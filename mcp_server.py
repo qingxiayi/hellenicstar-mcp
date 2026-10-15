@@ -9,6 +9,7 @@ from mcp.types import CallToolResult, Icon, ImageContent, TextContent, ToolAnnot
 from pydantic import BaseModel, Field, StrictInt
 from typing import Annotated
 from starlette.requests import Request
+from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from starlette.routing import Route
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -880,6 +881,13 @@ def agent_protocol_prompt() -> str:
 
 
 app = mcp.streamable_http_app()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 _mcp_http_lifespan = app.router.lifespan_context
 
 
