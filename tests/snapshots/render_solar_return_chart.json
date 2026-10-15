@@ -1,0 +1,803 @@
+{
+  "image_meta": {
+    "expected_height": 720,
+    "expected_width": 720,
+    "mime_type": "image/png",
+    "min_bytes": 10000
+  },
+  "input": {
+    "day": 15,
+    "hour": 18,
+    "house_system": "placidus",
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "residence_location_id": "gn:2988507",
+    "target_year": 2026,
+    "year": 1990
+  },
+  "output": {
+    "structuredContent": {
+      "calculation_source": {
+        "birth_context": {
+          "civil_dt": "1990-04-15T18:00:00",
+          "fold": 0,
+          "lat": 48.85341,
+          "lng": 2.3488,
+          "location_id": "gn:2988507",
+          "source": "location_db",
+          "tz_iana": "Europe/Paris",
+          "utc_offset": 2.0
+        },
+        "calculation_reference": {
+          "fingerprint": "c444988f0a99930dc30bf9082a65662eb1fcc57018c9fa3d11dea3b5c878dc49",
+          "input": {
+            "day": 15,
+            "fold": null,
+            "hour": 18,
+            "house_system": "placidus",
+            "location_id": "gn:2988507",
+            "minute": 0,
+            "month": 4,
+            "residence_location_id": "gn:2988507",
+            "target_year": 2026,
+            "year": 1990
+          },
+          "schema_version": "calculation-reference-v1",
+          "tool": "calculate_solar_return"
+        },
+        "chart": {
+          "angles": {
+            "ascendant": {
+              "deg_in_sign": 12.8656,
+              "longitude": 102.8656,
+              "retrograde": false,
+              "sign": "巨蟹",
+              "sign_index": 3
+            },
+            "descendant": {
+              "deg_in_sign": 12.8656,
+              "longitude": 282.8656,
+              "retrograde": false,
+              "sign": "摩羯",
+              "sign_index": 9
+            },
+            "imum_coeli": {
+              "deg_in_sign": 13.9332,
+              "longitude": 163.9332,
+              "retrograde": false,
+              "sign": "处女",
+              "sign_index": 5
+            },
+            "midheaven": {
+              "deg_in_sign": 13.9332,
+              "longitude": 343.9332,
+              "retrograde": false,
+              "sign": "双鱼",
+              "sign_index": 11
+            }
+          },
+          "angular_planets": [
+            {
+              "axis": "asc",
+              "house": 1,
+              "orb": 4.1386,
+              "planet": "jupiter",
+              "strength": "extended"
+            }
+          ],
+          "aspects": [
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 3.1345,
+              "point1": "moon",
+              "point2": "mercury"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 2.2258,
+              "point1": "moon",
+              "point2": "uranus"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 5.5183,
+              "point1": "moon",
+              "point2": "neptune"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 3.9822,
+              "point1": "mercury",
+              "point2": "mars"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 0.9087,
+              "point1": "mercury",
+              "point2": "uranus"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 2.3838,
+              "point1": "mercury",
+              "point2": "neptune"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 2.287,
+              "point1": "venus",
+              "point2": "jupiter"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 2.9863,
+              "point1": "mars",
+              "point2": "saturn"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 1.5985,
+              "point1": "mars",
+              "point2": "neptune"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 1.074,
+              "point1": "mars",
+              "point2": "pluto"
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "orb": 4.5847,
+              "point1": "saturn",
+              "point2": "neptune"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 1.9122,
+              "point1": "saturn",
+              "point2": "pluto"
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "orb": 2.6725,
+              "point1": "neptune",
+              "point2": "pluto"
+            }
+          ],
+          "elements": {
+            "counts": {
+              "air": 1,
+              "earth": 2,
+              "fire": 5,
+              "water": 2
+            },
+            "missing": []
+          },
+          "house_cusps": [
+            102.8656,
+            119.6545,
+            138.8031,
+            163.9332,
+            199.6768,
+            244.59,
+            282.8656,
+            299.6545,
+            318.8031,
+            343.9332,
+            19.6768,
+            64.59
+          ],
+          "intercepted_signs": [
+            {
+              "house": 11,
+              "sign": "金牛",
+              "sign_index": 1
+            },
+            {
+              "house": 5,
+              "sign": "天蝎",
+              "sign_index": 7
+            }
+          ],
+          "jones_pattern": {
+            "pattern_zh": "碗型",
+            "state_label": "标准格局"
+          },
+          "lunation_phase": {
+            "elongation": 331.7941,
+            "phase_name": "残月",
+            "phase_num": 8
+          },
+          "planets": {
+            "jupiter": {
+              "deg_in_sign": 17.0041,
+              "house": 1,
+              "longitude": 107.0041,
+              "retrograde": false,
+              "sign": "巨蟹",
+              "sign_index": 3,
+              "speed": 0.104
+            },
+            "mars": {
+              "deg_in_sign": 4.3306,
+              "house": 10,
+              "longitude": 4.3306,
+              "retrograde": false,
+              "sign": "白羊",
+              "sign_index": 0,
+              "speed": 0.7761
+            },
+            "mercury": {
+              "deg_in_sign": 0.3484,
+              "house": 10,
+              "longitude": 0.3484,
+              "retrograde": false,
+              "sign": "白羊",
+              "sign_index": 0,
+              "speed": 1.414
+            },
+            "moon": {
+              "deg_in_sign": 27.2139,
+              "house": 10,
+              "longitude": 357.2139,
+              "retrograde": false,
+              "sign": "双鱼",
+              "sign_index": 11,
+              "speed": 13.9497
+            },
+            "neptune": {
+              "deg_in_sign": 2.7321,
+              "house": 10,
+              "longitude": 2.7321,
+              "retrograde": false,
+              "sign": "白羊",
+              "sign_index": 0,
+              "speed": 0.0356
+            },
+            "pluto": {
+              "deg_in_sign": 5.4046,
+              "house": 8,
+              "longitude": 305.4046,
+              "retrograde": false,
+              "sign": "水瓶",
+              "sign_index": 10,
+              "speed": 0.0098
+            },
+            "saturn": {
+              "deg_in_sign": 7.3169,
+              "house": 10,
+              "longitude": 7.3169,
+              "retrograde": false,
+              "sign": "白羊",
+              "sign_index": 0,
+              "speed": 0.1209
+            },
+            "sun": {
+              "deg_in_sign": 25.4197,
+              "house": 11,
+              "longitude": 25.4197,
+              "retrograde": false,
+              "sign": "白羊",
+              "sign_index": 0,
+              "speed": 0.9795
+            },
+            "uranus": {
+              "deg_in_sign": 29.4396,
+              "house": 11,
+              "longitude": 59.4396,
+              "retrograde": false,
+              "sign": "金牛",
+              "sign_index": 1,
+              "speed": 0.0506
+            },
+            "venus": {
+              "deg_in_sign": 19.2911,
+              "house": 11,
+              "longitude": 49.2911,
+              "retrograde": false,
+              "sign": "金牛",
+              "sign_index": 1,
+              "speed": 1.2224
+            }
+          },
+          "unaspected_planets": [
+            "sun"
+          ]
+        },
+        "focus": {
+          "annual_focus": {
+            "asc_ruler": {
+              "house": 10,
+              "planet": "moon",
+              "planet_zh": "月亮",
+              "retrograde": false,
+              "sign": "双鱼"
+            },
+            "sr_asc_in_natal_house": 10
+          },
+          "asc_ruler": {
+            "house": 10,
+            "planet": "moon",
+            "planet_zh": "月亮",
+            "retrograde": false,
+            "sign": "双鱼"
+          }
+        },
+        "interpretation_workflow": {
+          "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+          "next_tool": "verify_calculation_claims",
+          "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+        },
+        "monthly_moon_progressions": {
+          "metonic_cycle": {
+            "is_return": false,
+            "orb": 91.3358
+          },
+          "moon_element_cycle": {
+            "element": "水",
+            "next_element": "火",
+            "next_sign": "狮子",
+            "position_in_run": 3,
+            "prev_element": "水",
+            "prev_sign": "天蝎",
+            "sign": "双鱼",
+            "stage": "closing"
+          },
+          "moon_progressions": [
+            {
+              "hits": [
+                {
+                  "orb": 0.1345,
+                  "target": "mercury"
+                }
+              ],
+              "month": 3,
+              "moon_lon": 0.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.8655,
+                  "target": "mercury"
+                }
+              ],
+              "month": 4,
+              "moon_lon": 1.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.5183,
+                  "target": "neptune"
+                }
+              ],
+              "month": 5,
+              "moon_lon": 2.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.4817,
+                  "target": "neptune"
+                }
+              ],
+              "month": 6,
+              "moon_lon": 3.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.1167,
+                  "target": "mars"
+                }
+              ],
+              "month": 7,
+              "moon_lon": 4.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.8833,
+                  "target": "mars"
+                }
+              ],
+              "month": 8,
+              "moon_lon": 5.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.103,
+                  "target": "saturn"
+                }
+              ],
+              "month": 10,
+              "moon_lon": 7.2139
+            },
+            {
+              "hits": [
+                {
+                  "orb": 0.897,
+                  "target": "saturn"
+                }
+              ],
+              "month": 11,
+              "moon_lon": 8.2139
+            }
+          ],
+          "saturn_return": {
+            "is_return": false,
+            "orb": 72.2823
+          },
+          "sun_transits": [
+            {
+              "date": "2026-05-09T22:13:52Z",
+              "longitude": 49.2911,
+              "target": "venus"
+            },
+            {
+              "date": "2026-05-20T10:38:34Z",
+              "longitude": 59.4396,
+              "target": "uranus"
+            },
+            {
+              "date": "2026-07-04T20:13:03Z",
+              "longitude": 102.8656,
+              "target": "asc"
+            },
+            {
+              "date": "2026-07-09T04:23:27Z",
+              "longitude": 107.0041,
+              "target": "jupiter"
+            },
+            {
+              "date": "2026-09-06T12:18:22Z",
+              "longitude": 163.9332,
+              "target": "ic"
+            },
+            {
+              "date": "2027-01-03T11:55:25Z",
+              "longitude": 282.8656,
+              "target": "dsc"
+            },
+            {
+              "date": "2027-01-25T15:02:19Z",
+              "longitude": 305.4046,
+              "target": "pluto"
+            },
+            {
+              "date": "2027-03-04T18:06:57Z",
+              "longitude": 343.9332,
+              "target": "mc"
+            },
+            {
+              "date": "2027-03-18T01:09:11Z",
+              "longitude": 357.2139,
+              "target": "moon"
+            },
+            {
+              "date": "2027-03-21T04:49:46Z",
+              "longitude": 0.3484,
+              "target": "mercury"
+            },
+            {
+              "date": "2027-03-23T14:28:37Z",
+              "longitude": 2.7321,
+              "target": "neptune"
+            },
+            {
+              "date": "2027-03-25T05:10:30Z",
+              "longitude": 4.3306,
+              "target": "mars"
+            },
+            {
+              "date": "2027-03-28T05:33:23Z",
+              "longitude": 7.3169,
+              "target": "saturn"
+            }
+          ]
+        },
+        "overlay_with_natal": {
+          "angle_contacts": [
+            {
+              "axis": "dsc",
+              "natal_planet": "neptune",
+              "orb": 1.7086
+            }
+          ],
+          "cross_aspects": [
+            {
+              "angle": 120,
+              "applying": true,
+              "aspect": "三分",
+              "natal_planet": "moon",
+              "orb": 0.4583,
+              "sr_planet": "sun"
+            },
+            {
+              "angle": 60,
+              "applying": true,
+              "aspect": "六分",
+              "natal_planet": "mars",
+              "orb": 0.6486,
+              "sr_planet": "sun"
+            },
+            {
+              "angle": 90,
+              "applying": false,
+              "aspect": "刑",
+              "natal_planet": "saturn",
+              "orb": 0.3852,
+              "sr_planet": "sun"
+            },
+            {
+              "angle": 90,
+              "applying": false,
+              "aspect": "刑",
+              "natal_planet": "moon",
+              "orb": 1.3358,
+              "sr_planet": "moon"
+            },
+            {
+              "angle": 180,
+              "applying": false,
+              "aspect": "冲",
+              "natal_planet": "pluto",
+              "orb": 2.3052,
+              "sr_planet": "venus"
+            },
+            {
+              "angle": 90,
+              "applying": true,
+              "aspect": "刑",
+              "natal_planet": "jupiter",
+              "orb": 0.2392,
+              "sr_planet": "mars"
+            },
+            {
+              "angle": 180,
+              "applying": false,
+              "aspect": "冲",
+              "natal_planet": "neptune",
+              "orb": 2.43,
+              "sr_planet": "jupiter"
+            },
+            {
+              "angle": 120,
+              "applying": false,
+              "aspect": "三分",
+              "natal_planet": "pluto",
+              "orb": 0.0182,
+              "sr_planet": "jupiter"
+            },
+            {
+              "angle": 90,
+              "applying": false,
+              "aspect": "刑",
+              "natal_planet": "jupiter",
+              "orb": 2.7471,
+              "sr_planet": "saturn"
+            },
+            {
+              "angle": 90,
+              "applying": true,
+              "aspect": "刑",
+              "natal_planet": "uranus",
+              "orb": 2.271,
+              "sr_planet": "saturn"
+            },
+            {
+              "angle": 90,
+              "applying": true,
+              "aspect": "刑",
+              "natal_planet": "jupiter",
+              "orb": 1.8377,
+              "sr_planet": "neptune"
+            }
+          ],
+          "degree_contacts": [],
+          "natal_planets_in_sr_houses": [
+            {
+              "house": 11,
+              "planet": "sun"
+            },
+            {
+              "house": 6,
+              "planet": "moon"
+            },
+            {
+              "house": 11,
+              "planet": "mercury"
+            },
+            {
+              "house": 9,
+              "planet": "venus"
+            },
+            {
+              "house": 9,
+              "planet": "mars"
+            },
+            {
+              "house": 12,
+              "planet": "jupiter"
+            },
+            {
+              "house": 7,
+              "planet": "saturn"
+            },
+            {
+              "house": 6,
+              "planet": "uranus"
+            },
+            {
+              "house": 7,
+              "planet": "neptune"
+            },
+            {
+              "house": 5,
+              "planet": "pluto"
+            }
+          ],
+          "repeating_aspects": [
+            {
+              "change": "different",
+              "natal_aspect": {
+                "angle": 120,
+                "name": "三分",
+                "orb": 5.0366
+              },
+              "pair": [
+                "mercury",
+                "uranus"
+              ],
+              "sr_aspect": {
+                "angle": 60,
+                "name": "六分",
+                "orb": 0.9087
+              }
+            },
+            {
+              "change": "different",
+              "natal_aspect": {
+                "angle": 120,
+                "name": "三分",
+                "orb": 0.0503
+              },
+              "pair": [
+                "mercury",
+                "neptune"
+              ],
+              "sr_aspect": {
+                "angle": 0,
+                "name": "合",
+                "orb": 2.3838
+              }
+            },
+            {
+              "change": "different",
+              "natal_aspect": {
+                "angle": 120,
+                "name": "三分",
+                "orb": 5.157
+              },
+              "pair": [
+                "venus",
+                "jupiter"
+              ],
+              "sr_aspect": {
+                "angle": 60,
+                "name": "六分",
+                "orb": 2.287
+              }
+            },
+            {
+              "change": "same",
+              "natal_aspect": {
+                "angle": 60,
+                "name": "六分",
+                "orb": 2.4118
+              },
+              "pair": [
+                "neptune",
+                "pluto"
+              ],
+              "sr_aspect": {
+                "angle": 60,
+                "name": "六分",
+                "orb": 2.6725
+              }
+            }
+          ],
+          "sr_planets_in_natal_houses": [
+            {
+              "house": 8,
+              "planet": "sun"
+            },
+            {
+              "house": 7,
+              "planet": "moon"
+            },
+            {
+              "house": 7,
+              "planet": "mercury"
+            },
+            {
+              "house": 8,
+              "planet": "venus"
+            },
+            {
+              "house": 7,
+              "planet": "mars"
+            },
+            {
+              "house": 10,
+              "planet": "jupiter"
+            },
+            {
+              "house": 7,
+              "planet": "saturn"
+            },
+            {
+              "house": 9,
+              "planet": "uranus"
+            },
+            {
+              "house": 7,
+              "planet": "neptune"
+            },
+            {
+              "house": 5,
+              "planet": "pluto"
+            }
+          ]
+        },
+        "quality": {
+          "algorithm_independently_verified_this_call": false,
+          "contract_version": "mcp-output-contracts-v1",
+          "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+          "regression_test": "tests/test_solar_return.py",
+          "scope": "required_fields_and_registered_domain_invariants",
+          "status": "passed"
+        },
+        "solar_return": {
+          "house_system": "placidus",
+          "local": "2026-04-15 11:17",
+          "residence": {
+            "city": "",
+            "lat": 48.85341,
+            "lng": 2.3488,
+            "tz": "Europe/Paris"
+          },
+          "residence_location_id": "gn:2988507",
+          "utc": "2026-04-15T09:17:12Z"
+        },
+        "status": "ok"
+      },
+      "image_url": "https://hellenicstar.com/mcp/chart/cfaff022f9f15287cbc0248ac664f5d46cf550848e869b9dcc2bcc7bae6bf730.png",
+      "mime_type": "image/png",
+      "quality": {
+        "image_semantics_checked": false,
+        "scope": "numerical_source_and_png_signature",
+        "status": "passed"
+      },
+      "status": "ok",
+      "title": "2026 太阳返照盘"
+    }
+  },
+  "tool": "render_solar_return_chart"
+}

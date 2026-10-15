@@ -1,0 +1,908 @@
+{
+  "input": {
+    "day": 15,
+    "hour": 18,
+    "house_system": "placidus",
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "acd0797a50efeb01e0f0a74d3645db6c23a9a65ffc90a276004e1e9aaf262b31",
+      "input": {
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "house_system": "placidus",
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_house_rulers"
+    },
+    "houses": [
+      {
+        "cross": "angular",
+        "cusp_longitude": 177.0133,
+        "cusp_sign": "处女座",
+        "house": 1,
+        "is_chart_ruler": true,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "水星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "水星",
+            "loop_from_step": 3,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "succedent",
+        "cusp_longitude": 201.1404,
+        "cusp_sign": "天秤座",
+        "house": 2,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "金星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "金星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "cadent",
+        "cusp_longitude": 231.0457,
+        "cusp_sign": "天蝎座",
+        "house": 3,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 5,
+                "longitude": 326.0683,
+                "planet": "火星",
+                "retrograde": false,
+                "sign": "水瓶座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "火星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 2,
+                "longitude": 226.986,
+                "planet": "冥王星",
+                "retrograde": true,
+                "sign": "天蝎座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "冥王星",
+            "loop_from_step": 0,
+            "loop_planets": [
+              "冥王星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "angular",
+        "cusp_longitude": 266.2372,
+        "cusp_sign": "射手座",
+        "house": 4,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "木星",
+            "loop_from_step": 0,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          }
+        ]
+      },
+      {
+        "cross": "succedent",
+        "cusp_longitude": 301.7485,
+        "cusp_sign": "水瓶座",
+        "house": 5,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "土星",
+            "loop_from_step": 0,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 4,
+                "longitude": 279.5879,
+                "planet": "天王星",
+                "retrograde": true,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "天王星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "cadent",
+        "cusp_longitude": 332.2271,
+        "cusp_sign": "双鱼座",
+        "house": 6,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "木星",
+            "loop_from_step": 0,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "海王星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "angular",
+        "cusp_longitude": 357.0133,
+        "cusp_sign": "双鱼座",
+        "house": 7,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "木星",
+            "loop_from_step": 0,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "海王星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "succedent",
+        "cusp_longitude": 21.1404,
+        "cusp_sign": "白羊座",
+        "house": 8,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 5,
+                "longitude": 326.0683,
+                "planet": "火星",
+                "retrograde": false,
+                "sign": "水瓶座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "火星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 5,
+                "longitude": 326.0683,
+                "planet": "火星",
+                "retrograde": false,
+                "sign": "水瓶座"
+              },
+              {
+                "house": 4,
+                "longitude": 279.5879,
+                "planet": "天王星",
+                "retrograde": true,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "火星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "cadent",
+        "cusp_longitude": 51.0457,
+        "cusp_sign": "金牛座",
+        "house": 9,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "金星",
+            "loop_from_step": 1,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "金星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "angular",
+        "cusp_longitude": 86.2372,
+        "cusp_sign": "双子座",
+        "house": 10,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "水星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "水星",
+            "loop_from_step": 3,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "succedent",
+        "cusp_longitude": 121.7485,
+        "cusp_sign": "狮子座",
+        "house": 11,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 25.4197,
+                "planet": "太阳",
+                "retrograde": false,
+                "sign": "白羊座"
+              },
+              {
+                "house": 5,
+                "longitude": 326.0683,
+                "planet": "火星",
+                "retrograde": false,
+                "sign": "水瓶座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "太阳",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 25.4197,
+                "planet": "太阳",
+                "retrograde": false,
+                "sign": "白羊座"
+              },
+              {
+                "house": 5,
+                "longitude": 326.0683,
+                "planet": "火星",
+                "retrograde": false,
+                "sign": "水瓶座"
+              },
+              {
+                "house": 4,
+                "longitude": 279.5879,
+                "planet": "天王星",
+                "retrograde": true,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "太阳",
+            "loop_from_step": 3,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      },
+      {
+        "cross": "cadent",
+        "cusp_longitude": 152.2271,
+        "cusp_sign": "处女座",
+        "house": 12,
+        "is_chart_ruler": false,
+        "tracks": [
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 10,
+                "longitude": 94.5698,
+                "planet": "木星",
+                "retrograde": false,
+                "sign": "巨蟹座"
+              },
+              {
+                "house": 3,
+                "longitude": 265.878,
+                "planet": "月亮",
+                "retrograde": false,
+                "sign": "射手座"
+              }
+            ],
+            "ending": "cycle",
+            "house_ruler": "水星",
+            "loop_from_step": 2,
+            "loop_planets": [
+              "木星",
+              "月亮"
+            ],
+            "track": "传统"
+          },
+          {
+            "chain": [
+              {
+                "house": 8,
+                "longitude": 44.6245,
+                "planet": "水星",
+                "retrograde": false,
+                "sign": "金牛座"
+              },
+              {
+                "house": 6,
+                "longitude": 339.7268,
+                "planet": "金星",
+                "retrograde": false,
+                "sign": "双鱼座"
+              },
+              {
+                "house": 4,
+                "longitude": 284.5742,
+                "planet": "海王星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              },
+              {
+                "house": 4,
+                "longitude": 295.0345,
+                "planet": "土星",
+                "retrograde": false,
+                "sign": "摩羯座"
+              }
+            ],
+            "ending": "self",
+            "house_ruler": "水星",
+            "loop_from_step": 3,
+            "loop_planets": [
+              "土星"
+            ],
+            "track": "现代"
+          }
+        ]
+      }
+    ],
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_natal_house_rulers.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "settings": {
+      "crosses": [
+        {
+          "houses": [
+            1,
+            4,
+            7,
+            10
+          ],
+          "id": "angular",
+          "name": "基本宫十字"
+        },
+        {
+          "houses": [
+            2,
+            5,
+            8,
+            11
+          ],
+          "id": "succedent",
+          "name": "固定宫十字"
+        },
+        {
+          "houses": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "id": "cadent",
+          "name": "变动宫十字"
+        }
+      ],
+      "ending": "self = ruler rules its own sign; cycle = the chain loops",
+      "house_system": "placidus"
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_house_rulers"
+}

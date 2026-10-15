@@ -1,0 +1,51 @@
+{
+  "input_claims": [
+    {
+      "kind": "sign",
+      "other_point": null,
+      "point": "sun",
+      "quote": "太阳在白羊座",
+      "scope": "natal",
+      "value": "白羊座"
+    }
+  ],
+  "output": {
+    "assessment": "submitted_claims_supported",
+    "claims": [
+      {
+        "claim": {
+          "kind": "sign",
+          "other_point": null,
+          "point": "sun",
+          "quote": "太阳在白羊座",
+          "scope": "natal",
+          "value": "白羊座"
+        },
+        "evidence": [
+          {
+            "path": "/planets/0/sign",
+            "value": "白羊座"
+          }
+        ],
+        "index": 0,
+        "reason": "与本次计算字段一致。",
+        "verdict": "supported"
+      }
+    ],
+    "counts": {
+      "contradicted": 0,
+      "supported": 1,
+      "unverified": 0
+    },
+    "coverage": {
+      "checked_claims": 1,
+      "full_report_checked": false,
+      "quote_semantics_checked": false,
+      "submitted_claims": 1
+    },
+    "next_action": "use_verified_facts",
+    "scope": "仅核对已提交的结构化本命断言。quote 原文只回显，未验证其与结构化断言的语义一致性；未核对整篇解读、遗漏的事实、心理推论或事件判断。",
+    "status": "ok"
+  },
+  "tool": "verify_natal_claims"
+}

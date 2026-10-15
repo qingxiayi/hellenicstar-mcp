@@ -1,0 +1,978 @@
+{
+  "input": {
+    "as_of": "2026-10-08",
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "age": 36.5,
+    "as_of": "2026-10-08",
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "87ebbbd69aa2e1b65aaa96d71e17241bd3a161c5783a4be524034b8b096cbd3b",
+      "input": {
+        "as_of": "2026-10-08",
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_progressed_lunation"
+    },
+    "current_phase_transition": {
+      "age": 35.6,
+      "date": "2025-12-06",
+      "phase_name": "残月",
+      "phase_num": 8,
+      "progressed_lights": {
+        "house_reference": "natal_placidus",
+        "moon": {
+          "degree_in_sign": 14.9934,
+          "longitude": 14.9934,
+          "natal_house": 7,
+          "sign": "白羊座",
+          "sign_index": 0
+        },
+        "sun": {
+          "degree_in_sign": 29.9934,
+          "longitude": 59.9934,
+          "natal_house": 9,
+          "sign": "金牛座",
+          "sign_index": 1
+        }
+      },
+      "saturn": {
+        "axis_orb": 1.79,
+        "degrees_into_house": 22.99,
+        "house": 6,
+        "longitude": 355.2186,
+        "near_axis": true,
+        "nearest_axis": "Dsc"
+      }
+    },
+    "days_to_next_phase": 855.5,
+    "engine_version": "progressed-lunation-4",
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "next_phase": {
+      "age": 38.8,
+      "date": "2029-02-10",
+      "phase_name": "新月",
+      "phase_num": 1,
+      "progressed_lights": {
+        "house_reference": "natal_placidus",
+        "moon": {
+          "degree_in_sign": 3.0525,
+          "longitude": 63.0525,
+          "natal_house": 9,
+          "sign": "双子座",
+          "sign_index": 2
+        },
+        "sun": {
+          "degree_in_sign": 3.0525,
+          "longitude": 63.0525,
+          "natal_house": 9,
+          "sign": "双子座",
+          "sign_index": 2
+        }
+      },
+      "saturn": {
+        "axis_orb": 38.55,
+        "degrees_into_house": 14.42,
+        "house": 8,
+        "longitude": 35.5646,
+        "near_axis": false,
+        "nearest_axis": "Dsc"
+      }
+    },
+    "phase": {
+      "angle_diff": 326.618,
+      "moon_lon": 27.4179,
+      "phase_name": "残月",
+      "phase_num": 8,
+      "progress_pct": 25.8,
+      "sun_lon": 60.7998
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_progressed_phase.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "saturn": {
+      "axis_orb": 1.79,
+      "degrees_into_house": 22.99,
+      "house": 6,
+      "longitude": 355.2186,
+      "near_axis": true,
+      "nearest_axis": "Dsc"
+    },
+    "settings": {
+      "method": "secondary_progression_rudhyar_8_phases",
+      "phase_boundaries": "45° from exact phase"
+    },
+    "status": "ok",
+    "timeline": [
+      {
+        "age": 2.6,
+        "date": "1992-11-30",
+        "phase_name": "下弦月",
+        "phase_num": 7,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 27.989,
+            "longitude": 297.989,
+            "natal_house": 4,
+            "sign": "摩羯座",
+            "sign_index": 9
+          },
+          "sun": {
+            "degree_in_sign": 27.989,
+            "longitude": 27.989,
+            "natal_house": 8,
+            "sign": "白羊座",
+            "sign_index": 0
+          }
+        },
+        "saturn": {
+          "axis_orb": 43.53,
+          "degrees_into_house": 11.74,
+          "house": 5,
+          "longitude": 313.4853,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 6.3,
+        "date": "1996-07-23",
+        "phase_name": "残月",
+        "phase_num": 8,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 16.5502,
+            "longitude": 346.5502,
+            "natal_house": 6,
+            "sign": "双鱼座",
+            "sign_index": 11
+          },
+          "sun": {
+            "degree_in_sign": 1.5502,
+            "longitude": 31.5502,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 10.37,
+          "degrees_into_house": 10.37,
+          "house": 7,
+          "longitude": 7.379,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 9.5,
+        "date": "1999-10-22",
+        "phase_name": "新月",
+        "phase_num": 1,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 4.715,
+            "longitude": 34.715,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          },
+          "sun": {
+            "degree_in_sign": 4.715,
+            "longitude": 34.715,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 41.34,
+          "degrees_into_house": 23.76,
+          "house": 8,
+          "longitude": 44.8978,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 12.7,
+        "date": "2002-12-27",
+        "phase_name": "娥眉月",
+        "phase_num": 2,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 22.812,
+            "longitude": 82.812,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          },
+          "sun": {
+            "degree_in_sign": 7.812,
+            "longitude": 37.812,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 1.43,
+          "degrees_into_house": 33.76,
+          "house": 9,
+          "longitude": 84.8023,
+          "near_axis": true,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 16.2,
+        "date": "2006-06-20",
+        "phase_name": "上弦月",
+        "phase_num": 3,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 11.1913,
+            "longitude": 131.1913,
+            "natal_house": 11,
+            "sign": "狮子座",
+            "sign_index": 4
+          },
+          "sun": {
+            "degree_in_sign": 11.1913,
+            "longitude": 41.1913,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 42.71,
+          "degrees_into_house": 7.2,
+          "house": 11,
+          "longitude": 128.944,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 20.1,
+        "date": "2010-05-06",
+        "phase_name": "盈凸月",
+        "phase_num": 4,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 29.9509,
+            "longitude": 179.9509,
+            "natal_house": 1,
+            "sign": "处女座",
+            "sign_index": 5
+          },
+          "sun": {
+            "degree_in_sign": 14.9509,
+            "longitude": 44.9509,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 1.32,
+          "degrees_into_house": 1.32,
+          "house": 1,
+          "longitude": 178.3286,
+          "near_axis": true,
+          "nearest_axis": "Asc"
+        }
+      },
+      {
+        "age": 24.1,
+        "date": "2014-06-08",
+        "phase_name": "满月",
+        "phase_num": 5,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 18.9066,
+            "longitude": 228.9066,
+            "natal_house": 2,
+            "sign": "天蝎座",
+            "sign_index": 7
+          },
+          "sun": {
+            "degree_in_sign": 18.9066,
+            "longitude": 48.9066,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 38.2,
+          "degrees_into_house": 26.9,
+          "house": 2,
+          "longitude": 228.0394,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 28.3,
+        "date": "2018-07-16",
+        "phase_name": "亏凸月",
+        "phase_num": 6,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 7.8709,
+            "longitude": 277.8709,
+            "natal_house": 4,
+            "sign": "摩羯座",
+            "sign_index": 9
+          },
+          "sun": {
+            "degree_in_sign": 22.8709,
+            "longitude": 52.8709,
+            "natal_house": 9,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 8.26,
+          "degrees_into_house": 8.26,
+          "house": 4,
+          "longitude": 274.5013,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 32.2,
+        "date": "2022-06-11",
+        "phase_name": "下弦月",
+        "phase_num": 7,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 26.6349,
+            "longitude": 326.6349,
+            "natal_house": 5,
+            "sign": "水瓶座",
+            "sign_index": 10
+          },
+          "sun": {
+            "degree_in_sign": 26.6349,
+            "longitude": 56.6349,
+            "natal_house": 9,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 31.8,
+          "degrees_into_house": 23.47,
+          "house": 5,
+          "longitude": 325.2177,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 35.6,
+        "date": "2025-12-06",
+        "phase_name": "残月",
+        "phase_num": 8,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 14.9934,
+            "longitude": 14.9934,
+            "natal_house": 7,
+            "sign": "白羊座",
+            "sign_index": 0
+          },
+          "sun": {
+            "degree_in_sign": 29.9934,
+            "longitude": 59.9934,
+            "natal_house": 9,
+            "sign": "金牛座",
+            "sign_index": 1
+          }
+        },
+        "saturn": {
+          "axis_orb": 1.79,
+          "degrees_into_house": 22.99,
+          "house": 6,
+          "longitude": 355.2186,
+          "near_axis": true,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 38.8,
+        "date": "2029-02-10",
+        "phase_name": "新月",
+        "phase_num": 1,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 3.0525,
+            "longitude": 63.0525,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          },
+          "sun": {
+            "degree_in_sign": 3.0525,
+            "longitude": 63.0525,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 38.55,
+          "degrees_into_house": 14.42,
+          "house": 8,
+          "longitude": 35.5646,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 42.1,
+        "date": "2032-05-06",
+        "phase_name": "娥眉月",
+        "phase_num": 2,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 21.1608,
+            "longitude": 111.1608,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          },
+          "sun": {
+            "degree_in_sign": 6.1608,
+            "longitude": 66.1608,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 4.9,
+          "degrees_into_house": 30.29,
+          "house": 9,
+          "longitude": 81.338,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 45.7,
+        "date": "2035-12-17",
+        "phase_name": "上弦月",
+        "phase_num": 3,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 9.6288,
+            "longitude": 159.6288,
+            "natal_house": 12,
+            "sign": "处女座",
+            "sign_index": 5
+          },
+          "sun": {
+            "degree_in_sign": 9.6288,
+            "longitude": 69.6288,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 38.04,
+          "degrees_into_house": 17.22,
+          "house": 11,
+          "longitude": 138.9711,
+          "near_axis": false,
+          "nearest_axis": "Asc"
+        }
+      },
+      {
+        "age": 49.7,
+        "date": "2039-12-19",
+        "phase_name": "盈凸月",
+        "phase_num": 4,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 28.4643,
+            "longitude": 208.4643,
+            "natal_house": 2,
+            "sign": "天秤座",
+            "sign_index": 6
+          },
+          "sun": {
+            "degree_in_sign": 13.4643,
+            "longitude": 73.4643,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 14.03,
+          "degrees_into_house": 14.03,
+          "house": 1,
+          "longitude": 191.0478,
+          "near_axis": false,
+          "nearest_axis": "Asc"
+        }
+      },
+      {
+        "age": 53.8,
+        "date": "2044-01-29",
+        "phase_name": "满月",
+        "phase_num": 5,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 17.4012,
+            "longitude": 257.4012,
+            "natal_house": 3,
+            "sign": "射手座",
+            "sign_index": 8
+          },
+          "sun": {
+            "degree_in_sign": 17.4013,
+            "longitude": 77.4013,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 27.28,
+          "degrees_into_house": 7.92,
+          "house": 3,
+          "longitude": 238.9611,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 57.8,
+        "date": "2048-02-01",
+        "phase_name": "亏凸月",
+        "phase_num": 6,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 6.2303,
+            "longitude": 306.2303,
+            "natal_house": 5,
+            "sign": "水瓶座",
+            "sign_index": 10
+          },
+          "sun": {
+            "degree_in_sign": 21.2303,
+            "longitude": 81.2303,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 14.69,
+          "degrees_into_house": 14.69,
+          "house": 4,
+          "longitude": 280.9233,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 61.5,
+        "date": "2051-10-27",
+        "phase_name": "下弦月",
+        "phase_num": 7,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 24.7979,
+            "longitude": 354.7979,
+            "natal_house": 6,
+            "sign": "双鱼座",
+            "sign_index": 11
+          },
+          "sun": {
+            "degree_in_sign": 24.7979,
+            "longitude": 84.7979,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 43.03,
+          "degrees_into_house": 12.23,
+          "house": 5,
+          "longitude": 313.9813,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 64.9,
+        "date": "2055-03-15",
+        "phase_name": "残月",
+        "phase_num": 8,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 13.0282,
+            "longitude": 43.0282,
+            "natal_house": 8,
+            "sign": "金牛座",
+            "sign_index": 1
+          },
+          "sun": {
+            "degree_in_sign": 28.0282,
+            "longitude": 88.0282,
+            "natal_house": 10,
+            "sign": "双子座",
+            "sign_index": 2
+          }
+        },
+        "saturn": {
+          "axis_orb": 2.11,
+          "degrees_into_house": 2.11,
+          "house": 7,
+          "longitude": 359.1203,
+          "near_axis": true,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 68.1,
+        "date": "2058-05-29",
+        "phase_name": "新月",
+        "phase_num": 1,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 1.0884,
+            "longitude": 91.0884,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          },
+          "sun": {
+            "degree_in_sign": 1.0884,
+            "longitude": 91.0884,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 43.31,
+          "degrees_into_house": 21.78,
+          "house": 8,
+          "longitude": 42.9224,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 71.5,
+        "date": "2061-10-08",
+        "phase_name": "娥眉月",
+        "phase_num": 2,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 19.298,
+            "longitude": 139.298,
+            "natal_house": 11,
+            "sign": "狮子座",
+            "sign_index": 4
+          },
+          "sun": {
+            "degree_in_sign": 4.298,
+            "longitude": 94.298,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 5.31,
+          "degrees_into_house": 5.31,
+          "house": 10,
+          "longitude": 91.5467,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      },
+      {
+        "age": 75.3,
+        "date": "2065-07-17",
+        "phase_name": "上弦月",
+        "phase_num": 3,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 7.8947,
+            "longitude": 187.8947,
+            "natal_house": 1,
+            "sign": "天秤座",
+            "sign_index": 6
+          },
+          "sun": {
+            "degree_in_sign": 7.8947,
+            "longitude": 97.8947,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 42.67,
+          "degrees_into_house": 12.6,
+          "house": 11,
+          "longitude": 134.3482,
+          "near_axis": false,
+          "nearest_axis": "Asc"
+        }
+      },
+      {
+        "age": 79.3,
+        "date": "2069-08-16",
+        "phase_name": "盈凸月",
+        "phase_num": 4,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 26.7866,
+            "longitude": 236.7866,
+            "natal_house": 3,
+            "sign": "天蝎座",
+            "sign_index": 7
+          },
+          "sun": {
+            "degree_in_sign": 11.7866,
+            "longitude": 101.7866,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 7.48,
+          "degrees_into_house": 7.48,
+          "house": 1,
+          "longitude": 184.4934,
+          "near_axis": false,
+          "nearest_axis": "Asc"
+        }
+      },
+      {
+        "age": 83.4,
+        "date": "2073-09-04",
+        "phase_name": "满月",
+        "phase_num": 5,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 15.6507,
+            "longitude": 285.6507,
+            "natal_house": 4,
+            "sign": "摩羯座",
+            "sign_index": 9
+          },
+          "sun": {
+            "degree_in_sign": 15.6507,
+            "longitude": 105.6507,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 35.89,
+          "degrees_into_house": 29.21,
+          "house": 2,
+          "longitude": 230.3494,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 87.2,
+        "date": "2077-07-05",
+        "phase_name": "亏凸月",
+        "phase_num": 6,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 4.3049,
+            "longitude": 334.3049,
+            "natal_house": 6,
+            "sign": "双鱼座",
+            "sign_index": 11
+          },
+          "sun": {
+            "degree_in_sign": 19.3049,
+            "longitude": 109.3049,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 11.21,
+          "degrees_into_house": 11.21,
+          "house": 4,
+          "longitude": 277.4459,
+          "near_axis": false,
+          "nearest_axis": "IC"
+        }
+      },
+      {
+        "age": 90.8,
+        "date": "2081-01-29",
+        "phase_name": "下弦月",
+        "phase_num": 7,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 22.7089,
+            "longitude": 22.7089,
+            "natal_house": 8,
+            "sign": "白羊座",
+            "sign_index": 0
+          },
+          "sun": {
+            "degree_in_sign": 22.7089,
+            "longitude": 112.7089,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 39.87,
+          "degrees_into_house": 15.4,
+          "house": 5,
+          "longitude": 317.1479,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 94.1,
+        "date": "2084-06-05",
+        "phase_name": "残月",
+        "phase_num": 8,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 10.9049,
+            "longitude": 70.9049,
+            "natal_house": 9,
+            "sign": "双子座",
+            "sign_index": 2
+          },
+          "sun": {
+            "degree_in_sign": 25.9049,
+            "longitude": 115.9049,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 5.91,
+          "degrees_into_house": 5.91,
+          "house": 7,
+          "longitude": 2.9187,
+          "near_axis": false,
+          "nearest_axis": "Dsc"
+        }
+      },
+      {
+        "age": 97.5,
+        "date": "2087-09-28",
+        "phase_name": "新月",
+        "phase_num": 1,
+        "progressed_lights": {
+          "house_reference": "natal_placidus",
+          "moon": {
+            "degree_in_sign": 29.0665,
+            "longitude": 119.0665,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          },
+          "sun": {
+            "degree_in_sign": 29.0665,
+            "longitude": 119.0665,
+            "natal_house": 10,
+            "sign": "巨蟹座",
+            "sign_index": 3
+          }
+        },
+        "saturn": {
+          "axis_orb": 43.54,
+          "degrees_into_house": 21.55,
+          "house": 8,
+          "longitude": 42.6935,
+          "near_axis": false,
+          "nearest_axis": "MC"
+        }
+      }
+    ]
+  },
+  "tool": "calculate_progressed_lunation"
+}

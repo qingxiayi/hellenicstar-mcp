@@ -1,0 +1,263 @@
+{
+  "input": {
+    "as_of": "2026-10-08",
+    "day": 15,
+    "hour": 18,
+    "house_system": "placidus",
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "tradition": "abu_mashar",
+    "year": 1990
+  },
+  "output": {
+    "annual_profections": {
+      "boundary": "local_birthday_date",
+      "house_system": "placidus",
+      "years": [
+        {
+          "age": 35,
+          "end": "2026-04-14",
+          "house": 12,
+          "is_current": false,
+          "lord_of_year": "水星",
+          "sign": "处女座",
+          "start": "2025-04-15"
+        },
+        {
+          "age": 36,
+          "end": "2027-04-14",
+          "house": 1,
+          "is_current": true,
+          "lord_of_year": "水星",
+          "sign": "处女座",
+          "start": "2026-04-15"
+        },
+        {
+          "age": 37,
+          "end": "2028-04-14",
+          "house": 2,
+          "is_current": false,
+          "lord_of_year": "金星",
+          "sign": "天秤座",
+          "start": "2027-04-15"
+        },
+        {
+          "age": 38,
+          "end": "2029-04-14",
+          "house": 3,
+          "is_current": false,
+          "lord_of_year": "火星",
+          "sign": "天蝎座",
+          "start": "2028-04-15"
+        },
+        {
+          "age": 39,
+          "end": "2030-04-14",
+          "house": 4,
+          "is_current": false,
+          "lord_of_year": "木星",
+          "sign": "射手座",
+          "start": "2029-04-15"
+        }
+      ]
+    },
+    "as_of": "2026-10-08",
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "60477865d675d0ffdc75a1628f063699e03f5de402e7cf1b86d9d122f58a31d5",
+      "input": {
+        "as_of": "2026-10-08",
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "house_system": "placidus",
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "tradition": "abu_mashar",
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_time_lords"
+    },
+    "firdaria": {
+      "major_periods": [
+        {
+          "age_end": 10.0,
+          "age_start": 0.0,
+          "end": "2000-04-14",
+          "is_current": false,
+          "lord": "太阳",
+          "start": "1990-04-15"
+        },
+        {
+          "age_end": 18.0,
+          "age_start": 10.0,
+          "end": "2008-04-14",
+          "is_current": false,
+          "lord": "金星",
+          "start": "2000-04-15"
+        },
+        {
+          "age_end": 31.0,
+          "age_start": 18.0,
+          "end": "2021-04-14",
+          "is_current": false,
+          "lord": "水星",
+          "start": "2008-04-15"
+        },
+        {
+          "age_end": 40.0,
+          "age_start": 31.0,
+          "end": "2030-04-14",
+          "is_current": true,
+          "lord": "月亮",
+          "start": "2021-04-15"
+        },
+        {
+          "age_end": 51.0,
+          "age_start": 40.0,
+          "end": "2041-04-14",
+          "is_current": false,
+          "lord": "土星",
+          "start": "2030-04-15"
+        },
+        {
+          "age_end": 63.0,
+          "age_start": 51.0,
+          "end": "2053-04-14",
+          "is_current": false,
+          "lord": "木星",
+          "start": "2041-04-15"
+        },
+        {
+          "age_end": 70.0,
+          "age_start": 63.0,
+          "end": "2060-04-13",
+          "is_current": false,
+          "lord": "火星",
+          "start": "2053-04-15"
+        },
+        {
+          "age_end": 73.0,
+          "age_start": 70.0,
+          "end": "2063-04-14",
+          "is_current": false,
+          "lord": "北交点",
+          "start": "2060-04-14"
+        },
+        {
+          "age_end": 75.0,
+          "age_start": 73.0,
+          "end": "2065-04-13",
+          "is_current": false,
+          "lord": "南交点",
+          "start": "2063-04-15"
+        },
+        {
+          "age_end": 85.0,
+          "age_start": 75.0,
+          "end": "2075-04-14",
+          "is_current": false,
+          "lord": "太阳",
+          "start": "2065-04-14"
+        },
+        {
+          "age_end": 93.0,
+          "age_start": 85.0,
+          "end": "2083-04-14",
+          "is_current": false,
+          "lord": "金星",
+          "start": "2075-04-15"
+        },
+        {
+          "age_end": 106.0,
+          "age_start": 93.0,
+          "end": "2096-04-13",
+          "is_current": false,
+          "lord": "水星",
+          "start": "2083-04-15"
+        }
+      ],
+      "sect": "day",
+      "sub_periods_in_current_major": [
+        {
+          "end": "2022-07-27",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2021-04-15",
+          "sub_lord": "月亮"
+        },
+        {
+          "end": "2023-11-09",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2022-07-28",
+          "sub_lord": "土星"
+        },
+        {
+          "end": "2025-02-21",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2023-11-10",
+          "sub_lord": "木星"
+        },
+        {
+          "end": "2026-06-05",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2025-02-22",
+          "sub_lord": "火星"
+        },
+        {
+          "end": "2027-09-18",
+          "is_current": true,
+          "major_lord": "月亮",
+          "start": "2026-06-06",
+          "sub_lord": "太阳"
+        },
+        {
+          "end": "2028-12-30",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2027-09-19",
+          "sub_lord": "金星"
+        },
+        {
+          "end": "2030-04-14",
+          "is_current": false,
+          "major_lord": "月亮",
+          "start": "2028-12-31",
+          "sub_lord": "水星"
+        }
+      ],
+      "tradition": "abu_mashar",
+      "year_length_days": 365.2425
+    },
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_time_lords.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_time_lords"
+}

@@ -1,0 +1,1249 @@
+{
+  "input": {
+    "location_id": "gn:2988507",
+    "moment": "2026-10-08T12:00:00+08:00"
+  },
+  "output": {
+    "aspect_patterns": {
+      "t_square": [
+        [
+          "水星",
+          "火星",
+          "冥王星"
+        ],
+        [
+          "金星",
+          "火星",
+          "冥王星"
+        ],
+        [
+          "凯龙星",
+          "火星",
+          "冥王星"
+        ]
+      ]
+    },
+    "aspects": [
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 59.58236925677909,
+        "involves_axis": false,
+        "orb": 0.4176307432209114,
+        "point1": "neptune",
+        "point1_zh": "海王星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 60.42577004902694,
+        "involves_axis": false,
+        "orb": 0.42577004902693716,
+        "point1": "mars",
+        "point1_zh": "火星",
+        "point2": "uranus",
+        "point2_zh": "天王星"
+      },
+      {
+        "angle": 0,
+        "applying": true,
+        "aspect": "合相",
+        "exact_diff": 0.6188015983171624,
+        "involves_axis": false,
+        "orb": 0.6188015983171624,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 150,
+        "applying": null,
+        "aspect": "梅花相位",
+        "exact_diff": 149.3521135817105,
+        "involves_axis": true,
+        "orb": 0.6478864182894881,
+        "point1": "part_of_fortune",
+        "point1_zh": "福点",
+        "point2": "descendant",
+        "point2_zh": "下降点"
+      },
+      {
+        "angle": 150,
+        "applying": null,
+        "aspect": "梅花相位",
+        "exact_diff": 149.3521135817105,
+        "involves_axis": true,
+        "orb": 0.6478864182894881,
+        "point1": "part_of_spirit",
+        "point1_zh": "精神点",
+        "point2": "descendant",
+        "point2_zh": "下降点"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 119.19609953904765,
+        "involves_axis": true,
+        "orb": 0.8039004609523488,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 60.80390046095236,
+        "involves_axis": true,
+        "orb": 0.803900460952363,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 150,
+        "applying": true,
+        "aspect": "梅花相位",
+        "exact_diff": 148.73331198339335,
+        "involves_axis": true,
+        "orb": 1.2666880166066505,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "descendant",
+        "point2_zh": "下降点"
+      },
+      {
+        "angle": 60,
+        "applying": null,
+        "aspect": "六分相",
+        "exact_diff": 61.295772836578976,
+        "involves_axis": false,
+        "orb": 1.2957728365789762,
+        "point1": "part_of_fortune",
+        "point1_zh": "福点",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 120,
+        "applying": null,
+        "aspect": "三分相",
+        "exact_diff": 118.57729794073049,
+        "involves_axis": true,
+        "orb": 1.4227020592695112,
+        "point1": "part_of_spirit",
+        "point1_zh": "精神点",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 60,
+        "applying": null,
+        "aspect": "六分相",
+        "exact_diff": 61.422702059269525,
+        "involves_axis": true,
+        "orb": 1.4227020592695254,
+        "point1": "part_of_spirit",
+        "point1_zh": "精神点",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 150,
+        "applying": true,
+        "aspect": "梅花相位",
+        "exact_diff": 151.44792373625015,
+        "involves_axis": false,
+        "orb": 1.4479237362501465,
+        "point1": "mercury",
+        "point1_zh": "水星",
+        "point2": "saturn",
+        "point2_zh": "土星"
+      },
+      {
+        "angle": 0,
+        "applying": false,
+        "aspect": "合相",
+        "exact_diff": 1.5419975377611763,
+        "involves_axis": false,
+        "orb": 1.5419975377611763,
+        "point1": "mercury",
+        "point1_zh": "水星",
+        "point2": "venus",
+        "point2_zh": "金星"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 61.84081259398971,
+        "involves_axis": false,
+        "orb": 1.8408125939897104,
+        "point1": "true_north_lunar_node",
+        "point1_zh": "北交点",
+        "point2": "chiron",
+        "point2_zh": "凯龙星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 118.15918740601029,
+        "involves_axis": false,
+        "orb": 1.8408125939897104,
+        "point1": "chiron",
+        "point1_zh": "凯龙星",
+        "point2": "true_south_lunar_node",
+        "point2_zh": "南交点"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 61.91457443489614,
+        "involves_axis": false,
+        "orb": 1.9145744348961387,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "part_of_fortune",
+        "point2_zh": "福点"
+      },
+      {
+        "angle": 90,
+        "applying": true,
+        "aspect": "四分相",
+        "exact_diff": 92.2130328927601,
+        "involves_axis": false,
+        "orb": 2.213032892760097,
+        "point1": "venus",
+        "point1_zh": "金星",
+        "point2": "mars",
+        "point2_zh": "火星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 122.30292029773653,
+        "involves_axis": false,
+        "orb": 2.3029202977365344,
+        "point1": "uranus",
+        "point1_zh": "天王星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 150,
+        "applying": true,
+        "aspect": "梅花相位",
+        "exact_diff": 152.63880294178705,
+        "involves_axis": false,
+        "orb": 2.6388029417870484,
+        "point1": "venus",
+        "point1_zh": "金星",
+        "point2": "uranus",
+        "point2_zh": "天王星"
+      },
+      {
+        "angle": 60,
+        "applying": null,
+        "aspect": "六分相",
+        "exact_diff": 57.28152510415151,
+        "involves_axis": true,
+        "orb": 2.7184748958484874,
+        "point1": "part_of_fortune",
+        "point1_zh": "福点",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 120,
+        "applying": null,
+        "aspect": "三分相",
+        "exact_diff": 122.7184748958485,
+        "involves_axis": true,
+        "orb": 2.7184748958485017,
+        "point1": "part_of_fortune",
+        "point1_zh": "福点",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 62.72055104095743,
+        "involves_axis": false,
+        "orb": 2.7205510409574316,
+        "point1": "uranus",
+        "point1_zh": "天王星",
+        "point2": "neptune",
+        "point2_zh": "海王星"
+      },
+      {
+        "angle": 180,
+        "applying": false,
+        "aspect": "对分相",
+        "exact_diff": 177.27130965323653,
+        "involves_axis": false,
+        "orb": 2.7286903467634716,
+        "point1": "mars",
+        "point1_zh": "火星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 150,
+        "applying": false,
+        "aspect": "梅花相位",
+        "exact_diff": 152.98992127401132,
+        "involves_axis": false,
+        "orb": 2.989921274011323,
+        "point1": "venus",
+        "point1_zh": "金星",
+        "point2": "saturn",
+        "point2_zh": "土星"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 123.14632108998437,
+        "involves_axis": false,
+        "orb": 3.1463210899843688,
+        "point1": "mars",
+        "point1_zh": "火星",
+        "point2": "neptune",
+        "point2_zh": "海王星"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 93.75503043052127,
+        "involves_axis": false,
+        "orb": 3.7550304305212734,
+        "point1": "mercury",
+        "point1_zh": "水星",
+        "point2": "mars",
+        "point2_zh": "火星"
+      },
+      {
+        "angle": 180,
+        "applying": false,
+        "aspect": "对分相",
+        "exact_diff": 176.11780480805672,
+        "involves_axis": false,
+        "orb": 3.882195191943282,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "saturn",
+        "point2_zh": "土星"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 86.09270075348616,
+        "involves_axis": false,
+        "orb": 3.907299246513844,
+        "point1": "pluto",
+        "point1_zh": "冥王星",
+        "point2": "chiron",
+        "point2_zh": "凯龙星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 124.58397063256791,
+        "involves_axis": false,
+        "orb": 4.583970632567912,
+        "point1": "true_north_lunar_node",
+        "point1_zh": "北交点",
+        "point2": "part_of_fortune",
+        "point2_zh": "福点"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 55.41602936743209,
+        "involves_axis": false,
+        "orb": 4.583970632567912,
+        "point1": "true_south_lunar_node",
+        "point1_zh": "南交点",
+        "point2": "part_of_fortune",
+        "point2_zh": "福点"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 55.31776749009606,
+        "involves_axis": false,
+        "orb": 4.68223250990394,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "mercury",
+        "point2_zh": "水星"
+      },
+      {
+        "angle": 90,
+        "applying": true,
+        "aspect": "四分相",
+        "exact_diff": 85.05827676047642,
+        "involves_axis": false,
+        "orb": 4.941723239523583,
+        "point1": "venus",
+        "point1_zh": "金星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 114.86439707439816,
+        "involves_axis": true,
+        "orb": 5.1356029256018445,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 65.13560292560186,
+        "involves_axis": true,
+        "orb": 5.135602925601859,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 114.7970458332286,
+        "involves_axis": false,
+        "orb": 5.202954166771406,
+        "point1": "mars",
+        "point1_zh": "火星",
+        "point2": "saturn",
+        "point2_zh": "土星"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 54.37127578420165,
+        "involves_axis": false,
+        "orb": 5.62872421579835,
+        "point1": "saturn",
+        "point1_zh": "土星",
+        "point2": "uranus",
+        "point2_zh": "天王星"
+      },
+      {
+        "angle": 90,
+        "applying": true,
+        "aspect": "四分相",
+        "exact_diff": 84.21651065610867,
+        "involves_axis": true,
+        "orb": 5.783489343891333,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 90,
+        "applying": true,
+        "aspect": "四分相",
+        "exact_diff": 95.78348934389135,
+        "involves_axis": true,
+        "orb": 5.783489343891347,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 180,
+        "applying": true,
+        "aspect": "对分相",
+        "exact_diff": 174.1202565308531,
+        "involves_axis": false,
+        "orb": 5.879743469146888,
+        "point1": "true_north_lunar_node",
+        "point1_zh": "北交点",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 0,
+        "applying": false,
+        "aspect": "合相",
+        "exact_diff": 5.879743469146888,
+        "involves_axis": false,
+        "orb": 5.879743469146888,
+        "point1": "true_south_lunar_node",
+        "point1_zh": "南交点",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 54.06049661344579,
+        "involves_axis": false,
+        "orb": 5.9395033865542075,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "jupiter",
+        "point2_zh": "木星"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 53.77576995233488,
+        "involves_axis": false,
+        "orb": 6.224230047665117,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "venus",
+        "point2_zh": "金星"
+      },
+      {
+        "angle": 180,
+        "applying": true,
+        "aspect": "对分相",
+        "exact_diff": 173.57521677344238,
+        "involves_axis": false,
+        "orb": 6.424783226557622,
+        "point1": "chiron",
+        "point1_zh": "凯龙星",
+        "point2": "part_of_fortune",
+        "point2_zh": "福点"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 83.51627922271524,
+        "involves_axis": false,
+        "orb": 6.483720777284759,
+        "point1": "mercury",
+        "point1_zh": "水星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 180,
+        "applying": true,
+        "aspect": "对分相",
+        "exact_diff": 173.50145493253595,
+        "involves_axis": false,
+        "orb": 6.49854506746405,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "true_north_lunar_node",
+        "point2_zh": "北交点"
+      },
+      {
+        "angle": 0,
+        "applying": true,
+        "aspect": "合相",
+        "exact_diff": 6.49854506746405,
+        "involves_axis": false,
+        "orb": 6.49854506746405,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "true_south_lunar_node",
+        "point2_zh": "南交点"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 53.44169501512863,
+        "involves_axis": false,
+        "orb": 6.55830498487137,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 96.63598959327733,
+        "involves_axis": false,
+        "orb": 6.63598959327733,
+        "point1": "mars",
+        "point1_zh": "火星",
+        "point2": "chiron",
+        "point2_zh": "凯龙星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 112.6975544715836,
+        "involves_axis": true,
+        "orb": 7.302445528416399,
+        "point1": "true_north_lunar_node",
+        "point1_zh": "北交点",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 67.3024455284164,
+        "involves_axis": true,
+        "orb": 7.302445528416399,
+        "point1": "true_north_lunar_node",
+        "point1_zh": "北交点",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 112.6975544715836,
+        "involves_axis": true,
+        "orb": 7.302445528416399,
+        "point1": "true_south_lunar_node",
+        "point1_zh": "南交点",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 67.30244552841641,
+        "involves_axis": true,
+        "orb": 7.302445528416413,
+        "point1": "true_south_lunar_node",
+        "point1_zh": "南交点",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 112.2794439368634,
+        "involves_axis": false,
+        "orb": 7.720556063136598,
+        "point1": "chiron",
+        "point1_zh": "凯龙星",
+        "point2": "part_of_spirit",
+        "point2_zh": "精神点"
+      },
+      {
+        "angle": 0,
+        "applying": true,
+        "aspect": "合相",
+        "exact_diff": 7.854077821450346,
+        "involves_axis": false,
+        "orb": 7.854077821450346,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "part_of_fortune",
+        "point2_zh": "福点"
+      },
+      {
+        "angle": 0,
+        "applying": true,
+        "aspect": "合相",
+        "exact_diff": 7.854077821450346,
+        "involves_axis": true,
+        "orb": 7.854077821450346,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "ascendant",
+        "point2_zh": "上升点"
+      },
+      {
+        "angle": 180,
+        "applying": true,
+        "aspect": "对分相",
+        "exact_diff": 172.14592217854965,
+        "involves_axis": true,
+        "orb": 7.854077821450346,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "descendant",
+        "point2_zh": "下降点"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 67.93164451353488,
+        "involves_axis": false,
+        "orb": 7.931644513534877,
+        "point1": "saturn",
+        "point1_zh": "土星",
+        "point2": "pluto",
+        "point2_zh": "冥王星"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 98.05103213824009,
+        "involves_axis": false,
+        "orb": 8.051032138240089,
+        "point1": "uranus",
+        "point1_zh": "天王星",
+        "point2": "true_north_lunar_node",
+        "point2_zh": "北交点"
+      },
+      {
+        "angle": 90,
+        "applying": true,
+        "aspect": "四分相",
+        "exact_diff": 81.9489678617599,
+        "involves_axis": false,
+        "orb": 8.051032138240103,
+        "point1": "uranus",
+        "point1_zh": "天王星",
+        "point2": "true_south_lunar_node",
+        "point2_zh": "南交点"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 111.66064233854624,
+        "involves_axis": false,
+        "orb": 8.33935766145376,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "chiron",
+        "point2_zh": "凯龙星"
+      },
+      {
+        "angle": 0,
+        "applying": true,
+        "aspect": "合相",
+        "exact_diff": 8.349275256755783,
+        "involves_axis": false,
+        "orb": 8.349275256755783,
+        "point1": "saturn",
+        "point1_zh": "土星",
+        "point2": "neptune",
+        "point2_zh": "海王星"
+      },
+      {
+        "angle": 180,
+        "applying": true,
+        "aspect": "对分相",
+        "exact_diff": 171.15097751396257,
+        "involves_axis": false,
+        "orb": 8.849022486037427,
+        "point1": "venus",
+        "point1_zh": "金星",
+        "point2": "chiron",
+        "point2_zh": "凯龙星"
+      },
+      {
+        "angle": 90,
+        "applying": false,
+        "aspect": "四分相",
+        "exact_diff": 98.86303298945215,
+        "involves_axis": false,
+        "orb": 8.863032989452151,
+        "point1": "moon",
+        "point1_zh": "月亮",
+        "point2": "uranus",
+        "point2_zh": "天王星"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 69.01779811754514,
+        "involves_axis": true,
+        "orb": 9.01779811754514,
+        "point1": "saturn",
+        "point1_zh": "土星",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 110.98220188245486,
+        "involves_axis": true,
+        "orb": 9.01779811754514,
+        "point1": "saturn",
+        "point1_zh": "土星",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 60,
+        "applying": false,
+        "aspect": "六分相",
+        "exact_diff": 69.0851493587147,
+        "involves_axis": false,
+        "orb": 9.085149358714702,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "mars",
+        "point2_zh": "火星"
+      },
+      {
+        "angle": 120,
+        "applying": true,
+        "aspect": "三分相",
+        "exact_diff": 129.1432581224061,
+        "involves_axis": true,
+        "orb": 9.14325812240611,
+        "point1": "chiron",
+        "point1_zh": "凯龙星",
+        "point2": "imum_coeli",
+        "point2_zh": "天底"
+      },
+      {
+        "angle": 60,
+        "applying": true,
+        "aspect": "六分相",
+        "exact_diff": 50.856741877593876,
+        "involves_axis": true,
+        "orb": 9.143258122406124,
+        "point1": "chiron",
+        "point1_zh": "凯龙星",
+        "point2": "midheaven",
+        "point2_zh": "中天"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 129.51091940774165,
+        "involves_axis": false,
+        "orb": 9.510919407741653,
+        "point1": "sun",
+        "point1_zh": "太阳",
+        "point2": "uranus",
+        "point2_zh": "天王星"
+      },
+      {
+        "angle": 120,
+        "applying": false,
+        "aspect": "三分相",
+        "exact_diff": 129.8216985784975,
+        "involves_axis": false,
+        "orb": 9.82169857849749,
+        "point1": "jupiter",
+        "point1_zh": "木星",
+        "point2": "saturn",
+        "point2_zh": "土星"
+      }
+    ],
+    "axes": {
+      "asc": {
+        "lon": 172.103837221734,
+        "sign_zh": "处女座"
+      },
+      "dsc": {
+        "lon": 352.103837221734,
+        "sign_zh": "双鱼座"
+      },
+      "ic": {
+        "lon": 260.033248744175,
+        "sign_zh": "射手座"
+      },
+      "mc": {
+        "lon": 80.033248744175,
+        "sign_zh": "双子座"
+      }
+    },
+    "calculation_reference": {
+      "fingerprint": "7ed2196d3285aea349ef6cab352d4dff188a88a238465570561bb47cc82c1f85",
+      "input": {
+        "location_id": "gn:2988507",
+        "moment": "2026-10-08T12:00:00+08:00"
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_sky_chart"
+    },
+    "house_cusps": [
+      {
+        "house": 1,
+        "longitude": 172.103837221734
+      },
+      {
+        "house": 2,
+        "longitude": 195.66036283985048
+      },
+      {
+        "house": 3,
+        "longitude": 225.0786555501201
+      },
+      {
+        "house": 4,
+        "longitude": 260.033248744175
+      },
+      {
+        "house": 5,
+        "longitude": 295.84533647445346
+      },
+      {
+        "house": 6,
+        "longitude": 326.80148258432956
+      },
+      {
+        "house": 7,
+        "longitude": 352.103837221734
+      },
+      {
+        "house": 8,
+        "longitude": 15.66036283985045
+      },
+      {
+        "house": 9,
+        "longitude": 45.07865555012006
+      },
+      {
+        "house": 10,
+        "longitude": 80.033248744175
+      },
+      {
+        "house": 11,
+        "longitude": 115.84533647445349
+      },
+      {
+        "house": 12,
+        "longitude": 146.80148258432956
+      }
+    ],
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "local_time": "2026-10-08 06:00",
+    "location": {
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "tz_iana": "Europe/Paris"
+    },
+    "moment": "2026-10-08T12:00:00+08:00",
+    "moon_phase": {
+      "angle_diff": 329.3521135817105,
+      "phase_name": "残月",
+      "phase_num": 8
+    },
+    "planet_motion": [
+      {
+        "deg_in_sign": 9.5675,
+        "longitude": 219.5675,
+        "phase": "pre_shadow",
+        "phase_cn": "逆行前阴影",
+        "phase_end": "2026-10-24T07:12:42Z",
+        "planet": "mercury",
+        "planet_cn": "水星",
+        "retrograde": false,
+        "shadow_end": "2026-11-30T06:16:23Z",
+        "shadow_start": "2026-10-04T09:09:22Z",
+        "sign_cn": "天蝎座",
+        "sign_idx": 7,
+        "speed": 1.1428,
+        "station_direct": {
+          "at": "2026-11-13T15:53:52Z",
+          "deg_in_sign": 5.0335,
+          "longitude": 215.0335,
+          "sign_cn": "天蝎座",
+          "sign_idx": 7
+        },
+        "station_retrograde": {
+          "at": "2026-10-24T07:12:42Z",
+          "deg_in_sign": 20.979,
+          "longitude": 230.979,
+          "sign_cn": "天蝎座",
+          "sign_idx": 7
+        }
+      },
+      {
+        "deg_in_sign": 11.0155,
+        "longitude": 11.0155,
+        "phase": "retrograde",
+        "phase_cn": "逆行",
+        "phase_end": "2026-12-10T23:31:06Z",
+        "planet": "saturn",
+        "planet_cn": "土星",
+        "retrograde": true,
+        "shadow_end": "2027-03-15T06:50:47Z",
+        "shadow_start": "2026-04-20T12:17:03Z",
+        "sign_cn": "白羊座",
+        "sign_idx": 0,
+        "speed": -0.0785,
+        "station_direct": {
+          "at": "2026-12-10T23:31:06Z",
+          "deg_in_sign": 7.931,
+          "longitude": 7.931,
+          "sign_cn": "白羊座",
+          "sign_idx": 0
+        },
+        "station_retrograde": {
+          "at": "2026-07-26T19:56:29Z",
+          "deg_in_sign": 14.75,
+          "longitude": 14.75,
+          "sign_cn": "白羊座",
+          "sign_idx": 0
+        }
+      },
+      {
+        "deg_in_sign": 5.3867,
+        "longitude": 65.3867,
+        "phase": "retrograde",
+        "phase_cn": "逆行",
+        "phase_end": "2027-02-08T12:29:27Z",
+        "planet": "uranus",
+        "planet_cn": "天王星",
+        "retrograde": true,
+        "shadow_end": "2027-05-26T03:46:39Z",
+        "shadow_start": "2026-05-25T10:44:13Z",
+        "sign_cn": "双子座",
+        "sign_idx": 2,
+        "speed": -0.0222,
+        "station_direct": {
+          "at": "2027-02-08T12:29:27Z",
+          "deg_in_sign": 1.6826,
+          "longitude": 61.6826,
+          "sign_cn": "双子座",
+          "sign_idx": 2
+        },
+        "station_retrograde": {
+          "at": "2026-09-10T18:27:14Z",
+          "deg_in_sign": 5.697,
+          "longitude": 65.697,
+          "sign_cn": "双子座",
+          "sign_idx": 2
+        }
+      },
+      {
+        "deg_in_sign": 2.6662,
+        "longitude": 2.6662,
+        "phase": "retrograde",
+        "phase_cn": "逆行",
+        "phase_end": "2026-12-12T22:17:26Z",
+        "planet": "neptune",
+        "planet_cn": "海王星",
+        "retrograde": true,
+        "shadow_end": "2027-04-02T18:59:49Z",
+        "shadow_start": "2026-03-16T08:54:46Z",
+        "sign_cn": "白羊座",
+        "sign_idx": 0,
+        "speed": -0.027,
+        "station_direct": {
+          "at": "2026-12-12T22:17:26Z",
+          "deg_in_sign": 1.6129,
+          "longitude": 1.6129,
+          "sign_cn": "白羊座",
+          "sign_idx": 0
+        },
+        "station_retrograde": {
+          "at": "2026-07-07T10:54:36Z",
+          "deg_in_sign": 4.4181,
+          "longitude": 4.4181,
+          "sign_cn": "白羊座",
+          "sign_idx": 0
+        }
+      },
+      {
+        "deg_in_sign": 3.0838,
+        "longitude": 303.0838,
+        "phase": "retrograde",
+        "phase_cn": "逆行",
+        "phase_end": "2026-10-16T02:40:18Z",
+        "planet": "pluto",
+        "planet_cn": "冥王星",
+        "retrograde": true,
+        "shadow_end": "2027-02-07T01:15:49Z",
+        "shadow_start": "2026-01-12T07:41:53Z",
+        "sign_cn": "水瓶座",
+        "sign_idx": 10,
+        "speed": -0.0038,
+        "station_direct": {
+          "at": "2026-10-16T02:40:18Z",
+          "deg_in_sign": 3.0686,
+          "longitude": 303.0686,
+          "sign_cn": "水瓶座",
+          "sign_idx": 10
+        },
+        "station_retrograde": {
+          "at": "2026-05-06T15:34:25Z",
+          "deg_in_sign": 5.5095,
+          "longitude": 305.5095,
+          "sign_cn": "水瓶座",
+          "sign_idx": 10
+        }
+      }
+    ],
+    "planets": [
+      {
+        "house": 1,
+        "longitude": 194.8976,
+        "name": "太阳",
+        "retrograde": false,
+        "sign": "天秤座"
+      },
+      {
+        "house": 12,
+        "longitude": 164.2498,
+        "name": "月亮",
+        "retrograde": false,
+        "sign": "处女座"
+      },
+      {
+        "house": 2,
+        "longitude": 219.5675,
+        "name": "水星",
+        "retrograde": false,
+        "sign": "天蝎座"
+      },
+      {
+        "house": 2,
+        "longitude": 218.0255,
+        "name": "金星",
+        "retrograde": true,
+        "sign": "天蝎座"
+      },
+      {
+        "house": 11,
+        "longitude": 125.8125,
+        "name": "火星",
+        "retrograde": false,
+        "sign": "狮子座"
+      },
+      {
+        "house": 11,
+        "longitude": 140.8371,
+        "name": "木星",
+        "retrograde": false,
+        "sign": "狮子座"
+      },
+      {
+        "house": 7,
+        "longitude": 11.0155,
+        "name": "土星",
+        "retrograde": true,
+        "sign": "白羊座"
+      },
+      {
+        "house": 9,
+        "longitude": 65.3867,
+        "name": "天王星",
+        "retrograde": true,
+        "sign": "双子座"
+      },
+      {
+        "house": 7,
+        "longitude": 2.6662,
+        "name": "海王星",
+        "retrograde": true,
+        "sign": "白羊座"
+      },
+      {
+        "house": 5,
+        "longitude": 303.0838,
+        "name": "冥王星",
+        "retrograde": true,
+        "sign": "水瓶座"
+      },
+      {
+        "house": 1,
+        "longitude": 172.1038,
+        "name": "上升",
+        "retrograde": false,
+        "sign": "处女座"
+      },
+      {
+        "house": 10,
+        "longitude": 80.0332,
+        "name": "天顶",
+        "retrograde": false,
+        "sign": "双子座"
+      },
+      {
+        "house": 11,
+        "longitude": 141.456,
+        "name": "精神点",
+        "retrograde": false,
+        "sign": "狮子座"
+      },
+      {
+        "house": 2,
+        "longitude": 202.7517,
+        "name": "福点",
+        "retrograde": false,
+        "sign": "天秤座"
+      },
+      {
+        "house": 6,
+        "longitude": 327.3357,
+        "name": "北交点",
+        "retrograde": true,
+        "sign": "水瓶座"
+      },
+      {
+        "house": 12,
+        "longitude": 147.3357,
+        "name": "南交点",
+        "retrograde": true,
+        "sign": "狮子座"
+      },
+      {
+        "house": 8,
+        "longitude": 29.1765,
+        "name": "凯龙星",
+        "retrograde": true,
+        "sign": "白羊座"
+      }
+    ],
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_mcp_natal.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "settings": {
+      "chart_moment": "2026-10-08T06:00:00+02:00",
+      "chart_time_precision": "minute",
+      "house_system": "placidus",
+      "motion_moment": "2026-10-08T12:00:00+08:00",
+      "zodiac": "tropical"
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_sky_chart"
+}

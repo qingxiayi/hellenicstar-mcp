@@ -1,0 +1,23 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y librsvg2-bin nodejs fonts-noto-cjk fonts-noto-core fonts-noto-extra
+      - if: runner.os == 'macOS'
+        run: brew install librsvg node
+      - run: python -m pip install -r requirements-dev.lock
+      - run: |
+          curl --fail --location --retry 3 https://download.geonames.org/export/dump/cities500.zip -o /tmp/cities500.zip
+          python scripts/build_location_db.py /tmp/cities500.zip --output data/location.db
+      - run: MCP_PYTHON=python bash scripts/verify.sh
+      - run: python scripts/build_release.py

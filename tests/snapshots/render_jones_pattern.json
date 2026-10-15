@@ -1,0 +1,585 @@
+{
+  "image_meta": {
+    "expected_height": 720,
+    "expected_width": 720,
+    "mime_type": "image/png",
+    "min_bytes": 10000
+  },
+  "input": {
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "structuredContent": {
+      "birth_context": {
+        "civil_dt": "1990-04-15T18:00:00",
+        "fold": 0,
+        "lat": 48.85341,
+        "lng": 2.3488,
+        "location_id": "gn:2988507",
+        "source": "location_db",
+        "tz_iana": "Europe/Paris",
+        "utc_offset": 2.0
+      },
+      "calculation_source": {
+        "ascendant": {
+          "domicile_ruler": "水星",
+          "domicile_ruler_position": {
+            "house": 8,
+            "longitude": 44.6245,
+            "planet": "水星",
+            "sign": "金牛座"
+          },
+          "first_triplicity_lord": "金星",
+          "longitude": 177.01327321444214,
+          "sign": "处女座"
+        },
+        "ascendant_triplicity": [
+          {
+            "dignity": "入旺",
+            "house": 6,
+            "house_type": "凶宫",
+            "planet_cn": "金星",
+            "sign_cn": "双鱼座",
+            "stage": "第一主星 0-25岁",
+            "tags": [
+              "异党吉星",
+              "入旺"
+            ]
+          },
+          {
+            "dignity": "—",
+            "house": 3,
+            "house_type": "弱宫",
+            "planet_cn": "月亮",
+            "sign_cn": "射手座",
+            "stage": "第二主星 25-50岁",
+            "tags": [
+              "光体",
+              "喜乐",
+              "浮游"
+            ]
+          },
+          {
+            "dignity": "—",
+            "house": 5,
+            "house_type": "吉宫",
+            "planet_cn": "火星",
+            "sign_cn": "水瓶座",
+            "stage": "共管主星 50岁+",
+            "tags": [
+              "异党凶星",
+              "浮游"
+            ]
+          }
+        ],
+        "aspect_patterns": {
+          "grand_cross": [
+            [
+              "冥王星",
+              "北交点",
+              "南交点",
+              "水星"
+            ]
+          ],
+          "t_square": [
+            [
+              "北交点",
+              "水星",
+              "冥王星"
+            ],
+            [
+              "南交点",
+              "水星",
+              "冥王星"
+            ],
+            [
+              "水星",
+              "北交点",
+              "南交点"
+            ],
+            [
+              "冥王星",
+              "北交点",
+              "南交点"
+            ]
+          ]
+        },
+        "birth_context": {
+          "civil_dt": "1990-04-15T18:00:00",
+          "fold": 0,
+          "lat": 48.85341,
+          "lng": 2.3488,
+          "location_id": "gn:2988507",
+          "source": "location_db",
+          "tz_iana": "Europe/Paris",
+          "utc_offset": 2.0
+        },
+        "calculation_reference": {
+          "fingerprint": "dca47aecf66a1c3fd69a48fff84622b92105e119b96de5fbf5a10268b2ad0a61",
+          "input": {
+            "day": 15,
+            "fold": null,
+            "hour": 18,
+            "house_system": "placidus",
+            "location_id": "gn:2988507",
+            "minute": 0,
+            "month": 4,
+            "year": 1990
+          },
+          "schema_version": "calculation-reference-v1",
+          "tool": "calculate_classical_factors"
+        },
+        "fortune_house_care": [
+          {
+            "fortune_house": 1,
+            "malefics": [],
+            "natal_house": 9,
+            "pardon": [],
+            "planets": []
+          },
+          {
+            "fortune_house": 4,
+            "malefics": [],
+            "natal_house": 12,
+            "pardon": [],
+            "planets": []
+          },
+          {
+            "fortune_house": 7,
+            "malefics": [],
+            "natal_house": 3,
+            "pardon": [],
+            "planets": [
+              {
+                "planet": "月亮",
+                "sign": "射手座"
+              }
+            ]
+          },
+          {
+            "fortune_house": 10,
+            "malefics": [],
+            "natal_house": 6,
+            "pardon": [
+              {
+                "desc": "",
+                "house": 6,
+                "planet": "金星"
+              }
+            ],
+            "planets": [
+              {
+                "planet": "金星",
+                "sign": "双鱼座"
+              }
+            ]
+          },
+          {
+            "fortune_house": 11,
+            "malefics": [],
+            "natal_house": 7,
+            "pardon": [],
+            "planets": []
+          }
+        ],
+        "interpretation_workflow": {
+          "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+          "next_tool": "verify_calculation_claims",
+          "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+        },
+        "jones_pattern": {
+          "borderline": false,
+          "borderline_alternates": [],
+          "borderline_reasons": [],
+          "cog_bowl": null,
+          "confidence": "clear",
+          "crossing_point": null,
+          "engine_version": "jones-miniapp-5",
+          "family_en": "Locomotive",
+          "family_zh": "火车头型",
+          "group_axis": null,
+          "high_focus_longitude": 226.986,
+          "high_focus_planet": "冥王星",
+          "is_variant": false,
+          "key_roles": [
+            {
+              "longitude": 226.986,
+              "planet_name": "冥王星",
+              "role_label": "车头星",
+              "role_type": "leader_loco"
+            },
+            {
+              "longitude": 94.5698,
+              "planet_name": "木星",
+              "role_label": "车尾星",
+              "role_type": "tail_loco"
+            }
+          ],
+          "max_gap_deg": 132.42,
+          "midpoint_bowl": null,
+          "midpoint_bundle": null,
+          "midpoint_loco": {
+            "long": 160.78
+          },
+          "occupied_signs": 8,
+          "pattern_en": "Locomotive",
+          "pattern_zh": "火车头型",
+          "sorted_gaps_deg": [
+            132.4162,
+            49.9453,
+            45.693,
+            38.8921,
+            31.0338,
+            19.2047,
+            13.7098,
+            13.6584,
+            10.4603,
+            4.9863
+          ],
+          "span_deg": 227.58,
+          "state": "standard",
+          "state_label": "标准格局",
+          "variant_en": null
+        },
+        "lots": [
+          {
+            "house": 9,
+            "longitude": 57.47157174956192,
+            "name": "福点",
+            "ruler": "金星",
+            "ruler_position": {
+              "house": 6,
+              "longitude": 339.7268,
+              "planet": "金星",
+              "sign": "双鱼座"
+            },
+            "sign": "金牛座"
+          },
+          {
+            "house": 4,
+            "longitude": 296.5549746793224,
+            "name": "精神点",
+            "ruler": "土星",
+            "ruler_position": {
+              "house": 4,
+              "longitude": 295.0345,
+              "planet": "土星",
+              "sign": "摩羯座"
+            },
+            "sign": "摩羯座"
+          }
+        ],
+        "lunations_around_birth": {
+          "after": [
+            {
+              "date": "1990年4月25日",
+              "days": 9.519065856933594,
+              "days_int": 10,
+              "degree": 4.7,
+              "eclipse": null,
+              "house_p": 8,
+              "house_w": 9,
+              "jd": 2448006.6857325234,
+              "label": "新月",
+              "lunar_type": "新月",
+              "sign_cn": "金牛"
+            },
+            {
+              "date": "1990年7月22日",
+              "days": 97.45437622070312,
+              "days_int": 97,
+              "degree": 29.1,
+              "eclipse": "日全食",
+              "house_p": 10,
+              "house_w": 11,
+              "jd": 2448094.621042887,
+              "label": "日全食",
+              "lunar_type": "新月",
+              "sign_cn": "巨蟹"
+            }
+          ],
+          "before": [
+            {
+              "date": "1990年4月10日",
+              "days": -5.528839111328125,
+              "days_int": -6,
+              "degree": 20.0,
+              "eclipse": null,
+              "house_p": 1,
+              "house_w": 2,
+              "jd": 2447991.637827555,
+              "label": "满月",
+              "lunar_type": "满月",
+              "sign_cn": "天秤"
+            },
+            {
+              "date": "1990年2月9日",
+              "days": -64.86407470703125,
+              "days_int": -65,
+              "degree": 20.8,
+              "eclipse": "月全食",
+              "house_p": 11,
+              "house_w": 12,
+              "jd": 2447932.3025919595,
+              "label": "月全食",
+              "lunar_type": "满月",
+              "sign_cn": "狮子"
+            }
+          ]
+        },
+        "malefic_care": [
+          {
+            "fortune_house": null,
+            "is_protected": false,
+            "natal_house": 5,
+            "planet": "火星",
+            "sign": "水瓶座"
+          },
+          {
+            "fortune_house": null,
+            "is_protected": false,
+            "natal_house": 4,
+            "planet": "土星",
+            "sign": "摩羯座"
+          },
+          {
+            "fortune_house": null,
+            "is_protected": false,
+            "natal_house": 2,
+            "planet": "冥王星",
+            "sign": "天蝎座"
+          }
+        ],
+        "moon_phase": {
+          "angle_diff": 240.45829853511975,
+          "phase_name": "亏凸月",
+          "phase_num": 6
+        },
+        "other_light_triplicity": {
+          "element": "火",
+          "luminary": "月亮",
+          "sign_cn": "射手座",
+          "stages": [
+            {
+              "dignity": "入旺",
+              "house": 8,
+              "house_type": "凶宫",
+              "planet_cn": "太阳",
+              "sign_cn": "白羊座",
+              "stage": "第一主星 0-25岁",
+              "tags": [
+                "光体",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "入旺",
+              "house": 10,
+              "house_type": "强宫",
+              "planet_cn": "木星",
+              "sign_cn": "巨蟹座",
+              "stage": "第二主星 25-50岁",
+              "tags": [
+                "同党吉星",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "入庙",
+              "house": 4,
+              "house_type": "强宫",
+              "planet_cn": "土星",
+              "sign_cn": "摩羯座",
+              "stage": "共管主星 50岁+",
+              "tags": [
+                "同党凶星",
+                "入庙"
+              ]
+            }
+          ]
+        },
+        "planet_condition": {
+          "active": [
+            {
+              "dignity": "入旺",
+              "house": 8,
+              "in_joy": false,
+              "in_sect": true,
+              "is_malefic": false,
+              "isolated": false,
+              "planet_cn": "太阳",
+              "sign_cn": "白羊座",
+              "tags": [
+                "光体"
+              ]
+            },
+            {
+              "dignity": "入旺",
+              "house": 10,
+              "in_joy": false,
+              "in_sect": true,
+              "is_malefic": false,
+              "isolated": false,
+              "planet_cn": "木星",
+              "sign_cn": "巨蟹座",
+              "tags": [
+                "同党吉星",
+                "半球喜乐",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "入庙",
+              "house": 4,
+              "in_joy": false,
+              "in_sect": true,
+              "is_malefic": true,
+              "isolated": true,
+              "planet_cn": "土星",
+              "sign_cn": "摩羯座",
+              "tags": [
+                "同党凶星",
+                "半球孤军",
+                "入庙"
+              ]
+            }
+          ],
+          "active_label": "日间派主星 · 得时",
+          "inactive": [
+            {
+              "dignity": "—",
+              "house": 3,
+              "in_joy": true,
+              "in_sect": false,
+              "is_malefic": false,
+              "isolated": false,
+              "planet_cn": "月亮",
+              "sign_cn": "射手座",
+              "tags": [
+                "光体"
+              ]
+            },
+            {
+              "dignity": "入旺",
+              "house": 6,
+              "in_joy": false,
+              "in_sect": false,
+              "is_malefic": false,
+              "isolated": false,
+              "planet_cn": "金星",
+              "sign_cn": "双鱼座",
+              "tags": [
+                "异党吉星",
+                "半球喜乐",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "—",
+              "house": 5,
+              "in_joy": false,
+              "in_sect": false,
+              "is_malefic": true,
+              "isolated": false,
+              "planet_cn": "火星",
+              "sign_cn": "水瓶座",
+              "tags": [
+                "异党凶星",
+                "半球喜乐",
+                "浮游"
+              ]
+            }
+          ],
+          "inactive_label": "夜间派主星 · 失时"
+        },
+        "planet_sect_status": {
+          "土星": "得时",
+          "太阳": "得时",
+          "月亮": "失时",
+          "木星": "得时",
+          "水星": "中性",
+          "火星": "失时",
+          "金星": "失时"
+        },
+        "quality": {
+          "algorithm_independently_verified_this_call": false,
+          "contract_version": "mcp-output-contracts-v1",
+          "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+          "regression_test": "tests/test_jones_pattern.py",
+          "scope": "required_fields_and_registered_domain_invariants",
+          "status": "passed"
+        },
+        "sect": "日生人",
+        "sect_light": "太阳",
+        "sect_light_triplicity": {
+          "sequence": "太阳 → 木星 → 土星",
+          "stages": [
+            {
+              "dignity": "入旺",
+              "house": 8,
+              "house_type": "凶宫",
+              "planet_cn": "太阳",
+              "sign_cn": "白羊座",
+              "stage": "第一主星 0-25岁",
+              "stage_label": "0-25岁",
+              "tags": [
+                "光体",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "入旺",
+              "house": 10,
+              "house_type": "强宫",
+              "planet_cn": "木星",
+              "sign_cn": "巨蟹座",
+              "stage": "第二主星 25-50岁",
+              "stage_label": "25-50岁",
+              "tags": [
+                "同党吉星",
+                "入旺"
+              ]
+            },
+            {
+              "dignity": "入庙",
+              "house": 4,
+              "house_type": "强宫",
+              "planet_cn": "土星",
+              "sign_cn": "摩羯座",
+              "stage": "共管主星 50岁+",
+              "stage_label": "50岁+",
+              "tags": [
+                "同党凶星",
+                "入庙"
+              ]
+            }
+          ]
+        },
+        "settings": {
+          "house_system": "placidus",
+          "zodiac": "tropical"
+        },
+        "status": "ok"
+      },
+      "image_url": "https://hellenicstar.com/mcp/chart/c61946d883969ba0799d0adfc83f39301ae6d004b7a8a7427aac1bb87197cd88.png",
+      "mime_type": "image/png",
+      "pattern_en": "Locomotive",
+      "pattern_zh": "火车头型",
+      "quality": {
+        "image_semantics_checked": false,
+        "scope": "numerical_source_and_png_signature",
+        "status": "passed"
+      },
+      "size_px": 720,
+      "state_label": "标准格局",
+      "status": "ok",
+      "title": "琼斯格局分布图"
+    }
+  },
+  "tool": "render_jones_pattern"
+}

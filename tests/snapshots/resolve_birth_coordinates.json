@@ -1,0 +1,32 @@
+{
+  "input": {
+    "latitude": 48.8566,
+    "longitude": 2.3522
+  },
+  "output": {
+    "calculation_reference": {
+      "fingerprint": "6044649e08c2ed3e8776dbb7bd56d25dd1b9f0d52711768d2c13b5e0dec91271",
+      "input": {
+        "latitude": 48.8566,
+        "longitude": 2.3522
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "resolve_birth_coordinates"
+    },
+    "coordinate_datum": "WGS84",
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "location_id": "coord:48.856600,2.352200",
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_mcp_guardrails.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "status": "ok",
+    "timezone": "Europe/Paris"
+  },
+  "tool": "resolve_birth_coordinates"
+}

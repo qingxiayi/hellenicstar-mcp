@@ -1,0 +1,1142 @@
+{
+  "input": {
+    "as_of": "2026-10-08",
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "as_of": "2026-10-08",
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "0d6c9290765af69ea2b28c51d525e8423986b6012456806b814397ea8d98bffa",
+      "input": {
+        "as_of": "2026-10-08",
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_zodiacal_releasing"
+    },
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "lots": {
+      "fortune": {
+        "level1": [
+          {
+            "age_end": 7.9,
+            "age_start": 0.0,
+            "end": "1998-03-04",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "1990-04-15"
+          },
+          {
+            "age_end": 27.6,
+            "age_start": 7.9,
+            "end": "2017-11-19",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "1998-03-04"
+          },
+          {
+            "age_end": 52.2,
+            "age_start": 27.6,
+            "end": "2042-07-11",
+            "is_current": true,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2017-11-19"
+          },
+          {
+            "age_end": 71.0,
+            "age_start": 52.2,
+            "end": "2061-04-02",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2042-07-11"
+          },
+          {
+            "age_end": 90.7,
+            "age_start": 71.0,
+            "end": "2080-12-18",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2061-04-02"
+          },
+          {
+            "age_end": 98.6,
+            "age_start": 90.7,
+            "end": "2088-11-06",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2080-12-18"
+          },
+          {
+            "age_end": 100.0,
+            "age_start": 98.6,
+            "end": "2090-04-15",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2088-11-06"
+          }
+        ],
+        "level2_in_current_level1": [
+          {
+            "age_end": 29.7,
+            "age_start": 27.6,
+            "end": "2019-12-09",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2017-11-19"
+          },
+          {
+            "age_end": 31.2,
+            "age_start": 29.7,
+            "end": "2021-07-01",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2019-12-09"
+          },
+          {
+            "age_end": 32.9,
+            "age_start": 31.2,
+            "end": "2023-02-21",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2021-07-01"
+          },
+          {
+            "age_end": 33.5,
+            "age_start": 32.9,
+            "end": "2023-10-19",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2023-02-21"
+          },
+          {
+            "age_end": 34.7,
+            "age_start": 33.5,
+            "end": "2025-01-11",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2023-10-19"
+          },
+          {
+            "age_end": 35.7,
+            "age_start": 34.7,
+            "end": "2026-01-06",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2025-01-11"
+          },
+          {
+            "age_end": 37.9,
+            "age_start": 35.7,
+            "end": "2028-03-26",
+            "is_current": true,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2026-01-06"
+          },
+          {
+            "age_end": 40.4,
+            "age_start": 37.9,
+            "end": "2030-09-12",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2028-03-26"
+          },
+          {
+            "age_end": 41.4,
+            "age_start": 40.4,
+            "end": "2031-09-07",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2030-09-12"
+          },
+          {
+            "age_end": 42.6,
+            "age_start": 41.4,
+            "end": "2032-11-30",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2031-09-07"
+          },
+          {
+            "age_end": 43.3,
+            "age_start": 42.6,
+            "end": "2033-07-28",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2032-11-30"
+          },
+          {
+            "age_end": 44.9,
+            "age_start": 43.3,
+            "end": "2035-03-20",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "2033-07-28"
+          },
+          {
+            "age_end": 47.1,
+            "age_start": 44.9,
+            "end": "2037-06-07",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": true,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2035-03-20"
+          },
+          {
+            "age_end": 49.6,
+            "age_start": 47.1,
+            "end": "2039-11-24",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2037-06-07"
+          },
+          {
+            "age_end": 50.6,
+            "age_start": 49.6,
+            "end": "2040-11-18",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2039-11-24"
+          },
+          {
+            "age_end": 51.8,
+            "age_start": 50.6,
+            "end": "2042-02-11",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2040-11-18"
+          },
+          {
+            "age_end": 52.2,
+            "age_start": 51.8,
+            "end": "2042-07-11",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2042-02-11"
+          }
+        ],
+        "level3_in_current_level2": [
+          {
+            "age_end": 35.9,
+            "age_start": 35.7,
+            "end": "2026-03-15",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2026-01-06"
+          },
+          {
+            "age_end": 36.1,
+            "age_start": 35.9,
+            "end": "2026-05-29",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2026-03-15"
+          },
+          {
+            "age_end": 36.2,
+            "age_start": 36.1,
+            "end": "2026-06-28",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2026-05-29"
+          },
+          {
+            "age_end": 36.3,
+            "age_start": 36.2,
+            "end": "2026-08-04",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2026-06-28"
+          },
+          {
+            "age_end": 36.4,
+            "age_start": 36.3,
+            "end": "2026-08-24",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2026-08-04"
+          },
+          {
+            "age_end": 36.5,
+            "age_start": 36.4,
+            "end": "2026-10-13",
+            "is_current": true,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "2026-08-24"
+          },
+          {
+            "age_end": 36.7,
+            "age_start": 36.5,
+            "end": "2026-12-15",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2026-10-13"
+          },
+          {
+            "age_end": 36.8,
+            "age_start": 36.7,
+            "end": "2027-01-31",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2026-12-15"
+          },
+          {
+            "age_end": 36.9,
+            "age_start": 36.8,
+            "end": "2027-03-22",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2027-01-31"
+          },
+          {
+            "age_end": 37.0,
+            "age_start": 36.9,
+            "end": "2027-04-11",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2027-03-22"
+          },
+          {
+            "age_end": 37.1,
+            "age_start": 37.0,
+            "end": "2027-05-19",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2027-04-11"
+          },
+          {
+            "age_end": 37.2,
+            "age_start": 37.1,
+            "end": "2027-06-18",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2027-05-19"
+          },
+          {
+            "age_end": 37.3,
+            "age_start": 37.2,
+            "end": "2027-08-19",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": true,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2027-06-18"
+          },
+          {
+            "age_end": 37.5,
+            "age_start": 37.3,
+            "end": "2027-10-06",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2027-08-19"
+          },
+          {
+            "age_end": 37.6,
+            "age_start": 37.5,
+            "end": "2027-11-25",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2027-10-06"
+          },
+          {
+            "age_end": 37.7,
+            "age_start": 37.6,
+            "end": "2027-12-15",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2027-11-25"
+          },
+          {
+            "age_end": 37.8,
+            "age_start": 37.7,
+            "end": "2028-01-21",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2027-12-15"
+          },
+          {
+            "age_end": 37.9,
+            "age_start": 37.8,
+            "end": "2028-02-20",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2028-01-21"
+          },
+          {
+            "age_end": 37.9,
+            "age_start": 37.9,
+            "end": "2028-03-26",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2028-02-20"
+          }
+        ],
+        "lot": "福点",
+        "lot_sign": "金牛座",
+        "releasing_sign": "金牛座",
+        "shifted": false,
+        "turning_points": [
+          {
+            "completion": null,
+            "foreshadowing": {
+              "age_start": 16.7,
+              "end": "2007-12-12",
+              "sign": "SAGITTARIUS",
+              "sign_cn": "射手座",
+              "start": "2006-12-17"
+            },
+            "from_sign": "GEMINI",
+            "from_sign_cn": "双子座",
+            "l1_end": "2017-11-19",
+            "l1_sign": "GEMINI",
+            "l1_sign_cn": "双子座",
+            "l1_start": "1998-03-04",
+            "loosing_of_bond": {
+              "age_start": 25.2,
+              "end": "2016-06-27",
+              "sign": "SAGITTARIUS",
+              "sign_cn": "射手座",
+              "start": "2015-07-03"
+            },
+            "to_sign": "SAGITTARIUS",
+            "to_sign_cn": "射手座"
+          },
+          {
+            "completion": null,
+            "foreshadowing": {
+              "age_start": 35.7,
+              "end": "2028-03-26",
+              "sign": "CAPRICORN",
+              "sign_cn": "摩羯座",
+              "start": "2026-01-06"
+            },
+            "from_sign": "CANCER",
+            "from_sign_cn": "巨蟹座",
+            "l1_end": "2042-07-11",
+            "l1_sign": "CANCER",
+            "l1_sign_cn": "巨蟹座",
+            "l1_start": "2017-11-19",
+            "loosing_of_bond": {
+              "age_start": 44.9,
+              "end": "2037-06-07",
+              "sign": "CAPRICORN",
+              "sign_cn": "摩羯座",
+              "start": "2035-03-20"
+            },
+            "to_sign": "CAPRICORN",
+            "to_sign_cn": "摩羯座"
+          },
+          {
+            "completion": null,
+            "foreshadowing": {
+              "age_start": 60.5,
+              "end": "2053-04-14",
+              "sign": "AQUARIUS",
+              "sign_cn": "水瓶座",
+              "start": "2050-10-27"
+            },
+            "from_sign": "LEO",
+            "from_sign_cn": "狮子座",
+            "l1_end": "2061-04-02",
+            "l1_sign": "LEO",
+            "l1_sign_cn": "狮子座",
+            "l1_start": "2042-07-11",
+            "loosing_of_bond": {
+              "age_start": 69.6,
+              "end": "2061-04-02",
+              "sign": "AQUARIUS",
+              "sign_cn": "水瓶座",
+              "start": "2059-11-09"
+            },
+            "to_sign": "AQUARIUS",
+            "to_sign_cn": "水瓶座"
+          }
+        ]
+      },
+      "spirit": {
+        "level1": [
+          {
+            "age_end": 26.6,
+            "age_start": 0.0,
+            "end": "2016-11-24",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "1990-04-15"
+          },
+          {
+            "age_end": 56.2,
+            "age_start": 26.6,
+            "end": "2046-06-20",
+            "is_current": true,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2016-11-24"
+          },
+          {
+            "age_end": 68.0,
+            "age_start": 56.2,
+            "end": "2058-04-18",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2046-06-20"
+          },
+          {
+            "age_end": 82.8,
+            "age_start": 68.0,
+            "end": "2073-01-29",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2058-04-18"
+          },
+          {
+            "age_end": 90.7,
+            "age_start": 82.8,
+            "end": "2080-12-18",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2073-01-29"
+          },
+          {
+            "age_end": 100.0,
+            "age_start": 90.7,
+            "end": "2090-04-15",
+            "is_current": false,
+            "level": 1,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "2080-12-18"
+          }
+        ],
+        "level2_in_current_level1": [
+          {
+            "age_end": 29.1,
+            "age_start": 26.6,
+            "end": "2019-05-13",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2016-11-24"
+          },
+          {
+            "age_end": 30.1,
+            "age_start": 29.1,
+            "end": "2020-05-07",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2019-05-13"
+          },
+          {
+            "age_end": 31.3,
+            "age_start": 30.1,
+            "end": "2021-07-31",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2020-05-07"
+          },
+          {
+            "age_end": 32.0,
+            "age_start": 31.3,
+            "end": "2022-03-28",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2021-07-31"
+          },
+          {
+            "age_end": 33.6,
+            "age_start": 32.0,
+            "end": "2023-11-18",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "2022-03-28"
+          },
+          {
+            "age_end": 35.6,
+            "age_start": 33.6,
+            "end": "2025-12-07",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2023-11-18"
+          },
+          {
+            "age_end": 37.2,
+            "age_start": 35.6,
+            "end": "2027-06-30",
+            "is_current": true,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2025-12-07"
+          },
+          {
+            "age_end": 38.9,
+            "age_start": 37.2,
+            "end": "2029-02-19",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2027-06-30"
+          },
+          {
+            "age_end": 39.5,
+            "age_start": 38.9,
+            "end": "2029-10-17",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2029-02-19"
+          },
+          {
+            "age_end": 40.7,
+            "age_start": 39.5,
+            "end": "2031-01-10",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2029-10-17"
+          },
+          {
+            "age_end": 41.7,
+            "age_start": 40.7,
+            "end": "2032-01-05",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2031-01-10"
+          },
+          {
+            "age_end": 43.9,
+            "age_start": 41.7,
+            "end": "2034-03-25",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2032-01-05"
+          },
+          {
+            "age_end": 45.5,
+            "age_start": 43.9,
+            "end": "2035-10-16",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": true,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2034-03-25"
+          },
+          {
+            "age_end": 47.1,
+            "age_start": 45.5,
+            "end": "2037-06-07",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2035-10-16"
+          },
+          {
+            "age_end": 47.8,
+            "age_start": 47.1,
+            "end": "2038-02-02",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2037-06-07"
+          },
+          {
+            "age_end": 49.0,
+            "age_start": 47.8,
+            "end": "2039-04-28",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2038-02-02"
+          },
+          {
+            "age_end": 50.0,
+            "age_start": 49.0,
+            "end": "2040-04-22",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2039-04-28"
+          },
+          {
+            "age_end": 52.2,
+            "age_start": 50.0,
+            "end": "2042-07-11",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2040-04-22"
+          },
+          {
+            "age_end": 54.7,
+            "age_start": 52.2,
+            "end": "2044-12-27",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2042-07-11"
+          },
+          {
+            "age_end": 55.7,
+            "age_start": 54.7,
+            "end": "2045-12-22",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2044-12-27"
+          },
+          {
+            "age_end": 56.2,
+            "age_start": 55.7,
+            "end": "2046-06-20",
+            "is_current": false,
+            "level": 2,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2045-12-22"
+          }
+        ],
+        "level3_in_current_level2": [
+          {
+            "age_end": 35.8,
+            "age_start": 35.6,
+            "end": "2026-01-24",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "狮子座",
+            "start": "2025-12-07"
+          },
+          {
+            "age_end": 35.9,
+            "age_start": 35.8,
+            "end": "2026-03-15",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "处女座",
+            "start": "2026-01-24"
+          },
+          {
+            "age_end": 36.0,
+            "age_start": 35.9,
+            "end": "2026-04-04",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "天秤座",
+            "start": "2026-03-15"
+          },
+          {
+            "age_end": 36.1,
+            "age_start": 36.0,
+            "end": "2026-05-11",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "天蝎座",
+            "start": "2026-04-04"
+          },
+          {
+            "age_end": 36.2,
+            "age_start": 36.1,
+            "end": "2026-06-10",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "射手座",
+            "start": "2026-05-11"
+          },
+          {
+            "age_end": 36.3,
+            "age_start": 36.2,
+            "end": "2026-08-17",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "摩羯座",
+            "start": "2026-06-10"
+          },
+          {
+            "age_end": 36.5,
+            "age_start": 36.3,
+            "end": "2026-10-31",
+            "is_current": true,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2026-08-17"
+          },
+          {
+            "age_end": 36.6,
+            "age_start": 36.5,
+            "end": "2026-11-30",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双鱼座",
+            "start": "2026-10-31"
+          },
+          {
+            "age_end": 36.7,
+            "age_start": 36.6,
+            "end": "2027-01-06",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "白羊座",
+            "start": "2026-11-30"
+          },
+          {
+            "age_end": 36.8,
+            "age_start": 36.7,
+            "end": "2027-01-26",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": "peak",
+            "sign": "金牛座",
+            "start": "2027-01-06"
+          },
+          {
+            "age_end": 36.9,
+            "age_start": 36.8,
+            "end": "2027-03-17",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "双子座",
+            "start": "2027-01-26"
+          },
+          {
+            "age_end": 37.1,
+            "age_start": 36.9,
+            "end": "2027-05-19",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": false,
+            "peak": null,
+            "sign": "巨蟹座",
+            "start": "2027-03-17"
+          },
+          {
+            "age_end": 37.2,
+            "age_start": 37.1,
+            "end": "2027-06-30",
+            "is_current": false,
+            "level": 3,
+            "loosing_of_bond": true,
+            "peak": "peak",
+            "sign": "水瓶座",
+            "start": "2027-05-19"
+          }
+        ],
+        "lot": "精神点",
+        "lot_sign": "摩羯座",
+        "releasing_sign": "摩羯座",
+        "shifted": false,
+        "turning_points": [
+          {
+            "completion": {
+              "age_start": 25.5,
+              "end": "2016-11-24",
+              "sign": "CAPRICORN",
+              "sign_cn": "摩羯座",
+              "start": "2015-10-01"
+            },
+            "foreshadowing": {
+              "age_start": 9.2,
+              "end": "2001-07-16",
+              "sign": "CANCER",
+              "sign_cn": "巨蟹座",
+              "start": "1999-06-27"
+            },
+            "from_sign": "CAPRICORN",
+            "from_sign_cn": "摩羯座",
+            "l1_end": "2016-11-24",
+            "l1_sign": "CAPRICORN",
+            "l1_sign_cn": "摩羯座",
+            "l1_start": "1990-04-15",
+            "loosing_of_bond": {
+              "age_start": 17.3,
+              "end": "2009-09-02",
+              "sign": "CANCER",
+              "sign_cn": "巨蟹座",
+              "start": "2007-08-14"
+            },
+            "to_sign": "CANCER",
+            "to_sign_cn": "巨蟹座"
+          },
+          {
+            "completion": {
+              "age_start": 52.2,
+              "end": "2044-12-27",
+              "sign": "AQUARIUS",
+              "sign_cn": "水瓶座",
+              "start": "2042-07-11"
+            },
+            "foreshadowing": {
+              "age_start": 35.6,
+              "end": "2027-06-30",
+              "sign": "LEO",
+              "sign_cn": "狮子座",
+              "start": "2025-12-07"
+            },
+            "from_sign": "AQUARIUS",
+            "from_sign_cn": "水瓶座",
+            "l1_end": "2046-06-20",
+            "l1_sign": "AQUARIUS",
+            "l1_sign_cn": "水瓶座",
+            "l1_start": "2016-11-24",
+            "loosing_of_bond": {
+              "age_start": 43.9,
+              "end": "2035-10-16",
+              "sign": "LEO",
+              "sign_cn": "狮子座",
+              "start": "2034-03-25"
+            },
+            "to_sign": "LEO",
+            "to_sign_cn": "狮子座"
+          }
+        ]
+      }
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_zodiacal_releasing.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "sect": "日生人",
+    "settings": {
+      "capricorn_years": 27,
+      "levels": 3,
+      "method": "Valens",
+      "spirit_shifted": false,
+      "year_length_days": 360.0
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_zodiacal_releasing"
+}

@@ -1,0 +1,518 @@
+{
+  "image_meta": {
+    "expected_height": 760,
+    "expected_width": 760,
+    "mime_type": "image/png",
+    "min_bytes": 10000
+  },
+  "input": {
+    "as_of": "2026-10-08",
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "structuredContent": {
+      "age": 36.48,
+      "as_of": "2026-10-08",
+      "birth_context": {
+        "civil_dt": "1990-04-15T18:00:00",
+        "fold": 0,
+        "lat": 48.85341,
+        "lng": 2.3488,
+        "location_id": "gn:2988507",
+        "source": "location_db",
+        "tz_iana": "Europe/Paris",
+        "utc_offset": 2.0
+      },
+      "calculation_source": {
+        "aspect_matrix": [
+          {
+            "age": 31.57,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2021-11-08",
+            "natal_point": "火星",
+            "sa_point": "太阳"
+          },
+          {
+            "age": 31.88,
+            "angle": 180.0,
+            "aspect": "冲",
+            "date": "2022-03-01",
+            "natal_point": "上升点",
+            "sa_point": "火星"
+          },
+          {
+            "age": 31.88,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2022-03-01",
+            "natal_point": "下降点",
+            "sa_point": "火星"
+          },
+          {
+            "age": 31.97,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2022-04-03",
+            "natal_point": "火星",
+            "sa_point": "土星"
+          },
+          {
+            "age": 32.57,
+            "angle": 180.0,
+            "aspect": "冲",
+            "date": "2022-11-09",
+            "natal_point": "北交点",
+            "sa_point": "凯龙星"
+          },
+          {
+            "age": 32.57,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2022-11-09",
+            "natal_point": "南交点",
+            "sa_point": "凯龙星"
+          },
+          {
+            "age": 33.02,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2023-04-24",
+            "natal_point": "福点",
+            "sa_point": "太阳"
+          },
+          {
+            "age": 33.4,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2023-09-08",
+            "natal_point": "冥王星",
+            "sa_point": "海王星"
+          },
+          {
+            "age": 34.34,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2024-08-17",
+            "natal_point": "水星",
+            "sa_point": "凯龙星"
+          },
+          {
+            "age": 34.35,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2024-08-21",
+            "natal_point": "北交点",
+            "sa_point": "天王星"
+          },
+          {
+            "age": 34.35,
+            "angle": 180.0,
+            "aspect": "冲",
+            "date": "2024-08-21",
+            "natal_point": "南交点",
+            "sa_point": "天王星"
+          },
+          {
+            "age": 35.93,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2026-03-20",
+            "natal_point": "海王星",
+            "sa_point": "金星"
+          },
+          {
+            "age": 38.27,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2028-07-22",
+            "natal_point": "木星",
+            "sa_point": "福点"
+          },
+          {
+            "age": 38.58,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2028-11-12",
+            "natal_point": "冥王星",
+            "sa_point": "天王星"
+          },
+          {
+            "age": 39.57,
+            "angle": 180.0,
+            "aspect": "冲",
+            "date": "2029-11-09",
+            "natal_point": "北交点",
+            "sa_point": "木星"
+          },
+          {
+            "age": 39.57,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2029-11-09",
+            "natal_point": "南交点",
+            "sa_point": "木星"
+          },
+          {
+            "age": 40.13,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2030-06-03",
+            "natal_point": "月亮",
+            "sa_point": "冥王星"
+          },
+          {
+            "age": 40.51,
+            "angle": 0.0,
+            "aspect": "合",
+            "date": "2030-10-18",
+            "natal_point": "天底",
+            "sa_point": "冥王星"
+          },
+          {
+            "age": 40.51,
+            "angle": 180.0,
+            "aspect": "冲",
+            "date": "2030-10-18",
+            "natal_point": "中天",
+            "sa_point": "冥王星"
+          },
+          {
+            "age": 41.32,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2031-08-09",
+            "natal_point": "上升点",
+            "sa_point": "冥王星"
+          },
+          {
+            "age": 41.34,
+            "angle": 90.0,
+            "aspect": "刑",
+            "date": "2031-08-19",
+            "natal_point": "水星",
+            "sa_point": "木星"
+          }
+        ],
+        "axis_contacts_by_directed_points": [
+          {
+            "age": 31.9,
+            "axis": "下降点",
+            "date": "2022-03-01",
+            "house": 5,
+            "point": "火星",
+            "quadrant": 2
+          },
+          {
+            "age": 36.3,
+            "axis": "中天",
+            "date": "2026-07-28",
+            "house": 8,
+            "point": "水星·福点",
+            "quadrant": 3
+          },
+          {
+            "age": 38.7,
+            "axis": "下降点",
+            "date": "2028-12-29",
+            "house": 5,
+            "point": "北交点·火星",
+            "quadrant": 2
+          },
+          {
+            "age": 40.5,
+            "axis": "天底",
+            "date": "2030-10-18",
+            "house": 2,
+            "point": "冥王星",
+            "quadrant": 1
+          }
+        ],
+        "birth_context": {
+          "civil_dt": "1990-04-15T18:00:00",
+          "fold": 0,
+          "lat": 48.85341,
+          "lng": 2.3488,
+          "location_id": "gn:2988507",
+          "source": "location_db",
+          "tz_iana": "Europe/Paris",
+          "utc_offset": 2.0
+        },
+        "calculation_reference": {
+          "fingerprint": "6228908f7ebae0b10a190220a3790165a197b2b3b46e4297a9266639897a9cce",
+          "input": {
+            "age_from": null,
+            "age_to": null,
+            "as_of": "2026-10-08",
+            "day": 15,
+            "fold": null,
+            "hour": 18,
+            "location_id": "gn:2988507",
+            "minute": 0,
+            "month": 4,
+            "wheel_age": null,
+            "year": 1990
+          },
+          "schema_version": "calculation-reference-v1",
+          "tool": "calculate_solar_arc"
+        },
+        "cross_aspects_at_wheel_age": [
+          {
+            "angle": 90.0,
+            "applying": false,
+            "aspect": "刑",
+            "natal_planet": "neptune",
+            "orb": 0.5327,
+            "sr_planet": "venus"
+          },
+          {
+            "angle": 180.0,
+            "applying": true,
+            "aspect": "冲",
+            "natal_planet": "north_node",
+            "orb": 2.969,
+            "sr_planet": "jupiter"
+          },
+          {
+            "angle": 0.0,
+            "applying": true,
+            "aspect": "合",
+            "natal_planet": "south_node",
+            "orb": 2.969,
+            "sr_planet": "jupiter"
+          },
+          {
+            "angle": 90.0,
+            "applying": false,
+            "aspect": "刑",
+            "natal_planet": "fortuna",
+            "orb": 2.943,
+            "sr_planet": "saturn"
+          },
+          {
+            "angle": 90.0,
+            "applying": false,
+            "aspect": "刑",
+            "natal_planet": "mercury",
+            "orb": 0.3435,
+            "sr_planet": "uranus"
+          },
+          {
+            "angle": 90.0,
+            "applying": true,
+            "aspect": "刑",
+            "natal_planet": "pluto",
+            "orb": 2.018,
+            "sr_planet": "uranus"
+          },
+          {
+            "angle": 0.0,
+            "applying": false,
+            "aspect": "合",
+            "natal_planet": "north_node",
+            "orb": 2.0491,
+            "sr_planet": "uranus"
+          },
+          {
+            "angle": 180.0,
+            "applying": false,
+            "aspect": "冲",
+            "natal_planet": "south_node",
+            "orb": 2.0491,
+            "sr_planet": "uranus"
+          },
+          {
+            "angle": 90.0,
+            "applying": false,
+            "aspect": "刑",
+            "natal_planet": "pluto",
+            "orb": 2.9683,
+            "sr_planet": "neptune"
+          },
+          {
+            "angle": 90.0,
+            "applying": false,
+            "aspect": "刑",
+            "natal_planet": "mercury",
+            "orb": 2.0598,
+            "sr_planet": "chiron"
+          },
+          {
+            "angle": 90.0,
+            "applying": true,
+            "aspect": "刑",
+            "natal_planet": "pluto",
+            "orb": 0.3017,
+            "sr_planet": "chiron"
+          },
+          {
+            "angle": 0.0,
+            "applying": true,
+            "aspect": "合",
+            "natal_planet": "jupiter",
+            "orb": 1.7181,
+            "sr_planet": "fortuna"
+          }
+        ],
+        "directed_axes_to_natal_points": [
+          {
+            "age": 31.8,
+            "axis": "中天",
+            "date": "2022-02-02",
+            "house": 10,
+            "point": "凯龙星·南交点",
+            "quadrant": 4
+          },
+          {
+            "age": 38.9,
+            "axis": "天底",
+            "date": "2029-03-22",
+            "house": 4,
+            "point": "土星·北交点",
+            "quadrant": 2
+          },
+          {
+            "age": 39.2,
+            "axis": "下降点",
+            "date": "2029-07-02",
+            "house": 8,
+            "point": "太阳·水星",
+            "quadrant": 3
+          }
+        ],
+        "directed_positions_at_wheel_age": {
+          "angles": {
+            "上升点": {
+              "degree_in_sign": 2.39,
+              "longitude": 212.3933,
+              "sign": "天蝎座"
+            },
+            "下降点": {
+              "degree_in_sign": 2.39,
+              "longitude": 32.3933,
+              "sign": "金牛座"
+            },
+            "中天": {
+              "degree_in_sign": 1.62,
+              "longitude": 121.6173,
+              "sign": "狮子座"
+            },
+            "天底": {
+              "degree_in_sign": 1.62,
+              "longitude": 301.6173,
+              "sign": "水瓶座"
+            }
+          },
+          "planets": {
+            "冥王星": {
+              "degree_in_sign": 22.37,
+              "longitude": 262.366,
+              "sign": "射手座"
+            },
+            "凯龙星": {
+              "degree_in_sign": 16.68,
+              "longitude": 136.6843,
+              "sign": "狮子座"
+            },
+            "北交点": {
+              "degree_in_sign": 18.3,
+              "longitude": 348.2989,
+              "sign": "双鱼座"
+            },
+            "南交点": {
+              "degree_in_sign": 18.3,
+              "longitude": 168.2989,
+              "sign": "处女座"
+            },
+            "土星": {
+              "degree_in_sign": 0.41,
+              "longitude": 330.4146,
+              "sign": "双鱼座"
+            },
+            "天王星": {
+              "degree_in_sign": 14.97,
+              "longitude": 314.9679,
+              "sign": "水瓶座"
+            },
+            "太阳": {
+              "degree_in_sign": 0.8,
+              "longitude": 60.7998,
+              "sign": "双子座"
+            },
+            "月亮": {
+              "degree_in_sign": 1.26,
+              "longitude": 301.2581,
+              "sign": "水瓶座"
+            },
+            "木星": {
+              "degree_in_sign": 9.95,
+              "longitude": 129.9498,
+              "sign": "狮子座"
+            },
+            "水星": {
+              "degree_in_sign": 20.0,
+              "longitude": 80.0045,
+              "sign": "双子座"
+            },
+            "海王星": {
+              "degree_in_sign": 19.95,
+              "longitude": 319.9542,
+              "sign": "水瓶座"
+            },
+            "火星": {
+              "degree_in_sign": 1.45,
+              "longitude": 1.4484,
+              "sign": "白羊座"
+            },
+            "福点": {
+              "degree_in_sign": 2.85,
+              "longitude": 92.8516,
+              "sign": "巨蟹座"
+            },
+            "金星": {
+              "degree_in_sign": 15.11,
+              "longitude": 15.1068,
+              "sign": "白羊座"
+            }
+          }
+        },
+        "interpretation_workflow": {
+          "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+          "next_tool": "verify_calculation_claims",
+          "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+        },
+        "quality": {
+          "algorithm_independently_verified_this_call": false,
+          "contract_version": "mcp-output-contracts-v1",
+          "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+          "regression_test": "tests/test_solar_arc_matrix.py",
+          "scope": "required_fields_and_registered_domain_invariants",
+          "status": "passed"
+        },
+        "settings": {
+          "age_from": 31.48215455028737,
+          "age_to": 41.48215455028737,
+          "method": "solar_arc_true_sun",
+          "wheel_age": 36.482,
+          "wheel_date": "2026-10-08"
+        },
+        "status": "ok"
+      },
+      "image_url": "https://hellenicstar.com/mcp/chart/6e4aa6d64bf6c8c6403a30a350979fa246a2ee633db9d797b13d66be12c61b06.png",
+      "mime_type": "image/png",
+      "quality": {
+        "image_semantics_checked": false,
+        "scope": "numerical_source_and_png_signature",
+        "status": "passed"
+      },
+      "status": "ok",
+      "title": "太阳弧双盘"
+    }
+  },
+  "tool": "render_solar_arc_biwheel"
+}

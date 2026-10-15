@@ -1,0 +1,3773 @@
+{
+  "image_meta": {
+    "expected_height": 720,
+    "expected_width": 720,
+    "mime_type": "image/png",
+    "min_bytes": 10000
+  },
+  "input": {
+    "person_a": {
+      "day": 15,
+      "fold": null,
+      "hour": 18,
+      "location_id": "gn:2988507",
+      "minute": 0,
+      "month": 4,
+      "year": 1990
+    },
+    "person_b": {
+      "day": 1,
+      "fold": null,
+      "hour": 9,
+      "location_id": "gn:2988507",
+      "minute": 30,
+      "month": 8,
+      "year": 1988
+    }
+  },
+  "output": {
+    "structuredContent": {
+      "calculation_source": {
+        "a_planets_in_b_houses": {
+          "上升点": 1,
+          "下降点": 7,
+          "中天": 10,
+          "冥王星": 3,
+          "凯龙星": 10,
+          "北交点": 5,
+          "南交点": 11,
+          "土星": 5,
+          "天底": 4,
+          "天王星": 4,
+          "太阳": 8,
+          "月亮": 4,
+          "木星": 10,
+          "水星": 9,
+          "海王星": 5,
+          "火星": 6,
+          "金星": 6
+        },
+        "b_planets_in_a_houses": {
+          "上升点": 12,
+          "下降点": 6,
+          "中天": 9,
+          "冥王星": 2,
+          "凯龙星": 10,
+          "北交点": 6,
+          "南交点": 12,
+          "土星": 4,
+          "天底": 3,
+          "天王星": 4,
+          "太阳": 11,
+          "月亮": 6,
+          "木星": 9,
+          "水星": 11,
+          "海王星": 4,
+          "火星": 7,
+          "金星": 9
+        },
+        "birth_context": {
+          "a": {
+            "civil_dt": "1990-04-15T18:00:00",
+            "fold": 0,
+            "lat": 48.85341,
+            "lng": 2.3488,
+            "location_id": "gn:2988507",
+            "source": "location_db",
+            "tz_iana": "Europe/Paris",
+            "utc_offset": 2.0
+          },
+          "b": {
+            "civil_dt": "1988-08-01T09:30:00",
+            "fold": 0,
+            "lat": 48.85341,
+            "lng": 2.3488,
+            "location_id": "gn:2988507",
+            "source": "location_db",
+            "tz_iana": "Europe/Paris",
+            "utc_offset": 2.0
+          }
+        },
+        "calculation_reference": {
+          "fingerprint": "357d419be047d65ad5bc4b2ec63f3c12a0b362b841a9baa8b7c29c641d5bc7f7",
+          "input": {
+            "orb_profile": "greene",
+            "person_a": {
+              "day": 15,
+              "fold": null,
+              "hour": 18,
+              "location_id": "gn:2988507",
+              "minute": 0,
+              "month": 4,
+              "year": 1990
+            },
+            "person_b": {
+              "day": 1,
+              "fold": null,
+              "hour": 9,
+              "location_id": "gn:2988507",
+              "minute": 30,
+              "month": 8,
+              "year": 1988
+            }
+          },
+          "schema_version": "calculation-reference-v1",
+          "tool": "calculate_relationship_charts"
+        },
+        "composite_chart": {
+          "aspects": [
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 0.138,
+              "second": "组合:天底",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 0.138,
+              "second": "组合:中天",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:土星",
+              "orb": 0.477,
+              "second": "组合:海王星",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 0.676,
+              "second": "组合:火星",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:太阳",
+              "orb": 0.779,
+              "second": "组合:木星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:太阳",
+              "orb": 0.814,
+              "second": "组合:天底",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:太阳",
+              "orb": 0.814,
+              "second": "组合:中天",
+              "tight": true
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 0.885,
+              "second": "组合:天王星",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 1.288,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 1.288,
+              "second": "组合:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 1.455,
+              "second": "组合:木星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:木星",
+              "orb": 1.593,
+              "second": "组合:天底",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:木星",
+              "orb": 1.593,
+              "second": "组合:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 2.067,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 2.067,
+              "second": "组合:下降点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 2.105,
+              "second": "组合:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:土星",
+              "orb": 2.581,
+              "second": "组合:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:火星",
+              "orb": 2.743,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:火星",
+              "orb": 2.743,
+              "second": "组合:下降点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:火星",
+              "orb": 3.271,
+              "second": "组合:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:金星",
+              "orb": 3.282,
+              "second": "组合:北交点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:土星",
+              "orb": 3.329,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:水星",
+              "orb": 3.488,
+              "second": "组合:北交点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:月亮",
+              "orb": 3.626,
+              "second": "组合:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:海王星",
+              "orb": 3.806,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 3.92,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:天王星",
+              "orb": 4.167,
+              "second": "组合:北交点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:金星",
+              "orb": 4.806,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:火星",
+              "orb": 5.375,
+              "second": "组合:海王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:火星",
+              "orb": 5.852,
+              "second": "组合:土星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 5.911,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 6.014,
+              "second": "组合:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 6.501,
+              "second": "组合:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 6.501,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:月亮",
+              "orb": 6.759,
+              "second": "组合:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:月亮",
+              "orb": 7.09,
+              "second": "组合:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:土星",
+              "orb": 7.25,
+              "second": "组合:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:太阳",
+              "orb": 7.573,
+              "second": "组合:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 7.654,
+              "second": "组合:天王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 7.726,
+              "second": "组合:海王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 7.789,
+              "second": "组合:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 8.087,
+              "second": "组合:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:海王星",
+              "orb": 8.118,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 8.135,
+              "second": "组合:土星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:月亮",
+              "orb": 8.352,
+              "second": "组合:木星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:太阳",
+              "orb": 8.568,
+              "second": "组合:水星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:土星",
+              "orb": 8.595,
+              "second": "组合:上升点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 8.612,
+              "second": "组合:海王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:火星",
+              "orb": 9.181,
+              "second": "组合:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 9.244,
+              "second": "组合:火星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 9.382,
+              "second": "组合:天底",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 9.382,
+              "second": "组合:中天",
+              "tight": false
+            }
+          ],
+          "axes": {
+            "上升点": {
+              "degree_in_sign": 19.41,
+              "longitude": 169.4074,
+              "sign": "处女座"
+            },
+            "下降点": {
+              "degree_in_sign": 19.41,
+              "longitude": 349.4074,
+              "sign": "双鱼座"
+            },
+            "中天": {
+              "degree_in_sign": 16.53,
+              "longitude": 76.5265,
+              "sign": "双子座"
+            },
+            "天底": {
+              "degree_in_sign": 16.53,
+              "longitude": 256.5265,
+              "sign": "射手座"
+            }
+          },
+          "house_cusps": [
+            169.4074,
+            192.6078,
+            221.6988,
+            256.5265,
+            292.5695,
+            323.8448,
+            349.4074,
+            12.6078,
+            41.6988,
+            76.5265,
+            112.5695,
+            143.8448
+          ],
+          "planet_houses": {
+            "上升点": 1,
+            "下降点": 7,
+            "中天": 10,
+            "冥王星": 3,
+            "凯龙星": 10,
+            "北交点": 6,
+            "南交点": 12,
+            "土星": 4,
+            "天底": 4,
+            "天王星": 4,
+            "太阳": 10,
+            "月亮": 5,
+            "木星": 10,
+            "水星": 10,
+            "海王星": 4,
+            "火星": 6,
+            "金星": 8
+          },
+          "planets": {
+            "冥王星": {
+              "degree_in_sign": 13.39,
+              "longitude": 223.3938,
+              "sign": "天蝎座"
+            },
+            "凯龙星": {
+              "degree_in_sign": 7.48,
+              "longitude": 97.4831,
+              "sign": "巨蟹座"
+            },
+            "北交点": {
+              "degree_in_sign": 29.4,
+              "longitude": 329.396,
+              "sign": "水瓶座"
+            },
+            "南交点": {
+              "degree_in_sign": 29.4,
+              "longitude": 149.396,
+              "sign": "狮子座"
+            },
+            "土星": {
+              "degree_in_sign": 10.81,
+              "longitude": 280.8126,
+              "sign": "摩羯座"
+            },
+            "天王星": {
+              "degree_in_sign": 3.56,
+              "longitude": 273.5629,
+              "sign": "摩羯座"
+            },
+            "太阳": {
+              "degree_in_sign": 17.34,
+              "longitude": 77.3407,
+              "sign": "双子座"
+            },
+            "月亮": {
+              "degree_in_sign": 9.77,
+              "longitude": 309.7674,
+              "sign": "水瓶座"
+            },
+            "木星": {
+              "degree_in_sign": 18.12,
+              "longitude": 78.1194,
+              "sign": "双子座"
+            },
+            "水星": {
+              "degree_in_sign": 25.91,
+              "longitude": 85.9084,
+              "sign": "双子座"
+            },
+            "海王星": {
+              "degree_in_sign": 11.29,
+              "longitude": 281.2891,
+              "sign": "摩羯座"
+            },
+            "火星": {
+              "degree_in_sign": 16.66,
+              "longitude": 346.6646,
+              "sign": "双鱼座"
+            },
+            "金星": {
+              "degree_in_sign": 2.68,
+              "longitude": 32.6776,
+              "sign": "金牛座"
+            }
+          }
+        },
+        "composite_to_natal_aspects": {
+          "a": [
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:海王星",
+              "orb": 0.015,
+              "second": "A:凯龙星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 0.03,
+              "second": "A:月亮",
+              "tight": true
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:水星",
+              "orb": 0.16,
+              "second": "A:火星",
+              "tight": true
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:火星",
+              "orb": 0.321,
+              "second": "A:冥王星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 0.329,
+              "second": "A:天底",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 0.329,
+              "second": "A:中天",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:冥王星",
+              "orb": 0.475,
+              "second": "A:北交点",
+              "tight": true
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:水星",
+              "orb": 0.489,
+              "second": "A:太阳",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:土星",
+              "orb": 0.492,
+              "second": "A:凯龙星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 1.007,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:土星",
+              "orb": 1.086,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 1.105,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 1.105,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:冥王星",
+              "orb": 1.18,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:土星",
+              "orb": 1.225,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:冥王星",
+              "orb": 1.231,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 1.562,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:海王星",
+              "orb": 1.701,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:金星",
+              "orb": 1.892,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:火星",
+              "orb": 2.04,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 2.09,
+              "second": "A:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:火星",
+              "orb": 2.09,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:凯龙星",
+              "orb": 2.105,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 2.244,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:上升点",
+              "orb": 2.421,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:下降点",
+              "orb": 2.421,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:凯龙星",
+              "orb": 2.913,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:月亮",
+              "orb": 3.151,
+              "second": "A:北交点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:北交点",
+              "orb": 3.159,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:北交点",
+              "orb": 3.159,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:海王星",
+              "orb": 3.285,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:北交点",
+              "orb": 3.328,
+              "second": "A:火星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:海王星",
+              "orb": 3.335,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:北交点",
+              "orb": 3.518,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:冥王星",
+              "orb": 3.592,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:天底",
+              "orb": 3.608,
+              "second": "A:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:中天",
+              "orb": 3.608,
+              "second": "A:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 3.667,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:土星",
+              "orb": 3.762,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:冥王星",
+              "orb": 3.806,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:土星",
+              "orb": 3.812,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:凯龙星",
+              "orb": 3.821,
+              "second": "A:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:北交点",
+              "orb": 3.976,
+              "second": "A:太阳",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:太阳",
+              "orb": 4.422,
+              "second": "A:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:上升点",
+              "orb": 4.783,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:下降点",
+              "orb": 4.783,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:上升点",
+              "orb": 4.833,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:下降点",
+              "orb": 4.833,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:月亮",
+              "orb": 4.857,
+              "second": "A:水星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:北交点",
+              "orb": 5.174,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:木星",
+              "orb": 5.201,
+              "second": "A:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:火星",
+              "orb": 5.36,
+              "second": "A:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:下降点",
+              "orb": 5.627,
+              "second": "A:土星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:上升点",
+              "orb": 5.627,
+              "second": "A:土星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 5.697,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 6.025,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:土星",
+              "orb": 6.243,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 6.44,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 6.471,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 6.471,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天王星",
+              "orb": 6.55,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天王星",
+              "orb": 6.55,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:海王星",
+              "orb": 6.719,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 6.8,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天底",
+              "orb": 6.8,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:中天",
+              "orb": 6.8,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 6.83,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 6.83,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 6.83,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 6.83,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 6.91,
+              "second": "A:天王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:火星",
+              "orb": 6.938,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:凯龙星",
+              "orb": 7.091,
+              "second": "A:海王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:月亮",
+              "orb": 7.219,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:金星",
+              "orb": 7.258,
+              "second": "A:太阳",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 7.326,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 7.326,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:下降点",
+              "orb": 7.606,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:上升点",
+              "orb": 7.606,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:下降点",
+              "orb": 7.606,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:上升点",
+              "orb": 7.606,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 7.614,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:金星",
+              "orb": 7.643,
+              "second": "A:土星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 7.685,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 7.741,
+              "second": "A:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:木星",
+              "orb": 7.759,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:木星",
+              "orb": 7.949,
+              "second": "A:火星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:下降点",
+              "orb": 8.103,
+              "second": "A:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:木星",
+              "orb": 8.118,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:木星",
+              "orb": 8.118,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天王星",
+              "orb": 8.143,
+              "second": "A:太阳",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 8.393,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:太阳",
+              "orb": 8.537,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 8.661,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:太阳",
+              "orb": 8.728,
+              "second": "A:火星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 8.824,
+              "second": "A:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天底",
+              "orb": 8.893,
+              "second": "A:太阳",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 8.894,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 8.894,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:太阳",
+              "orb": 8.896,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:太阳",
+              "orb": 8.896,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.213,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天底",
+              "orb": 9.352,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:中天",
+              "orb": 9.352,
+              "second": "A:月亮",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 9.503,
+              "second": "A:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:中天",
+              "orb": 9.542,
+              "second": "A:火星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.573,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.573,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 9.673,
+              "second": "A:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 9.673,
+              "second": "A:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:上升点",
+              "orb": 9.681,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:下降点",
+              "orb": 9.681,
+              "second": "A:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天底",
+              "orb": 9.711,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天底",
+              "orb": 9.711,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:中天",
+              "orb": 9.711,
+              "second": "A:天底",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:中天",
+              "orb": 9.711,
+              "second": "A:中天",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:上升点",
+              "orb": 9.82,
+              "second": "A:天王星",
+              "tight": false
+            }
+          ],
+          "b": [
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:月亮",
+              "orb": 0.034,
+              "second": "B:冥王星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 0.099,
+              "second": "B:凯龙星",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:凯龙星",
+              "orb": 0.222,
+              "second": "B:火星",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 0.28,
+              "second": "B:金星",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:月亮",
+              "orb": 0.506,
+              "second": "B:太阳",
+              "tight": true
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:海王星",
+              "orb": 0.512,
+              "second": "B:上升点",
+              "tight": true
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 0.512,
+              "second": "B:下降点",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:凯龙星",
+              "orb": 0.521,
+              "second": "B:海王星",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天底",
+              "orb": 0.653,
+              "second": "B:北交点",
+              "tight": true
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:中天",
+              "orb": 0.653,
+              "second": "B:北交点",
+              "tight": true
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 0.682,
+              "second": "B:土星",
+              "tight": true
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:火星",
+              "orb": 0.791,
+              "second": "B:北交点",
+              "tight": true
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:金星",
+              "orb": 0.984,
+              "second": "B:凯龙星",
+              "tight": true
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:土星",
+              "orb": 0.989,
+              "second": "B:上升点",
+              "tight": true
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:土星",
+              "orb": 0.989,
+              "second": "B:下降点",
+              "tight": true
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:土星",
+              "orb": 1.011,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 1.468,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 1.488,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:冥王星",
+              "orb": 1.592,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 1.592,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:水星",
+              "orb": 1.629,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:北交点",
+              "orb": 1.858,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 2.246,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:水星",
+              "orb": 2.252,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:北交点",
+              "orb": 2.273,
+              "second": "B:木星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 2.318,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 2.479,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:月亮",
+              "orb": 2.506,
+              "second": "B:火星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:月亮",
+              "orb": 2.575,
+              "second": "B:水星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:北交点",
+              "orb": 2.805,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:土星",
+              "orb": 2.809,
+              "second": "B:海王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:月亮",
+              "orb": 2.952,
+              "second": "B:天底",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:月亮",
+              "orb": 2.952,
+              "second": "B:中天",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:海王星",
+              "orb": 3.285,
+              "second": "B:海王星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:上升点",
+              "orb": 3.534,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:下降点",
+              "orb": 3.534,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:土星",
+              "orb": 3.552,
+              "second": "B:火星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:冥王星",
+              "orb": 3.592,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天王星",
+              "orb": 3.698,
+              "second": "B:火星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:北交点",
+              "orb": 3.768,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:凯龙星",
+              "orb": 3.821,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:海王星",
+              "orb": 4.028,
+              "second": "B:火星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:冥王星",
+              "orb": 4.132,
+              "second": "B:太阳",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:下降点",
+              "orb": 4.249,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:上升点",
+              "orb": 4.249,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:北交点",
+              "orb": 4.266,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:凯龙星",
+              "orb": 4.318,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 4.318,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 4.441,
+              "second": "B:海王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:金星",
+              "orb": 4.515,
+              "second": "B:水星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:海王星",
+              "orb": 4.584,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天底",
+              "orb": 4.725,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天底",
+              "orb": 4.725,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:中天",
+              "orb": 4.725,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:中天",
+              "orb": 4.725,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:火星",
+              "orb": 4.863,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:火星",
+              "orb": 4.863,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:土星",
+              "orb": 5.061,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 5.14,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 5.326,
+              "second": "B:海王星",
+              "tight": false
+            },
+            {
+              "angle": 60,
+              "aspect": "六分",
+              "first": "组合:冥王星",
+              "orb": 5.39,
+              "second": "B:海王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 5.537,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 5.539,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 5.539,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 6.025,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 6.087,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:冥王星",
+              "orb": 6.201,
+              "second": "B:水星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 6.221,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 6.221,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:太阳",
+              "orb": 6.316,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 6.318,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:木星",
+              "orb": 6.318,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:金星",
+              "orb": 6.584,
+              "second": "B:太阳",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:火星",
+              "orb": 6.863,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天王星",
+              "orb": 6.972,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:火星",
+              "orb": 6.992,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:金星",
+              "orb": 7.124,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天底",
+              "orb": 7.13,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:中天",
+              "orb": 7.13,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:土星",
+              "orb": 7.151,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 7.183,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 7.183,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天底",
+              "orb": 7.265,
+              "second": "B:太阳",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:北交点",
+              "orb": 7.42,
+              "second": "B:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:北交点",
+              "orb": 7.42,
+              "second": "B:中天",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:木星",
+              "orb": 7.509,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:上升点",
+              "orb": 7.606,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:上升点",
+              "orb": 7.606,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:下降点",
+              "orb": 7.606,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:下降点",
+              "orb": 7.606,
+              "second": "B:下降点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:海王星",
+              "orb": 7.627,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:水星",
+              "orb": 7.754,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天王星",
+              "orb": 7.934,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:月亮",
+              "orb": 8.098,
+              "second": "B:木星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:下降点",
+              "orb": 8.13,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:上升点",
+              "orb": 8.13,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天王星",
+              "orb": 8.239,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:太阳",
+              "orb": 8.288,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:凯龙星",
+              "orb": 8.39,
+              "second": "B:北交点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:木星",
+              "orb": 8.471,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 8.964,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天底",
+              "orb": 9.102,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:中天",
+              "orb": 9.102,
+              "second": "B:金星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:金星",
+              "orb": 9.124,
+              "second": "B:上升点",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:太阳",
+              "orb": 9.25,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天底",
+              "orb": 9.266,
+              "second": "B:火星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:天底",
+              "orb": 9.334,
+              "second": "B:水星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:木星",
+              "orb": 9.418,
+              "second": "B:天王星",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:下降点",
+              "orb": 9.606,
+              "second": "B:冥王星",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:中天",
+              "orb": 9.711,
+              "second": "B:中天",
+              "tight": false
+            },
+            {
+              "angle": 0,
+              "aspect": "合",
+              "first": "组合:天底",
+              "orb": 9.711,
+              "second": "B:天底",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:天底",
+              "orb": 9.711,
+              "second": "B:中天",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:中天",
+              "orb": 9.711,
+              "second": "B:天底",
+              "tight": false
+            },
+            {
+              "angle": 120,
+              "aspect": "拱",
+              "first": "组合:冥王星",
+              "orb": 9.732,
+              "second": "B:凯龙星",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.849,
+              "second": "B:天底",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.849,
+              "second": "B:中天",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:天王星",
+              "orb": 9.906,
+              "second": "B:月亮",
+              "tight": false
+            },
+            {
+              "angle": 90,
+              "aspect": "刑",
+              "first": "组合:火星",
+              "orb": 9.926,
+              "second": "B:土星",
+              "tight": false
+            },
+            {
+              "angle": 180,
+              "aspect": "冲",
+              "first": "组合:凯龙星",
+              "orb": 9.945,
+              "second": "B:天王星",
+              "tight": false
+            }
+          ]
+        },
+        "interpretation_workflow": {
+          "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+          "next_tool": "verify_calculation_claims",
+          "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+        },
+        "quality": {
+          "algorithm_independently_verified_this_call": false,
+          "contract_version": "mcp-output-contracts-v1",
+          "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+          "regression_test": "tests/test_relationship_charts.py",
+          "scope": "required_fields_and_registered_domain_invariants",
+          "status": "passed"
+        },
+        "settings": {
+          "composite": "short-arc midpoints; composite cusps are midpoints of Placidus cusps",
+          "house_system": "placidus",
+          "orb_profile": "greene",
+          "orbs": {
+            "0": 10.0,
+            "60": 6.0,
+            "90": 10.0,
+            "120": 10.0,
+            "180": 10.0
+          }
+        },
+        "shared_house_patterns": {
+          "house_system": "placidus",
+          "patterns": [
+            {
+              "complete": true,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [],
+              "houses": [
+                {
+                  "house": 1,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "south_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 5,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "mars"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "north_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 9,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "jupiter"
+                    }
+                  ]
+                }
+              ],
+              "id": "fire_triplicity",
+              "kind": "triangle",
+              "name": "火象宫位大三角"
+            },
+            {
+              "complete": true,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [],
+              "houses": [
+                {
+                  "house": 2,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "pluto"
+                    }
+                  ]
+                },
+                {
+                  "house": 6,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "venus"
+                    }
+                  ]
+                },
+                {
+                  "house": 10,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "jupiter"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "chiron"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "venus"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "chiron"
+                    }
+                  ]
+                }
+              ],
+              "id": "earth_triplicity",
+              "kind": "triangle",
+              "name": "土象宫位大三角"
+            },
+            {
+              "complete": true,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [],
+              "houses": [
+                {
+                  "house": 3,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "moon"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "pluto"
+                    }
+                  ]
+                },
+                {
+                  "house": 7,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "moon"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "north_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 11,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "south_node"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "sun"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "mercury"
+                    }
+                  ]
+                }
+              ],
+              "id": "air_triplicity",
+              "kind": "triangle",
+              "name": "风象宫位大三角"
+            },
+            {
+              "complete": false,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [
+                12
+              ],
+              "houses": [
+                {
+                  "house": 4,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "saturn"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "uranus"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "neptune"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "saturn"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "uranus"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "neptune"
+                    }
+                  ]
+                },
+                {
+                  "house": 8,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "sun"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "mercury"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "mars"
+                    }
+                  ]
+                },
+                {
+                  "house": 12,
+                  "members": []
+                }
+              ],
+              "id": "water_triplicity",
+              "kind": "triangle",
+              "name": "水象宫位大三角"
+            },
+            {
+              "complete": true,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [],
+              "houses": [
+                {
+                  "house": 1,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "south_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 4,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "saturn"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "uranus"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "neptune"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "saturn"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "uranus"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "neptune"
+                    }
+                  ]
+                },
+                {
+                  "house": 7,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "moon"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "north_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 10,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "jupiter"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "chiron"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "venus"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "chiron"
+                    }
+                  ]
+                }
+              ],
+              "id": "cardinal_cross",
+              "kind": "cross",
+              "name": "基本宫大十字"
+            },
+            {
+              "complete": true,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [],
+              "houses": [
+                {
+                  "house": 2,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "pluto"
+                    }
+                  ]
+                },
+                {
+                  "house": 5,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "mars"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "north_node"
+                    }
+                  ]
+                },
+                {
+                  "house": 8,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "sun"
+                    },
+                    {
+                      "chart": "a",
+                      "point": "mercury"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "mars"
+                    }
+                  ]
+                },
+                {
+                  "house": 11,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "south_node"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "sun"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "mercury"
+                    }
+                  ]
+                }
+              ],
+              "id": "fixed_cross",
+              "kind": "cross",
+              "name": "固定宫大十字"
+            },
+            {
+              "complete": false,
+              "contributors": [
+                "a",
+                "b"
+              ],
+              "empty_houses": [
+                12
+              ],
+              "houses": [
+                {
+                  "house": 3,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "moon"
+                    },
+                    {
+                      "chart": "b",
+                      "point": "pluto"
+                    }
+                  ]
+                },
+                {
+                  "house": 6,
+                  "members": [
+                    {
+                      "chart": "a",
+                      "point": "venus"
+                    }
+                  ]
+                },
+                {
+                  "house": 9,
+                  "members": [
+                    {
+                      "chart": "b",
+                      "point": "jupiter"
+                    }
+                  ]
+                },
+                {
+                  "house": 12,
+                  "members": []
+                }
+              ],
+              "id": "mutable_cross",
+              "kind": "cross",
+              "name": "变动宫大十字"
+            }
+          ],
+          "rule": "combined_own_natal_house_occupancy"
+        },
+        "status": "ok",
+        "synastry_aspects": [
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:金星",
+            "orb": 0.075,
+            "second": "B:冥王星",
+            "tight": true
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:太阳",
+            "orb": 0.209,
+            "second": "B:金星",
+            "tight": true
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:天王星",
+            "orb": 0.214,
+            "second": "B:冥王星",
+            "tight": true
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:月亮",
+            "orb": 0.25,
+            "second": "B:金星",
+            "tight": true
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:天底",
+            "orb": 0.353,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:中天",
+            "orb": 0.353,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:上升点",
+            "orb": 0.423,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:下降点",
+            "orb": 0.423,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:火星",
+            "orb": 0.44,
+            "second": "B:金星",
+            "tight": true
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:凯龙星",
+            "orb": 0.497,
+            "second": "B:上升点",
+            "tight": true
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:凯龙星",
+            "orb": 0.497,
+            "second": "B:下降点",
+            "tight": true
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:火星",
+            "orb": 0.522,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:下降点",
+            "orb": 0.525,
+            "second": "B:天王星",
+            "tight": true
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:上升点",
+            "orb": 0.525,
+            "second": "B:天王星",
+            "tight": true
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:天底",
+            "orb": 0.609,
+            "second": "B:金星",
+            "tight": true
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:中天",
+            "orb": 0.609,
+            "second": "B:金星",
+            "tight": true
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:月亮",
+            "orb": 0.713,
+            "second": "B:土星",
+            "tight": true
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:木星",
+            "orb": 0.908,
+            "second": "B:凯龙星",
+            "tight": true
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:冥王星",
+            "orb": 1.113,
+            "second": "B:北交点",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:太阳",
+            "orb": 1.171,
+            "second": "B:土星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:水星",
+            "orb": 1.249,
+            "second": "B:北交点",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:海王星",
+            "orb": 1.299,
+            "second": "B:北交点",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:天底",
+            "orb": 1.301,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:中天",
+            "orb": 1.301,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:土星",
+            "orb": 1.378,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:上升点",
+            "orb": 1.385,
+            "second": "B:金星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:下降点",
+            "orb": 1.385,
+            "second": "B:金星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:火星",
+            "orb": 1.47,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:凯龙星",
+            "orb": 1.503,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:天王星",
+            "orb": 1.584,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:月亮",
+            "orb": 1.66,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:金星",
+            "orb": 1.723,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:金星",
+            "orb": 2.075,
+            "second": "B:上升点",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:金星",
+            "orb": 2.075,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:太阳",
+            "orb": 2.118,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:天王星",
+            "orb": 2.214,
+            "second": "B:上升点",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:天王星",
+            "orb": 2.214,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:月亮",
+            "orb": 2.221,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:天王星",
+            "orb": 2.327,
+            "second": "B:火星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:天底",
+            "orb": 2.58,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:中天",
+            "orb": 2.58,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:木星",
+            "orb": 2.691,
+            "second": "B:火星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:海王星",
+            "orb": 2.773,
+            "second": "B:上升点",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:海王星",
+            "orb": 2.773,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:水星",
+            "orb": 2.823,
+            "second": "B:上升点",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:水星",
+            "orb": 2.823,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:金星",
+            "orb": 2.911,
+            "second": "B:天底",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:金星",
+            "orb": 2.911,
+            "second": "B:中天",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:北交点",
+            "orb": 3.117,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:凯龙星",
+            "orb": 3.3,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:上升点",
+            "orb": 3.357,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:下降点",
+            "orb": 3.357,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:木星",
+            "orb": 3.434,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:北交点",
+            "orb": 3.657,
+            "second": "B:太阳",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:凯龙星",
+            "orb": 4.043,
+            "second": "B:火星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:凯龙星",
+            "orb": 4.569,
+            "second": "B:北交点",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:下降点",
+            "orb": 4.656,
+            "second": "B:木星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:上升点",
+            "orb": 4.656,
+            "second": "B:木星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:海王星",
+            "orb": 4.773,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:水星",
+            "orb": 4.823,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:冥王星",
+            "orb": 5.185,
+            "second": "B:上升点",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:冥王星",
+            "orb": 5.185,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:木星",
+            "orb": 5.232,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:水星",
+            "orb": 5.363,
+            "second": "B:太阳",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:火星",
+            "orb": 5.601,
+            "second": "B:木星",
+            "tight": false
+          },
+          {
+            "angle": 60,
+            "aspect": "六分",
+            "first": "A:北交点",
+            "orb": 5.658,
+            "second": "B:火星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:北交点",
+            "orb": 5.726,
+            "second": "B:水星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:天王星",
+            "orb": 5.926,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:金星",
+            "orb": 6.065,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:北交点",
+            "orb": 6.103,
+            "second": "B:中天",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:金星",
+            "orb": 6.146,
+            "second": "B:北交点",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:海王星",
+            "orb": 6.57,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:水星",
+            "orb": 6.62,
+            "second": "B:海王星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:土星",
+            "orb": 6.634,
+            "second": "B:木星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:下降点",
+            "orb": 6.649,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:上升点",
+            "orb": 6.649,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:冥王星",
+            "orb": 6.671,
+            "second": "B:月亮",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:木星",
+            "orb": 7.032,
+            "second": "B:天王星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:冥王星",
+            "orb": 7.184,
+            "second": "B:冥王星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:木星",
+            "orb": 7.232,
+            "second": "B:下降点",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:海王星",
+            "orb": 7.313,
+            "second": "B:火星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:天底",
+            "orb": 7.425,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:中天",
+            "orb": 7.425,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:水星",
+            "orb": 7.432,
+            "second": "B:水星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:火星",
+            "orb": 7.594,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:凯龙星",
+            "orb": 7.642,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:冥王星",
+            "orb": 7.724,
+            "second": "B:太阳",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:月亮",
+            "orb": 7.784,
+            "second": "B:凯龙星",
+            "tight": false
+          },
+          {
+            "angle": 180,
+            "aspect": "冲",
+            "first": "A:木星",
+            "orb": 7.979,
+            "second": "B:土星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:金星",
+            "orb": 8.058,
+            "second": "B:木星",
+            "tight": false
+          },
+          {
+            "angle": 0,
+            "aspect": "合",
+            "first": "A:木星",
+            "orb": 8.941,
+            "second": "B:金星",
+            "tight": false
+          },
+          {
+            "angle": 90,
+            "aspect": "刑",
+            "first": "A:冥王星",
+            "orb": 9.794,
+            "second": "B:水星",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:下降点",
+            "orb": 9.803,
+            "second": "B:天底",
+            "tight": false
+          },
+          {
+            "angle": 120,
+            "aspect": "拱",
+            "first": "A:上升点",
+            "orb": 9.803,
+            "second": "B:中天",
+            "tight": false
+          }
+        ]
+      },
+      "image_url": "https://hellenicstar.com/mcp/chart/79401d0377e14bf918e8ae87d3c55abdd500f1479577b42136ba7fe83c7e1cea.png",
+      "mime_type": "image/png",
+      "quality": {
+        "image_semantics_checked": false,
+        "scope": "numerical_source_and_png_signature",
+        "status": "passed"
+      },
+      "status": "ok",
+      "title": "组合中点盘"
+    }
+  },
+  "tool": "render_composite_chart"
+}

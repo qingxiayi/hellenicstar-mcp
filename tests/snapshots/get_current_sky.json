@@ -1,0 +1,558 @@
+{
+  "input": {
+    "moment": "2026-10-08T12:00:00+08:00"
+  },
+  "output": {
+    "calculation_reference": {
+      "fingerprint": "402dea704896689cd177dbf50dba50fe3fb6a1fbbdf745a56452ec866cce9fba",
+      "input": {
+        "moment": "2026-10-08T12:00:00+08:00"
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "get_current_sky"
+    },
+    "eclipse": {
+      "next": {
+        "at": "2027-02-06T15:59:39Z",
+        "days_from_now": 121.5,
+        "kind": "solar",
+        "kind_cn": "日食",
+        "sun": {
+          "deg_in_sign": 17.63,
+          "sign_cn": "水瓶座"
+        },
+        "type_cn": "日环食"
+      },
+      "recent": {
+        "at": "2026-08-28T04:12:58Z",
+        "days_from_now": -40.991,
+        "kind": "lunar",
+        "kind_cn": "月食",
+        "sun": {
+          "deg_in_sign": 4.9,
+          "sign_cn": "处女座"
+        },
+        "type_cn": "月偏食"
+      }
+    },
+    "ingress": {
+      "at": "2026-10-09T08:10:33Z",
+      "next_sign_cn": "天秤座"
+    },
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "lunation": {
+      "days_since_last_full_moon": 11.466,
+      "days_to_next_full_moon": 18.008,
+      "days_to_next_new_moon": 2.493,
+      "last_full_moon_at": "2026-09-26T16:49:03Z",
+      "last_new_moon_at": "2026-09-11T03:27:00Z",
+      "lunation_length_days": 29.516,
+      "mean_synodic_month_days": 29.5306,
+      "moon_age_days": 27.023,
+      "next_full_moon_at": "2026-10-26T04:11:49Z",
+      "next_new_moon_at": "2026-10-10T15:50:05Z"
+    },
+    "moon": {
+      "deg_in_sign": 14.25,
+      "sign_cn": "处女座"
+    },
+    "moon_aspects_today": [
+      {
+        "aspect_cn": "六合相",
+        "at": "2026-10-07T17:08:01Z",
+        "planet_cn": "金星"
+      },
+      {
+        "aspect_cn": "六合相",
+        "at": "2026-10-07T18:56:38Z",
+        "planet_cn": "水星"
+      },
+      {
+        "aspect_cn": "梅花相位",
+        "at": "2026-10-07T22:18:08Z",
+        "planet_cn": "土星"
+      }
+    ],
+    "moon_distance": {
+      "apparent_diameter_arcmin": 31.52,
+      "distance_km": 379043,
+      "illuminated_fraction": 0.0703,
+      "phase_angle_deg": 149.25
+    },
+    "moon_motion": {
+      "mean_speed_deg_per_day": 13.1764,
+      "speed_deg_per_day": 13.5245,
+      "state": "fast",
+      "state_cn": "快"
+    },
+    "moon_node_distance": {
+      "distance_deg": 16.91,
+      "nearest": "south",
+      "nearest_cn": "南交点",
+      "nearest_lon": 147.34
+    },
+    "moon_phase": {
+      "angle_diff": 329.35,
+      "cycle_progress_pct": 91.5,
+      "exact_at": "2026-10-07T00:44:04Z",
+      "hours_since_exact": 27.27,
+      "hours_to_next": 59.83,
+      "illumination_pct": 7.03,
+      "illumination_source": "swiss_ephemeris_pheno",
+      "is_waxing": false,
+      "next_at": "2026-10-10T15:50:05Z",
+      "next_phase_name": "新月",
+      "phase_name": "残月",
+      "phase_num": 8,
+      "phase_progress_deg": 14.35
+    },
+    "patterns": [
+      {
+        "apex": {
+          "cn": "金星",
+          "deg_in_sign": 8.03,
+          "element_cn": "水象",
+          "key": "venus",
+          "longitude": 218.0255,
+          "modality_cn": "固定",
+          "sign_cn": "天蝎座"
+        },
+        "element_cn": null,
+        "keys": [
+          "mars",
+          "pluto",
+          "venus"
+        ],
+        "kind": "t_square",
+        "kind_cn": "T三角",
+        "modality_cn": "固定",
+        "orb_deg": 4.94,
+        "points": [
+          {
+            "cn": "火星",
+            "deg_in_sign": 5.81,
+            "element_cn": "火象",
+            "key": "mars",
+            "longitude": 125.8125,
+            "modality_cn": "固定",
+            "sign_cn": "狮子座"
+          },
+          {
+            "cn": "冥王星",
+            "deg_in_sign": 3.08,
+            "element_cn": "风象",
+            "key": "pluto",
+            "longitude": 303.0838,
+            "modality_cn": "固定",
+            "sign_cn": "水瓶座"
+          },
+          {
+            "cn": "金星",
+            "deg_in_sign": 8.03,
+            "element_cn": "水象",
+            "key": "venus",
+            "longitude": 218.0255,
+            "modality_cn": "固定",
+            "sign_cn": "天蝎座"
+          }
+        ],
+        "tier": "event",
+        "tightness": 18
+      },
+      {
+        "apex": {
+          "cn": "金星",
+          "deg_in_sign": 8.03,
+          "element_cn": "水象",
+          "key": "venus",
+          "longitude": 218.0255,
+          "modality_cn": "固定",
+          "sign_cn": "天蝎座"
+        },
+        "element_cn": null,
+        "keys": [
+          "saturn",
+          "uranus",
+          "venus"
+        ],
+        "kind": "yod",
+        "kind_cn": "上帝手指",
+        "modality_cn": null,
+        "orb_deg": 5.63,
+        "points": [
+          {
+            "cn": "土星",
+            "deg_in_sign": 11.02,
+            "element_cn": "火象",
+            "key": "saturn",
+            "longitude": 11.0155,
+            "modality_cn": "基本",
+            "sign_cn": "白羊座"
+          },
+          {
+            "cn": "天王星",
+            "deg_in_sign": 5.39,
+            "element_cn": "风象",
+            "key": "uranus",
+            "longitude": 65.3867,
+            "modality_cn": "变动",
+            "sign_cn": "双子座"
+          },
+          {
+            "cn": "金星",
+            "deg_in_sign": 8.03,
+            "element_cn": "水象",
+            "key": "venus",
+            "longitude": 218.0255,
+            "modality_cn": "固定",
+            "sign_cn": "天蝎座"
+          }
+        ],
+        "tier": "event",
+        "tightness": 6
+      }
+    ],
+    "planet_aspects_active": [
+      {
+        "angle": 60.0,
+        "applying": false,
+        "aspect_cn": "六合相",
+        "exact_at": null,
+        "orb_deg": 0.42,
+        "p1": "neptune",
+        "p1_cn": "海王星",
+        "p2": "pluto",
+        "p2_cn": "冥王星",
+        "tier": "background"
+      },
+      {
+        "angle": 60.0,
+        "applying": false,
+        "aspect_cn": "六合相",
+        "exact_at": "2026-10-07T10:41:31Z",
+        "orb_deg": 0.43,
+        "p1": "mars",
+        "p1_cn": "火星",
+        "p2": "uranus",
+        "p2_cn": "天王星",
+        "tier": "event"
+      },
+      {
+        "angle": 150.0,
+        "applying": true,
+        "aspect_cn": "梅花相位",
+        "exact_at": "2026-10-09T08:55:29Z",
+        "orb_deg": 1.45,
+        "p1": "mercury",
+        "p1_cn": "水星",
+        "p2": "saturn",
+        "p2_cn": "土星",
+        "tier": "event"
+      },
+      {
+        "angle": 0.0,
+        "applying": false,
+        "aspect_cn": "合相",
+        "exact_at": "2026-10-07T00:10:23Z",
+        "orb_deg": 1.54,
+        "p1": "mercury",
+        "p1_cn": "水星",
+        "p2": "venus",
+        "p2_cn": "金星",
+        "tier": "event"
+      },
+      {
+        "angle": 90.0,
+        "applying": true,
+        "aspect_cn": "四分相",
+        "exact_at": "2026-10-10T21:31:08Z",
+        "orb_deg": 2.21,
+        "p1": "venus",
+        "p1_cn": "金星",
+        "p2": "mars",
+        "p2_cn": "火星",
+        "tier": "event"
+      },
+      {
+        "angle": 120.0,
+        "applying": true,
+        "aspect_cn": "三分相",
+        "exact_at": null,
+        "orb_deg": 2.3,
+        "p1": "uranus",
+        "p1_cn": "天王星",
+        "p2": "pluto",
+        "p2_cn": "冥王星",
+        "tier": "background"
+      },
+      {
+        "angle": 150.0,
+        "applying": true,
+        "aspect_cn": "梅花相位",
+        "exact_at": "2026-10-16T08:39:33Z",
+        "orb_deg": 2.64,
+        "p1": "venus",
+        "p1_cn": "金星",
+        "p2": "uranus",
+        "p2_cn": "天王星",
+        "tier": "event"
+      },
+      {
+        "angle": 60.0,
+        "applying": false,
+        "aspect_cn": "六合相",
+        "exact_at": null,
+        "orb_deg": 2.72,
+        "p1": "uranus",
+        "p1_cn": "天王星",
+        "p2": "neptune",
+        "p2_cn": "海王星",
+        "tier": "background"
+      },
+      {
+        "angle": 180.0,
+        "applying": false,
+        "aspect_cn": "对分相",
+        "exact_at": "2026-10-03T10:38:54Z",
+        "orb_deg": 2.73,
+        "p1": "mars",
+        "p1_cn": "火星",
+        "p2": "pluto",
+        "p2_cn": "冥王星",
+        "tier": "event"
+      },
+      {
+        "angle": 150.0,
+        "applying": false,
+        "aspect_cn": "梅花相位",
+        "exact_at": null,
+        "orb_deg": 2.99,
+        "p1": "venus",
+        "p1_cn": "金星",
+        "p2": "saturn",
+        "p2_cn": "土星",
+        "tier": "event"
+      },
+      {
+        "angle": 120.0,
+        "applying": false,
+        "aspect_cn": "三分相",
+        "exact_at": "2026-10-02T22:17:44Z",
+        "orb_deg": 3.15,
+        "p1": "mars",
+        "p1_cn": "火星",
+        "p2": "neptune",
+        "p2_cn": "海王星",
+        "tier": "event"
+      },
+      {
+        "angle": 90.0,
+        "applying": false,
+        "aspect_cn": "四分相",
+        "exact_at": "2026-10-02T09:14:22Z",
+        "orb_deg": 3.76,
+        "p1": "mercury",
+        "p1_cn": "水星",
+        "p2": "mars",
+        "p2_cn": "火星",
+        "tier": "event"
+      },
+      {
+        "angle": 180.0,
+        "applying": false,
+        "aspect_cn": "对分相",
+        "exact_at": "2026-10-04T12:29:14Z",
+        "orb_deg": 3.88,
+        "p1": "sun",
+        "p1_cn": "太阳",
+        "p2": "saturn",
+        "p2_cn": "土星",
+        "tier": "event"
+      },
+      {
+        "angle": 60.0,
+        "applying": false,
+        "aspect_cn": "六合相",
+        "exact_at": "2026-10-07T18:56:38Z",
+        "orb_deg": 4.68,
+        "p1": "moon",
+        "p1_cn": "月亮",
+        "p2": "mercury",
+        "p2_cn": "水星",
+        "tier": "event"
+      },
+      {
+        "angle": 90.0,
+        "applying": true,
+        "aspect_cn": "四分相",
+        "exact_at": "2026-10-20T06:56:08Z",
+        "orb_deg": 4.94,
+        "p1": "venus",
+        "p1_cn": "金星",
+        "p2": "pluto",
+        "p2_cn": "冥王星",
+        "tier": "event"
+      },
+      {
+        "angle": 120.0,
+        "applying": true,
+        "aspect_cn": "三分相",
+        "exact_at": "2026-10-16T08:32:24Z",
+        "orb_deg": 5.2,
+        "p1": "mars",
+        "p1_cn": "火星",
+        "p2": "saturn",
+        "p2_cn": "土星",
+        "tier": "event"
+      },
+      {
+        "angle": 60.0,
+        "applying": true,
+        "aspect_cn": "六合相",
+        "exact_at": null,
+        "orb_deg": 5.63,
+        "p1": "saturn",
+        "p1_cn": "土星",
+        "p2": "uranus",
+        "p2_cn": "天王星",
+        "tier": "background"
+      },
+      {
+        "angle": 60.0,
+        "applying": true,
+        "aspect_cn": "六合相",
+        "exact_at": "2026-10-15T08:21:42Z",
+        "orb_deg": 5.94,
+        "p1": "sun",
+        "p1_cn": "太阳",
+        "p2": "jupiter",
+        "p2_cn": "木星",
+        "tier": "event"
+      },
+      {
+        "angle": 90.0,
+        "applying": false,
+        "aspect_cn": "四分相",
+        "exact_at": "2026-10-02T20:42:46Z",
+        "orb_deg": 6.48,
+        "p1": "mercury",
+        "p1_cn": "水星",
+        "p2": "pluto",
+        "p2_cn": "冥王星",
+        "tier": "event"
+      }
+    ],
+    "planet_aspects_today": [],
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_sky_now.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "retrograde_planets": [
+      {
+        "deg_in_sign": 8.03,
+        "longitude": 218.0255,
+        "next_station": {
+          "at": "2026-11-14T00:27:28Z",
+          "deg_in_sign": 22.86,
+          "direction": "direct",
+          "longitude": 202.8637,
+          "planet": "venus",
+          "planet_cn": "金星",
+          "sign_cn": "天秤座"
+        },
+        "planet": "venus",
+        "planet_cn": "金星",
+        "sign_cn": "天蝎座",
+        "speed": -0.1923
+      },
+      {
+        "deg_in_sign": 11.02,
+        "longitude": 11.0155,
+        "next_station": {
+          "at": "2026-12-10T23:31:07Z",
+          "deg_in_sign": 7.93,
+          "direction": "direct",
+          "longitude": 7.931,
+          "planet": "saturn",
+          "planet_cn": "土星",
+          "sign_cn": "白羊座"
+        },
+        "planet": "saturn",
+        "planet_cn": "土星",
+        "sign_cn": "白羊座",
+        "speed": -0.0785
+      },
+      {
+        "deg_in_sign": 5.39,
+        "longitude": 65.3867,
+        "next_station": {
+          "at": "2027-02-08T12:29:28Z",
+          "deg_in_sign": 1.68,
+          "direction": "direct",
+          "longitude": 61.6826,
+          "planet": "uranus",
+          "planet_cn": "天王星",
+          "sign_cn": "双子座"
+        },
+        "planet": "uranus",
+        "planet_cn": "天王星",
+        "sign_cn": "双子座",
+        "speed": -0.0222
+      },
+      {
+        "deg_in_sign": 2.67,
+        "longitude": 2.6662,
+        "next_station": {
+          "at": "2026-12-12T22:17:26Z",
+          "deg_in_sign": 1.61,
+          "direction": "direct",
+          "longitude": 1.6129,
+          "planet": "neptune",
+          "planet_cn": "海王星",
+          "sign_cn": "白羊座"
+        },
+        "planet": "neptune",
+        "planet_cn": "海王星",
+        "sign_cn": "白羊座",
+        "speed": -0.027
+      },
+      {
+        "deg_in_sign": 3.08,
+        "longitude": 303.0838,
+        "next_station": {
+          "at": "2026-10-16T02:40:18Z",
+          "deg_in_sign": 3.07,
+          "direction": "direct",
+          "longitude": 303.0686,
+          "planet": "pluto",
+          "planet_cn": "冥王星",
+          "sign_cn": "水瓶座"
+        },
+        "planet": "pluto",
+        "planet_cn": "冥王星",
+        "sign_cn": "水瓶座",
+        "speed": -0.0038
+      }
+    ],
+    "stations_today": [],
+    "status": "ok",
+    "sun": {
+      "sign_cn": "天秤座"
+    },
+    "timestamp": "2026-10-08T12:00:00+08:00",
+    "voc": {
+      "active": true,
+      "end": "2026-10-09T08:10:33Z",
+      "start": "2026-10-07T18:56:38Z"
+    }
+  },
+  "tool": "get_current_sky"
+}

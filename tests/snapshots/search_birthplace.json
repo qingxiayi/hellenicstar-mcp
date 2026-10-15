@@ -1,0 +1,160 @@
+{
+  "input": {
+    "query": "Paris"
+  },
+  "output": {
+    "calculation_reference": {
+      "fingerprint": "6e4da5343572e48dcc36e46cfb01e778f590240847a879641e06cb5a0259e3c4",
+      "input": {
+        "query": "Paris"
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "search_birthplace"
+    },
+    "clarification": {
+      "prompt_to_user": "找到多个地点，请让用户确认地区后选择对应的 location_id。",
+      "required": [
+        {
+          "field": "location_id",
+          "prompt": "请搜索并确认地点，或用经纬度解析地点 ID；同名地点需要用户选择。"
+        }
+      ]
+    },
+    "next_action": "ask_user",
+    "options": [
+      {
+        "admin1": "11",
+        "city": "巴黎",
+        "country": "法国",
+        "country_code": "FR",
+        "lat": 48.85341,
+        "lng": 2.3488,
+        "location_id": "gn:2988507",
+        "region": "法国",
+        "timezone": "Europe/Paris",
+        "tz_display": "中欧时间"
+      },
+      {
+        "admin1": "TX",
+        "city": "Paris",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 33.66094,
+        "lng": -95.55551,
+        "location_id": "gn:4717560",
+        "region": "美国 · 得克萨斯州",
+        "timezone": "America/Chicago",
+        "tz_display": "北美中部时间"
+      },
+      {
+        "admin1": "08",
+        "city": "Paris",
+        "country": "加拿大",
+        "country_code": "CA",
+        "lat": 43.2,
+        "lng": -80.38333,
+        "location_id": "gn:6942553",
+        "region": "加拿大",
+        "timezone": "America/Toronto",
+        "tz_display": "北美东部时间"
+      },
+      {
+        "admin1": "TN",
+        "city": "Paris",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 36.302,
+        "lng": -88.32671,
+        "location_id": "gn:4647963",
+        "region": "美国 · 田纳西州",
+        "timezone": "America/Chicago",
+        "tz_display": "北美中部时间"
+      },
+      {
+        "admin1": "KY",
+        "city": "巴黎",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 38.2098,
+        "lng": -84.25299,
+        "location_id": "gn:4303602",
+        "region": "美国 · 肯塔基州",
+        "timezone": "America/New_York",
+        "tz_display": "北美东部时间"
+      },
+      {
+        "admin1": "IL",
+        "city": "Paris",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 39.61115,
+        "lng": -87.69614,
+        "location_id": "gn:4246659",
+        "region": "美国 · 伊利诺伊州",
+        "timezone": "America/Chicago",
+        "tz_display": "北美中部时间"
+      },
+      {
+        "admin1": "ME",
+        "city": "帕里斯",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 44.25979,
+        "lng": -70.50062,
+        "location_id": "gn:4974617",
+        "region": "美国 · 缅因州",
+        "timezone": "America/New_York",
+        "tz_display": "北美东部时间"
+      },
+      {
+        "admin1": "AR",
+        "city": "巴黎",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 35.29203,
+        "lng": -93.72992,
+        "location_id": "gn:4125402",
+        "region": "美国 · 阿肯色州",
+        "timezone": "America/Chicago",
+        "tz_display": "北美中部时间"
+      },
+      {
+        "admin1": "MO",
+        "city": "Paris",
+        "country": "美国",
+        "country_code": "US",
+        "lat": 39.48087,
+        "lng": -92.00128,
+        "location_id": "gn:4402452",
+        "region": "美国 · 密苏里州",
+        "timezone": "America/Chicago",
+        "tz_display": "北美中部时间"
+      },
+      {
+        "admin1": "06",
+        "city": "París",
+        "country": "巴拿马",
+        "country_code": "PA",
+        "lat": 8.05267,
+        "lng": -80.55379,
+        "location_id": "gn:3703358",
+        "region": "巴拿马",
+        "timezone": "America/Panama",
+        "tz_display": "北美东部时间"
+      }
+    ],
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_mcp_natal.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "required_fields": [
+      "location_id"
+    ],
+    "status": "ok"
+  },
+  "tool": "search_birthplace"
+}

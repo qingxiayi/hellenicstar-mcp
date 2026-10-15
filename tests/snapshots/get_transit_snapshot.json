@@ -1,0 +1,152 @@
+{
+  "input": {
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "moment": "2026-10-08T12:00:00+08:00",
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "active_aspects_to_natal": [
+      {
+        "applying": false,
+        "aspect": "刑",
+        "natal_point": "凯龙星",
+        "orb": 0.289,
+        "orb_limit": 1.5,
+        "transit_planet": "土星"
+      },
+      {
+        "applying": true,
+        "aspect": "刑",
+        "natal_point": "天王星",
+        "orb": 1.428,
+        "orb_limit": 1.5,
+        "transit_planet": "土星"
+      }
+    ],
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "b73cc2ed4bf00537ef3769ba8fb9f7caf8d41a6807c48fd55660c101cff78567",
+      "input": {
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "moment": "2026-10-08T12:00:00+08:00",
+        "month": 4,
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "get_transit_snapshot"
+    },
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "moment": "2026-10-08T12:00:00+08:00",
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_transit_natal.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "status": "ok",
+    "transit_positions": {
+      "冥王星": {
+        "degree_in_sign": 3.08,
+        "longitude": 303.0838,
+        "retrograde": true,
+        "sign": "水瓶座"
+      },
+      "凯龙星": {
+        "degree_in_sign": 29.18,
+        "longitude": 29.1765,
+        "retrograde": true,
+        "sign": "白羊座"
+      },
+      "北交点": {
+        "degree_in_sign": 27.34,
+        "longitude": 327.3357,
+        "retrograde": true,
+        "sign": "水瓶座"
+      },
+      "南交点": {
+        "degree_in_sign": 27.34,
+        "longitude": 147.3357,
+        "retrograde": true,
+        "sign": "狮子座"
+      },
+      "土星": {
+        "degree_in_sign": 11.02,
+        "longitude": 11.0155,
+        "retrograde": true,
+        "sign": "白羊座"
+      },
+      "天王星": {
+        "degree_in_sign": 5.39,
+        "longitude": 65.3867,
+        "retrograde": true,
+        "sign": "双子座"
+      },
+      "太阳": {
+        "degree_in_sign": 14.9,
+        "longitude": 194.8976,
+        "retrograde": false,
+        "sign": "天秤座"
+      },
+      "月亮": {
+        "degree_in_sign": 14.25,
+        "longitude": 164.2498,
+        "retrograde": false,
+        "sign": "处女座"
+      },
+      "木星": {
+        "degree_in_sign": 20.84,
+        "longitude": 140.8371,
+        "retrograde": false,
+        "sign": "狮子座"
+      },
+      "水星": {
+        "degree_in_sign": 9.57,
+        "longitude": 219.5675,
+        "retrograde": false,
+        "sign": "天蝎座"
+      },
+      "海王星": {
+        "degree_in_sign": 2.67,
+        "longitude": 2.6662,
+        "retrograde": true,
+        "sign": "白羊座"
+      },
+      "火星": {
+        "degree_in_sign": 5.81,
+        "longitude": 125.8125,
+        "retrograde": false,
+        "sign": "狮子座"
+      },
+      "金星": {
+        "degree_in_sign": 8.03,
+        "longitude": 218.0255,
+        "retrograde": true,
+        "sign": "天蝎座"
+      }
+    }
+  },
+  "tool": "get_transit_snapshot"
+}

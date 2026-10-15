@@ -1,0 +1,88 @@
+{
+  "input": {
+    "day": 15,
+    "from_date": "2026-01-01",
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "to_date": "2026-12-31",
+    "year": 1990
+  },
+  "output": {
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "21b48a65f48c0d25970ec50e896c54f5ab1f052ea3becb785acdb9e0de215c2a",
+      "input": {
+        "day": 15,
+        "fold": null,
+        "from_date": "2026-01-01",
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "planet": null,
+        "to_date": "2026-12-31",
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_house_ingresses"
+    },
+    "event_count": 2,
+    "events": [
+      {
+        "age": 35.747,
+        "contact": "3/3",
+        "enter_local": "2026-01-13 13:25",
+        "entered_house": 7,
+        "entry": "顺行进入",
+        "exact_utc": "2026-01-13T12:25:38Z",
+        "leave_local": "2027-05-05 20:09",
+        "left_house": 6,
+        "planet": "土星"
+      },
+      {
+        "age": 36.229,
+        "contact": "1/1",
+        "enter_local": "2026-07-08 10:21",
+        "entered_house": 11,
+        "entry": "顺行进入",
+        "exact_utc": "2026-07-08T08:21:52Z",
+        "leave_local": "2027-08-05 23:48",
+        "left_house": 10,
+        "planet": "木星"
+      }
+    ],
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_transit_lifetime.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "settings": {
+      "age_range": "0–84",
+      "from_date": "2026-01-01",
+      "house_system": "placidus",
+      "planet": "木星、土星",
+      "to_date": "2026-12-31"
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_house_ingresses"
+}

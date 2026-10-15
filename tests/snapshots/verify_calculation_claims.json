@@ -1,0 +1,40 @@
+{
+  "input_claims": [
+    {
+      "path": "/planets/0/house",
+      "quote": "太阳第8宫",
+      "value": 8
+    }
+  ],
+  "output": {
+    "assessment": "submitted_claims_supported",
+    "claims": [
+      {
+        "claimed_value": 8,
+        "evidence": {
+          "path": "/planets/0/house",
+          "tool": "calculate_natal_chart",
+          "value": 8
+        },
+        "path": "/planets/0/house",
+        "quote": "太阳第8宫",
+        "verdict": "supported"
+      }
+    ],
+    "counts": {
+      "contradicted": 0,
+      "supported": 1,
+      "unverified": 0
+    },
+    "coverage": {
+      "checked_claims": 1,
+      "full_report_checked": false,
+      "independent_algorithm_verification": false,
+      "quote_semantics_checked": false,
+      "submitted_claims": 1
+    },
+    "next_action": "use_verified_facts",
+    "status": "ok"
+  },
+  "tool": "verify_calculation_claims"
+}

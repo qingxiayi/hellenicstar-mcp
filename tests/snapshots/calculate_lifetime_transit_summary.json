@@ -1,0 +1,301 @@
+{
+  "input": {
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "minute": 0,
+    "month": 4,
+    "year": 1990
+  },
+  "output": {
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "76143e03ae190b62923ba8a7a9a7ff310b131dd9561a5985c26ce9e75174ad8a",
+      "input": {
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "minute": 0,
+        "month": 4,
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_lifetime_transit_summary"
+    },
+    "chapters": [
+      {
+        "ages": "0—6岁",
+        "axes": 18,
+        "fast": 535,
+        "planets": {
+          "jupiter": 96,
+          "mars": 439,
+          "neptune": 19,
+          "pluto": 9,
+          "saturn": 37,
+          "uranus": 18
+        },
+        "points": 600,
+        "slow": 83,
+        "total": 618
+      },
+      {
+        "ages": "7—13岁",
+        "axes": 21,
+        "fast": 544,
+        "planets": {
+          "jupiter": 92,
+          "mars": 452,
+          "neptune": 5,
+          "pluto": 4,
+          "saturn": 45,
+          "uranus": 15
+        },
+        "points": 592,
+        "slow": 69,
+        "total": 613
+      },
+      {
+        "ages": "14—20岁",
+        "axes": 26,
+        "fast": 557,
+        "planets": {
+          "jupiter": 97,
+          "mars": 460,
+          "neptune": 15,
+          "pluto": 10,
+          "saturn": 40,
+          "uranus": 23
+        },
+        "points": 619,
+        "slow": 88,
+        "total": 645
+      },
+      {
+        "ages": "21—27岁",
+        "axes": 19,
+        "fast": 545,
+        "planets": {
+          "jupiter": 87,
+          "mars": 458,
+          "neptune": 14,
+          "pluto": 16,
+          "saturn": 41,
+          "uranus": 19
+        },
+        "points": 616,
+        "slow": 90,
+        "total": 635
+      },
+      {
+        "ages": "28—34岁",
+        "axes": 18,
+        "fast": 505,
+        "planets": {
+          "jupiter": 82,
+          "mars": 423,
+          "neptune": 18,
+          "pluto": 10,
+          "saturn": 38,
+          "uranus": 20
+        },
+        "points": 573,
+        "slow": 86,
+        "total": 591
+      },
+      {
+        "ages": "35—41岁",
+        "axes": 24,
+        "fast": 563,
+        "planets": {
+          "jupiter": 96,
+          "mars": 467,
+          "neptune": 12,
+          "pluto": 3,
+          "saturn": 44,
+          "uranus": 12
+        },
+        "points": 610,
+        "slow": 71,
+        "total": 634
+      },
+      {
+        "ages": "42—48岁",
+        "axes": 21,
+        "fast": 537,
+        "planets": {
+          "jupiter": 87,
+          "mars": 450,
+          "neptune": 12,
+          "pluto": 7,
+          "saturn": 48,
+          "uranus": 22
+        },
+        "points": 605,
+        "slow": 89,
+        "total": 626
+      },
+      {
+        "ages": "49—55岁",
+        "axes": 22,
+        "fast": 545,
+        "planets": {
+          "jupiter": 97,
+          "mars": 448,
+          "neptune": 19,
+          "pluto": 11,
+          "saturn": 41,
+          "uranus": 16
+        },
+        "points": 610,
+        "slow": 87,
+        "total": 632
+      },
+      {
+        "ages": "56—62岁",
+        "axes": 22,
+        "fast": 531,
+        "planets": {
+          "jupiter": 91,
+          "mars": 440,
+          "neptune": 13,
+          "pluto": 11,
+          "saturn": 39,
+          "uranus": 23
+        },
+        "points": 595,
+        "slow": 86,
+        "total": 617
+      },
+      {
+        "ages": "63—69岁",
+        "axes": 19,
+        "fast": 541,
+        "planets": {
+          "jupiter": 84,
+          "mars": 457,
+          "neptune": 4,
+          "pluto": 8,
+          "saturn": 46,
+          "uranus": 20
+        },
+        "points": 600,
+        "slow": 78,
+        "total": 619
+      },
+      {
+        "ages": "70—76岁",
+        "axes": 27,
+        "fast": 535,
+        "planets": {
+          "jupiter": 81,
+          "mars": 454,
+          "neptune": 8,
+          "pluto": 20,
+          "saturn": 46,
+          "uranus": 23
+        },
+        "points": 605,
+        "slow": 97,
+        "total": 632
+      },
+      {
+        "ages": "77—84岁",
+        "axes": 22,
+        "fast": 606,
+        "planets": {
+          "jupiter": 98,
+          "mars": 508,
+          "neptune": 14,
+          "pluto": 2,
+          "saturn": 49,
+          "uranus": 20
+        },
+        "points": 669,
+        "slow": 85,
+        "total": 691
+      }
+    ],
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_transit_lifetime.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "settings": {
+      "age_range": "0–84",
+      "aspects": "0/60/90/120/180",
+      "chapter_years": 7,
+      "transit_planets": "木星、火星、土星、天王星、海王星、冥王星"
+    },
+    "status": "ok",
+    "total_events": 7553,
+    "totals_by_aspect": [
+      0.0,
+      60.0,
+      90.0,
+      120.0,
+      180.0
+    ],
+    "totals_by_group": {
+      "fast": {
+        "label": "木火",
+        "planets": [
+          "jupiter",
+          "mars"
+        ]
+      },
+      "slow": {
+        "label": "天海冥土",
+        "planets": [
+          "saturn",
+          "uranus",
+          "neptune",
+          "pluto"
+        ]
+      }
+    },
+    "totals_by_target": {
+      "axes": [
+        "asc",
+        "mc",
+        "dsc",
+        "ic"
+      ],
+      "points": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "uranus",
+        "neptune",
+        "pluto",
+        "chiron",
+        "north_node",
+        "fortuna",
+        "spiritus"
+      ]
+    }
+  },
+  "tool": "calculate_lifetime_transit_summary"
+}

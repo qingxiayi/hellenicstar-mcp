@@ -1,0 +1,4 @@
+# Optional independent comparison libraries; runtime versions remain pinned.
+-r requirements.lock
+astrologica
+stellium

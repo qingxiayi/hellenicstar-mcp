@@ -1,0 +1,221 @@
+{
+  "input": {
+    "as_of": "2026-10-08",
+    "day": 15,
+    "hour": 18,
+    "location_id": "gn:2988507",
+    "lot": "fortune",
+    "minute": 0,
+    "month": 4,
+    "parent_sign": "GEMINI",
+    "parent_start": "2026-08-24",
+    "year": 1990
+  },
+  "output": {
+    "as_of": "2026-10-08",
+    "birth_context": {
+      "civil_dt": "1990-04-15T18:00:00",
+      "fold": 0,
+      "lat": 48.85341,
+      "lng": 2.3488,
+      "location_id": "gn:2988507",
+      "source": "location_db",
+      "tz_iana": "Europe/Paris",
+      "utc_offset": 2.0
+    },
+    "calculation_reference": {
+      "fingerprint": "a4f1bd84aa39ba5bd885963d28a176ac1ded3555adf5fbb66267ae644d59c9ad",
+      "input": {
+        "as_of": "2026-10-08",
+        "day": 15,
+        "fold": null,
+        "hour": 18,
+        "location_id": "gn:2988507",
+        "lot": "fortune",
+        "minute": 0,
+        "month": 4,
+        "parent_sign": "GEMINI",
+        "parent_start": "2026-08-24",
+        "year": 1990
+      },
+      "schema_version": "calculation-reference-v1",
+      "tool": "calculate_zodiacal_releasing_l4"
+    },
+    "interpretation_workflow": {
+      "before_final_answer": "Submit all source facts used in the draft with unchanged calculation_reference and exact JSON Pointer paths. Include full event/role objects when context matters. Correct contradicted facts and verify the corrected draft; identify unverified facts.",
+      "next_tool": "verify_calculation_claims",
+      "scope": "Submitted source fields only; quote semantics, omitted facts and psychological interpretations are not checked."
+    },
+    "level4": [
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-08-28",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "双子座",
+        "start": "2026-08-24"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-03",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "巨蟹座",
+        "start": "2026-08-28"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-07",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": "peak",
+        "sign": "狮子座",
+        "start": "2026-09-03"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-11",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "处女座",
+        "start": "2026-09-07"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-12",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "天秤座",
+        "start": "2026-09-11"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-16",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": "peak",
+        "sign": "天蝎座",
+        "start": "2026-09-12"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-18",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "射手座",
+        "start": "2026-09-16"
+      },
+      {
+        "age_end": 36.4,
+        "age_start": 36.4,
+        "end": "2026-09-24",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "摩羯座",
+        "start": "2026-09-18"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.4,
+        "end": "2026-09-30",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": "peak",
+        "sign": "水瓶座",
+        "start": "2026-09-24"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.5,
+        "end": "2026-10-02",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "双鱼座",
+        "start": "2026-09-30"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.5,
+        "end": "2026-10-06",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "白羊座",
+        "start": "2026-10-02"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.5,
+        "end": "2026-10-07",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": "peak",
+        "sign": "金牛座",
+        "start": "2026-10-06"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.5,
+        "end": "2026-10-10",
+        "is_current": true,
+        "level": 4,
+        "loosing_of_bond": true,
+        "peak": null,
+        "sign": "射手座",
+        "start": "2026-10-07"
+      },
+      {
+        "age_end": 36.5,
+        "age_start": 36.5,
+        "end": "2026-10-13",
+        "is_current": false,
+        "level": 4,
+        "loosing_of_bond": false,
+        "peak": null,
+        "sign": "摩羯座",
+        "start": "2026-10-10"
+      }
+    ],
+    "lot": "福点",
+    "parent_period": {
+      "sign": "GEMINI",
+      "start": "2026-08-24"
+    },
+    "quality": {
+      "algorithm_independently_verified_this_call": false,
+      "contract_version": "mcp-output-contracts-v1",
+      "limitations": "结构和一致性检查通过，不等于独立证明算法正确，也不验证解释。",
+      "regression_test": "tests/test_zodiacal_releasing_l4_api.py",
+      "scope": "required_fields_and_registered_domain_invariants",
+      "status": "passed"
+    },
+    "status": "ok"
+  },
+  "tool": "calculate_zodiacal_releasing_l4"
+}
