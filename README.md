@@ -89,7 +89,7 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 克隆或下载解压本项目，进入 `hellenicstar-mcp`。推荐使用 Python 3.12：
 
 ```bash
-# 推荐方式（使用 uv 极速安装，能有效避免 Windows 下 pip 编译源码包报 EEXIST 错误）：
+# 推荐方式（使用 uv 极速安装，能有效避免新版 pip 编译源码包报 EEXIST 错误）：
 uv venv
 uv pip install -r requirements.lock
 
