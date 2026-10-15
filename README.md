@@ -7,6 +7,72 @@
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
 不包含课程、会员、登录、支付或 AI 报告服务，不需要模型 API Key。
 
+## 适用与不适用场景
+
+### 适合谁
+
+本项目是一个**本地优先**的占星计算与星图渲染 MCP 服务，适合：
+
+- **个人开发者**：在本机用 Claude Desktop、Cursor 等 MCP 客户端搭建自己的工作流
+- **占星师**：需要结构化、可复核的计算数据，而不是看不到过程的 App 输出
+- **研究者**：需要本命、行运、返照、推运、合盘、Davison、迁移盘、时间主星等技法的结构化结果
+
+设计取舍：
+
+- **计算与解读分离**：服务端只返回可核对的计算数据和 PNG，解读交给客户端和使用者
+- **输出契约**：每个数据工具都必须显式注册输出契约，没注册的工具无法暴露；校验不通过的结果直接拦下，不会和错误信息一起返回
+- **先算后画**：渲染工具先调用对应的计算工具，并要求结果通过校验，然后才出图
+- **可核验**：成功结果附带 `calculation_reference`，可以用 `verify_calculation_claims` / `verify_natal_claims` 按原始输入重新计算，逐条核对引用的字段
+- **能力自发现**：`get_capabilities` 返回全部工具、输入 schema、版本和算法注册信息
+- **不存储数据**：不保存报告、出生资料或快照
+- **无需模型 API Key**，不包含课程、会员、登录、支付或 AI 报告服务
+
+### 不适合谁
+
+本项目**不是**：
+
+- 多租户 SaaS 平台或商业云服务后端
+- 带账号、订阅、计费的产品系统
+- 开箱即可放到公网的匿名 API 服务
+- 为水平扩展、分布式限流或大流量场景设计的系统
+
+如果你需要内建认证、OAuth / API Key 管理、租户隔离或分布式配额，本项目默认不提供这些功能。
+
+### 部署边界
+
+- 推荐用法：**stdio**，或只绑定本机（loopback）的 **Streamable HTTP**
+- HTTP 服务**默认匿名，没有用户认证**；`MCP_ALLOWED_HOSTS` 默认只允许 localhost / 127.0.0.1
+- 如果你自己决定放到网络上，请放在可信的 HTTPS 反向代理或访问网关后面，自行加鉴权，并按 `SECURITY.md` 和部署文档配置域名、支持联系方式和 `MCP_SOURCE_URL`（源码地址）
+- 并发闸门是**单进程**的（默认同时计算 2 个、排队 4 个、等待超时 15 秒，可通过环境变量配置），用来保护本机资源，不代表用户容量
+
+### 核验能证明什么，不能证明什么
+
+- 核验只检查你提交的**结构化计算字段**是否和重新计算的结果一致
+- 它**不能**验证心理解释、事件预测或整篇解读
+- 通过输出契约也**不等于**算法本身一定正确，它保证的是结果结构完整、内部一致
+
+> 设计哲学：服务留在本地，计算保持严谨，输出可以核验，范围说清楚。
+
+---
+
+## Who this MCP is for / Not for
+
+**For:** individual developers, astrologers, and researchers who run a local MCP server alongside Claude Desktop, Cursor, or other MCP clients, and want structured, re-checkable calculation data instead of opaque app output.
+
+**What it does:**
+- Returns calculation data and PNG charts; interpretation stays with the client and the user
+- Every data tool must register an explicit output contract; results that fail validation are withheld
+- Render tools draw only from validated calculation results
+- Results carry a `calculation_reference`; `verify_calculation_claims` re-computes from the original input and checks cited fields
+- `get_capabilities` exposes tools, input schemas, versions, and the algorithm registry
+- Stores no reports, birth data, or snapshots; needs no model API key
+
+**Not for:** multi-tenant SaaS, account/billing systems, public anonymous APIs, or horizontally scaled deployments. No built-in auth, OAuth, tenant isolation, or distributed rate limiting.
+
+**Deployment boundary:** Use stdio or loopback-only HTTP. HTTP is anonymous by default. If you expose it on a network, put it behind your own HTTPS gateway with authentication, and set `MCP_SOURCE_URL`. The compute gate is per-process (2 active / 4 queued / 15 s timeout by default, configurable via env) and protects local resources; it is not a capacity guarantee.
+
+**Verification scope:** Claim verification checks submitted structured fields only. It does not validate interpretations, predictions, or whole reports. Passing an output contract does not prove an algorithm is correct.
+
 ## 功能
 
 - 本命盘、普拉西度与整宫制、历史时区和夏令时歧义处理。
