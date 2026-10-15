@@ -84,6 +84,24 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 完整列表：[docs/tools.md](docs/tools.md)。使用协议：[docs/mcp-agent-protocol.md](docs/mcp-agent-protocol.md)。
 核对工具检查提交的计算事实，不独立验证心理解释，也不代表整个报告已经正确。
 
+## 零门槛安装：直接把这段话发给你的 AI 助手（最推荐）
+
+如果你不太懂代码或命令，只要你的电脑上安装了 **WorkBuddy、Codex、Cursor、Windsurf 或 Claude Code**，你**完全不需要手动敲终端命令**！
+
+👉 **直接复制下面这段话，发给你电脑上的 AI 助手即可：**
+
+> “帮我把这个开源占星 MCP 项目安装到本地并配置启用：  
+> 项目地址：https://github.com/qingxiayi/hellenicstar-mcp  
+> 请帮我：  
+> 1. 用 git clone 下载到本地；  
+> 2. 使用 uv 或 python 虚拟环境安装 requirements.lock 依赖；  
+> 3. 将它配置为当前环境可用的 MCP 服务（运行 mcp_server.py）；  
+> 4. 跑一个样例测试：计算 1990年4月15日 18:00 巴黎的本命盘并画出星盘图，向我汇报安装结果。”
+
+你的 AI 助手在自己电脑里收到后，就会自动在后台克隆、装好依赖并直接挂载工具。完成后你就可以在对话里直接让它排盘了！
+
+---
+
 ## 快速上手与接入指引
 
 你可以根据自己的使用习惯，选择以下任意一种方式使用希腊星智 MCP：
