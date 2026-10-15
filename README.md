@@ -130,20 +130,20 @@ stdio 直接返回图片内容，不提供 HTTP 图片链接；需要支持 MCP 
 并配置 HTTPS 代理，见 [部署说明](docs/deployment.md) 和 [SECURITY.md](SECURITY.md)。
 默认没有用户认证；并发设置是单进程配置，不是已测量的用户容量。
 
-### 云端一键部署（面向 Notion / 移动端 AI 接入）
+### 云端一键部署（面向远程 Agent / 移动端 AI 接入）
 
-如果你希望将本 MCP 部署为全天候在线的 Streamable HTTP 服务，以便在 **Notion AI、手机端 Claude 或远程 Agent** 中调用，推荐通过 [Railway](https://railway.app) 或支持 Docker 的云托管平台一键运行：
+如果你希望将本 MCP 部署为全天候在线的 Streamable HTTP 服务，以便在 **移动端 Claude、远程 Agent 或自定义工作流** 中调用，推荐通过 [Railway](https://railway.app) 或支持 Docker 的云托管平台一键运行：
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template)
 
 1. 点击上方按钮或在 Railway 中导入本 GitHub 仓库；
 2. 平台会自动读取仓库自带的 `Dockerfile` 构建并拉起服务，对外分配专属的 HTTPS 网址；
 3. 你的云端 MCP 服务入口即为：`https://你的域名/mcp`；
-4. 将该链接填入 Notion 连接器或移动端客户端即可在线使用。
+4. 将该链接填入支持 HTTP MCP 的客户端即可在线使用。
 
 > **重要说明（本地使用 vs 云端自建的成本与边界）**：
 > 1. **个人电脑本地运行（完全永久免费）**：推荐将代码克隆到本地（Mac / Windows），通过 stdio 配合 Claude Desktop、Cursor、Codex 本地运行，不产生任何服务器成本、隐私完全留在本地，无使用时长限制。
-> 2. **云端托管部署（Notion / 移动端专用）**：若为了手机端或 Notion 远程调用而部署至 Railway、Render 等云平台，各平台通常提供初始免费试用额度；试用期结束或额度耗尽后，若需全天候 24 小时保持在线，需用户自行在所选云平台绑定支付方式维系云主机运行，或选择转为本地运行。
+> 2. **云端托管部署（远程 Agent / 移动端专用）**：若为了移动端或云端工作流远程调用而部署至 Railway、Render 等云平台，各平台通常提供初始免费试用额度；试用期结束或额度耗尽后，若需全天候 24 小时保持在线，需用户自行在所选云平台绑定支付方式维系云主机运行，或选择转为本地运行。
 > 3. **安全提醒**：云端公开部署建议在环境变量中配置 `MCP_HTTP_BEARER_TOKEN` 开启 Token 访问鉴权，防止公网被他人滥用消耗你的云端资源，详见 [SECURITY.md](SECURITY.md)。
 
 
