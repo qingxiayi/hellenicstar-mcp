@@ -908,7 +908,12 @@ app.router.lifespan_context = _http_lifespan
 
 
 async def mcp_rate_limit(request: Request, call_next):
-    """Bound anonymous MCP traffic using the existing cross-process limiter."""
+    """Optionally enforce Bearer token and bound MCP traffic using the cross-process limiter."""
+    required_token = os.environ.get("MCP_HTTP_BEARER_TOKEN", "").strip()
+    if required_token and request.url.path.startswith("/mcp"):
+        auth_header = request.headers.get("authorization", "")
+        if not auth_header or auth_header != f"Bearer {required_token}":
+            return JSONResponse({"error": "Unauthorized: invalid or missing Bearer token"}, status_code=401)
     peer = request.client.host if request.client else "unknown"
     forwarded = request.headers.get("x-real-ip", "").strip()
     ip = forwarded if peer in {"127.0.0.1", "::1"} and forwarded else peer
