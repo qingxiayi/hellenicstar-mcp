@@ -197,3 +197,15 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
 见 [NOTICE.md](NOTICE.md)。公开服务须提供所部署版本的对应源代码。
 
 已测任务与已知限制：[真实客户端任务验收](docs/task-acceptance-2026-10-14.md)。其中四轴精确行运目前仅支持合相，不覆盖四轴其他主要相位。
+
+## 交流与支持
+
+如果你在安装、使用或占星技法对接过程中有任何疑问，或者希望探讨心理占星与 AI 智能体结合的更多可能性，欢迎与我们交流：
+
+<div align="center">
+  <img src="assets/wechat_qrcode.jpg" width="180" alt="微信公众号二维码" />
+  <p><b>关注微信公众号，获取最新案例实录与算法更新</b></p>
+</div>
+
+- **问题反馈**：欢迎通过 GitHub [Issues](https://github.com/qingxiayi/hellenicstar-mcp/issues) 提交 Bug 或功能建议。
+- **开源支持**：如果这个项目对你的学习或探索有所启发，欢迎在页面右上角为我们点一颗 **⭐️ Star** 支持一下！
