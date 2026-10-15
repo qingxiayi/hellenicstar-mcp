@@ -14,4 +14,4 @@ USER mcp
 
 EXPOSE 5000
 
-CMD ["python", "-m", "uvicorn", "mcp_server:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "1"]
+CMD ["sh", "-c", "python -m uvicorn mcp_server:app --host 0.0.0.0 --port ${PORT:-5000} --workers 1"]
