@@ -114,11 +114,12 @@ mcp = FastMCP(
         "Timing tools return period tables for one reference date (as_of, YYYY-MM-DD); "
         "describe them as traditional time-lord techniques, never as guaranteed events."
     ),
+    host="0.0.0.0",
     streamable_http_path="/mcp",
     stateless_http=True,
     json_response=True,
-    transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False) if os.environ.get("MCP_ALLOWED_HOSTS") == "*" else TransportSecuritySettings(
-        allowed_hosts=os.environ.get("MCP_ALLOWED_HOSTS", "localhost,localhost:*,127.0.0.1:*").split(","),
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=False,
     ),
 )
 
