@@ -130,6 +130,20 @@ stdio 直接返回图片内容，不提供 HTTP 图片链接；需要支持 MCP 
 并配置 HTTPS 代理，见 [部署说明](docs/deployment.md) 和 [SECURITY.md](SECURITY.md)。
 默认没有用户认证；并发设置是单进程配置，不是已测量的用户容量。
 
+### 云端一键部署（面向 Notion / 移动端 AI 接入）
+
+如果你希望将本 MCP 部署为全天候在线的 Streamable HTTP 服务，以便在 **Notion AI、手机端 Claude 或远程 Agent** 中调用，推荐通过 [Railway](https://railway.app) 或支持 Docker 的云托管平台一键运行：
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template)
+
+1. 点击上方按钮或在 Railway 中导入本 GitHub 仓库；
+2. 平台会自动读取仓库自带的 `Dockerfile` 构建并拉起服务，对外分配专属的 HTTPS 网址；
+3. 你的云端 MCP 服务入口即为：`https://你的域名/mcp`；
+4. 将该链接填入 Notion 连接器或移动端客户端即可在线使用。
+
+> **安全提醒**：云端部署默认开放给公网。若希望仅供个人使用，建议在平台的环境变量中设置网络访问控制，或通过带有鉴权的反向代理网关访问，详见 [SECURITY.md](SECURITY.md)。
+
+
 ## 地点与时间
 
 - 已知 WGS-84 经纬度：调用 `resolve_birth_coordinates`，将返回的 `location_id` 用于计算。
