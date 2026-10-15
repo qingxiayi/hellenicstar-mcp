@@ -102,18 +102,6 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 
 ---
 
-## 快速上手与接入指引
-
-你可以根据自己的使用习惯，选择以下任意一种方式使用希腊星智 MCP：
-
-| 接入方式 | 适用场景 | 客户端支持 | 费用与特点 |
-| :--- | :--- | :--- | :--- |
-| **方式一：电脑本地免运维运行（最推荐）** | 个人电脑日常使用、注重排盘隐私 | Claude Desktop、Cursor、Codex、WorkBuddy | **完全永久免费**，数据不离机，复制配置即可用 |
-| **方式二：公共云端免安装测试端点** | 网页端测试、移动端体验、临时尝鲜 | 任何支持输入 HTTP MCP URL 的客户端 | **免部署开箱即用**：`https://hellenicstar-mcp-production.up.railway.app/mcp` |
-| **方式三：云端自托管部署** | 打造属于自己的 24 小时全天候远程节点 | 自建智能体、云端 Agent 工作流 | 导入 GitHub 到 Railway/Docker 一键构建，成本由个人云账号自理 |
-
----
-
 ## 安装
 
 克隆或下载解压本项目，进入 `hellenicstar-mcp`。推荐使用 Python 3.12：
@@ -159,20 +147,6 @@ stdio 直接返回图片内容，不提供 HTTP 图片链接；需要支持 MCP 
 端点为 `http://127.0.0.1:5000/mcp`。公开部署须设置域名、支持联系和对应源代码地址，
 并配置 HTTPS 代理，见 [部署说明](docs/deployment.md) 和 [SECURITY.md](SECURITY.md)。
 默认没有用户认证；并发设置是单进程配置，不是已测量的用户容量。
-
-### 云端自托管部署（面向远程 Agent / 移动端 AI 接入）
-
-如果你希望自行将本 MCP 部署为全天候在线的 Streamable HTTP 服务，推荐使用 [Railway](https://railway.app) 等支持 Docker 的云托管平台：
-
-1. 在 Railway 中点击 **+ New Project** -> **Deploy from GitHub repo**，选择并导入本仓库；
-2. 平台会自动读取仓库自带的 `Dockerfile` 完成构建与容器拉起；
-3. 在服务设置（Settings -> Networking）中点击 **Generate Domain** 生成专属 HTTPS 域名；
-4. 你的专属云端 MCP 服务入口即为：`https://你的域名/mcp`，可直接填入支持 HTTP MCP 的客户端使用。
-
-> **重要说明（本地使用 vs 云端自建的成本与边界）**：
-> 1. **个人电脑本地运行（完全永久免费）**：推荐将代码克隆到本地（Mac / Windows），通过 stdio 配合 Claude Desktop、Cursor、Codex 本地运行，不产生任何服务器成本、隐私完全留在本地，无使用时长限制。
-> 2. **云端托管部署（远程 Agent / 移动端专用）**：若为了移动端或云端工作流远程调用而部署至 Railway、Render 等云平台，各平台通常提供初始免费试用额度；试用期结束或额度耗尽后，若需全天候 24 小时保持在线，需用户自行在所选云平台绑定支付方式维系云主机运行，或选择转为本地运行。
-> 3. **安全提醒**：云端公开部署建议在环境变量中配置 `MCP_HTTP_BEARER_TOKEN` 开启 Token 访问鉴权，防止公网被他人滥用消耗你的云端资源，详见 [SECURITY.md](SECURITY.md)。
 
 
 ## 地点与时间
