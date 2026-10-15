@@ -63,7 +63,9 @@ tool_logger = logging.getLogger("mcp.tool_calls")
 MCP_COMPUTE_GATE_CONFIG = ComputeGateConfig.from_env()
 MCP_COMPUTE_GATE = ComputeGate.from_config(MCP_COMPUTE_GATE_CONFIG)
 
-PUBLIC_BASE = os.environ.get("MCP_PUBLIC_BASE", "http://127.0.0.1:5000").rstrip("/")
+# Automatically detect Railway or custom public domain
+_default_base = f"https://{os.environ['RAILWAY_PUBLIC_DOMAIN']}" if os.environ.get("RAILWAY_PUBLIC_DOMAIN") else "http://127.0.0.1:5000"
+PUBLIC_BASE = os.environ.get("MCP_PUBLIC_BASE", _default_base).rstrip("/")
 CHART_DIR = os.environ.get(
     "MCP_CHART_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache", "mcp_charts"))
 CHART_TTL_SECONDS = 7 * 86400
