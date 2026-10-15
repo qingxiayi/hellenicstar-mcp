@@ -882,7 +882,23 @@ def agent_protocol_prompt() -> str:
     return protocol_text()
 
 
+class EnsureAcceptHeaderMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http":
+            headers = dict(scope.get("headers", []))
+            accept = headers.get(b"accept", b"").decode("latin1")
+            if not accept or "*/*" in accept or "application/json" not in accept:
+                new_headers = [(k, v) for k, v in scope.get("headers", []) if k.lower() != b"accept"]
+                new_headers.append((b"accept", b"application/json, text/event-stream, */*"))
+                scope["headers"] = new_headers
+        await self.app(scope, receive, send)
+
+
 app = mcp.streamable_http_app()
+app.add_middleware(EnsureAcceptHeaderMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
