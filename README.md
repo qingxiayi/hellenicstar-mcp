@@ -86,11 +86,16 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 
 ## 安装
 
-下载并解压源码发行包，进入 `hellenicstar-mcp`。使用 Python 3.12：
+克隆或下载解压本项目，进入 `hellenicstar-mcp`。推荐使用 Python 3.12：
 
 ```bash
+# 推荐方式（使用 uv 极速安装，能有效避免 Windows 下 pip 编译源码包报 EEXIST 错误）：
+uv venv
+uv pip install -r requirements.lock
+
+# 或传统 pip 方式：
 python3.12 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # Windows 为: .venv\Scripts\activate
 python -m pip install -r requirements.lock
 ```
 
