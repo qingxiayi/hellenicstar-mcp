@@ -84,6 +84,18 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 完整列表：[docs/tools.md](docs/tools.md)。使用协议：[docs/mcp-agent-protocol.md](docs/mcp-agent-protocol.md)。
 核对工具检查提交的计算事实，不独立验证心理解释，也不代表整个报告已经正确。
 
+## 快速上手与接入指引
+
+你可以根据自己的使用习惯，选择以下任意一种方式使用希腊星智 MCP：
+
+| 接入方式 | 适用场景 | 客户端支持 | 费用与特点 |
+| :--- | :--- | :--- | :--- |
+| **方式一：电脑本地免运维运行（最推荐）** | 个人电脑日常使用、注重排盘隐私 | Claude Desktop、Cursor、Codex、WorkBuddy | **完全永久免费**，数据不离机，复制配置即可用 |
+| **方式二：公共云端免安装测试端点** | 网页端测试、移动端体验、临时尝鲜 | 任何支持输入 HTTP MCP URL 的客户端 | **免部署开箱即用**：`https://hellenicstar-mcp-production.up.railway.app/mcp` |
+| **方式三：云端自托管部署** | 打造属于自己的 24 小时全天候远程节点 | 自建智能体、云端 Agent 工作流 | 导入 GitHub 到 Railway/Docker 一键构建，成本由个人云账号自理 |
+
+---
+
 ## 安装
 
 克隆或下载解压本项目，进入 `hellenicstar-mcp`。推荐使用 Python 3.12：
