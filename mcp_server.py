@@ -117,7 +117,7 @@ mcp = FastMCP(
     streamable_http_path="/mcp",
     stateless_http=True,
     json_response=True,
-    transport_security=None if os.environ.get("MCP_ALLOWED_HOSTS") == "*" else TransportSecuritySettings(
+    transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False) if os.environ.get("MCP_ALLOWED_HOSTS") == "*" else TransportSecuritySettings(
         allowed_hosts=os.environ.get("MCP_ALLOWED_HOSTS", "localhost,localhost:*,127.0.0.1:*").split(","),
     ),
 )
