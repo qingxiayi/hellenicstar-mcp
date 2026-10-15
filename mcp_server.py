@@ -118,7 +118,8 @@ mcp = FastMCP(
     stateless_http=True,
     json_response=True,
     transport_security=TransportSecuritySettings(
-        allowed_hosts=os.environ.get("MCP_ALLOWED_HOSTS", "localhost,localhost:*,127.0.0.1:*").split(","),
+        enable_dns_rebinding_protection=os.environ.get("MCP_ENABLE_DNS_REBINDING_PROTECTION", "false").lower() in ("true", "1", "yes") if os.environ.get("MCP_ALLOWED_HOSTS") == "*" else True,
+        allowed_hosts=[] if os.environ.get("MCP_ALLOWED_HOSTS") == "*" else os.environ.get("MCP_ALLOWED_HOSTS", "localhost,localhost:*,127.0.0.1:*").split(","),
     ),
 )
 
