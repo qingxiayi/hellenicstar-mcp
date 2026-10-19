@@ -6,7 +6,7 @@
 
 [English](README_en.md) | [中文说明](README.md)
 
-**HellenicStar Astrology MCP** is a standalone, high-precision astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server featuring **42 professional tools** designed for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.).
+**HellenicStar Astrology MCP** is a standalone, high-precision astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server featuring **44 professional tools** designed for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.).
 
 By coupling the classical Swiss Ephemeris engine with rigorous Hellenistic rules and structured claim verification, it supplies calculated chart data and checks submitted factual claims. These checks do not guarantee that an LLM’s final interpretation is accurate or free of hallucinations.
 
@@ -42,7 +42,11 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities (42 Tools)
+## Core Capabilities (44 Tools)
+
+- **Planetary Aspect Cycles & Arabic Lots**:
+  - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.
+  - `calculate_lots`: Calculate Hellenistic and Arabic lots (Fortune, Spirit, Eros, Necessity, Marriage, etc.) on demand with formulas and sect reversal info.
 
 ### 1. High-Precision Natal & Astronomical Charting
 - **House Systems**: Placidus, Whole Sign, and traditional quadrant frameworks.

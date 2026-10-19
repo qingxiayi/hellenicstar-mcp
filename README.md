@@ -5,7 +5,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 
-独立的占星计算与星图渲染 MCP 服务，提供 **42 个工具**，支持 stdio 和
+独立的占星计算与星图渲染 MCP 服务，提供 **44 个工具**，支持 stdio 和
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
 不包含课程、会员、登录、支付或 AI 报告服务，不需要模型 API Key。
 
@@ -98,6 +98,10 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 **Verification scope:** Claim verification checks submitted structured fields only. It does not validate interpretations, predictions, or whole reports. Passing an output contract does not prove an algorithm is correct.
 
 ## 功能
+
+- **通用相位扫描与阿拉伯点**：
+  - `scan_planetary_aspects`：跨百年任意星体对、自定义相位角及容许度窗口或年份摘要扫描。
+  - `calculate_lots`：希腊化与阿拉伯特殊点（福点、精神点、爱神点、必然点、婚姻点等）按需计算与公式展示。
 
 - 本命盘、普拉西度与整宫制、历史时区和夏令时歧义处理。
 - 古典要素、三分主星、福点/精神点、宫主星链、琼斯格局。

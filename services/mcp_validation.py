@@ -14,6 +14,7 @@ ASPECT_NAMES = {0: {'合','合相'},60:{'六分','六分相','六合相'},90:{'�
                 120:{'拱','拱相','三分','三分相'},150:{'梅花','梅花相','梅花相位'},180:{'冲','冲相','对分','对分相'}}
 # Explicit registry: a newly exposed calculation cannot silently bypass checks.
 CONTRACTS = {
+    "scan_planetary_aspects": ("planetary_scan", {"settings": dict, "event_count": int, "events": list, "windows": list, "year_summary": list}, "tests/test_planetary_aspect_scan.py"),
     'search_birthplace': ('location', {'options': list}, 'tests/test_mcp_natal.py'),
     'resolve_birth_coordinates': ('location', {'location_id': str, 'lat': float, 'lng': float, 'timezone': str}, 'tests/test_mcp_guardrails.py'),
     'calculate_natal_chart': ('natal', {'birth_context': dict, 'settings': dict, 'planets': list, 'axes': dict, 'house_cusps': list, 'aspects': list}, 'tests/test_mcp_natal.py'),
@@ -39,6 +40,7 @@ CONTRACTS = {
     'calculate_sky_chart': ('sky_chart', {'moment': str, 'location': dict, 'settings': dict, 'planets': list, 'house_cusps': list, 'axes': dict, 'aspects': list, 'moon_phase': dict, 'planet_motion': list}, 'tests/test_mcp_natal.py'),
     'calculate_davison_chart': ('davison', {'birth_context': dict, 'settings': dict, 'midpoint_space_time': dict, 'chart': dict, 'aspects': list}, 'tests/test_davison_chart.py'),
     'calculate_relocation_chart': ('relocation', {'birth_context': dict, 'settings': dict, 'relocation_location': dict, 'angular_shifts': dict, 'axes': dict, 'house_cusps': list, 'planets': list, 'aspects': list}, 'tests/test_relocation_chart.py'),
+    'calculate_lots': ('lots', {'birth_context': dict, 'settings': dict, 'sect': str, 'lots': list}, 'tests/test_classical_engine.py'),
 }
 # Images get a checked numerical companion BEFORE rendering. Pixel/label layout
 # still requires visual tests; image presence never proves chart correctness.
@@ -256,7 +258,20 @@ def domain_checks(tool,d,args):
     if args.get('moment'):
         stamp=d.get('moment',d.get('timestamp'))
         if stamp: require(instant(stamp)==instant(args['moment']),'/moment','instant_matches_input')
-    if family=='location':
+    if family=='planetary_scan':
+        require(d['event_count'] >= 0, '/event_count', 'nonnegative_count')
+        if d['settings']['output_precision'] != 'year_summary':
+            require(d['event_count']==len(d['events']), '/events', 'count_matches')
+        for i, row in enumerate(d['events']):
+            path='/events/'+str(i)
+            fields(row, {'planet_a':str,'planet_b':str,'aspect_degree':float,
+                         'longitude_a':float,'longitude_b':float,'angular_difference':float,
+                         'hit_index':int,'cycle_group_id':str,'retrograde_a':bool,'retrograde_b':bool}, path)
+            require(row['planet_a']==d['planet_a'] and row['planet_b']==d['planet_b'],path,'pair_matches')
+            require(row['hit_index']>=1,path,'positive_hit_index')
+            require(0<=row['longitude_a']<360 and 0<=row['longitude_b']<360,path,'longitude_range')
+            require(abs(row['angular_difference']-row['aspect_degree'])<0.00002,path,'exact_residual')
+    elif family=='location':
         rows=d.get('options',[d])
         require(bool(rows),'/options','nonempty_location_result')
         for row in rows:
@@ -461,6 +476,11 @@ def domain_checks(tool,d,args):
             for key,p in c['planets'].items():
                 expected=(int(p['longitude']//30)-asc_sign)%12+1
                 require(p['house']==expected, '/chart/planets/'+key+'/house', 'whole_sign_house_matches_sign')
+    elif family=='lots':
+        require(d['sect'] in ('日生人', '夜生人'), '/sect', 'known_sect')
+        require(isinstance(d['lots'], list) and len(d['lots']) > 0, '/lots', 'non_empty_lots')
+        for lot in d['lots']:
+            fields(lot, {'key': str, 'name_zh': str, 'longitude': float, 'sign': str, 'formula': str, 'reversed_at_night': bool}, '/lots')
     elif family=='relocation':
         rl=d['relocation_location']
         require(rl['location_id']==args['relocation_location_id'], '/relocation_location/location_id', 'relocation_location_matches_input')

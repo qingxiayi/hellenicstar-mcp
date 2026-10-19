@@ -18,6 +18,7 @@ NATAL_SOURCE_TOOLS = frozenset({
     "render_natal_chart",
     "render_jones_pattern",
     "calculate_classical_factors",
+    "calculate_lots",
     "calculate_zodiacal_releasing",
     "calculate_time_lords",
     "calculate_solar_arc",
@@ -46,6 +47,7 @@ NATAL_SOURCE_TOOLS = frozenset({
 })
 
 INDEPENDENT_CALCULATION_TOOLS = frozenset({
+    "scan_planetary_aspects",
     "get_current_sky",
     "calculate_aspect_windows",
     "calculate_lunar_return",

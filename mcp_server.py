@@ -7,14 +7,14 @@ from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, Icon, ImageContent, TextContent, ToolAnnotations
 from pydantic import BaseModel, Field, StrictInt
-from typing import Annotated
+from typing import Annotated, Literal
 from starlette.requests import Request
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from starlette.routing import Route
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from services.mcp_natal import (calculate_classical_data, calculate_natal_data,
+from services.mcp_natal import (calculate_classical_data, calculate_lots_data, calculate_natal_data,
                                 calculate_releasing_data, calculate_time_lord_data,
                                 render_natal_chart_png, render_jones_pattern_png,
                                 search_birthplace as find_birthplace)
@@ -831,6 +831,31 @@ def verify_natal_claims(reference: NatalFactReference,
 def verify_calculation_claims(reference: CalculationReference,
                              claims: Annotated[list[CalculationClaim], Field(min_length=1,max_length=100)]) -> dict:
     return verify_calculation_claims_data(reference.model_dump(), [c.model_dump() for c in claims])
+
+
+@tool(annotations=READ_ONLY, description="Calculate Hellenistic and Arabic lots on demand. Returns name, longitude, sign, house, formula and day/night reversal info. Filter with lots=['fortune', 'spirit', 'eros', 'marriage_male', 'mother', ...]. Data only, no psychological interpretation.")
+def calculate_lots(
+    *, year: StrictInt | None = None, month: StrictInt | None = None,
+    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
+    location_id: str | None = None, lots: list[str] | None = None,
+    house_system: str = "whole_sign", fold: StrictInt | None = None
+) -> dict:
+    return calculate_lots_data(year=year, month=month, day=day, hour=hour,
+                              minute=minute, location_id=location_id,
+                              lots=lots, house_system=house_system, fold=fold)
+
+
+@tool(annotations=READ_ONLY, description="Scan exact planetary aspects over UTC inclusive date ranges (1800–2399, max 200 years). Arbitrary supported body pair and angles [0,180]; tropical geocentric apparent Swiss Ephemeris, mean nodes by default. Uses bracketed roots and relative-speed station splits. mode=orb_window returns clipped entry/exit windows plus exact events; orb_deg is separate from exact. output_precision: exact_datetime, date, year_summary. timezone_name is optional IANA zone. Cycle IDs and hit indices are query-local directed-angle groups, not universal cycle numbering. See docs/planetary-aspect-scan.md.")
+def scan_planetary_aspects(
+    planet_a: str, planet_b: str, start_date: str, end_date: str,
+    aspects: list[float] | None = None,
+    mode: Literal["exact", "orb_window"] = "exact", orb_deg: float = 1.0,
+    output_precision: Literal["exact_datetime", "date", "year_summary"] = "exact_datetime",
+    timezone_name: str | None = None,
+) -> dict:
+    from services.planetary_aspect_scan import scan
+    return scan(planet_a, planet_b, start_date, end_date, aspects, mode,
+                orb_deg, output_precision, timezone_name)
 
 
 @tool(annotations=READ_ONLY, description="Discover the current MCP tools, their input schemas, registered algorithm provenance and system versions. Generated from the live tool registry and algorithm_registry; use this before choosing a calculation workflow.")

@@ -258,6 +258,7 @@ def _lot(result: dict, prefix: str, label: str, house_system: str) -> dict:
 def calculate_classical_data(*, year: int, month: int, day: int, hour: int,
                              minute: int, location_id: str,
                              house_system: str = "placidus",
+                             planets: list[str] | None = None,
                              fold: int | None = None) -> dict:
     """Project sect, triplicity lords, planet condition, lots and Jones pattern."""
     try:
@@ -267,6 +268,65 @@ def calculate_classical_data(*, year: int, month: int, day: int, hour: int,
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
     complement = result.get("complement_luminary_tri_stages") or {}
+
+    from services.classical_engine import (
+        compute_essential_dignities,
+        compute_solar_state,
+        compute_orientality,
+        compute_receptions,
+        TRADITIONAL_PLANETS,
+        SOLAR_THRESHOLDS,
+    )
+
+    is_diurnal = (result["sect"] == "日生人")
+    planets_by_key = {p["key"]: p for p in result["natal_planets_full"]}
+    sun_lon = planets_by_key["sun"]["lon"]
+    house_key = HOUSE_SYSTEMS[house_system]
+
+    target_keys = TRADITIONAL_PLANETS
+    if planets:
+        allowed = {k.strip().lower() for k in planets}
+        filtered = [k for k in TRADITIONAL_PLANETS if k in allowed]
+        if filtered:
+            target_keys = tuple(filtered)
+
+    dignities_detail = []
+    for pk in target_keys:
+        p = planets_by_key[pk]
+        lon = p["lon"]
+        ed = compute_essential_dignities(pk, lon, is_diurnal)
+        p_house = p[house_key]
+        cross = "angular" if p_house in (1, 4, 7, 10) else ("succedent" if p_house in (2, 5, 8, 11) else "cadent")
+        accidental = {
+            "house": p_house,
+            "cross": cross,
+            "in_sect": (result["sect_labels"][house_system].get(p["cn"]) == "得时"),
+            "retrograde": p["retrograde"],
+        }
+        if pk != "sun":
+            sol = compute_solar_state(lon, sun_lon)
+            accidental["solar_state"] = sol["state"]
+            accidental["solar_state_zh"] = sol["state_zh"]
+            accidental["solar_separation_deg"] = sol["solar_separation_deg"]
+            ori = compute_orientality(lon, sun_lon)
+            accidental["orientality"] = ori["orientality"]
+            accidental["orientality_zh"] = ori["orientality_zh"]
+        else:
+            accidental["solar_state"] = "luminary"
+            accidental["solar_state_zh"] = "发光体"
+            accidental["orientality"] = "luminary"
+            accidental["orientality_zh"] = "发光体"
+
+        dignities_detail.append({
+            "planet": pk,
+            "planet_zh": p["cn"],
+            "longitude": round(lon, 4),
+            "sign": p["sign"],
+            "essential_dignities": ed,
+            "accidental_status": accidental,
+        })
+    receptions_data = compute_receptions(planets_by_key, result.get("aspects", []), is_diurnal)
+
     return {
         "status": "ok",
         "birth_context": result["birth_context"],
@@ -297,6 +357,43 @@ def calculate_classical_data(*, year: int, month: int, day: int, hour: int,
         "lunations_around_birth": result["lunation_data"],
         "jones_pattern": _strip_text({k: v for k, v in result["jones_pattern"].items()
                                       if k != "distribution"}),
+        "classical_dignities_detail": dignities_detail,
+        "receptions": receptions_data,
+        "solar_state_thresholds": SOLAR_THRESHOLDS,
+    }
+
+
+def calculate_lots_data(*, year: int, month: int, day: int, hour: int,
+                        minute: int, location_id: str,
+                        lots: list[str] | None = None,
+                        house_system: str = "whole_sign",
+                        fold: int | None = None) -> dict:
+    """Calculate Hellenistic and Arabic lots on demand."""
+    try:
+        result = _compute_source(year=year, month=month, day=day, hour=hour,
+                                 minute=minute, location_id=location_id,
+                                 house_system=house_system, fold=fold)
+    except (BirthContextError, ValueError) as exc:
+        return _input_error(exc)
+
+    from services.classical_engine import compute_lots
+    is_diurnal = (result["sect"] == "日生人")
+    planets_map = {p["key"]: p["lon"] for p in result["natal_planets_full"]}
+    asc_lon = result["asc_lon"]
+    sun_lon = planets_map["sun"]
+    moon_lon = planets_map["moon"]
+    cusps = list(result["cusps"]) if result.get("cusps") else []
+
+    lots_list = compute_lots(
+        asc_lon=asc_lon, sun_lon=sun_lon, moon_lon=moon_lon,
+        planets_map=planets_map, cusps=cusps, is_diurnal=is_diurnal,
+        requested_lots=lots, house_system=house_system)
+    return {
+        "status": "ok",
+        "birth_context": result["birth_context"],
+        "settings": {"zodiac": "tropical", "house_system": house_system},
+        "sect": result["sect"],
+        "lots": lots_list,
     }
 
 

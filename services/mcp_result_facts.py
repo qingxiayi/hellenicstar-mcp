@@ -31,7 +31,7 @@ ClaimValueType = Union[
     None
 ]
 
-ReferenceInputType = Union[Scalar, ScalarDict]
+ReferenceInputType = Union[Scalar, ScalarDict, ScalarList]
 
 
 class CalculationReference(BaseModel):
