@@ -42,7 +42,7 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities (44 Tools)
+## Core Capabilities (45 Tools)
 
 - **Planetary Aspect Cycles & Arabic Lots**:
   - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.

@@ -9,6 +9,20 @@
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
 不包含课程、会员、登录、支付或 AI 报告服务，不需要模型 API Key。
 
+## 本命结构图谱：先计算关系，再形成理解
+
+`calculate_natal_structure_graph` 根据准确的出生年月日时和确认后的地点，计算十颗行星之间的结构关系，供后续核对与解读使用。
+
+- **定位链与汇聚**：分别按传统、现代守护规则追踪每颗行星的去向，列出自定位、闭环、汇入集合和直接指入关系。
+- **相位网络与构型**：提供 6°、8°、10° 三档筛选，输出连通分量、孤立节点，以及大三角、小三角、楔形、T 三角、风筝、神秘矩形、大十字。
+- **其他关系层**：保留互容、古典尊贵与状态、Placidus／整宫宫主关系和 Jones 几何分类。
+- **共享来源**：用来源字段与依赖边标明哪些关系重复使用同一底层事实，便于避免把重复关系当作多条独立证据。
+- **部分图层可用**：高纬度导致 Placidus 失败时，保留仍能计算的行星关系，并用 `completeness=partial` 和 `layer_availability` 标记未计算的宫位、轴点层。
+
+例如，可以让 MCP 客户端“计算我的本命结构图谱，分别列出传统和现代定位闭环，以及每个闭环有哪些行星汇入；再用原结果字段复核这些关系”。汇聚数量提供结构信息，心理主线需要另行检验。当前输出为结构化数据；此工具不生成可视化图谱图片。
+
+输入示例、完整字段、复核方式与可复现测试见 [本命结构图谱说明](docs/natal-structure-graph.md)。
+
 ## 土木流年大表：从长期周期查到具体日期
 
 围绕“土星、木星何时经过我的四轴、进入哪一宫、是否因逆行再次经过”，提供可查询的事件表和可直接展示的全景图，便于回顾经历、比较不同阶段，并继续查看某段时间的详细行运。
@@ -98,6 +112,8 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 **Verification scope:** Claim verification checks submitted structured fields only. It does not validate interpretations, predictions, or whole reports. Passing an output contract does not prove an algorithm is correct.
 
 ## 功能
+
+- **本命结构图谱**：定位链、闭环与汇聚、互容、相位构型、宫主关系、状态与共享依赖，可用原始字段复算核对。
 
 - **通用相位扫描与阿拉伯点**：
   - `scan_planetary_aspects`：跨百年任意星体对、自定义相位角及容许度窗口或年份摘要扫描。
@@ -256,8 +272,3 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
 
 - **问题反馈**：欢迎通过 GitHub [Issues](https://github.com/qingxiayi/hellenicstar-mcp/issues) 提交 Bug 或功能建议。
 - **开源支持**：如果这个项目对你的学习或探索有所启发，欢迎在页面右上角为我们点一颗 **⭐️ Star** 支持一下！
-
-
-## Natal structure graph / 本命结构图谱
-
-`calculate_natal_structure_graph` returns deterministic dispositor paths, cycles, basins, receptions, aspect motifs and shared dependencies. High-latitude failures retain planetary relations with explicit unavailable house layers. No psychological theme is inferred. See [the graph contract and reproducible validation](docs/natal-structure-graph.md).

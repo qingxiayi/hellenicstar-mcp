@@ -1,7 +1,9 @@
 # Standalone release verification
 
-This is a local source-release candidate. No remote repository has been created,
-no Git history has been pushed, and no production server has been changed.
+The historical preparation records below describe the initial source release.
+The public repository now includes the natal structure graph tool (45 tools).
+See [the 2026-10-21 release verification](validation/natal-structure-release-2026-10-21.md)
+for the deployed source revision and the scope of current runtime checks.
 
 The standalone cleanup removes the legacy course/report generation and model API
 code. Classical MCP results use a calculation-field allowlist; the two inherited

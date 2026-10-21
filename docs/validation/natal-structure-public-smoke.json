@@ -1,0 +1,43 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "checks": {
+    "full": {
+      "node_count": 10,
+      "completeness": "full",
+      "verification": {
+        "supported": 2,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "partial": {
+      "node_count": 10,
+      "completeness": "partial",
+      "verification": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 1
+      }
+    },
+    "calculate_natal_chart": {
+      "status": "ok",
+      "quality": "passed"
+    },
+    "calculate_lots": {
+      "status": "ok",
+      "quality": "passed"
+    },
+    "scan_planetary_aspects": {
+      "status": "ok",
+      "quality": "passed"
+    },
+    "image": {
+      "bytes": 270959,
+      "sha256": "6e2f666a1067f4bbce70be9c4814216e3042e673460dafb3b6e2eeb3759379cb",
+      "url": "https://hellenicstar.com/mcp/chart/6e2f666a1067f4bbce70be9c4814216e3042e673460dafb3b6e2eeb3759379cb.png",
+      "cache_control": "no-store"
+    },
+    "invalid_and_missing": "passed"
+  },
+  "tool_count": 45
+}
