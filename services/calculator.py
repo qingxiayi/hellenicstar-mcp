@@ -171,8 +171,9 @@ def compute(name, year, month, day, hour, minute, city, lat=None, lng=None, tz=N
     location_id / fold: 新解析链入参（下拉签发的 canonical id / 秋拨歧义所选 fold）。
     tz: 旧形参，保留兼容旧调用方但已忽略——时区现由 resolver 单一来源决定（plan §5.4）。
     """
-    year, month, day = int(year), int(month), int(day)
-    hour, minute = int(hour), int(minute)
+    from services.birth_input import validated_birth_values
+    year, month, day, hour, minute = validated_birth_values(
+        year, month, day, hour, minute)
 
     # ── 单一解析链（plan §2/§5.4）：LocationResolver → CivilTimeResolver → ctx ──
     # 旧链已删：normalize_timezone_for_coords / CITY_COORDINATES 进程级注入 /

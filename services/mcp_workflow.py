@@ -8,6 +8,11 @@ _VERIFY = {"tool": "verify_calculation_claims", "when": "引用计算事实写�
            "purpose": "用原样 calculation_reference 和原结果字段路径核对草稿事实"}
 
 WORKFLOWS = {
+    "natal_structure": {
+        "label": "本命结构图谱", "patterns": (r"本命结构|结构图谱|natal structure|dispositor graph",),
+        "needed": _BIRTH,
+        "steps": [("calculate_natal_structure_graph", "计算定位链、闭环、汇聚、相位构型及依赖关系")],
+    },
     "natal": {
         "label": "本命盘", "patterns": (r"本命盘|出生星盘|natal|birth chart",),
         "needed": _BIRTH + ["宫制 placidus 或 whole_sign"],

@@ -19,7 +19,7 @@ def test_stdio_discovery_from_other_working_directory(tmp_path):
             async with ClientSession(read, write) as session:
                 await session.initialize()
                 names = {tool.name for tool in (await session.list_tools()).tools}
-                assert len(names) == 44
+                assert len(names) == 45
                 assert {'resolve_birth_coordinates', 'get_agent_protocol'} <= names
     asyncio.run(check())
 

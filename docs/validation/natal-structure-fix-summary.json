@@ -1,0 +1,19 @@
+{
+  "inputs": 1294,
+  "counts": {
+    "ok": 1245,
+    "rejected": 13,
+    "partial": 36
+  },
+  "failures": [],
+  "normal_semantics_compared": 1245,
+  "max_seconds": 0.43348,
+  "source_baselines": {
+    "normal_sources_unchanged": 3,
+    "comparison": "JSON-normalized; existing cusps tuple serializes as list"
+  },
+  "new_unit_tests": 60,
+  "related_calculation_tests": 96,
+  "scope": "local Python module; not registered as MCP or deployed",
+  "contract_and_compatibility_test_run": 172
+}

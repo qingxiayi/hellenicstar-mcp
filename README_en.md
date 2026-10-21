@@ -135,3 +135,8 @@ pytest tests/ -q
 - Geographic resolution utilizes **GeoNames** (CC BY 4.0) and **timezonefinder**.
 - See [NOTICE.md](NOTICE.md) for full third-party notices and licenses.
 
+
+
+## Natal structure graph / 本命结构图谱
+
+`calculate_natal_structure_graph` returns deterministic dispositor paths, cycles, basins, receptions, aspect motifs and shared dependencies. High-latitude failures retain planetary relations with explicit unavailable house layers. No psychological theme is inferred. See [the graph contract and reproducible validation](docs/natal-structure-graph.md).

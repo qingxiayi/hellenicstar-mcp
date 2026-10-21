@@ -14,6 +14,7 @@ ASPECT_NAMES = {0: {'合','合相'},60:{'六分','六分相','六合相'},90:{'�
                 120:{'拱','拱相','三分','三分相'},150:{'梅花','梅花相','梅花相位'},180:{'冲','冲相','对分','对分相'}}
 # Explicit registry: a newly exposed calculation cannot silently bypass checks.
 CONTRACTS = {
+    'calculate_natal_structure_graph': ('natal_structure', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'nodes': list, 'facts': dict, 'dispositor': dict, 'aspects': dict, 'houses': dict, 'conditions': dict, 'receptions': dict, 'layer_availability': dict, 'interpretations': list}, 'tests/test_mcp_structure_graph.py'),
     "scan_planetary_aspects": ("planetary_scan", {"settings": dict, "event_count": int, "events": list, "windows": list, "year_summary": list}, "tests/test_planetary_aspect_scan.py"),
     'search_birthplace': ('location', {'options': list}, 'tests/test_mcp_natal.py'),
     'resolve_birth_coordinates': ('location', {'location_id': str, 'lat': float, 'lng': float, 'timezone': str}, 'tests/test_mcp_guardrails.py'),
@@ -62,6 +63,7 @@ RENDER_SOURCES = {
 # Metadata tools are audited separately from calculation tools: they do not
 # produce calculation_reference values or enter the claim-recomputation registry.
 META_CONTRACTS = {
+    'calculate_natal_structure_graph': ('natal_structure', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'nodes': list, 'facts': dict, 'dispositor': dict, 'aspects': dict, 'houses': dict, 'conditions': dict, 'receptions': dict, 'layer_availability': dict, 'interpretations': list}, 'tests/test_mcp_structure_graph.py'),
     'get_capabilities': {'schema_version': str, 'versions': dict,
                          'tool_count': int, 'tools': list, 'algorithm_registry': dict},
     'get_agent_protocol': {'schema_version': str, 'uri': str, 'content': str},
@@ -507,7 +509,13 @@ def validate_output(tool, data, args):
     try:
         require(tool in CONTRACTS,'/','tool_has_contract')
         require(isinstance(data,dict) and data.get('status')=='ok','/status','successful_result_required')
-        fields(data,CONTRACTS[tool][1]); walk(data); domain_checks(tool,data,args)
+        fields(data,CONTRACTS[tool][1])
+        if tool == 'calculate_natal_structure_graph':
+            from services.mcp_structure_graph import validate_graph_output
+            context(data['birth_context'], args)
+            validate_graph_output(data)
+        else:
+            walk(data); domain_checks(tool,data,args)
     except InvalidOutput as exc:
         return [{'path':exc.path,'rule':exc.rule}]
     except (KeyError,TypeError,ValueError,IndexError,OverflowError):

@@ -5,7 +5,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 
-独立的占星计算与星图渲染 MCP 服务，提供 **44 个工具**，支持 stdio 和
+独立的占星计算与星图渲染 MCP 服务，提供 **45 个工具**，支持 stdio 和
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
 不包含课程、会员、登录、支付或 AI 报告服务，不需要模型 API Key。
 
@@ -256,3 +256,8 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
 
 - **问题反馈**：欢迎通过 GitHub [Issues](https://github.com/qingxiayi/hellenicstar-mcp/issues) 提交 Bug 或功能建议。
 - **开源支持**：如果这个项目对你的学习或探索有所启发，欢迎在页面右上角为我们点一颗 **⭐️ Star** 支持一下！
+
+
+## Natal structure graph / 本命结构图谱
+
+`calculate_natal_structure_graph` returns deterministic dispositor paths, cycles, basins, receptions, aspect motifs and shared dependencies. High-latitude failures retain planetary relations with explicit unavailable house layers. No psychological theme is inferred. See [the graph contract and reproducible validation](docs/natal-structure-graph.md).

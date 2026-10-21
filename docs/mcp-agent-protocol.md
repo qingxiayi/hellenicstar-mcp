@@ -31,3 +31,8 @@
 ## 行运四轴范围
 
 `calculate_transits_to_natal` 对四轴只计算合相（0度）。`target_scope=axes` 的空结果仅代表没有四轴合相；不能推断没有六合、刑、拱或冲。用户要求四轴全部主要相位时，明确说明本工具不能完整完成，不能将合相查询冒充全相位查询。
+
+
+## 本命结构图谱
+
+需要定位链、闭环、汇聚、构型或共享依赖时调用 `calculate_natal_structure_graph`。检查 `completeness` 和 `layer_availability`；`status=ok` 不等于宫位层完整。结构中心性不直接等于心理核心。用原样 `calculation_reference` 核验所引用的图谱字段。

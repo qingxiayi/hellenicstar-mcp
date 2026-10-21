@@ -17,7 +17,7 @@ def test_capabilities_reflect_live_tools_and_algorithm_registry():
 
     assert capabilities["status"] == "ok"
     assert capabilities["schema_version"] == "mcp-capabilities-v1"
-    assert capabilities["tool_count"] == len(exposed) == 44
+    assert capabilities["tool_count"] == len(exposed) == 45
     assert set(listed) == set(exposed)
     assert capabilities["algorithm_registry"] == list_algorithms()
     assert capabilities["versions"] == get_version_info()

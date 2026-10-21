@@ -414,6 +414,17 @@ def calculate_natal_chart(
                                 house_system=house_system, fold=fold)
 
 
+@tool(annotations=READ_ONLY, description="Calculate a deterministic natal structure graph from an exact civil birth time and selected location_id. Includes traditional and modern dispositor paths, terminal cycles and basins, receptions, aspect networks at 6/8/10 degree cutoffs, seven geometric motifs, both house systems, classical conditions and shared dependencies. No psychological core or importance ranking is inferred. If Placidus fails, completeness=partial and houses/axes are explicitly unavailable; planetary relations remain usable. Both full and partial results can be verified using calculation_reference. See docs/natal-structure-graph.md.")
+def calculate_natal_structure_graph(
+    *, year: StrictInt | None = None, month: StrictInt | None = None,
+    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
+    location_id: str | None = None, fold: StrictInt | None = None
+) -> dict:
+    from services.mcp_structure_graph import calculate_graph_data
+    return calculate_graph_data(year=year, month=month, day=day, hour=hour,
+                                minute=minute, location_id=location_id, fold=fold)
+
+
 @tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the existing natal chart wheel as a 720px PNG shown to the user. Requires an exact birth date, local time and selected location_id; supports placidus or whole_sign. Ask about ambiguous civil time instead of guessing fold.")
 def render_natal_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,

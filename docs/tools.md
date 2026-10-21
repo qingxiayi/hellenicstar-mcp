@@ -3,6 +3,7 @@
 - `search_birthplace`
 - `resolve_birth_coordinates`
 - `calculate_natal_chart`
+- `calculate_natal_structure_graph` — [deterministic relationships and layer availability](natal-structure-graph.md)
 - `render_natal_chart`
 - `render_jones_pattern`
 - `calculate_classical_factors`

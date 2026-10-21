@@ -17,6 +17,7 @@ BIRTH=dict(year=1990,month=4,day=15,hour=18,minute=0,location_id='gn:2988507')
 PARTNER=dict(year=1988,month=8,day=1,hour=9,minute=30,location_id='gn:2988507')
 MOMENT='2026-10-08T12:00:00+08:00'
 EXTRAS={
+ 'calculate_natal_structure_graph':{},
  "scan_planetary_aspects":dict(planet_a="Jupiter",planet_b="Saturn",start_date="2020-01-01",end_date="2020-12-31",aspects=[0]),
  'search_birthplace':dict(query='Paris'), 'resolve_birth_coordinates':dict(latitude=48.8566,longitude=2.3522),
  'calculate_natal_chart':dict(house_system='placidus'), 'calculate_classical_factors':dict(house_system='placidus'),
@@ -38,6 +39,7 @@ EXTRAS={
  'calculate_lots':dict(house_system='whole_sign',lots=['fortune','spirit','eros']),
 }
 PATHS={
+ 'calculate_natal_structure_graph':'/dispositor/traditional/paths/sun/terminal',
  "scan_planetary_aspects":"/events/0/exact_datetime_utc",
  'search_birthplace':'/options/0/location_id', 'resolve_birth_coordinates':'/timezone',
  'calculate_natal_chart':'/planets/0/house', 'calculate_classical_factors':'/jones_pattern/high_focus_planet',
@@ -58,6 +60,7 @@ PATHS={
 }
 # Each mutation is a realistic corrupted output, not merely a missing top key.
 MUTATIONS={
+ 'calculate_natal_structure_graph':('/dispositor/traditional/paths/sun/terminal',['invalid']),
  "scan_planetary_aspects":("/events/0/angular_difference",12.0),
  'search_birthplace':('/options/0/location_id',''), 'resolve_birth_coordinates':('/lat',91),
  'calculate_natal_chart':('/planets/0/house',1), 'calculate_classical_factors':('/jones_pattern/high_focus_planet','不存在的星体'),
