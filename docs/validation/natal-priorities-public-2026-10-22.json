@@ -1,0 +1,30 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "tool_count": 46,
+  "old_tool_schemas_unchanged": true,
+  "old_graph_unchanged": true,
+  "checks": [
+    {
+      "case": "full",
+      "completeness": "full",
+      "dynamics": "available",
+      "aspects": 15,
+      "verification": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    {
+      "case": "polar",
+      "completeness": "partial",
+      "dynamics": "available",
+      "aspects": 11,
+      "verification": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    }
+  ]
+}
