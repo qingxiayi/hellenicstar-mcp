@@ -14,6 +14,7 @@ ASPECT_NAMES = {0: {'合','合相'},60:{'六分','六分相','六合相'},90:{'�
                 120:{'拱','拱相','三分','三分相'},150:{'梅花','梅花相','梅花相位'},180:{'冲','冲相','对分','对分相'}}
 # Explicit registry: a newly exposed calculation cannot silently bypass checks.
 CONTRACTS = {
+    'calculate_natal_salience': ('natal_salience', {'schema_version':str, 'completeness':str, 'birth_context':dict, 'settings':dict, 'source_graph':dict, 'core_structures':list, 'priority_planets':list, 'priority_aspects':list, 'priority_configurations':list, 'house_ruler_links':list, 'global_distribution':dict, 'evidence_index':dict, 'reading_plan':dict, 'evidence_matrix':dict, 'resource_checks':dict, 'priority_decisions':dict, 'resource_decisions':dict, 'reception_facts':dict, 'aspect_dynamics':dict, 'selection_audit':list, 'availability':dict, 'method':dict, 'layer_availability':dict, 'interpretations':list}, 'tests/test_natal_salience.py'),
     'calculate_natal_structure_graph': ('natal_structure', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'nodes': list, 'facts': dict, 'dispositor': dict, 'aspects': dict, 'houses': dict, 'conditions': dict, 'receptions': dict, 'layer_availability': dict, 'interpretations': list}, 'tests/test_mcp_structure_graph.py'),
     "scan_planetary_aspects": ("planetary_scan", {"settings": dict, "event_count": int, "events": list, "windows": list, "year_summary": list}, "tests/test_planetary_aspect_scan.py"),
     'search_birthplace': ('location', {'options': list}, 'tests/test_mcp_natal.py'),
@@ -510,7 +511,10 @@ def validate_output(tool, data, args):
         require(tool in CONTRACTS,'/','tool_has_contract')
         require(isinstance(data,dict) and data.get('status')=='ok','/status','successful_result_required')
         fields(data,CONTRACTS[tool][1])
-        if tool == 'calculate_natal_structure_graph':
+        if tool == 'calculate_natal_salience':
+            from services.mcp_salience import validate_salience_output
+            validate_salience_output(data,args)
+        elif tool == 'calculate_natal_structure_graph':
             from services.mcp_structure_graph import validate_graph_output
             context(data['birth_context'], args)
             validate_graph_output(data)

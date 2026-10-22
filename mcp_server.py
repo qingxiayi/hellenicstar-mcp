@@ -6,7 +6,7 @@ Run behind HTTPS reverse proxy with `uvicorn mcp_server:app --host 127.0.0.1 --p
 from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, Icon, ImageContent, TextContent, ToolAnnotations
-from pydantic import BaseModel, Field, StrictInt
+from pydantic import BaseModel, Field, StrictInt, StrictFloat, StrictBool
 from typing import Annotated, Literal
 from starlette.requests import Request
 from starlette.middleware.cors import CORSMiddleware
@@ -423,6 +423,27 @@ def calculate_natal_structure_graph(
     from services.mcp_structure_graph import calculate_graph_data
     return calculate_graph_data(year=year, month=month, day=day, hour=hour,
                                 minute=minute, location_id=location_id, fold=fold)
+
+
+@tool(annotations=READ_ONLY, description="Extract natal priorities from the full structure graph using versioned selection rules, without scores or a mandatory single core. Returns terminal groups with main external entries and seven/ten-origin comparisons, identity/axis/tight-aspect/configuration candidates, complete planet profiles, semantic evidence links and availability. Includes reading_plan (all terminals and maximal configurations first), evidence_matrix (selection vs context, no vote count), and resource_checks tied to specific states/aspects without remedy verdicts. Version 2 priority_decisions indexes roles without tiers; resource_decisions v3 separates established relationships, counterpart state and topic applicability without global support grades or effective-remedy verdicts. Candidate coverage is not a concise shortlist. States do not select a core. Calculation-only output; no psychological hypotheses or advice. reception_facts separates host/guest dignity bases, sign geometry and current degree-aspect membership. aspect_dynamics calculates applying/separating and bounded first exact contacts with stations/sign changes; dynamics_days is 1 to 90 (default 30). reception_policy chooses explicit dignity/sign/degree/applying criteria, not efficacy. Candidate routes include all major aspects and shared configurations, with intrinsic conditions separate. scope controls statistical origins, rulership controls edges; modern chains may pass through outer planets even with seven origins. Uses true ASC/MC, merges opposite-axis expressions. Selected planets retain all aspects in orb_view, not just tight ones. source_graph preserves all nodes. See docs/natal-salience.md.")
+def calculate_natal_salience(
+    *, year: StrictInt | None = None, month: StrictInt | None = None,
+    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
+    location_id: str | None = None, fold: StrictInt | None = None,
+    scope: Literal['classical7','ten'] = 'classical7',
+    rulership: Literal['traditional','modern'] = 'traditional', orb_view: StrictInt = 8,
+    tight_orb: StrictInt | StrictFloat = 3.0, axis_orb: StrictInt | StrictFloat = 5.0,
+    include_mc_ruler: StrictBool = False,
+    distribution_points: Literal['ten','ten_plus_asc_mc'] = 'ten_plus_asc_mc',
+    reception_policy: Literal['dignity_only','sign_aspect','degree_aspect','applying_degree_aspect'] = 'dignity_only',
+    dynamics_days: StrictInt = 30,
+) -> dict:
+    from services.mcp_salience import calculate_salience_data
+    return calculate_salience_data(year=year,month=month,day=day,hour=hour,minute=minute,
+                                   location_id=location_id,fold=fold,scope=scope,
+                                   rulership=rulership,orb_view=orb_view,tight_orb=tight_orb,
+                                   axis_orb=axis_orb,include_mc_ruler=include_mc_ruler,
+                                   distribution_points=distribution_points,reception_policy=reception_policy,dynamics_days=dynamics_days)
 
 
 @tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the existing natal chart wheel as a 720px PNG shown to the user. Requires an exact birth date, local time and selected location_id; supports placidus or whole_sign. Ask about ambiguous civil time instead of guessing fold.")

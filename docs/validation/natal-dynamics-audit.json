@@ -1,0 +1,93 @@
+{
+  "version": "natal-dynamics-audit-v1",
+  "inputs": 1294,
+  "counts": {
+    "full": 1245,
+    "dynamics_available": 1280,
+    "partial": 36,
+    "dynamics_partial": 1
+  },
+  "phase_counts": {
+    "separating": 10012,
+    "applying": 10036,
+    "unknown": 8
+  },
+  "search_counts": {
+    "not_found_in_window": 9780,
+    "exact_found": 10268,
+    "unavailable": 8
+  },
+  "policy_counts": {
+    "dignity_only:True": 13854,
+    "dignity_only:False": 11142,
+    "sign_aspect:True": 8952,
+    "sign_aspect:False": 16044,
+    "degree_aspect:False": 20416,
+    "degree_aspect:True": 4580,
+    "applying_degree_aspect:False": 22713,
+    "applying_degree_aspect:True": 2283
+  },
+  "max_exact_residual_deg": 3.5838663166032347e-06,
+  "finer_mesh_pair_checks": 180,
+  "rejected": [
+    {
+      "id": "dst-gap",
+      "status": "nonexistent"
+    },
+    {
+      "id": "dst-repeat-unset",
+      "status": "ambiguous"
+    },
+    {
+      "id": "china-dst-gap",
+      "status": "nonexistent"
+    },
+    {
+      "id": "invalid-leap",
+      "status": "invalid_input"
+    },
+    {
+      "id": "invalid-hour",
+      "status": "invalid_input"
+    },
+    {
+      "id": "apia-skipped-date",
+      "status": "nonexistent"
+    },
+    {
+      "id": "lat-over",
+      "status": "invalid_input"
+    },
+    {
+      "id": "lng-over",
+      "status": "invalid_input"
+    },
+    {
+      "id": "negative-minute",
+      "status": "invalid_input"
+    },
+    {
+      "id": "minute-60",
+      "status": "invalid_input"
+    },
+    {
+      "id": "month-13",
+      "status": "invalid_input"
+    },
+    {
+      "id": "fold-2",
+      "status": "invalid_input"
+    },
+    {
+      "id": "fractional-hour",
+      "status": "invalid_input"
+    }
+  ],
+  "failures": [],
+  "elapsed_seconds": 51.43,
+  "limitations": [
+    "30-day bounded first-hit search, not unlimited perfection proof.",
+    "Same ephemeris checked by finite differences and finer mesh, not independent astronomy data.",
+    "No claim of psychological importance or reception efficacy."
+  ]
+}

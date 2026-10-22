@@ -43,3 +43,7 @@
 - `get_capabilities`
 - `get_agent_protocol`
 - `recommend_workflow`
+
+## Natal priority extraction
+
+`calculate_natal_salience` consumes the full natal graph. Configuration: `scope`, `rulership`, `orb_view`, `tight_orb`, `axis_orb`, `include_mc_ruler`, `distribution_points`, `reception_policy`, `dynamics_days`. Outputs include terminal/main-entry metrics, classified candidates, profiles, condition and connection facts, semantic evidence, reception criteria and bounded aspect motion. Defaults: classical seven origins, traditional rulers, 8-degree upstream view, 30-day search. No interpretation or efficacy scoring. See [details](natal-salience.md).

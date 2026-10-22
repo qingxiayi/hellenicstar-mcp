@@ -47,6 +47,7 @@ NATAL_SOURCE_TOOLS = frozenset({
 })
 
 INDEPENDENT_CALCULATION_TOOLS = frozenset({
+    "calculate_natal_salience",
     "calculate_natal_structure_graph",
     "scan_planetary_aspects",
     "get_current_sky",

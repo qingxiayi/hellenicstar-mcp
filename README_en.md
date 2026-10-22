@@ -42,7 +42,7 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities (45 Tools)
+## Core Capabilities (46 Tools)
 
 - **Planetary Aspect Cycles & Arabic Lots**:
   - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.
@@ -140,3 +140,7 @@ pytest tests/ -q
 ## Natal structure graph / 本命结构图谱
 
 `calculate_natal_structure_graph` returns deterministic dispositor paths, cycles, basins, receptions, aspect motifs and shared dependencies. High-latitude failures retain planetary relations with explicit unavailable house layers. No psychological theme is inferred. See [the graph contract and reproducible validation](docs/natal-structure-graph.md).
+
+## Natal priorities and motion conditions
+
+`calculate_natal_salience` extracts terminal groups, main entries, classified candidates and complete profiles without a score or mandatory single core. `reception_policy` selects explicit dignity, sign-aspect, degree-aspect or applying-degree-aspect checks. `aspect_dynamics` returns phase from relative longitude speed, bounded first exact contacts, and preceding stations/ingresses. `dynamics_days` is 1–90 (default 30). Missing ephemeris coverage remains explicit. No psychological advice, efficacy verdict or unlimited perfection claim. See [the specification](docs/natal-salience.md).
