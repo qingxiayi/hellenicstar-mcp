@@ -20,6 +20,7 @@ def build_reading_layers(data):
         for identity, e in evidence.items():
             detail = e['detail']
             if ((e['family'] == 'dispositor' and planet in detail.get('origins', [])) or
+                (e['family'] == 'configuration' and planet in detail.get('members', [])) or
                 (e['family'] == 'aspect' and planet in (detail.get('from'), detail.get('to'))) or
                 (e['family'] == 'reception' and planet in (detail.get('planet1'), detail.get('planet2'))) or
                 (e['family'] == 'house_ruler' and detail.get('ruler') == planet) or
@@ -38,7 +39,7 @@ def build_reading_layers(data):
     groups = defaultdict(list)
     for identity, e in evidence.items():
         groups[e['synonym_group']].append(identity)
-    plan = dict(version='natal-reading-v1', order=['structural_backbone', 'identity_and_local',
+    plan = dict(version='natal-reading-v2', order=['structural_backbone', 'identity_and_local',
                 'complete_profiles', 'resource_checks'], score=None,
         structural_backbone=dict(
             terminal_refs=[f'/core_structures/{i}' for i in range(len(data['core_structures']))],
@@ -54,17 +55,22 @@ def build_reading_layers(data):
                 if (e['family']=='house_ruler' and e['detail'].get('luminaries')) or k.startswith('concentration:'))),
         complete_profiles=[dict(planet=k, ref=f'/priority_planets/{i}/profile') for k,(i,_) in sorted(planets.items())],
         candidate_coverage=dict(selected=len(planets), total=len(matrix),
-            all_selected=len(planets)==len(matrix), meaning='coverage, not a concise shortlist'),
+            all_selected=len(planets)==len(matrix), meaning='selected focal planets; grouped structures and local relations remain separate',
+            candidate_count=sum(bool(r['selection_reasons']) for r in data['candidate_planets']),
+            broad_selection=data['focus_selection']['broad_selection']),
         limitation='Order is an explicit project reading policy, not psychological importance. '
                    'All terminals survive; maximal means not contained in another detected configuration.')
     return dict(reading_plan=plan,
         evidence_matrix=dict(version='natal-evidence-matrix-v1', families=list(FAMILIES), rows=matrix,
             synonymous_groups={k:sorted(v) for k,v in sorted(groups.items()) if len(v)>1},
             independence='not_assumed; shared inputs, synonyms and containment are not extra independent votes'),
-        resource_checks=_resource_checks(planets))
+        resource_checks=_resource_checks(
+            {p:(i,dict(profile=profile)) for i,(p,profile) in enumerate(data['planet_profiles'].items())},
+            {p:'/planet_profiles/'+p for p in data['planet_profiles']}))
 
 
-def _resource_checks(planets):
+def _resource_checks(planets, profile_paths=None):
+    profile_paths = profile_paths or {p:f"/priority_planets/{i}/profile" for p,(i,_) in planets.items()}
     topics = {}
 
     def add(identity, kind, affected, fact, ref):
@@ -75,7 +81,7 @@ def _resource_checks(planets):
             topics[identity]['source_refs'].append(ref)
 
     for p, (i, row) in sorted(planets.items()):
-        profile = row['profile']; base=f'/priority_planets/{i}/profile'
+        profile = row['profile']; base=profile_paths[p]
         condition = profile['condition']
         if condition:
             for flag in ('detriment', 'fall', 'peregrine'):
@@ -111,7 +117,7 @@ def _resource_checks(planets):
                 if candidate['planet'] in affected:
                     continue  # A participant is not a third-party connection to its own aspect.
                 connections[candidate['planet']].append(dict(endpoint=endpoint,
-                    candidate_ref=f'/priority_planets/{i}/profile/resource_review/candidates/{j}'))
+                    candidate_ref=profile_paths[endpoint]+f'/resource_review/candidates/{j}'))
         topic['candidate_connections']=[dict(planet=p,connections=links,
             coverage='all_affected' if len(links)==len(affected) else 'some_affected',
             relevance='structural_connection_only; ability_to_address_this_condition_not_evaluated')

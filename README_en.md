@@ -143,4 +143,6 @@ pytest tests/ -q
 
 ## Natal priorities and motion conditions
 
+Version 2 separates grouped terminals/configurations, focal planets and local aspects. It no longer promotes every participant; all ten profiles remain available. See [rules, regression evidence and migration](docs/validation/natal-focus-v2.md).
+
 `calculate_natal_salience` extracts terminal groups, main entries, classified candidates and complete profiles without a score or mandatory single core. `reception_policy` selects explicit dignity, sign-aspect, degree-aspect or applying-degree-aspect checks. `aspect_dynamics` returns phase from relative longitude speed, bounded first exact contacts, and preceding stations/ingresses. `dynamics_days` is 1–90 (default 30). Missing ephemeris coverage remains explicit. No psychological advice, efficacy verdict or unlimited perfection claim. See [the specification](docs/natal-salience.md). [Verified release record](docs/validation/natal-priorities-release-2026-10-22.md).

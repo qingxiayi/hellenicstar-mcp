@@ -48,31 +48,33 @@ def priority_decisions(data):
     for i, link in enumerate(data['house_ruler_links']):
         add(link['ruler'], 'house_ruler', f'{link["system"]}:{link["house"]}',
             dict(system=link['system'], house=link['house'], located_house=link['located_house']), f'/house_ruler_links/{i}')
-    for p, i in profiles.items():
-        for j, contact in enumerate(data['priority_planets'][i]['profile']['axis_contacts']):
+    all_profiles = data.get('planet_profiles', {p:data['priority_planets'][i]['profile'] for p,i in profiles.items()})
+    profile_paths = {p:'/planet_profiles/'+p if 'planet_profiles' in data else f'/priority_planets/{profiles[p]}/profile' for p in all_profiles}
+    for p, profile in all_profiles.items():
+        for j, contact in enumerate(profile['axis_contacts']):
             kind = 'axis_conjunction' if contact['angle'] in (0,180) else 'axis_aspect'
-            add(p, kind, contact['id'], contact, f'/priority_planets/{i}/profile/axis_contacts/{j}')
+            add(p, kind, contact['id'], contact, profile_paths[p]+f'/axis_contacts/{j}')
     for i, edge in enumerate(data['priority_aspects']):
         for p in (edge['from'],edge['to']):
             add(p, 'tight_aspect_participant', edge['id'], dict(angle=edge['angle'],orb=edge['orb']), f'/priority_aspects/{i}')
-    for p, i in profiles.items():
-        for j, c in enumerate(data['priority_planets'][i]['profile']['resource_review']['candidates']):
+    for p, profile in all_profiles.items():
+        for j, c in enumerate(profile['resource_review']['candidates']):
             add(c['planet'], 'resource_connection', p,
                 dict(connected_planet=p, route_kinds=sorted({r['kind'] for r in c['routes']})),
-                f'/priority_planets/{i}/profile/resource_review/candidates/{j}')
+                profile_paths[p]+f'/resource_review/candidates/{j}')
     rows = []; groups = defaultdict(set)
     for p in sorted(roles):
         ordered = sorted(roles[p], key=lambda r:(r['kind'],r['object_id']))
         for role in ordered:
             groups[role['kind']].add(p)
         rows.append(dict(planet=p, roles=ordered, selected_for_profile=p in profiles,
-            profile_ref=f'/priority_planets/{profiles[p]}/profile' if p in profiles else None))
-    return dict(version='natal-priority-policy-v2', rows=rows,
+            selected_as_focus=p in profiles, profile_ref=profile_paths.get(p)))
+    return dict(version='natal-priority-policy-v3', rows=rows,
         role_groups={k:sorted(v) for k,v in sorted(groups.items())},
         policy=dict(order='planet and role identifiers only; not importance',
             ranking=None, state_effect='conditions do not remove or promote structural roles',
             coverage='all terminals and all ten planets; no largest-basin filter',
-            selection='profile selection is separate from role membership; roles may exist without a selected profile',
+            selection='all ten profiles and roles survive; selected_for_profile refers only to the focal planet list',
             migration='v1 tier, domains and largest_basin_terminal_ids removed; use rows.roles and role_groups'))
 
 

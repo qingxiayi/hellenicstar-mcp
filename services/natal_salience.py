@@ -12,6 +12,7 @@ from services.natal_resource_context import triplicity_context, resource_review
 from services.natal_reading_plan import build_reading_layers
 from services.natal_decision_policy import build_decisions
 from services.natal_relation_facts import reception_facts, POLICIES
+from services.natal_focus import select_focus
 
 DEFAULTS = dict(scope='classical7', rulership='traditional', orb_view=8,
                 tight_orb=3.0, axis_orb=5.0, include_mc_ruler=False,
@@ -182,6 +183,7 @@ def build_salience(graph, config=None, dynamics=None):
             incident=[e['angle'] for e in aspects if e['id'] in m['depends_on'] and k in (e['from'],e['to'])]
             roles[k]=['opposition_endpoint'] if 180 in incident else ['member']
             if m['kind']=='wedge' and 180 not in incident: roles[k]=['mediator']
+            if m['kind']=='minor_grand_trine' and sorted(incident)==[60,60]: roles[k]=['sextile_vertex']
             if m['kind']=='t_square' and sorted(incident)==[90,90]: roles[k]=['apex']
             if m['kind']=='kite' and sorted(incident)==[60,60,180]: roles[k].append('sextile_apex')
         contained=[n['id'] for n in motifs if set(n['depends_on'])<set(m['depends_on'])]
@@ -271,25 +273,35 @@ def build_salience(graph, config=None, dynamics=None):
             quadrants={str(q+1):sum((h-1)//3==q for h in hs) for q in range(4)} if available else None,
             hemispheres=dict(above=sum(h>=7 for h in hs),below=sum(h<=6 for h in hs),
                 eastern=sum(h in (10,11,12,1,2,3) for h in hs),western=sum(h in (4,5,6,7,8,9) for h in hs)) if available else None)
-    priority=[]; audit=[]
+    focus, focus_policy = select_focus(reasons, evidence, configurations)
+    priority=[]; audit=[]; candidates=[]
     for k in sorted(nodes):
-        selected=reasons[k]
+        original=reasons[k]
+        candidates.append(dict(planet=k,selection_reasons=original))
+        selected=focus[k]['selection_reasons']
         selected.sort(key=lambda r:(CATEGORIES.index(r['category']),r['evidence_id']))
         categories=[category for category in CATEGORIES if any(r['category']==category for r in selected)]
         if selected: priority.append(dict(planet=k,categories=categories,selection_reasons=selected,profile=profiles[k]))
         audit.append(dict(planet=k,selected=bool(selected),rules_matched=selected,
-                          reason='matched_rules' if selected else 'no_enabled_selection_rule_matched',
+                          reason=focus[k]['reason'], candidate_rules_matched=original,
+                          focus_rules=focus[k]['rules'], structural_families=focus[k]['structural_families'],
+                          candidate_evaluations=focus[k]['candidate_evaluations'],
                           unknowns=['axis:'+a for a in ('asc','mc','dsc','ic') if a not in axes]))
     priority.sort(key=lambda r:(CATEGORIES.index(r['categories'][0]),r['planet']))
-    result = dict(schema_version='natal-priorities-v1',core_structures=cores,scope_comparison=comparisons,
-        priority_planets=priority,priority_aspects=sorted(priority_aspects,key=lambda e:(e['orb'],e['id'])),
+    result = dict(schema_version='natal-priorities-v2',core_structures=cores,scope_comparison=comparisons,
+        priority_planets=priority,planet_profiles=profiles,candidate_planets=candidates,
+        focus_selection=dict(policy=focus_policy,planet_ids=[p["planet"] for p in priority],
+            terminal_group_ids=[t["id"] for t in cores],
+            configuration_group_ids=sorted(m["id"] for m in configurations if not any(m["id"] in n["contains"] for n in configurations)),
+            broad_selection=len(priority)>=8,
+            coverage_note="No forced cap; broad selections must be displayed as such, not a unique core."),priority_aspects=sorted(priority_aspects,key=lambda e:(e['orb'],e['id'])),
         priority_configurations=sorted(configurations,key=lambda m:(-len(m['members']),m['id'])),
         house_ruler_links=links,global_distribution=distribution,reception_facts=relation_facts,
         aspect_dynamics=copy.deepcopy(dynamics) if dynamics else dict(status='not_supplied',rows=[]),
         evidence_index=dict(sorted(evidence.items())),selection_audit=audit,
         availability=dict(source=graph['layer_availability'],axes={a:'available' if a in axes else 'unavailable' for a in ('asc','mc','dsc','ic')},
             configurations=dict(supported=['grand_trine','minor_grand_trine','wedge','t_square','kite','mystic_rectangle','grand_cross'],unsupported=['yod'])),
-        method=dict(version='natal-priorities-v1',config=c,score=None,category_order=list(CATEGORIES),
+        method=dict(version='natal-priorities-v2',config=c,score=None,category_order=list(CATEGORIES),
             within_category='stable identifier; aspects by orb; configurations by member count then identifier',
             deduplication='stable semantic IDs; synonyms linked, contained configurations retained; correlated evidence not discarded',
             interpretation='Calculation and selection rules only; no psychological hypotheses, advice, efficacy, global importance grade or independent-evidence count inferred',
