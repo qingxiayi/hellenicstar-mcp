@@ -1,0 +1,27 @@
+{
+  "tool_count": 46,
+  "input_schemas_unchanged": true,
+  "old_graph_and_dynamics_unchanged": true,
+  "cases": {
+    "full": {
+      "selected": 9,
+      "profiles": 10,
+      "claims": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "schema_version": "natal-priorities-v2"
+    },
+    "polar": {
+      "selected": 2,
+      "profiles": 10,
+      "claims": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "schema_version": "natal-priorities-v2"
+    }
+  }
+}

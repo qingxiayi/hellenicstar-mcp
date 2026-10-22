@@ -116,7 +116,7 @@ v1消费者迁移：`priority_planets` 成员可能减少；需要全部画像�
 
 单星事项引用该星的现有资源候选；刑冲按同一相位合并，并查看两端各自的候选。候选连接两端时标 `all_affected`，只连接一端时标 `some_affected`。刑冲当事星不被列作这组刑冲的第三方候选。引用可查对方完整状态及每条路线；共同连接不自动成为新构型或救应。
 
-**这一层识别的是与事项当事星的结构连接，尚未判定连接是否能处理该事项。** `relevance` 明示未评估解决能力，`verdict=null`；没有候选不等于“无药”。太阳的日光状态为空时视为不适用，不生成虚假日光问题。引用均以完整工具返回值为根；若用 `include` 裁剪返回值，应同时保留引用所需的 `priority_planets`、`core_structures`、`priority_configurations` 和 `evidence_index`。
+**这一层识别的是与事项当事星的结构连接，尚未判定连接是否能处理该事项。** `relevance` 明示未评估解决能力，`verdict=null`；没有候选不等于“无药”。太阳的日光状态为空时视为不适用，不生成虚假日光问题。引用均以完整工具返回值为根；若用 `include` 裁剪返回值，应同时保留引用所需的 `planet_profiles`、`priority_planets`、`core_structures`、`priority_configurations` 和 `evidence_index`。
 
 来源追溯不用于直接判定语义相同。同一黄经可参与落座、宫位和相位计算，这些问题不同。
 
