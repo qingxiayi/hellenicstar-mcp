@@ -1,5 +1,7 @@
 # Current release status
 
+Relationship observation v0.14 is deployed and public (48 tools), with natal priorities v4 retained. See [the 2026-10-23 relationship release record](validation/relationship-observation-release-2026-10-23.md) for public HTTPS verification, compatibility and Mini Program isolation.
+
 Natal priorities v4 is deployed and its source is public; see [the 2026-10-23 verification record](validation/natal-jones-release-2026-10-23.md). The earlier local-preparation notes below are historical, not the current GitHub or production status.
 
 # Standalone release verification

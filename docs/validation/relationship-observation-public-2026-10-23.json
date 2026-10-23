@@ -1,0 +1,58 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "tools": 48,
+  "existing_schemas_backward_compatible": true,
+  "schema_changes": [
+    "verify_calculation_claims"
+  ],
+  "old_reference_verified": true,
+  "natal_v4_output_unchanged": true,
+  "legacy_relationship_unchanged": true,
+  "scenarios": {
+    "love": {
+      "version": "john-green-observation-v0.14",
+      "counts": {
+        "unique_contacts": 61,
+        "observation_paths": 122,
+        "activation_clusters": 28
+      },
+      "quality": "passed"
+    },
+    "friendship": {
+      "version": "john-green-observation-v0.14",
+      "counts": {
+        "unique_contacts": 61,
+        "observation_paths": 122,
+        "activation_clusters": 28
+      },
+      "quality": "passed"
+    },
+    "work": {
+      "version": "john-green-observation-v0.14",
+      "counts": {
+        "unique_contacts": 61,
+        "observation_paths": 122,
+        "activation_clusters": 28
+      },
+      "quality": "passed"
+    },
+    "family": {
+      "version": "john-green-observation-v0.14",
+      "counts": {
+        "unique_contacts": 61,
+        "observation_paths": 122,
+        "activation_clusters": 28
+      },
+      "quality": "passed"
+    }
+  },
+  "natal_single": true,
+  "human_note_nonpersistent": true,
+  "claims": {
+    "supported": 1,
+    "contradicted": 1,
+    "unverified": 0
+  },
+  "timing_window": true,
+  "childbirth": true
+}
