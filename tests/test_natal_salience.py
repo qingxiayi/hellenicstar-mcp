@@ -45,11 +45,47 @@ def test_triplicity_roles_disclosed_without_changing_active_dignity():
                 assert condition==old
                 assert context['counted_by_engine']==(planet==active)
                 assert context['planet_roles']==[r for r,p in context['rulers'].items() if p==planet]
+                order=list(rulers) if active==rulers[0] else [rulers[1],rulers[0],rulers[2]]
+                assert context['is_triplicity_ruler']==(planet in rulers)
+                assert context['sect_order']==order
+                assert context['sect_priority']==(order.index(planet)+1 if planet in order else None)
     context=triplicity_context('jupiter',0,{'essential': {
         'triplicity':False,'active_triplicity_lord':'sun'}})
     assert context['planet_roles']==['night']
     assert context['counted_by_engine'] is False
+    assert context['is_triplicity_ruler'] is True and context['sect_priority']==2
+    assert context['counting_reason']=='secondary_ruler_not_counted_by_active_only_policy'
     assert triplicity_context('uranus',0,None)['status'].startswith('classical_conditions_not_defined')
+
+
+def test_triplicity_unknown_sect_does_not_fabricate_priority():
+    from services.natal_resource_context import triplicity_context
+    for active in (None,'venus'):
+        c=triplicity_context('jupiter',0,{'essential':dict(triplicity=False,active_triplicity_lord=active)})
+        assert c['is_triplicity_ruler'] is True
+        assert c['sect_order'] is None and c['sect_priority'] is None
+        assert c['order_status']=='unknown_sect'
+
+
+def test_peregrine_topics_keep_uncredited_triplicity_identity(graph):
+    data=build_salience(graph)
+    members=[p for p,v in data['planet_profiles'].items()
+             if v['triplicity_context'].get('is_triplicity_ruler') and
+             not v['triplicity_context']['counted_by_engine'] and v['condition']['essential']['peregrine']]
+    assert members
+    for p in members:
+        context=data['planet_profiles'][p]['triplicity_context']
+        topic=next(t for t in data['resource_checks']['topics'] if t['id']==f'state:{p}:peregrine')
+        assert topic['fact']['policy_scope']=='active_day_or_night_only'
+        assert topic['fact']['triplicity_context']==context
+        assert topic['verdict'] is None
+        for t in data['resource_checks']['topics']:
+            if t['kind']=='soft_aspect_with_essential_condition' and t['fact']['counterpart']==p:
+                assert t['fact']['counterpart_triplicity_context']==context
+        for profile in data['planet_profiles'].values():
+            for row in profile['resource_review']['candidates']:
+                if row['planet']==p:
+                    assert row['counterpart_state']['condition_context']['triplicity_context']==context
 
 
 def test_resource_review_keeps_counterpart_limits_without_verdict(graph):
@@ -72,7 +108,7 @@ def test_resource_review_keeps_counterpart_limits_without_verdict(graph):
             assert 'resource_review' not in state
             assert candidate['assessment']=='not_evaluated'
             assert {e['id'] for e in state['aspects']}=={
-                e['id'] for e in graph['aspects']['8']['edges'] if candidate['planet'] in (e['from'],e['to'])}
+                e['id'] for e in graph['aspects']['6']['edges'] if candidate['planet'] in (e['from'],e['to'])}
             assert all(r['source_refs'] for r in candidate['routes'])
 
 
@@ -94,7 +130,7 @@ def test_no_score_complete_profiles_and_no_mutation(graph):
     assert d['method']['score'] is None
     assert d['global_distribution']['point_count']==12
     assert len(d['selection_audit'])==10
-    edges=graph['aspects']['8']['edges']
+    edges=graph['aspects']['6']['edges']
     for row in d['priority_planets']:
         assert 'score' not in row
         expected={e['id'] for e in edges if row['planet'] in (e['from'],e['to'])}
@@ -116,14 +152,14 @@ def test_duplicate_and_order_invariance(graph):
 
 def test_semantic_aliases_and_opposite_edge_order_merge(graph):
     g=copy.deepcopy(graph)
-    edge=copy.deepcopy(g['aspects']['8']['edges'][0])
+    edge=copy.deepcopy(g['aspects']['6']['edges'][0])
     edge['id']='client-alias'
     edge['from'],edge['to']=edge['to'],edge['from']
     edge['depends_on'].reverse()
-    g['aspects']['8']['edges'].append(edge)
-    if g['aspects']['8']['motifs']:
-        m=copy.deepcopy(g['aspects']['8']['motifs'][0]);m['id']='alias';m['members'].reverse()
-        g['aspects']['8']['motifs'].append(m)
+    g['aspects']['6']['edges'].append(edge)
+    if g['aspects']['6']['motifs']:
+        m=copy.deepcopy(g['aspects']['6']['motifs'][0]);m['id']='alias';m['members'].reverse()
+        g['aspects']['6']['motifs'].append(m)
     assert build_salience(g)==build_salience(graph)
 
 
@@ -246,6 +282,7 @@ def test_real_stdio_discovery_selection_and_reference():
                 await s.initialize()
                 schema = next(t for t in (await s.list_tools()).tools if t.name == 'calculate_natal_salience')
                 assert 'interpretation_policy' not in schema.inputSchema['properties']
+                assert schema.inputSchema['properties']['orb_view']['default'] == 6
                 async def call(args):
                     r=await s.call_tool('calculate_natal_salience',args)
                     assert not r.isError,r

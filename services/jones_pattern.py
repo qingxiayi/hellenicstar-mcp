@@ -11,6 +11,7 @@ from typing import Dict, Iterable, List
 
 from engine.jones import (
     PLANET_NAMES_ZH,
+    SELLAR_OPPOSITION_ORB,
     _build_key_roles,
     detect_with_variants,
     result_to_dict,
@@ -143,6 +144,15 @@ def calculate_jones_pattern(planets: Dict[str, Dict]) -> Dict:
     # Bucket midpoint is derived from the nine-planet bowl boundaries rather
     # than from the largest gap after the handle is put back into the wheel.
     engine_geometry = result_to_dict(result, planet_meta=planet_meta)
+    sellar = engine_geometry.get('sellar_focus')
+    core_opposition = None
+    if sellar and sellar.get('opp_name'):
+        separation = abs((sellar['lon'] - sellar['opp_lon'] + 180) % 360 - 180)
+        core_opposition = dict(planet_name=_clean_planet_name(sellar['name']),
+            opposite_planet_name=_clean_planet_name(sellar['opp_name']),
+            longitude=sellar['lon'], opposite_longitude=sellar['opp_lon'],
+            orb=abs(180-separation), upstream_orb_limit=SELLAR_OPPOSITION_ORB,
+            policy='upstream Sellar supplement; opposite signs and fixed speed-rank ordering')
     midpoint_bowl = engine_geometry.get("midpoint_bowl")
     midpoint_loco = engine_geometry.get("midpoint_loco")
     midpoint_bundle = engine_geometry.get("midpoint_bundle")
@@ -217,6 +227,7 @@ def calculate_jones_pattern(planets: Dict[str, Dict]) -> Dict:
         ),
         "guide": pattern_guide(pattern),
         "key_roles": key_roles,
+        "core_opposition": core_opposition,
         "distribution": distribution,
         "midpoint_bowl": (
             {"long": round(float(midpoint_bowl["long"]) % 360.0, 4)}

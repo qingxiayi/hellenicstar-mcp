@@ -1,0 +1,159 @@
+{
+  "seed": 2026102206,
+  "stats": {
+    "charts": 300,
+    "views": 900,
+    "cross_focus_changed_8_to_10": 43,
+    "cross_focus_changed_6_to_8": 34
+  },
+  "examples": [],
+  "view_demotions": [],
+  "structural_examples": {
+    "self": {
+      "birth": {
+        "id": "holdout-000",
+        "group": "holdout",
+        "year": 1989,
+        "month": 2,
+        "day": 23,
+        "hour": 1,
+        "minute": 9,
+        "location_id": "coord:9.308800,-137.054618"
+      },
+      "terminals": [
+        {
+          "members": [
+            "saturn"
+          ],
+          "numerator": 7
+        }
+      ],
+      "cross_focus": [
+        "moon",
+        "saturn",
+        "sun"
+      ],
+      "specific_focus": [
+        "jupiter",
+        "venus"
+      ]
+    },
+    "two_node_cycle": {
+      "birth": {
+        "id": "holdout-001",
+        "group": "holdout",
+        "year": 1914,
+        "month": 1,
+        "day": 10,
+        "hour": 3,
+        "minute": 2,
+        "location_id": "coord:28.704978,-70.922639"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mercury",
+            "saturn"
+          ],
+          "numerator": 7
+        }
+      ],
+      "cross_focus": [
+        "mars",
+        "mercury",
+        "moon"
+      ],
+      "specific_focus": [
+        "saturn",
+        "sun"
+      ]
+    },
+    "multi_node_cycle": {
+      "birth": {
+        "id": "holdout-002",
+        "group": "holdout",
+        "year": 2072,
+        "month": 7,
+        "day": 26,
+        "hour": 15,
+        "minute": 23,
+        "location_id": "coord:20.786730,-112.568155"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "moon",
+            "saturn"
+          ],
+          "numerator": 5
+        },
+        {
+          "members": [
+            "sun"
+          ],
+          "numerator": 2
+        }
+      ],
+      "cross_focus": [
+        "jupiter",
+        "mercury",
+        "moon",
+        "pluto",
+        "sun",
+        "uranus"
+      ],
+      "specific_focus": [
+        "mars",
+        "saturn",
+        "venus"
+      ]
+    },
+    "multiple_terminals": {
+      "birth": {
+        "id": "holdout-002",
+        "group": "holdout",
+        "year": 2072,
+        "month": 7,
+        "day": 26,
+        "hour": 15,
+        "minute": 23,
+        "location_id": "coord:20.786730,-112.568155"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "moon",
+            "saturn"
+          ],
+          "numerator": 5
+        },
+        {
+          "members": [
+            "sun"
+          ],
+          "numerator": 2
+        }
+      ],
+      "cross_focus": [
+        "jupiter",
+        "mercury",
+        "moon",
+        "pluto",
+        "sun",
+        "uranus"
+      ],
+      "specific_focus": [
+        "mars",
+        "saturn",
+        "venus"
+      ]
+    }
+  },
+  "invariant_failures": [],
+  "interpretation": "Endpoint-role exclusions and orb sensitivity are observations of the declared policy, not automatically astronomical errors or proof of psychological importance. No ranking oracle.",
+  "deployment": "not_performed"
+}

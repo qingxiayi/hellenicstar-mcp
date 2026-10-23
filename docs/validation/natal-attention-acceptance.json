@@ -1,0 +1,581 @@
+{
+  "seed": 2026102206,
+  "stats": {
+    "charts": 300,
+    "views": 900,
+    "cross_focus_changed_8_to_10": 71,
+    "charts_with_maximal_opposition_role_not_in_attention_network": 222,
+    "such_planets": 570,
+    "charts_with_chart_ruler_in_this_category": 47,
+    "cross_focus_changed_6_to_8": 67,
+    "cross_focus_lost_when_view_widened_6_to_8": 44
+  },
+  "examples": [
+    {
+      "birth": {
+        "id": "holdout-002",
+        "group": "holdout",
+        "year": 2072,
+        "month": 7,
+        "day": 26,
+        "hour": 15,
+        "minute": 23,
+        "location_id": "coord:20.786730,-112.568155"
+      },
+      "excluded_roles": [
+        {
+          "planet": "jupiter",
+          "category": "cross_focus",
+          "roles": {
+            "axis_contact": [
+              "axis:jupiter:asc:180"
+            ],
+            "identity": [
+              "identity:chart_ruler"
+            ]
+          },
+          "configuration_opposition_roles": [
+            {
+              "configuration": "t_square:jupiter:mars:uranus",
+              "opposition_edges": [
+                "a:jupiter:uranus:180"
+              ]
+            },
+            {
+              "configuration": "t_square:jupiter:moon:pluto",
+              "opposition_edges": [
+                "a:jupiter:moon:180"
+              ]
+            },
+            {
+              "configuration": "t_square:jupiter:pluto:uranus",
+              "opposition_edges": [
+                "a:jupiter:uranus:180"
+              ]
+            },
+            {
+              "configuration": "wedge:jupiter:moon:saturn",
+              "opposition_edges": [
+                "a:jupiter:moon:180"
+              ]
+            },
+            {
+              "configuration": "wedge:jupiter:moon:venus",
+              "opposition_edges": [
+                "a:jupiter:moon:180"
+              ]
+            },
+            {
+              "configuration": "wedge:jupiter:uranus:venus",
+              "opposition_edges": [
+                "a:jupiter:uranus:180"
+              ]
+            }
+          ],
+          "chart_ruler": true
+        }
+      ]
+    },
+    {
+      "birth": {
+        "id": "holdout-003",
+        "group": "holdout",
+        "year": 1987,
+        "month": 2,
+        "day": 14,
+        "hour": 0,
+        "minute": 10,
+        "location_id": "coord:-41.163013,-134.846654"
+      },
+      "excluded_roles": [
+        {
+          "planet": "moon",
+          "category": "cross_focus",
+          "roles": {
+            "chart_pattern": [
+              "pattern:jones:focus"
+            ],
+            "identity": [
+              "identity:moon"
+            ]
+          },
+          "configuration_opposition_roles": [
+            {
+              "configuration": "kite:mars:moon:sun:uranus",
+              "opposition_edges": [
+                "a:moon:sun:180"
+              ]
+            }
+          ],
+          "chart_ruler": false
+        }
+      ]
+    },
+    {
+      "birth": {
+        "id": "holdout-004",
+        "group": "holdout",
+        "year": 1930,
+        "month": 1,
+        "day": 17,
+        "hour": 20,
+        "minute": 50,
+        "location_id": "coord:63.203326,-104.964364"
+      },
+      "excluded_roles": [
+        {
+          "planet": "mars",
+          "category": "associated_context",
+          "roles": {},
+          "configuration_opposition_roles": [
+            {
+              "configuration": "wedge:mars:moon:pluto",
+              "opposition_edges": [
+                "a:mars:pluto:180"
+              ]
+            }
+          ],
+          "chart_ruler": false
+        },
+        {
+          "planet": "pluto",
+          "category": "associated_context",
+          "roles": {},
+          "configuration_opposition_roles": [
+            {
+              "configuration": "wedge:mars:moon:pluto",
+              "opposition_edges": [
+                "a:mars:pluto:180"
+              ]
+            }
+          ],
+          "chart_ruler": false
+        }
+      ]
+    },
+    {
+      "birth": {
+        "id": "holdout-005",
+        "group": "holdout",
+        "year": 2097,
+        "month": 8,
+        "day": 14,
+        "hour": 13,
+        "minute": 40,
+        "location_id": "coord:-32.318286,137.472554"
+      },
+      "excluded_roles": [
+        {
+          "planet": "jupiter",
+          "category": "specific_focus",
+          "roles": {
+            "identity": [
+              "identity:chart_ruler"
+            ]
+          },
+          "configuration_opposition_roles": [
+            {
+              "configuration": "t_square:jupiter:mars:pluto",
+              "opposition_edges": [
+                "a:jupiter:mars:180"
+              ]
+            }
+          ],
+          "chart_ruler": true
+        },
+        {
+          "planet": "mars",
+          "category": "specific_focus",
+          "roles": {
+            "chart_pattern": [
+              "pattern:jones:focus"
+            ]
+          },
+          "configuration_opposition_roles": [
+            {
+              "configuration": "t_square:jupiter:mars:pluto",
+              "opposition_edges": [
+                "a:jupiter:mars:180"
+              ]
+            }
+          ],
+          "chart_ruler": false
+        }
+      ]
+    }
+  ],
+  "view_demotions": [
+    {
+      "birth": {
+        "id": "holdout-008",
+        "group": "holdout",
+        "year": 2019,
+        "month": 6,
+        "day": 3,
+        "hour": 6,
+        "minute": 47,
+        "location_id": "coord:-37.158219,-28.555332"
+      },
+      "planets": [
+        "jupiter"
+      ],
+      "views": {
+        "6": [
+          {
+            "planet": "jupiter",
+            "category": "cross_focus",
+            "role_groups": {
+              "aspect_network": [
+                "a:jupiter:neptune:90"
+              ],
+              "chart_pattern": [
+                "pattern:jones:focus"
+              ]
+            },
+            "evidence_ids": [
+              "a:jupiter:neptune:90",
+              "pattern:jones:focus"
+            ],
+            "local_aspect_evidence_ids": [
+              "a:jupiter:neptune:90"
+            ],
+            "legacy_selected": true,
+            "reason": "multiple_role_groups",
+            "source_refs": [
+              "/planet_profiles/jupiter",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [
+              "terminal:jupiter"
+            ],
+            "main_entry_for": [],
+            "configuration_memberships": []
+          }
+        ],
+        "8": [
+          {
+            "planet": "jupiter",
+            "category": "specific_focus",
+            "role_groups": {
+              "chart_pattern": [
+                "pattern:jones:focus"
+              ]
+            },
+            "evidence_ids": [
+              "pattern:jones:focus"
+            ],
+            "local_aspect_evidence_ids": [],
+            "legacy_selected": true,
+            "reason": "single_role_group",
+            "source_refs": [
+              "/planet_profiles/jupiter",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [
+              "terminal:jupiter"
+            ],
+            "main_entry_for": [],
+            "configuration_memberships": [
+              "t_square:jupiter:neptune:sun"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "birth": {
+        "id": "holdout-009",
+        "group": "holdout",
+        "year": 1968,
+        "month": 6,
+        "day": 25,
+        "hour": 8,
+        "minute": 41,
+        "location_id": "coord:50.736924,-120.964735"
+      },
+      "planets": [
+        "saturn"
+      ],
+      "views": {
+        "6": [
+          {
+            "planet": "saturn",
+            "category": "cross_focus",
+            "role_groups": {
+              "aspect_network": [
+                "a:mercury:saturn:60"
+              ],
+              "chart_pattern": [
+                "pattern:jones:focus"
+              ]
+            },
+            "evidence_ids": [
+              "a:mercury:saturn:60",
+              "pattern:jones:focus"
+            ],
+            "local_aspect_evidence_ids": [
+              "a:mercury:saturn:60"
+            ],
+            "legacy_selected": true,
+            "reason": "multiple_role_groups",
+            "source_refs": [
+              "/planet_profiles/saturn",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [],
+            "main_entry_for": [],
+            "configuration_memberships": []
+          }
+        ],
+        "8": [
+          {
+            "planet": "saturn",
+            "category": "specific_focus",
+            "role_groups": {
+              "chart_pattern": [
+                "pattern:jones:focus"
+              ]
+            },
+            "evidence_ids": [
+              "pattern:jones:focus"
+            ],
+            "local_aspect_evidence_ids": [],
+            "legacy_selected": true,
+            "reason": "single_role_group",
+            "source_refs": [
+              "/planet_profiles/saturn",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [],
+            "main_entry_for": [],
+            "configuration_memberships": [
+              "minor_grand_trine:jupiter:mercury:saturn",
+              "minor_grand_trine:jupiter:moon:saturn"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "birth": {
+        "id": "holdout-023",
+        "group": "holdout",
+        "year": 2066,
+        "month": 5,
+        "day": 17,
+        "hour": 7,
+        "minute": 22,
+        "location_id": "coord:-61.971769,-157.971981"
+      },
+      "planets": [
+        "sun"
+      ],
+      "views": {
+        "6": [
+          {
+            "planet": "sun",
+            "category": "cross_focus",
+            "role_groups": {
+              "aspect_network": [
+                "a:pluto:sun:60"
+              ],
+              "identity": [
+                "identity:sun"
+              ]
+            },
+            "evidence_ids": [
+              "a:pluto:sun:60",
+              "identity:sun"
+            ],
+            "local_aspect_evidence_ids": [
+              "a:pluto:sun:60"
+            ],
+            "legacy_selected": true,
+            "reason": "multiple_role_groups",
+            "source_refs": [
+              "/planet_profiles/sun",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [],
+            "main_entry_for": [],
+            "configuration_memberships": []
+          }
+        ],
+        "8": [
+          {
+            "planet": "sun",
+            "category": "specific_focus",
+            "role_groups": {
+              "identity": [
+                "identity:sun"
+              ]
+            },
+            "evidence_ids": [
+              "identity:sun"
+            ],
+            "local_aspect_evidence_ids": [],
+            "legacy_selected": true,
+            "reason": "single_role_group",
+            "source_refs": [
+              "/planet_profiles/sun",
+              "/selection_audit"
+            ],
+            "terminal_memberships": [],
+            "main_entry_for": [],
+            "configuration_memberships": [
+              "wedge:pluto:sun:uranus"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "structural_examples": {
+    "self": {
+      "birth": {
+        "id": "holdout-000",
+        "group": "holdout",
+        "year": 1989,
+        "month": 2,
+        "day": 23,
+        "hour": 1,
+        "minute": 9,
+        "location_id": "coord:9.308800,-137.054618"
+      },
+      "terminals": [
+        {
+          "members": [
+            "saturn"
+          ],
+          "numerator": 7
+        }
+      ],
+      "cross_focus": [
+        "moon",
+        "saturn",
+        "sun"
+      ],
+      "specific_focus": [
+        "jupiter",
+        "venus"
+      ]
+    },
+    "two_node_cycle": {
+      "birth": {
+        "id": "holdout-001",
+        "group": "holdout",
+        "year": 1914,
+        "month": 1,
+        "day": 10,
+        "hour": 3,
+        "minute": 2,
+        "location_id": "coord:28.704978,-70.922639"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mercury",
+            "saturn"
+          ],
+          "numerator": 7
+        }
+      ],
+      "cross_focus": [
+        "mars",
+        "mercury",
+        "moon"
+      ],
+      "specific_focus": [
+        "saturn",
+        "sun"
+      ]
+    },
+    "multi_node_cycle": {
+      "birth": {
+        "id": "holdout-002",
+        "group": "holdout",
+        "year": 2072,
+        "month": 7,
+        "day": 26,
+        "hour": 15,
+        "minute": 23,
+        "location_id": "coord:20.786730,-112.568155"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "moon",
+            "saturn"
+          ],
+          "numerator": 5
+        },
+        {
+          "members": [
+            "sun"
+          ],
+          "numerator": 2
+        }
+      ],
+      "cross_focus": [
+        "jupiter",
+        "mercury",
+        "moon",
+        "pluto",
+        "sun",
+        "uranus"
+      ],
+      "specific_focus": [
+        "mars",
+        "saturn",
+        "venus"
+      ]
+    },
+    "multiple_terminals": {
+      "birth": {
+        "id": "holdout-002",
+        "group": "holdout",
+        "year": 2072,
+        "month": 7,
+        "day": 26,
+        "hour": 15,
+        "minute": 23,
+        "location_id": "coord:20.786730,-112.568155"
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "moon",
+            "saturn"
+          ],
+          "numerator": 5
+        },
+        {
+          "members": [
+            "sun"
+          ],
+          "numerator": 2
+        }
+      ],
+      "cross_focus": [
+        "jupiter",
+        "mercury",
+        "moon",
+        "pluto",
+        "sun",
+        "uranus"
+      ],
+      "specific_focus": [
+        "mars",
+        "saturn",
+        "venus"
+      ]
+    }
+  },
+  "invariant_failures": [],
+  "interpretation": "Endpoint-role exclusions and orb sensitivity are observations of the declared policy, not automatically astronomical errors or proof of psychological importance. No ranking oracle.",
+  "deployment": "not_performed"
+}

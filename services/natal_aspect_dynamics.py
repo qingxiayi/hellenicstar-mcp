@@ -7,6 +7,7 @@ import swisseph as swe
 from services.planetary_aspect_scan import BODIES, bisect, TIME_TOL, _stamp
 from services.transit_utils import body_position
 from services.ephemeris_guard import EphemerisModeError
+from services.natal_structure_graph import DEFAULT_ASPECT_VIEW
 
 ANGLE_TOL = 1e-6
 SPEED_TOL = 1e-8
@@ -141,7 +142,7 @@ def _compute(start, days, edges):
     return rows
 
 
-def calculate_dynamics(graph, days=30, orb_view=8):
+def calculate_dynamics(graph, days=30, orb_view=DEFAULT_ASPECT_VIEW):
     import copy
     context = graph['birth_context']
     civil = datetime.fromisoformat(context['civil_dt'])

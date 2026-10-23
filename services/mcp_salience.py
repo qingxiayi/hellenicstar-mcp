@@ -1,12 +1,12 @@
 """Separate, versioned priority extraction contract; graph v1 stays unchanged."""
-from services.natal_salience import build_salience, normalize_config
+from services.natal_salience import build_salience, normalize_config, DEFAULT_ASPECT_VIEW
 from services.mcp_structure_graph import calculate_graph_data, validate_graph_output
 from services.natal_aspect_dynamics import calculate_dynamics
 
 CONFIG_KEYS=('scope','rulership','orb_view','tight_orb','axis_orb','include_mc_ruler','distribution_points','reception_policy','dynamics_days')
 
 
-def calculate_salience_data(*, scope='classical7', rulership='traditional', orb_view=8,
+def calculate_salience_data(*, scope='classical7', rulership='traditional', orb_view=DEFAULT_ASPECT_VIEW,
                             tight_orb=3.0, axis_orb=5.0, include_mc_ruler=False,
                             distribution_points='ten_plus_asc_mc', reception_policy='dignity_only', dynamics_days=30, **birth):
     try:
@@ -17,7 +17,7 @@ def calculate_salience_data(*, scope='classical7', rulership='traditional', orb_
         return {'status':'invalid_input','error':str(exc)}
     if 'interpretation_policy' in birth:
         return {'status':'invalid_input','error':'interpretation_policy has been withdrawn; calculation-only endpoint'}
-    graph=calculate_graph_data(**birth)
+    graph=calculate_graph_data(**birth,include_supplementary=True)
     if graph['status']!='ok': return graph
     dynamics=calculate_dynamics(graph,dynamics_days,orb_view)
     return dict(build_salience(graph,config,dynamics),status='ok',completeness=graph['completeness'],

@@ -99,7 +99,7 @@ def test_real_ephemeris_phase_and_roots_and_no_cache_mutation():
     d=calculate_salience_data(year=2000,month=1,day=1,hour=12,minute=0,location_id='coord:39.904200,116.407400')
     motion=d['aspect_dynamics']
     assert motion['status']=='available'
-    assert {r['aspect_id'] for r in motion['rows']}=={e['id'] for e in d['source_graph']['aspects']['8']['edges']}
+    assert {r['aspect_id'] for r in motion['rows']}=={e['id'] for e in d['source_graph']['aspects']['6']['edges']}
     for row in motion['rows']:
         hit=row['search']['first_exact_jd_ut']
         if hit:

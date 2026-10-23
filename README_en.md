@@ -6,7 +6,7 @@
 
 [English](README_en.md) | [中文说明](README.md)
 
-**HellenicStar Astrology MCP** is a standalone, high-precision astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server featuring **44 professional tools** designed for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.).
+**HellenicStar Astrology MCP** is a standalone astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server with **46 tools in the current source** for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.). Deployed instances may differ; inspect their `tools/list`. Natal priorities v4 separates the Jones perspective into `jones_view`, with a side-by-side `view_comparison`. Jones no longer promotes natal priority membership or attention groups (`attention_layers` v3). Complete profiles and relationship facts remain unchanged; lists can change because the former Jones anchor is removed. See [parallel views and migration](docs/natal-jones-parallel-view.md). Deployment evidence is recorded separately.
 
 By coupling the classical Swiss Ephemeris engine with rigorous Hellenistic rules and structured claim verification, it supplies calculated chart data and checks submitted factual claims. These checks do not guarantee that an LLM’s final interpretation is accurate or free of hallucinations.
 
@@ -33,6 +33,12 @@ Add this server to your `claude_desktop_config.json`:
 
 ## Why HellenicStar MCP?
 
+[planet condition views](docs/natal-condition-views.md) compare active-sect dignity with explicit 3/2/1 triplicity credits, alongside house, motion, angle-distance and dispositor facts. They do not alter focus selection or reception rules and are not a full PNA implementation. See the release verification record for deployment status.
+
+[purpose-specific relationship views](docs/natal-relationship-views.md) add `relationship_views` to `calculate_natal_salience`: separate dependency, direct-aspect and remaining-context lists, with both endpoint states and sources. All original associations are retained; the default remains 6 degrees. These lists do not establish resource efficacy or remedies. See the release verification record for deployment status.
+
+`calculate_natal_salience` extracts rule-based natal priorities from the complete graph: terminal groups, main external entries, multiple candidate categories and complete planet profiles. It defaults to a uniform inclusive 6-degree natal aspect view; 8/10-degree views remain explicit alternatives. It compares seven- and ten-origin scopes without scores or a mandatory single core. A layered reading plan starts with all terminals and maximal configurations; an evidence matrix distinguishes selection from context, and resource checks reference specific states/aspects. Candidate coverage is not a concise shortlist. Role index v4 and resource dimensions v3 separate structural roles and resource relationships, counterpart state and topic applicability without a global importance or support grade. Profiles expose triplicity roles, intrinsic conditions, and candidate routes through dispositors, dignity relations, all five major aspects and shared configurations. Reception facts separate host/guest direction, dignity bases, sign geometry and the selected degree-aspect view; applying/separating is computed from relative speed, with bounded first-exact searches and station/ingress facts. Four explicit reception criteria are selectable; no unlimited perfection or efficacy claim. Calculation and selection only; the experimental interpretation policy has been withdrawn. See [rules and limitations](docs/natal-salience.md).
+
 Generic LLMs (like Claude or GPT) struggle with astrological calculations: they hallucinate planetary longitudes, misplace house cusps, invent non-existent aspects, and produce vague astrological Barnum statements.
 
 HellenicStar solves this by strictly separating **Computation** from **Interpretation**:
@@ -42,11 +48,8 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities (46 Tools)
+## Core Capabilities
 
-- **Planetary Aspect Cycles & Arabic Lots**:
-  - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.
-  - `calculate_lots`: Calculate Hellenistic and Arabic lots (Fortune, Spirit, Eros, Necessity, Marriage, etc.) on demand with formulas and sect reversal info.
 
 ### 1. High-Precision Natal & Astronomical Charting
 - **House Systems**: Placidus, Whole Sign, and traditional quadrant frameworks.
@@ -134,15 +137,3 @@ pytest tests/ -q
 - Astronomical calculation core relies on **Swiss Ephemeris** (AGPL-3.0 / Professional dual license).
 - Geographic resolution utilizes **GeoNames** (CC BY 4.0) and **timezonefinder**.
 - See [NOTICE.md](NOTICE.md) for full third-party notices and licenses.
-
-
-
-## Natal structure graph / 本命结构图谱
-
-`calculate_natal_structure_graph` returns deterministic dispositor paths, cycles, basins, receptions, aspect motifs and shared dependencies. High-latitude failures retain planetary relations with explicit unavailable house layers. No psychological theme is inferred. See [the graph contract and reproducible validation](docs/natal-structure-graph.md).
-
-## Natal priorities and motion conditions
-
-Version 2 separates grouped terminals/configurations, focal planets and local aspects. It no longer promotes every participant; all ten profiles remain available. See [rules, regression evidence and migration](docs/validation/natal-focus-v2.md).
-
-`calculate_natal_salience` extracts terminal groups, main entries, classified candidates and complete profiles without a score or mandatory single core. `reception_policy` selects explicit dignity, sign-aspect, degree-aspect or applying-degree-aspect checks. `aspect_dynamics` returns phase from relative longitude speed, bounded first exact contacts, and preceding stations/ingresses. `dynamics_days` is 1–90 (default 30). Missing ephemeris coverage remains explicit. No psychological advice, efficacy verdict or unlimited perfection claim. See [the specification](docs/natal-salience.md). [Verified release record](docs/validation/natal-priorities-release-2026-10-22.md).

@@ -1,0 +1,83 @@
+{
+  "version": "algorithm-only-v1",
+  "inputs": 1294,
+  "counts": {
+    "full": 1245,
+    "multiple_terminal_charts": 650,
+    "partial": 36
+  },
+  "terminal_shapes": {
+    "multi_node_cycle": 312,
+    "two_node_cycle": 530,
+    "self": 1253
+  },
+  "route_instances": {
+    "dignity_relation": 27055,
+    "dispositor": 11034,
+    "mutual_reception": 3433,
+    "square_or_opposition": 13429,
+    "shared_configuration": 33090,
+    "sextile_or_trine": 19317,
+    "conjunction": 6440
+  },
+  "rejected": [
+    {
+      "id": "dst-gap",
+      "status": "nonexistent"
+    },
+    {
+      "id": "dst-repeat-unset",
+      "status": "ambiguous"
+    },
+    {
+      "id": "china-dst-gap",
+      "status": "nonexistent"
+    },
+    {
+      "id": "invalid-leap",
+      "status": "invalid_input"
+    },
+    {
+      "id": "invalid-hour",
+      "status": "invalid_input"
+    },
+    {
+      "id": "apia-skipped-date",
+      "status": "nonexistent"
+    },
+    {
+      "id": "lat-over",
+      "status": "invalid_input"
+    },
+    {
+      "id": "lng-over",
+      "status": "invalid_input"
+    },
+    {
+      "id": "negative-minute",
+      "status": "invalid_input"
+    },
+    {
+      "id": "minute-60",
+      "status": "invalid_input"
+    },
+    {
+      "id": "month-13",
+      "status": "invalid_input"
+    },
+    {
+      "id": "fold-2",
+      "status": "invalid_input"
+    },
+    {
+      "id": "fractional-hour",
+      "status": "invalid_input"
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Synthetic inputs are not a population sample or proof of importance accuracy.",
+    "Candidate routes overlap; counts are neither independent evidence nor efficacy.",
+    "Applying/separating and perfection are unknown; no psychological conclusions."
+  ]
+}

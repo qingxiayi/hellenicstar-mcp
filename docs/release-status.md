@@ -1,3 +1,7 @@
+# Current release status
+
+The natal priorities v4 release is tracked in [the 2026-10-23 verification record](validation/natal-jones-release-2026-10-23.md). The earlier local-preparation notes below are historical, not the current GitHub or production status.
+
 # Standalone release verification
 
 The historical preparation records below describe the initial source release.

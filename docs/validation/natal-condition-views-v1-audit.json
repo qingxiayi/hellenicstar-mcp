@@ -1,0 +1,17 @@
+{
+  "version": "natal-condition-views-v1",
+  "seed": 2026102212,
+  "stats": {
+    "charts": 152,
+    "full": 120,
+    "日生人": 87,
+    "classical_planets": 1064,
+    "planets_with_changed_dignity_credit": 287,
+    "planets_with_changed_peregrine_flag": 149,
+    "invariant_variants": 304,
+    "夜生人": 65,
+    "partial": 32
+  },
+  "failures": [],
+  "limitation": "Rule arithmetic and software invariants, not professional validity or predictive efficacy."
+}

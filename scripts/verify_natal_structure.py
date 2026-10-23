@@ -30,7 +30,7 @@ def check_graph(planets, got, rules):
 
 def main():
     rows=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/natal-structure-synthetic.json').read_text())
-    counts=Counter();failures=[];elapsed=[]
+    counts=Counter();failures=[];elapsed=[]; candidate_sets=Counter(); terminal_shapes=Counter()
     def timeout(*_): raise TimeoutError('8 seconds per input')
     signal.signal(signal.SIGALRM,timeout)
     expected_rejections={'dst-gap','dst-repeat-unset','china-dst-gap','invalid-leap','invalid-hour','apia-skipped-date','lat-over','lng-over','negative-minute','minute-60','month-13','fold-2','fractional-hour'}
@@ -48,6 +48,15 @@ def main():
                 ps={n['id']:{'longitude':n['lon']} for n in d['nodes']}
                 for policy,rules in [('traditional',TRADITIONAL_RULERS),('modern',MODERN_RULERS)]:check_graph(ps,d['dispositor'][policy],rules)
                 counts[d['completeness']]+=1
+                from services.natal_salience import build_salience
+                salience=build_salience(d)
+                selected={k:v for k,v in ps.items() if k in salience['scope_comparison']['classical7']['origins']}
+                check_graph(selected,{'terminals':[{'members':t['members'],'basin':t['origins']} for t in salience['core_structures']]},TRADITIONAL_RULERS)
+                checked=dict(salience,status='ok',settings=salience['method']['config'],source_graph=d,completeness=d['completeness'],birth_context=d['birth_context'],layer_availability=d['layer_availability'],interpretations=[])
+                assert not validate_output('calculate_natal_salience',checked,args)
+                if d['completeness']=='full':
+                    candidate_sets[str(len(salience['priority_planets']))]+=1
+                    terminal_shapes.update(t['type'] for t in salience['core_structures'])
         except Exception as e:failures.append({'id':row['id'],'error':type(e).__name__+': '+str(e)})
         finally:signal.alarm(0)
         elapsed.append(time.perf_counter()-start)
@@ -55,7 +64,7 @@ def main():
     for _ in range(10000):
         ps={k:{'longitude':rng.randrange(12)*30+rng.uniform(.001,29.999)} for k in TEN}
         for rules in (TRADITIONAL_RULERS,MODERN_RULERS):check_graph(ps,topology(ps,rules),rules)
-    summary={'synthetic_birth_inputs':len(rows),'counts':dict(counts),'failures':failures,'independent_topology_checks':20000,'max_input_seconds':round(max(elapsed),4)}
+    summary={'synthetic_birth_inputs':len(rows),'counts':dict(counts),'failures':failures,'independent_topology_checks':20000,'max_input_seconds':round(max(elapsed),4),'priority_candidate_counts_full':dict(candidate_sets),'salience_terminal_shapes_full':dict(terminal_shapes)}
     print(json.dumps(summary,ensure_ascii=False,indent=2))
     assert not failures,summary
 

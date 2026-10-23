@@ -42,6 +42,8 @@ def priority_decisions(data):
         elif evidence['family'] == 'reception':
             for p, other in ((detail['planet1'],detail['planet2']), (detail['planet2'],detail['planet1'])):
                 add(p, 'mutual_reception_with', other, dict(planet=other, current_view=detail['current_view']), '/evidence_index/'+identity)
+        elif identity == 'bridge:chart_ruler':
+            add(detail['planet'], 'chart_ruler_dispositor', identity, detail, '/evidence_index/'+identity)
     for i, m in enumerate(data['priority_configurations']):
         for p in m['members']:
             add(p, 'configuration_role', m['id'], dict(roles=m['roles'][p]), f'/priority_configurations/{i}')
@@ -69,7 +71,7 @@ def priority_decisions(data):
             groups[role['kind']].add(p)
         rows.append(dict(planet=p, roles=ordered, selected_for_profile=p in profiles,
             selected_as_focus=p in profiles, profile_ref=profile_paths.get(p)))
-    return dict(version='natal-priority-policy-v3', rows=rows,
+    return dict(version='natal-priority-policy-v4', rows=rows,
         role_groups={k:sorted(v) for k,v in sorted(groups.items())},
         policy=dict(order='planet and role identifiers only; not importance',
             ranking=None, state_effect='conditions do not remove or promote structural roles',
@@ -142,9 +144,9 @@ def assess_resource(topic, candidate, data):
     if kind == 'essential_condition':
         status = 'governance_or_reception_context' if governance_endpoints else 'aspect_context_only' if aspect_endpoints else 'participant_connection_only'
         reason = 'Sign governance/reception and aspect contact are separate forms of context; neither changes essential dignity.'
-    elif kind == 'square_or_opposition':
+    elif kind in ('square_or_opposition','soft_aspect_with_essential_condition'):
         status = 'two_endpoint_aspect_connection' if len(set(affected) & set(aspect_endpoints))==2 else 'one_endpoint_aspect_connection' if aspect_endpoints else 'governance_connection_only' if governance_endpoints else 'structural_connection_only'
-        reason = 'Describes which endpoints are connected; it does not establish resolution or a new configuration.'
+        reason = 'Describes which endpoints are connected; it does not establish help, harm, resolution or a new configuration.'
     elif kind in ('motion','solar_condition','house_association'):
         status = 'background_connection_only'
         reason = 'The relationship supplies context; it does not change natal motion, solar state or house association.'

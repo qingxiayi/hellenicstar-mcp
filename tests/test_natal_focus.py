@@ -88,7 +88,7 @@ def test_all_ten_profiles_and_connections_survive_selection(graph):
     assert len(data['priority_planets'])<10
     assert {r['planet'] for r in data['priority_planets']}==set(data['focus_selection']['planet_ids'])
     for p,profile in data['planet_profiles'].items():
-        expected={e['id'] for e in graph['aspects']['8']['edges'] if p in (e['from'],e['to'])}
+        expected={e['id'] for e in graph['aspects']['6']['edges'] if p in (e['from'],e['to'])}
         assert {e['id'] for e in profile['aspects']}==expected
     assert all(not t['unavailable_endpoint_profiles'] for t in data['resource_checks']['topics'])
 
@@ -126,7 +126,7 @@ def test_real_mcp_focus_claim_and_tamper_check():
     async def run():
         args=dict(year=2000,month=1,day=1,hour=12,minute=0,location_id='coord:39.904200,116.407400')
         out=await m.calculate_natal_salience(**args)
-        assert out['status']=='ok' and out['schema_version']=='natal-priorities-v2'
+        assert out['status']=='ok' and out['schema_version']=='natal-priorities-v4'
         path='/focus_selection/planet_ids'
         result=await m.verify_calculation_claims(reference=m.CalculationReference(**out['calculation_reference']),
             claims=[m.CalculationClaim(quote='selected planets',path=path,value=out['focus_selection']['planet_ids'])])
@@ -134,3 +134,73 @@ def test_real_mcp_focus_claim_and_tamper_check():
         out['focus_selection']['planet_ids']=[]
         assert checked_result('calculate_natal_salience',out,args)['status']=='validation_failed'
     asyncio.run(run())
+
+
+def test_mutual_relation_is_candidate_not_automatic_focus_and_cycle_alias_is_not_a_vote():
+    evidence={'terminal:a:b':dict(family='dispositor',detail={}),
+              'reception:a:b':dict(family='reception',detail={},synonym_group='terminal:a:b'),
+              'house:a':dict(family='house_ruler',detail={})}
+    reasons={'a':[dict(category='terminal',evidence_id=k) for k in evidence]}
+    row=select_focus(reasons,evidence,[])[0]['a']
+    assert not row['selected']
+    assert set(row['structural_families'])=={'dispositor','house_ruler'}
+    alias=next(e for e in row['candidate_evaluations'] if e['evidence_id']=='reception:a:b')
+    assert alias['disposition']=='synonymous_relation'
+    assert alias['represented_by']==['terminal:a:b']
+    # A distinct mixed-dignity exchange is a different structural description.
+    evidence['reception:a:b']['synonym_group']='reception:a:b'
+    row=select_focus(reasons,evidence,[])[0]['a']
+    assert row['selected'] and row['rules'][0]['rule']=='cross_family_convergence'
+    only={'a':[dict(category='reception',evidence_id='reception:a:b')]}
+    assert not select_focus(only,evidence,[])[0]['a']['selected']
+
+
+def test_mutuals_without_aspects_reach_both_candidate_lists():
+    import json
+    from pathlib import Path
+    from services.mcp_structure_graph import calculate_graph_data
+    row=next(r for r in json.loads((Path(__file__).parent/'fixtures/natal-structure-synthetic.json').read_text()) if r['id']=='random-000')
+    graph=calculate_graph_data(**{k:v for k,v in row.items() if k not in ('id','group')})
+    data=build_salience(graph)
+    assert any(not r['has_aspect'] for r in graph['receptions']['mutual_receptions'])
+    for r in graph['receptions']['mutual_receptions']:
+        a,b=sorted((r['planet1'],r['planet2']))
+        identity=f'reception:{a}:{b}'
+        for p in (a,b):
+            audit=next(a for a in data['selection_audit'] if a['planet']==p)
+            assert identity in {e['evidence_id'] for e in audit['candidate_evaluations']}
+        assert data['evidence_index'][identity]['detail']['has_aspect']==r['has_aspect']
+
+
+@pytest.mark.parametrize('rulership',['traditional','modern'])
+def test_chart_ruler_bridge_is_one_hop_uses_selected_rulership_and_requires_asc(graph,rulership):
+    from services.natal_house_rulers import SIGN_KEYS,TRADITIONAL_RULERS,MODERN_RULERS
+    rules=TRADITIONAL_RULERS if rulership=='traditional' else MODERN_RULERS
+    for sign in range(12):
+        g=copy.deepcopy(graph);g['axes']['asc']['lon']=sign*30+10
+        data=build_salience(g,{'rulership':rulership})
+        guest=rules[SIGN_KEYS[sign]]
+        host=data['planet_profiles'][guest]['dispositor']['planet']
+        bridges=[e for e in data['evidence_index'].values() if e['id'].startswith('bridge:')]
+        assert len(bridges)==(host!=guest)
+        if bridges:
+            assert bridges[0]['detail']==dict(planet=host,guest=guest,role='chart_ruler_dispositor',rulership=rulership,depth=1)
+            assert host in data['focus_selection']['planet_ids']
+    g['axes']={}
+    assert 'bridge:chart_ruler' not in build_salience(g)['evidence_index']
+
+
+@pytest.mark.parametrize('name,planet,status',[
+    ('水星','mercury','available'),('uranus','uranus','available'),
+    (None,None,'no_focus_supplied'),('水星/金星',None,'unrecognized_focus')])
+def test_pattern_focus_consumes_single_upstream_result_without_guessing(graph,name,planet,status):
+    g=copy.deepcopy(graph);g['jones']=dict(engine_version='test',high_focus_planet=name,confidence='moderate')
+    data=build_salience(g)
+    assert data['jones_view']['upstream_focus']['status']==status
+    assert data['jones_view']['upstream_focus']['planet']==planet
+    assert 'pattern:jones:focus' not in data['evidence_index']
+    without=copy.deepcopy(g);without.pop('jones')
+    plain=build_salience(without)
+    assert data['focus_selection']==plain['focus_selection']
+    assert data['attention_layers']==plain['attention_layers']
+    assert plain['jones_view']['upstream_focus']['status']=='unavailable'

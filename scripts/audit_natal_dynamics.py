@@ -57,7 +57,8 @@ def main():
                     finer+=1
             graph=d['source_graph']; nodes={n['id']:n for n in graph['nodes']}
             for policy in POLICIES:
-                facts=reception_facts(nodes,graph['aspects']['8']['edges'],graph['facts']['sect']['value'],8,motion,policy)
+                view=d['settings']['orb_view']
+                facts=reception_facts(nodes,graph['aspects'][str(view)]['edges'],graph['facts']['sect']['value'],view,motion,policy)
                 for r in facts['rows']:
                     e=r['policy_evaluation'];policies[policy+':'+str(e['meets'])]+=1
                     if e['meets'] is True: assert not e['failed'] and not e['unknown']

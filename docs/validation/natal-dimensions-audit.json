@@ -1,0 +1,41 @@
+{
+  "version": "v2",
+  "inputs": 1294,
+  "counts": {
+    "full": 1245,
+    "rejected_or_ambiguous": 13,
+    "partial": 36
+  },
+  "role_instances": {
+    "configuration_role": 15827,
+    "dispositor_of": 11557,
+    "house_ruler": 29880,
+    "resource_connection": 29801,
+    "tight_aspect_participant": 15300,
+    "mutual_reception_with": 3518,
+    "terminal_member": 3365,
+    "axis_aspect": 4211,
+    "luminary": 2562,
+    "axis_conjunction": 1408,
+    "chart_ruler": 1245,
+    "terminal_entry": 1675
+  },
+  "applicability": {
+    "one_endpoint_aspect_connection": 15281,
+    "two_endpoint_aspect_connection": 2126,
+    "governance_connection_only": 7577,
+    "background_connection_only": 42061,
+    "aspect_context_only": 8788,
+    "governance_or_reception_context": 8029
+  },
+  "essential_state_coverage": {
+    "available": 65277,
+    "classical_condition_not_defined": 18585
+  },
+  "topic_counts": {
+    "dimensions_reported": 30850,
+    "no_candidate_under_policy": 383
+  },
+  "failures": [],
+  "limitation": "Full and partial charts; relations repeat across topics. No importance or efficacy grades."
+}

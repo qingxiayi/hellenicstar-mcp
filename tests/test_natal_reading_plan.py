@@ -86,3 +86,27 @@ def test_zero_tight_gate_does_not_hide_non_tight_hard_aspect_topics():
     data=build_salience(graph,{'tight_orb':0})
     assert not data['reading_plan']['identity_and_local']['tight_aspect_ids']
     assert any(t['kind']=='square_or_opposition' and t['fact']['orb']>0 for t in data['resource_checks']['topics'])
+
+
+def test_soft_condition_topics_are_directional_facts_not_harm_verdicts():
+    from services.natal_reading_plan import _resource_checks
+    edge=dict(id='a:mars:sun:120',angle=120,orb=4.2,**{'from':'mars','to':'sun'})
+    def profile(flags):
+        return dict(condition=dict(essential=flags),retrograde=False,houses={},house_ruler_links={},
+                    aspects=[edge],resource_review=dict(candidates=[]),condition_availability='available')
+    neutral=dict(detriment=False,fall=False,peregrine=False)
+    planets={'mars':(0,dict(profile=profile(neutral))),
+             'sun':(1,dict(profile=profile(dict(neutral,detriment=True))))}
+    def topics():
+        return [t for t in _resource_checks(planets)['topics'] if t['kind']=='soft_aspect_with_essential_condition']
+    rows=topics()
+    assert len(rows)==1
+    assert rows[0]['fact']==dict(planet='mars',counterpart='sun',aspect_id=edge['id'],angle=120,orb=4.2,counterpart_flags=['detriment'])
+    assert rows[0]['verdict'] is None
+    assert len(rows[0]['source_refs'])==2
+    planets['sun'][1]['profile']['aspects'].append(edge.copy())
+    assert topics()==rows
+    planets['sun'][1]['profile']['condition']=None
+    assert topics()==[]  # Missing state must not be treated as debility.
+    planets['sun'][1]['profile']['condition']=dict(essential=neutral)
+    assert topics()==[]

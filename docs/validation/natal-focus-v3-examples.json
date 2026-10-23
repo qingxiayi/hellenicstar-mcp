@@ -1,0 +1,158 @@
+[
+  {
+    "id": "random-000",
+    "terminals": [
+      {
+        "members": [
+          "mars",
+          "mercury",
+          "saturn"
+        ],
+        "coverage": 7,
+        "entry": [
+          "saturn"
+        ]
+      }
+    ],
+    "before": [
+      "saturn",
+      "moon",
+      "sun",
+      "pluto",
+      "uranus"
+    ],
+    "after": [
+      "mars",
+      "mercury",
+      "saturn",
+      "moon",
+      "sun",
+      "pluto",
+      "uranus"
+    ],
+    "new_rules": {
+      "mars": [
+        "chart_ruler_dispositor",
+        "upstream_pattern_focus",
+        "cross_family_convergence"
+      ],
+      "mercury": [
+        "cross_family_convergence"
+      ]
+    }
+  },
+  {
+    "id": "random-001",
+    "terminals": [
+      {
+        "members": [
+          "moon",
+          "sun"
+        ],
+        "coverage": 5,
+        "entry": [
+          "sun"
+        ]
+      },
+      {
+        "members": [
+          "saturn"
+        ],
+        "coverage": 2,
+        "entry": [
+          "saturn"
+        ]
+      }
+    ],
+    "before": [
+      "moon",
+      "saturn",
+      "sun",
+      "mars",
+      "venus"
+    ],
+    "after": [
+      "moon",
+      "saturn",
+      "sun",
+      "mercury",
+      "mars",
+      "venus"
+    ],
+    "new_rules": {
+      "mercury": [
+        "upstream_pattern_focus"
+      ]
+    }
+  },
+  {
+    "id": "random-019",
+    "terminals": [
+      {
+        "members": [
+          "venus"
+        ],
+        "coverage": 7,
+        "entry": [
+          "venus"
+        ]
+      }
+    ],
+    "before": [
+      "venus",
+      "moon",
+      "saturn",
+      "sun",
+      "pluto"
+    ],
+    "after": [
+      "venus",
+      "moon",
+      "saturn",
+      "sun",
+      "neptune",
+      "pluto"
+    ],
+    "new_rules": {
+      "neptune": [
+        "upstream_pattern_focus"
+      ]
+    }
+  },
+  {
+    "id": "random-004",
+    "terminals": [
+      {
+        "members": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "venus"
+        ],
+        "coverage": 7,
+        "entry": [
+          "mars"
+        ]
+      }
+    ],
+    "before": [
+      "jupiter",
+      "mars",
+      "mercury",
+      "venus",
+      "moon",
+      "sun",
+      "neptune"
+    ],
+    "after": [
+      "jupiter",
+      "mars",
+      "mercury",
+      "venus",
+      "moon",
+      "sun",
+      "neptune"
+    ],
+    "new_rules": {}
+  }
+]

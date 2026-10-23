@@ -1,0 +1,165 @@
+{
+  "version": "natal-focus-v3",
+  "holdout_seed": 2026102205,
+  "samples": {
+    "regression": {
+      "inputs": 1294,
+      "status": {
+        "ok": 1281,
+        "full": 1245,
+        "nonexistent": 3,
+        "ambiguous": 1,
+        "partial": 36,
+        "invalid_input": 9
+      },
+      "baseline_focal_count_full": {},
+      "focal_planet_count_full": {
+        "2": 1,
+        "3": 1,
+        "4": 19,
+        "5": 121,
+        "6": 269,
+        "7": 392,
+        "8": 305,
+        "9": 115,
+        "10": 22
+      },
+      "changes": {},
+      "examples": [],
+      "rule_occurrences": {
+        "chart_ruler_dispositor": 1059,
+        "upstream_pattern_focus": 1194,
+        "cross_family_convergence": 5034,
+        "identity_anchor": 3807,
+        "maximal_configuration_focus": 3650,
+        "axis_conjunction": 1408,
+        "main_external_entry": 1675
+      },
+      "terminal_shapes": {
+        "multi_node_cycle": 312,
+        "two_node_cycle": 530,
+        "self": 1253,
+        "multiple_terminals": 650
+      },
+      "rejected": [
+        {
+          "id": "dst-gap",
+          "status": "nonexistent"
+        },
+        {
+          "id": "dst-repeat-unset",
+          "status": "ambiguous"
+        },
+        {
+          "id": "china-dst-gap",
+          "status": "nonexistent"
+        },
+        {
+          "id": "invalid-leap",
+          "status": "invalid_input"
+        },
+        {
+          "id": "invalid-hour",
+          "status": "invalid_input"
+        },
+        {
+          "id": "apia-skipped-date",
+          "status": "nonexistent"
+        },
+        {
+          "id": "lat-over",
+          "status": "invalid_input"
+        },
+        {
+          "id": "lng-over",
+          "status": "invalid_input"
+        },
+        {
+          "id": "negative-minute",
+          "status": "invalid_input"
+        },
+        {
+          "id": "minute-60",
+          "status": "invalid_input"
+        },
+        {
+          "id": "month-13",
+          "status": "invalid_input"
+        },
+        {
+          "id": "fold-2",
+          "status": "invalid_input"
+        },
+        {
+          "id": "fractional-hour",
+          "status": "invalid_input"
+        }
+      ],
+      "cross_focus_counts": {
+        "0": 7,
+        "1": 57,
+        "2": 216,
+        "3": 420,
+        "4": 343,
+        "5": 186,
+        "6": 43,
+        "7": 9
+      }
+    },
+    "holdout": {
+      "inputs": 1000,
+      "status": {
+        "ok": 1000,
+        "full": 1000
+      },
+      "baseline_focal_count_full": {},
+      "focal_planet_count_full": {
+        "3": 2,
+        "4": 25,
+        "5": 99,
+        "6": 211,
+        "7": 297,
+        "8": 234,
+        "9": 114,
+        "10": 18
+      },
+      "changes": {},
+      "examples": [],
+      "rule_occurrences": {
+        "upstream_pattern_focus": 933,
+        "cross_family_convergence": 3981,
+        "main_external_entry": 1304,
+        "identity_anchor": 3000,
+        "maximal_configuration_focus": 3132,
+        "axis_conjunction": 1107,
+        "chart_ruler_dispositor": 848
+      },
+      "terminal_shapes": {
+        "self": 984,
+        "multiple_terminals": 515,
+        "two_node_cycle": 409,
+        "multi_node_cycle": 259
+      },
+      "rejected": [],
+      "cross_focus_counts": {
+        "0": 1,
+        "1": 48,
+        "2": 159,
+        "3": 322,
+        "4": 291,
+        "5": 138,
+        "6": 32,
+        "7": 8,
+        "8": 1
+      }
+    }
+  },
+  "configuration_variants": 1104,
+  "failures": [],
+  "limits": [
+    "No labelled professional importance truth; fewer selections alone is not evidence of accuracy.",
+    "No planet-count target or fixed winner; broad outputs remain possible and disclosed.",
+    "Holdout is deterministic synthetic data, not population representative.",
+    "Rules use structural families, not statistical independence or psychological interpretation."
+  ]
+}

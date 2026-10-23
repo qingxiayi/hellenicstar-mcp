@@ -18,20 +18,31 @@ def select_focus(reasons, evidence, configurations):
             aspect_roots.setdefault(edge, []).append(mid)
     rows = {}
     for planet, matches in sorted(reasons.items()):
+        matched_ids={m['evidence_id'] for m in matches}
         evaluations = []
         direct = []
         families = {}
         for match in matches:
             identity = match['evidence_id']; e = evidence[identity]; detail = e['detail']
             family = e['family']; rule = None; owners = []
+            if family == 'chart_pattern':
+                continue  # Parallel Jones evidence never participates, even in convergence.
             disposition = 'context'
             if family == 'identity':
                 rule = 'identity_anchor'
             elif family == 'dispositor':
                 if identity.startswith('entry:'):
                     rule = 'main_external_entry'
+                elif identity == 'bridge:chart_ruler':
+                    rule = 'chart_ruler_dispositor'
                 else:
                     disposition = 'group_member'; owners = [identity]
+            elif family == 'reception':
+                synonym=e.get('synonym_group',identity)
+                if synonym != identity and synonym in matched_ids:
+                    disposition='synonymous_relation'; owners=[synonym]
+                else:
+                    disposition='local_relation'
             elif family == 'angularity' and identity.startswith('axis:'):
                 if detail['angle'] in (0, 180):
                     rule = 'axis_conjunction'
@@ -50,7 +61,7 @@ def select_focus(reasons, evidence, configurations):
                 direct.append(dict(rule=rule, evidence_ids=[identity]))
                 disposition = 'direct_selection'
             # A child motif and its aspect edges cannot corroborate their parent.
-            if disposition not in ('contained_structure', 'contained_aspect'):
+            if disposition not in ('contained_structure', 'contained_aspect', 'synonymous_relation'):
                 families.setdefault(family, []).append(identity)
             evaluations.append(dict(**match, disposition=disposition,
                                     represented_by=owners))
@@ -67,11 +78,14 @@ def select_focus(reasons, evidence, configurations):
             candidate_evaluations=evaluations, structural_families=qualifying,
             reason='direct_anchor_or_convergence' if selected else
                    'represented_by_groups_or_local_relations' if matches else 'no_candidate_rule_matched')
-    return rows, dict(version='natal-focus-v2',
+    return rows, dict(version='natal-focus-v4',
         direct_rules=['identity_anchor', 'main_external_entry', 'axis_conjunction',
-                      'maximal_configuration_focus'],
+                      'maximal_configuration_focus', 'chart_ruler_dispositor'],
         convergence_min_families=CONVERGENCE_FAMILIES,
-        convergence='Distinct descriptions, not independent votes; contained motifs and their aspect edges do not add families.',
+        convergence='Distinct descriptions, not independent votes; contained motifs, their aspect edges and synonymous cycle/reception descriptions do not add families.',
+        reception='A candidate relationship even without an aspect; no automatic focus or resource efficacy.',
+        bridge='Only the immediate external dispositor of the chart ruler; no recursive promotion.',
+        pattern='Excluded from natal selection; see the parallel jones_view and view_comparison. No combined score.',
         symmetric_structures='Retained as groups; no arbitrary focal member.',
         state_effect='No promotion from dignity, retrograde or adverse condition.',
         maximum_planets=None, ranking=None,

@@ -1,0 +1,285 @@
+{
+  "version": "natal-focus-v3",
+  "holdout_seed": 2026102203,
+  "samples": {
+    "regression": {
+      "inputs": 1294,
+      "status": {
+        "ok": 1281,
+        "full": 1245,
+        "nonexistent": 3,
+        "ambiguous": 1,
+        "partial": 36,
+        "invalid_input": 9
+      },
+      "baseline_focal_count_full": {
+        "2": 1,
+        "3": 16,
+        "4": 72,
+        "5": 234,
+        "6": 350,
+        "7": 321,
+        "8": 195,
+        "9": 47,
+        "10": 9
+      },
+      "focal_planet_count_full": {
+        "2": 1,
+        "3": 1,
+        "4": 19,
+        "5": 121,
+        "6": 269,
+        "7": 392,
+        "8": 305,
+        "9": 115,
+        "10": 22
+      },
+      "changes": {
+        "changed": 676,
+        "unchanged": 605
+      },
+      "examples": [
+        {
+          "id": "random-000",
+          "added": [
+            "mars",
+            "mercury"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-001",
+          "added": [
+            "mercury"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-002",
+          "added": [
+            "mars"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-006",
+          "added": [
+            "uranus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-007",
+          "added": [
+            "mars"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-008",
+          "added": [
+            "mercury",
+            "saturn",
+            "venus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-010",
+          "added": [
+            "venus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "random-019",
+          "added": [
+            "neptune"
+          ],
+          "removed": []
+        }
+      ],
+      "rule_occurrences": {
+        "chart_ruler_dispositor": 1059,
+        "upstream_pattern_focus": 1194,
+        "cross_family_convergence": 5034,
+        "identity_anchor": 3807,
+        "maximal_configuration_focus": 3650,
+        "axis_conjunction": 1408,
+        "main_external_entry": 1675
+      },
+      "terminal_shapes": {
+        "multi_node_cycle": 312,
+        "two_node_cycle": 530,
+        "self": 1253,
+        "multiple_terminals": 650
+      },
+      "rejected": [
+        {
+          "id": "dst-gap",
+          "status": "nonexistent"
+        },
+        {
+          "id": "dst-repeat-unset",
+          "status": "ambiguous"
+        },
+        {
+          "id": "china-dst-gap",
+          "status": "nonexistent"
+        },
+        {
+          "id": "invalid-leap",
+          "status": "invalid_input"
+        },
+        {
+          "id": "invalid-hour",
+          "status": "invalid_input"
+        },
+        {
+          "id": "apia-skipped-date",
+          "status": "nonexistent"
+        },
+        {
+          "id": "lat-over",
+          "status": "invalid_input"
+        },
+        {
+          "id": "lng-over",
+          "status": "invalid_input"
+        },
+        {
+          "id": "negative-minute",
+          "status": "invalid_input"
+        },
+        {
+          "id": "minute-60",
+          "status": "invalid_input"
+        },
+        {
+          "id": "month-13",
+          "status": "invalid_input"
+        },
+        {
+          "id": "fold-2",
+          "status": "invalid_input"
+        },
+        {
+          "id": "fractional-hour",
+          "status": "invalid_input"
+        }
+      ]
+    },
+    "holdout": {
+      "inputs": 300,
+      "status": {
+        "ok": 300,
+        "full": 300
+      },
+      "baseline_focal_count_full": {
+        "3": 6,
+        "4": 10,
+        "5": 48,
+        "6": 88,
+        "7": 91,
+        "8": 45,
+        "9": 10,
+        "10": 2
+      },
+      "focal_planet_count_full": {
+        "4": 4,
+        "5": 20,
+        "6": 66,
+        "7": 103,
+        "8": 72,
+        "9": 30,
+        "10": 5
+      },
+      "changes": {
+        "unchanged": 140,
+        "changed": 160
+      },
+      "examples": [
+        {
+          "id": "holdout-002",
+          "added": [
+            "pluto"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-003",
+          "added": [
+            "venus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-004",
+          "added": [
+            "uranus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-005",
+          "added": [
+            "venus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-011",
+          "added": [
+            "venus"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-015",
+          "added": [
+            "pluto"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-016",
+          "added": [
+            "pluto"
+          ],
+          "removed": []
+        },
+        {
+          "id": "holdout-018",
+          "added": [
+            "jupiter"
+          ],
+          "removed": []
+        }
+      ],
+      "rule_occurrences": {
+        "main_external_entry": 402,
+        "chart_ruler_dispositor": 250,
+        "cross_family_convergence": 1196,
+        "maximal_configuration_focus": 1004,
+        "identity_anchor": 900,
+        "axis_conjunction": 316,
+        "upstream_pattern_focus": 284
+      },
+      "terminal_shapes": {
+        "two_node_cycle": 108,
+        "self": 314,
+        "multiple_terminals": 154,
+        "multi_node_cycle": 76
+      },
+      "rejected": []
+    }
+  },
+  "configuration_variants": 768,
+  "failures": [],
+  "limits": [
+    "No labelled professional importance truth; fewer selections alone is not evidence of accuracy.",
+    "No planet-count target or fixed winner; broad outputs remain possible and disclosed.",
+    "Holdout is deterministic synthetic data, not population representative.",
+    "Rules use structural families, not statistical independence or psychological interpretation."
+  ]
+}

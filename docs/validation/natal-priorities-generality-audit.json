@@ -1,0 +1,715 @@
+{
+  "input_count": 1294,
+  "counts": {
+    "full": 1245,
+    "rejected_or_ambiguous": 13,
+    "partial": 36
+  },
+  "failures": [],
+  "selected_count_full": {
+    "4": 1,
+    "6": 1,
+    "7": 5,
+    "8": 61,
+    "9": 322,
+    "10": 855
+  },
+  "category_planet_hits": {
+    "terminal": 3258,
+    "identity": 3518,
+    "axis": 5060,
+    "tight_aspect": 8961,
+    "configuration": 6236,
+    "house_ruler": 3239,
+    "angular_concentration": 4126
+  },
+  "exclusive_category_hits": {
+    "terminal": 88,
+    "identity": 185,
+    "axis": 274,
+    "tight_aspect": 642,
+    "configuration": 191,
+    "house_ruler": 86,
+    "angular_concentration": 191
+  },
+  "selected_count_if_one_category_removed": {
+    "terminal": {
+      "4": 1,
+      "6": 1,
+      "7": 11,
+      "8": 81,
+      "9": 352,
+      "10": 799
+    },
+    "identity": {
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 17,
+      "8": 106,
+      "9": 376,
+      "10": 743
+    },
+    "axis": {
+      "4": 1,
+      "5": 1,
+      "6": 4,
+      "7": 28,
+      "8": 119,
+      "9": 394,
+      "10": 698
+    },
+    "tight_aspect": {
+      "4": 1,
+      "5": 4,
+      "6": 12,
+      "7": 69,
+      "8": 205,
+      "9": 420,
+      "10": 534
+    },
+    "configuration": {
+      "4": 1,
+      "6": 1,
+      "7": 15,
+      "8": 102,
+      "9": 401,
+      "10": 725
+    },
+    "house_ruler": {
+      "4": 1,
+      "6": 2,
+      "7": 9,
+      "8": 80,
+      "9": 354,
+      "10": 799
+    },
+    "angular_concentration": {
+      "4": 1,
+      "6": 3,
+      "7": 15,
+      "8": 106,
+      "9": 385,
+      "10": 735
+    }
+  },
+  "tight_orb_sensitivity": {
+    "0": {
+      "4": 1,
+      "5": 4,
+      "6": 12,
+      "7": 69,
+      "8": 205,
+      "9": 420,
+      "10": 534
+    },
+    "1": {
+      "4": 1,
+      "5": 3,
+      "6": 4,
+      "7": 37,
+      "8": 149,
+      "9": 405,
+      "10": 646
+    },
+    "3": {
+      "4": 1,
+      "6": 1,
+      "7": 5,
+      "8": 61,
+      "9": 322,
+      "10": 855
+    }
+  },
+  "chart_shape_counts": {
+    "all_ten_selected": 855,
+    "multi_node_cycle": 299,
+    "multiple_terminals": 627,
+    "self": 834,
+    "two_node_cycle": 466,
+    "six_or_fewer_selected": 2
+  },
+  "resources": {
+    "reviewed_planets": 11981,
+    "no_external_candidate": 199,
+    "candidate_pairs": 29081,
+    "multiple_routes_same_pair": 3521,
+    "classical_condition_unavailable": 6372,
+    "detriment_or_fall": 5393,
+    "retrograde": 3543,
+    "has_square_or_opposition": 19145,
+    "mutual_without_current_aspect": 2278
+  },
+  "examples": {
+    "all_ten_selected": {
+      "input": {
+        "id": "random-000",
+        "group": "random",
+        "year": 2043,
+        "month": 12,
+        "day": 9,
+        "hour": 11,
+        "minute": 37,
+        "city": "Beijing",
+        "lat": 39.9042,
+        "lng": 116.4074
+      },
+      "selected": {
+        "mars": [
+          "terminal",
+          "tight_aspect",
+          "configuration"
+        ],
+        "mercury": [
+          "terminal",
+          "configuration"
+        ],
+        "saturn": [
+          "terminal",
+          "identity",
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "moon": [
+          "identity",
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "angular_concentration"
+        ],
+        "sun": [
+          "identity",
+          "tight_aspect",
+          "configuration"
+        ],
+        "pluto": [
+          "axis",
+          "configuration",
+          "angular_concentration"
+        ],
+        "uranus": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "jupiter": [
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "neptune": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "venus": [
+          "tight_aspect",
+          "configuration"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "saturn"
+          ],
+          "numerator": 7,
+          "denominator": 7,
+          "main_entries": [
+            "saturn"
+          ],
+          "feeders": {
+            "direct": [
+              "jupiter",
+              "venus"
+            ],
+            "indirect": [
+              "moon",
+              "sun"
+            ]
+          }
+        }
+      ]
+    },
+    "multi_node_cycle": {
+      "input": {
+        "id": "random-000",
+        "group": "random",
+        "year": 2043,
+        "month": 12,
+        "day": 9,
+        "hour": 11,
+        "minute": 37,
+        "city": "Beijing",
+        "lat": 39.9042,
+        "lng": 116.4074
+      },
+      "selected": {
+        "mars": [
+          "terminal",
+          "tight_aspect",
+          "configuration"
+        ],
+        "mercury": [
+          "terminal",
+          "configuration"
+        ],
+        "saturn": [
+          "terminal",
+          "identity",
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "moon": [
+          "identity",
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "angular_concentration"
+        ],
+        "sun": [
+          "identity",
+          "tight_aspect",
+          "configuration"
+        ],
+        "pluto": [
+          "axis",
+          "configuration",
+          "angular_concentration"
+        ],
+        "uranus": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "jupiter": [
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "neptune": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "venus": [
+          "tight_aspect",
+          "configuration"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "mars",
+            "mercury",
+            "saturn"
+          ],
+          "numerator": 7,
+          "denominator": 7,
+          "main_entries": [
+            "saturn"
+          ],
+          "feeders": {
+            "direct": [
+              "jupiter",
+              "venus"
+            ],
+            "indirect": [
+              "moon",
+              "sun"
+            ]
+          }
+        }
+      ]
+    },
+    "multiple_terminals": {
+      "input": {
+        "id": "random-001",
+        "group": "random",
+        "year": 1901,
+        "month": 7,
+        "day": 18,
+        "hour": 5,
+        "minute": 3,
+        "city": "Shanghai",
+        "lat": 31.2304,
+        "lng": 121.4737
+      },
+      "selected": {
+        "moon": [
+          "terminal",
+          "identity",
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "saturn": [
+          "terminal",
+          "axis",
+          "angular_concentration"
+        ],
+        "sun": [
+          "terminal",
+          "identity",
+          "axis",
+          "house_ruler",
+          "angular_concentration"
+        ],
+        "mercury": [
+          "axis",
+          "angular_concentration"
+        ],
+        "pluto": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "uranus": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "venus": [
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "angular_concentration"
+        ],
+        "mars": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "neptune": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "jupiter": [
+          "configuration",
+          "angular_concentration"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "moon",
+            "sun"
+          ],
+          "numerator": 5,
+          "denominator": 7,
+          "main_entries": [
+            "sun"
+          ],
+          "feeders": {
+            "direct": [
+              "mercury",
+              "venus"
+            ],
+            "indirect": [
+              "mars"
+            ]
+          }
+        },
+        {
+          "members": [
+            "saturn"
+          ],
+          "numerator": 2,
+          "denominator": 7,
+          "main_entries": [
+            "saturn"
+          ],
+          "feeders": {
+            "direct": [
+              "jupiter"
+            ],
+            "indirect": []
+          }
+        }
+      ]
+    },
+    "self": {
+      "input": {
+        "id": "random-001",
+        "group": "random",
+        "year": 1901,
+        "month": 7,
+        "day": 18,
+        "hour": 5,
+        "minute": 3,
+        "city": "Shanghai",
+        "lat": 31.2304,
+        "lng": 121.4737
+      },
+      "selected": {
+        "moon": [
+          "terminal",
+          "identity",
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "saturn": [
+          "terminal",
+          "axis",
+          "angular_concentration"
+        ],
+        "sun": [
+          "terminal",
+          "identity",
+          "axis",
+          "house_ruler",
+          "angular_concentration"
+        ],
+        "mercury": [
+          "axis",
+          "angular_concentration"
+        ],
+        "pluto": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "uranus": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "venus": [
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "angular_concentration"
+        ],
+        "mars": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "neptune": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "jupiter": [
+          "configuration",
+          "angular_concentration"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "moon",
+            "sun"
+          ],
+          "numerator": 5,
+          "denominator": 7,
+          "main_entries": [
+            "sun"
+          ],
+          "feeders": {
+            "direct": [
+              "mercury",
+              "venus"
+            ],
+            "indirect": [
+              "mars"
+            ]
+          }
+        },
+        {
+          "members": [
+            "saturn"
+          ],
+          "numerator": 2,
+          "denominator": 7,
+          "main_entries": [
+            "saturn"
+          ],
+          "feeders": {
+            "direct": [
+              "jupiter"
+            ],
+            "indirect": []
+          }
+        }
+      ]
+    },
+    "two_node_cycle": {
+      "input": {
+        "id": "random-001",
+        "group": "random",
+        "year": 1901,
+        "month": 7,
+        "day": 18,
+        "hour": 5,
+        "minute": 3,
+        "city": "Shanghai",
+        "lat": 31.2304,
+        "lng": 121.4737
+      },
+      "selected": {
+        "moon": [
+          "terminal",
+          "identity",
+          "tight_aspect",
+          "configuration",
+          "house_ruler"
+        ],
+        "saturn": [
+          "terminal",
+          "axis",
+          "angular_concentration"
+        ],
+        "sun": [
+          "terminal",
+          "identity",
+          "axis",
+          "house_ruler",
+          "angular_concentration"
+        ],
+        "mercury": [
+          "axis",
+          "angular_concentration"
+        ],
+        "pluto": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "uranus": [
+          "axis",
+          "tight_aspect",
+          "configuration"
+        ],
+        "venus": [
+          "axis",
+          "tight_aspect",
+          "configuration",
+          "angular_concentration"
+        ],
+        "mars": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "neptune": [
+          "tight_aspect",
+          "configuration"
+        ],
+        "jupiter": [
+          "configuration",
+          "angular_concentration"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "moon",
+            "sun"
+          ],
+          "numerator": 5,
+          "denominator": 7,
+          "main_entries": [
+            "sun"
+          ],
+          "feeders": {
+            "direct": [
+              "mercury",
+              "venus"
+            ],
+            "indirect": [
+              "mars"
+            ]
+          }
+        },
+        {
+          "members": [
+            "saturn"
+          ],
+          "numerator": 2,
+          "denominator": 7,
+          "main_entries": [
+            "saturn"
+          ],
+          "feeders": {
+            "direct": [
+              "jupiter"
+            ],
+            "indirect": []
+          }
+        }
+      ]
+    },
+    "six_or_fewer_selected": {
+      "input": {
+        "id": "random-019",
+        "group": "random",
+        "year": 1863,
+        "month": 10,
+        "day": 7,
+        "hour": 13,
+        "minute": 39,
+        "city": "Sao Paulo",
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "selected": {
+        "venus": [
+          "terminal",
+          "house_ruler"
+        ],
+        "moon": [
+          "identity",
+          "axis",
+          "tight_aspect"
+        ],
+        "saturn": [
+          "identity"
+        ],
+        "sun": [
+          "identity",
+          "axis",
+          "tight_aspect",
+          "house_ruler"
+        ],
+        "mars": [
+          "axis",
+          "tight_aspect"
+        ],
+        "pluto": [
+          "axis"
+        ]
+      },
+      "terminals": [
+        {
+          "members": [
+            "venus"
+          ],
+          "numerator": 7,
+          "denominator": 7,
+          "main_entries": [
+            "venus"
+          ],
+          "feeders": {
+            "direct": [
+              "mars",
+              "mercury",
+              "saturn",
+              "sun"
+            ],
+            "indirect": [
+              "jupiter",
+              "moon"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Synthetic sample is not population representative.",
+    "No independently labelled important-planet or remedy answers: recall and precision are unknown.",
+    "Category ablation diagnoses coverage; it does not justify deleting a category.",
+    "Resource counters overlap; counts describe facts, not efficacy or harm."
+  ]
+}

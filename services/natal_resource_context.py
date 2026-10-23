@@ -13,11 +13,25 @@ def triplicity_context(planet, sign_idx, condition):
     roles = dict(zip(('day', 'night', 'participating'), DOROTHEAN_TRIPLICITY[sign_idx]))
     essential = condition['essential']
     active = essential.get('active_triplicity_lord')
-    return dict(status='available', rulers=roles,
+    sect_role=next((role for role in ('day','night') if roles[role]==active),None)
+    order=([roles['day'],roles['night'],roles['participating']] if sect_role=='day' else
+           [roles['night'],roles['day'],roles['participating']] if sect_role=='night' else None)
+    member=planet in roles.values()
+    priority=order.index(planet)+1 if order and member else None
+    return dict(status='available', version='triplicity-context-v2', rulers=roles,
                 planet_roles=[role for role, ruler in roles.items() if ruler == planet],
-                active_lord=active, active_sect_role=next(
-                    (role for role in ('day', 'night') if roles[role] == active), None),
+                is_triplicity_ruler=member, sect_order=order, sect_priority=priority,
+                order_status='available' if order else 'unknown_sect',
+                active_lord=active, active_sect_role=sect_role,
                 counted_by_engine=essential['triplicity'],
+                counting_reason=('primary_ruler_in_current_sect' if priority==1 else
+                                 'secondary_ruler_not_counted_by_active_only_policy' if priority==2 else
+                                 'participating_ruler_not_counted_by_active_only_policy' if priority==3 else
+                                 'not_a_ruler_of_this_triplicity' if not member else 'unknown_sect'),
+                peregrine_under_active_policy=essential.get('peregrine'),
+                meaning='Ruler identity, sect priority and dignity credit are separate. '
+                        'Uncredited does not mean non-member; peregrine is scoped to the active dignity policy, '
+                        'not absence of all relationships or resources.',
                 policy='active_day_or_night_only; participating and other-sect roles are disclosed, not scored')
 
 
@@ -35,6 +49,7 @@ def condition_context(profile):
             availability='unavailable' if house is None else 'available')
     condition = profile['condition']
     return dict(houses=houses, essential=copy.deepcopy(condition['essential']) if condition else None,
+        triplicity_context=copy.deepcopy(profile.get('triplicity_context')),
         retrograde=profile['retrograde'], solar=copy.deepcopy(condition.get('solar')) if condition else None,
         axis_contacts=copy.deepcopy(profile['axis_contacts']),
         availability=profile['condition_availability'], aggregation=None)

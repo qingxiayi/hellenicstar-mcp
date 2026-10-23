@@ -1,0 +1,25 @@
+{
+  "version": "natal-jones-separation-audit-v1",
+  "seed": 2026102311,
+  "totals": {
+    "configurations_checked": 116,
+    "charts": 92,
+    "full": 60,
+    "partial": 32
+  },
+  "shapes": {
+    "Locomotive": 30,
+    "Bucket": 11,
+    "See-Saw": 5,
+    "TwoHandle": 18,
+    "Splay": 3,
+    "Bowl": 2,
+    "Tripod": 2,
+    "Bundle": 1,
+    "Splash": 4,
+    "Hourglass": 15,
+    "ConjHandle": 1
+  },
+  "failures": [],
+  "limitation": "Software isolation and geometry consistency, not a validation of author interpretations or efficacy."
+}

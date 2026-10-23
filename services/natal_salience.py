@@ -6,18 +6,18 @@ import copy
 import json
 import math
 from collections import Counter
-from services.natal_structure_graph import TEN, SEVEN, topology
-from services.natal_house_rulers import SIGN_KEYS, TRADITIONAL_RULERS, MODERN_RULERS
+from services.natal_structure_graph import TEN, SEVEN, topology, DEFAULT_ASPECT_VIEW
+from services.natal_house_rulers import SIGN_KEYS, TRADITIONAL_RULERS, MODERN_RULERS, PLANET_ZH
 from services.natal_resource_context import triplicity_context, resource_review
 from services.natal_reading_plan import build_reading_layers
 from services.natal_decision_policy import build_decisions
 from services.natal_relation_facts import reception_facts, POLICIES
 from services.natal_focus import select_focus
 
-DEFAULTS = dict(scope='classical7', rulership='traditional', orb_view=8,
+DEFAULTS = dict(scope='classical7', rulership='traditional', orb_view=DEFAULT_ASPECT_VIEW,
                 tight_orb=3.0, axis_orb=5.0, include_mc_ruler=False,
                 distribution_points='ten_plus_asc_mc', reception_policy='dignity_only', dynamics_days=30)
-CATEGORIES = ('terminal', 'identity', 'axis', 'tight_aspect', 'configuration', 'house_ruler', 'angular_concentration')
+CATEGORIES = ('terminal', 'identity', 'dispositor_bridge', 'axis', 'tight_aspect', 'configuration', 'house_ruler', 'angular_concentration', 'reception')
 
 
 def normalize_config(config=None):
@@ -163,6 +163,12 @@ def build_salience(graph, config=None, dynamics=None):
     chart_ruler=rules[SIGN_KEYS[int(axes['asc']['lon']//30)]] if 'asc' in axes else None
     if chart_ruler:
         record('identity:chart_ruler','identity',dict(planet=chart_ruler),['axis:asc'],['/source_graph/axes/asc'],[chart_ruler],'identity')
+        host=rules[SIGN_KEYS[nodes[chart_ruler]['sign_idx']]]
+        if host != chart_ruler:
+            record('bridge:chart_ruler','dispositor',dict(planet=host,guest=chart_ruler,
+                role='chart_ruler_dispositor',rulership=c['rulership'],depth=1),
+                ['axis:asc',f'lon:{chart_ruler}'],['/source_graph/axes/asc','/source_graph/nodes'],
+                [host],'dispositor_bridge')
     if c['include_mc_ruler'] and 'mc' in axes:
         k=rules[SIGN_KEYS[int(axes['mc']['lon']//30)]]
         record('identity:mc_ruler','identity',dict(planet=k),['axis:mc'],['/source_graph/axes/mc'],[k],'identity')
@@ -216,8 +222,10 @@ def build_salience(graph, config=None, dynamics=None):
                   current_view=dict(orb_view=c['orb_view'],has_aspect=edge is not None,
                                     aspect_id=edge['id'] if edge else None,orb=edge['orb'] if edge else None))
         receptions.append(item)
-        synonym='terminal:'+':'.join((a,b)) if r['domicile_cycle'] and c['rulership']=='traditional' else None
-        record('reception:'+a+':'+b,'reception',item,r['depends_on'],['/source_graph/receptions/mutual_receptions'],synonym=synonym)
+        terminal_id='terminal:'+':'.join((a,b))
+        synonym=terminal_id if r['domicile_cycle'] and terminal_id in evidence else None
+        record('reception:'+a+':'+b,'reception',item,r['depends_on'],
+               ['/source_graph/receptions/mutual_receptions'],[a,b],'reception',synonym=synonym)
     one_way=[]
     for r in _unique(graph['receptions']['receptions'],lambda r:(r['received_planet'],r['dignitor_planet'])):
         a,b=r['received_planet'],r['dignitor_planet']
@@ -288,7 +296,7 @@ def build_salience(graph, config=None, dynamics=None):
                           candidate_evaluations=focus[k]['candidate_evaluations'],
                           unknowns=['axis:'+a for a in ('asc','mc','dsc','ic') if a not in axes]))
     priority.sort(key=lambda r:(CATEGORIES.index(r['categories'][0]),r['planet']))
-    result = dict(schema_version='natal-priorities-v2',core_structures=cores,scope_comparison=comparisons,
+    result = dict(schema_version='natal-priorities-v4',core_structures=cores,scope_comparison=comparisons,
         priority_planets=priority,planet_profiles=profiles,candidate_planets=candidates,
         focus_selection=dict(policy=focus_policy,planet_ids=[p["planet"] for p in priority],
             terminal_group_ids=[t["id"] for t in cores],
@@ -300,12 +308,25 @@ def build_salience(graph, config=None, dynamics=None):
         aspect_dynamics=copy.deepcopy(dynamics) if dynamics else dict(status='not_supplied',rows=[]),
         evidence_index=dict(sorted(evidence.items())),selection_audit=audit,
         availability=dict(source=graph['layer_availability'],axes={a:'available' if a in axes else 'unavailable' for a in ('asc','mc','dsc','ic')},
+            chart_pattern_focus=dict(status='moved_to_parallel_view',source_ref='/jones_view/upstream_focus',selection_effect='none'),
             configurations=dict(supported=['grand_trine','minor_grand_trine','wedge','t_square','kite','mystic_rectangle','grand_cross'],unsupported=['yod'])),
-        method=dict(version='natal-priorities-v2',config=c,score=None,category_order=list(CATEGORIES),
+        method=dict(version='natal-priorities-v4',config=c,score=None,category_order=list(CATEGORIES),
             within_category='stable identifier; aspects by orb; configurations by member count then identifier',
             deduplication='stable semantic IDs; synonyms linked, contained configurations retained; correlated evidence not discarded',
             interpretation='Calculation and selection rules only; no psychological hypotheses, advice, efficacy, global importance grade or independent-evidence count inferred',
             aspect_source='existing engine list filtered by selected orb view; cannot restore omitted upstream aspects'))
     result.update(build_reading_layers(result))
     result.update(build_decisions(result))
+    from services.natal_policy_context import policy_context
+    result['supplementary_contacts'], result['policy_comparison'] = policy_context(graph,c,profiles)
+    result['availability']['supplementary_contacts']=result['supplementary_contacts']['status']
+    result['reading_plan']['identity_and_local']['supplementary_contacts_ref']='/supplementary_contacts'
+    from services.natal_attention import build_attention_layers
+    result['attention_layers'] = build_attention_layers(result)
+    from services.natal_condition_views import build_condition_views
+    result['planet_condition_assessments'] = build_condition_views(result, graph)
+    from services.natal_relationship_views import build_relationship_views
+    result['relationship_views'] = build_relationship_views(result)
+    from services.natal_jones_view import build_jones_view
+    result['jones_view'], result['view_comparison'] = build_jones_view(graph, result)
     return result

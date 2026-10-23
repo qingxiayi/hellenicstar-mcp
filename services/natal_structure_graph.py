@@ -13,6 +13,7 @@ from services.classical_engine import compute_essential_dignities, compute_recep
 from versioning import get_version_info
 TEN = tuple(PLANET_ZH)
 SEVEN = TEN[:7]
+DEFAULT_ASPECT_VIEW = 6
 
 
 class StructureInputError(ValueError):
@@ -293,23 +294,26 @@ def build_structure_graph(source):
                 'source_pointer': f'/house_ruler_chains/{system}/{house - 1}',
             })
     shared = []
-    for a, b in itertools.combinations(layers['8']['motifs'], 2):
+    for a, b in itertools.combinations(layers[str(DEFAULT_ASPECT_VIEW)]['motifs'], 2):
         overlap = sorted(set(a['depends_on']) & set(b['depends_on']))
         if overlap:
             shared.append({'structures': [a['id'], b['id']], 'shared_aspect_edges': overlap})
     jones_keys = ('engine_version', 'pattern_en', 'pattern_zh', 'confidence',
                   'max_gap_deg', 'occupied_signs', 'high_focus_planet')
+    from services.natal_jones_view import project_observation_details
+    jones_facts = {key: source['jones_pattern'][key] for key in jones_keys}
+    jones_facts['observation_details'] = project_observation_details(source['jones_pattern'])
     return {
         'schema_version': 'natal-structure-v1',
         'status': 'partial' if source.get('layer_availability') else 'ok',
         'birth_context': source['birth_context'],
         'settings': {
             'zodiac': 'tropical', 'location_assumption': 'See birth_context for resolved coordinates',
-            'primary_aspect_view': 8, 'scope': list(TEN),
+            'primary_aspect_view': DEFAULT_ASPECT_VIEW, 'scope': list(TEN),
             'house_systems': ['placidus', 'whole_sign'],
             'modern_rulership': 'replace Scorpio/Aquarius/Pisces with Pluto/Uranus/Neptune, not co-rulership',
             'motif_scope': 'ten planets; no axes, nodes, Chiron or lots',
-            'reception_aspects': 'existing engine list, not the 8-degree graph filter',
+            'reception_aspects': 'upstream engine list; selected degree-aspect membership is separate',
         },
         'engine': get_version_info(),
         'source_sha256': hashlib.sha256(json.dumps(source, sort_keys=True, ensure_ascii=False,
@@ -319,7 +323,7 @@ def build_structure_graph(source):
         'dispositor': {'traditional': topology(planets, TRADITIONAL_RULERS),
                       'modern': topology(planets, MODERN_RULERS)},
         'aspects': layers, 'houses': houses, 'conditions': conditions, 'receptions': receptions,
-        'jones': {key: source['jones_pattern'][key] for key in jones_keys}, 'axes': source['axes'],
+        'jones': jones_facts, 'axes': source['axes'],
         'engine_additional_patterns': {
             'data': source['phase_patterns'],
             'note': 'Original engine rules and expanded point scope; kept separate from ten-planet graph; no psychological fields',
@@ -336,7 +340,7 @@ def build_structure_graph(source):
     }
 
 
-def _house_independent_source(context, reason):
+def _house_independent_source(context, reason, include_supplementary=False):
     """Calculate ten planets at the resolved UTC instant; leave houses absent."""
     from types import SimpleNamespace
     import swisseph as swe
@@ -363,12 +367,25 @@ def _house_independent_source(context, reason):
         positions[key] = {"longitude": lon}
         if key == "sun":
             sun_values = values
+    if include_supplementary:
+        values, flags = swe.calc_ut(jd, swe.TRUE_NODE, swe.FLG_SWIEPH | swe.FLG_SPEED)
+        if not flags & swe.FLG_SWIEPH:
+            raise EphemerisModeError('true_node: Swiss file ephemeris required')
+        for key, name, offset in (('north_node','北交点',0),('south_node','南交点',180)):
+            lon=(values[0]+offset)%360; idx=int(lon//30)
+            planets.append(dict(key=key,cn=name,lon=lon,sign=SIGN_NAMES_ZH[idx],sign_idx=idx,
+                                house_p=None,house_w=None,retrograde=values[3]<0))
+        flags_by_planet['true_node']=flags
     snap = context.snapshot
     # True solar altitude determines day/night even when Placidus fails.
     altitude = swe.azalt(jd, swe.ECL2HOR, (snap.lng_wgs84, snap.lat_wgs84, 0),
                          0, 0, sun_values[:3])[1]
-    points = [(p["key"], SimpleNamespace(abs_pos=p["lon"])) for p in planets]
+    points = [(p["key"], SimpleNamespace(abs_pos=p["lon"])) for p in planets if p['key'] in TEN]
     aspects = NatalChartCalculator().calculate_aspects(points)
+    if include_supplementary:
+        extra = [(p['key'], SimpleNamespace(abs_pos=p['lon'])) for p in planets if p['key'] not in TEN]
+        aspects += [a for a in NatalChartCalculator().calculate_aspects(points+extra)
+                    if a['point1'] not in TEN or a['point2'] not in TEN]
     layers = {k: {"status": "unavailable", "reason": "placidus_calculation_failed",
                   "detail": reason} for k in ("placidus", "whole_sign", "axes")}
     return {
@@ -390,7 +407,8 @@ def _house_independent_source(context, reason):
 
 
 def calculate_structure_graph(*, year, month, day, hour, minute, city="",
-                              lat=None, lng=None, location_id=None, fold=None, name=""):
+                              lat=None, lng=None, location_id=None, fold=None, name="",
+                              include_supplementary=False):
     """Calculate a full or explicitly partial graph from an exact civil time.
 
     Invalid inputs raise ValueError (BirthContextError retains fold candidates).
@@ -421,11 +439,15 @@ def calculate_structure_graph(*, year, month, day, hour, minute, city="",
     try:
         swe.houses(resolved.context.julian_day_ut, snapshot.lat_wgs84, snapshot.lng_wgs84, b"P")
     except swe.Error as exc:
-        source = _house_independent_source(resolved.context, str(exc))
+        source = _house_independent_source(resolved.context, str(exc), include_supplementary)
     else:
         source = compute(name, year, month, day, hour, minute, city,
                          lat=lat, lng=lng, location_id=location_id, fold=fold)
     graph = build_structure_graph(source)
+    if include_supplementary:
+        from services.natal_policy_context import extract_supplementary_source, validate_supplementary
+        graph['supplementary_source'] = extract_supplementary_source(source)
+        validate_supplementary(graph)
     graph["source_metadata"] = source.get("source_metadata", {"kind": "calculator.compute"})
     return graph
 

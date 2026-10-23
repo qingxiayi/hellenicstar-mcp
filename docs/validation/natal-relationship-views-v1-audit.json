@@ -1,0 +1,16 @@
+{
+  "version": "natal-relationship-views-v1",
+  "seed": 2026102307,
+  "orb_view": 6,
+  "totals": {
+    "planet_views": 1520,
+    "all_associations": 5887,
+    "selected_union": 4995,
+    "background": 892,
+    "charts": 152,
+    "full": 120,
+    "partial": 32
+  },
+  "failures": [],
+  "limitation": "Integration and classification checks only, not remedy efficacy or professional accuracy."
+}

@@ -39,7 +39,7 @@ def build_reading_layers(data):
     groups = defaultdict(list)
     for identity, e in evidence.items():
         groups[e['synonym_group']].append(identity)
-    plan = dict(version='natal-reading-v2', order=['structural_backbone', 'identity_and_local',
+    plan = dict(version='natal-reading-v3', order=['structural_backbone', 'identity_and_local',
                 'complete_profiles', 'resource_checks'], score=None,
         structural_backbone=dict(
             terminal_refs=[f'/core_structures/{i}' for i in range(len(data['core_structures']))],
@@ -48,6 +48,8 @@ def build_reading_layers(data):
                                          shared_with=m['shared_with']) for m in configurations]),
         identity_and_local=dict(
             identity_evidence_ids=sorted(k for k,e in evidence.items() if e['family']=='identity'),
+            bridge_evidence_ids=sorted(k for k in evidence if k.startswith('bridge:')),
+            pattern_evidence_ids=[], parallel_pattern_ref='/jones_view',
             axis_contact_ids=sorted(k for k in evidence if k.startswith('axis:')),
             tight_aspect_ids=[a['id'] for a in data['priority_aspects']],
             configuration_roles=[dict(id=m['id'], roles=m['roles']) for m in configurations],
@@ -61,7 +63,7 @@ def build_reading_layers(data):
         limitation='Order is an explicit project reading policy, not psychological importance. '
                    'All terminals survive; maximal means not contained in another detected configuration.')
     return dict(reading_plan=plan,
-        evidence_matrix=dict(version='natal-evidence-matrix-v1', families=list(FAMILIES), rows=matrix,
+        evidence_matrix=dict(version='natal-evidence-matrix-v2', families=list(FAMILIES), rows=matrix,
             synonymous_groups={k:sorted(v) for k,v in sorted(groups.items()) if len(v)>1},
             independence='not_assumed; shared inputs, synonyms and containment are not extra independent votes'),
         resource_checks=_resource_checks(
@@ -88,6 +90,11 @@ def _resource_checks(planets, profile_paths=None):
                 if condition['essential'][flag]:
                     add(f'state:{p}:{flag}', 'essential_condition', [p], dict(flag=flag,value=True),
                         base+'/condition/essential/'+flag)
+                    if flag=='peregrine':
+                        topic=topics[f'state:{p}:{flag}']
+                        topic['fact']['policy_scope']='active_day_or_night_only'
+                        topic['fact']['triplicity_context']=profile.get('triplicity_context')
+                        topic['source_refs'].append(base+'/triplicity_context')
             solar = condition.get('solar') or {}
             if solar.get('state') in ('combust','under_beams'):
                 add(f'state:{p}:solar', 'solar_condition', [p], solar, base+'/condition/solar')
@@ -106,6 +113,28 @@ def _resource_checks(planets, profile_paths=None):
             if edge['angle'] in (90,180):
                 add('geometry:'+edge['id'], 'square_or_opposition', [edge['from'],edge['to']],
                     dict(aspect_id=edge['id'],angle=edge['angle'],orb=edge['orb']),base+f'/aspects/{j}')
+            elif edge['angle'] in (60,120):
+                other=edge['to'] if edge['from']==p else edge['from']
+                counterpart=planets.get(other)
+                other_condition=counterpart[1]['profile']['condition'] if counterpart else None
+                flags=[flag for flag in ('detriment','fall','peregrine')
+                       if other_condition and other_condition['essential'].get(flag)]
+                if flags:
+                    # A directional conjunction of known facts, not a claim that
+                    # a geometric soft aspect transmits harm or remedies anything.
+                    identity=f'soft_condition:{edge["id"]}:{p}:{other}'
+                    fact=dict(planet=p,counterpart=other,aspect_id=edge['id'],
+                              angle=edge['angle'],orb=edge['orb'],counterpart_flags=flags)
+                    if 'peregrine' in flags:
+                        fact['peregrine_policy_scope']='active_day_or_night_only'
+                        fact['counterpart_triplicity_context']=counterpart[1]['profile'].get('triplicity_context')
+                    add(identity,'soft_aspect_with_essential_condition',[p,other],fact,base+f'/aspects/{j}')
+                    for flag in flags:
+                        add(identity,'soft_aspect_with_essential_condition',[p,other],fact,
+                            profile_paths[other]+'/condition/essential/'+flag)
+                    if 'peregrine' in flags:
+                        add(identity,'soft_aspect_with_essential_condition',[p,other],fact,
+                            profile_paths[other]+'/triplicity_context')
 
     for topic in topics.values():
         affected=topic['affected_planets']; connections=defaultdict(list)

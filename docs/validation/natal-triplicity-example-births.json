@@ -1,0 +1,943 @@
+[
+  {
+    "date": "1984-03-15 06:30",
+    "city": "Beijing",
+    "completeness": "full",
+    "terminals": [
+      {
+        "id": "terminal:mars",
+        "type": "self",
+        "members": [
+          "mars"
+        ],
+        "origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "moon",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "numerator": 7,
+        "denominator": 7,
+        "coverage": 1.0,
+        "external_origins": [
+          "jupiter",
+          "mercury",
+          "moon",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "feeders": {
+          "direct": [
+            "mercury",
+            "saturn"
+          ],
+          "indirect": [
+            "jupiter",
+            "moon",
+            "sun",
+            "venus"
+          ]
+        },
+        "first_entry": {
+          "mars": {
+            "origins": [
+              "jupiter",
+              "mercury",
+              "moon",
+              "saturn",
+              "sun",
+              "venus"
+            ],
+            "count": 6
+          }
+        },
+        "main_entries": [
+          "mars"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:mars:mars",
+            "from": "mars",
+            "to": "mars",
+            "depends_on": [
+              "lon:mars"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "jupiter": {
+            "path": [
+              "jupiter",
+              "saturn",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 2
+          },
+          "mars": {
+            "path": [
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 0
+          },
+          "mercury": {
+            "path": [
+              "mercury",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 1
+          },
+          "moon": {
+            "path": [
+              "moon",
+              "sun",
+              "jupiter",
+              "saturn",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 4
+          },
+          "saturn": {
+            "path": [
+              "saturn",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 1
+          },
+          "sun": {
+            "path": [
+              "sun",
+              "jupiter",
+              "saturn",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 3
+          },
+          "venus": {
+            "path": [
+              "venus",
+              "jupiter",
+              "saturn",
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 3
+          }
+        }
+      }
+    ],
+    "focus": [
+      "mars",
+      "jupiter",
+      "moon",
+      "sun",
+      "saturn",
+      "neptune"
+    ]
+  },
+  {
+    "date": "1990-11-23 22:10",
+    "city": "New York",
+    "completeness": "full",
+    "terminals": [
+      {
+        "id": "terminal:jupiter:sun",
+        "type": "two_node_cycle",
+        "members": [
+          "jupiter",
+          "sun"
+        ],
+        "origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "sun",
+          "venus"
+        ],
+        "numerator": 5,
+        "denominator": 7,
+        "coverage": 0.7142857142857143,
+        "external_origins": [
+          "mars",
+          "mercury",
+          "venus"
+        ],
+        "feeders": {
+          "direct": [
+            "mercury",
+            "venus"
+          ],
+          "indirect": [
+            "mars"
+          ]
+        },
+        "first_entry": {
+          "jupiter": {
+            "origins": [
+              "mars",
+              "mercury",
+              "venus"
+            ],
+            "count": 3
+          },
+          "sun": {
+            "origins": [],
+            "count": 0
+          }
+        },
+        "main_entries": [
+          "jupiter"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:jupiter:sun",
+            "from": "jupiter",
+            "to": "sun",
+            "depends_on": [
+              "lon:jupiter"
+            ],
+            "rule": "domicile"
+          },
+          {
+            "id": "d:sun:jupiter",
+            "from": "sun",
+            "to": "jupiter",
+            "depends_on": [
+              "lon:sun"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "jupiter": {
+            "path": [
+              "jupiter",
+              "sun"
+            ],
+            "terminal": [
+              "jupiter",
+              "sun"
+            ],
+            "steps_to_terminal": 0
+          },
+          "mars": {
+            "path": [
+              "mars",
+              "mercury",
+              "jupiter",
+              "sun"
+            ],
+            "terminal": [
+              "jupiter",
+              "sun"
+            ],
+            "steps_to_terminal": 2
+          },
+          "mercury": {
+            "path": [
+              "mercury",
+              "jupiter",
+              "sun"
+            ],
+            "terminal": [
+              "jupiter",
+              "sun"
+            ],
+            "steps_to_terminal": 1
+          },
+          "sun": {
+            "path": [
+              "sun",
+              "jupiter"
+            ],
+            "terminal": [
+              "jupiter",
+              "sun"
+            ],
+            "steps_to_terminal": 0
+          },
+          "venus": {
+            "path": [
+              "venus",
+              "jupiter",
+              "sun"
+            ],
+            "terminal": [
+              "jupiter",
+              "sun"
+            ],
+            "steps_to_terminal": 1
+          }
+        }
+      },
+      {
+        "id": "terminal:saturn",
+        "type": "self",
+        "members": [
+          "saturn"
+        ],
+        "origins": [
+          "moon",
+          "saturn"
+        ],
+        "numerator": 2,
+        "denominator": 7,
+        "coverage": 0.2857142857142857,
+        "external_origins": [
+          "moon"
+        ],
+        "feeders": {
+          "direct": [
+            "moon"
+          ],
+          "indirect": []
+        },
+        "first_entry": {
+          "saturn": {
+            "origins": [
+              "moon"
+            ],
+            "count": 1
+          }
+        },
+        "main_entries": [
+          "saturn"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:saturn:saturn",
+            "from": "saturn",
+            "to": "saturn",
+            "depends_on": [
+              "lon:saturn"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "moon": {
+            "path": [
+              "moon",
+              "saturn"
+            ],
+            "terminal": [
+              "saturn"
+            ],
+            "steps_to_terminal": 1
+          },
+          "saturn": {
+            "path": [
+              "saturn"
+            ],
+            "terminal": [
+              "saturn"
+            ],
+            "steps_to_terminal": 0
+          }
+        }
+      }
+    ],
+    "focus": [
+      "jupiter",
+      "saturn",
+      "moon",
+      "sun",
+      "mars",
+      "mercury",
+      "pluto"
+    ]
+  },
+  {
+    "date": "2000-02-29 12:00",
+    "city": "Sydney",
+    "completeness": "full",
+    "terminals": [
+      {
+        "id": "terminal:saturn:venus",
+        "type": "two_node_cycle",
+        "members": [
+          "saturn",
+          "venus"
+        ],
+        "origins": [
+          "jupiter",
+          "mercury",
+          "moon",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "numerator": 6,
+        "denominator": 7,
+        "coverage": 0.8571428571428571,
+        "external_origins": [
+          "jupiter",
+          "mercury",
+          "moon",
+          "sun"
+        ],
+        "feeders": {
+          "direct": [
+            "jupiter",
+            "moon"
+          ],
+          "indirect": [
+            "mercury",
+            "sun"
+          ]
+        },
+        "first_entry": {
+          "saturn": {
+            "origins": [
+              "moon"
+            ],
+            "count": 1
+          },
+          "venus": {
+            "origins": [
+              "jupiter",
+              "mercury",
+              "sun"
+            ],
+            "count": 3
+          }
+        },
+        "main_entries": [
+          "venus"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:saturn:venus",
+            "from": "saturn",
+            "to": "venus",
+            "depends_on": [
+              "lon:saturn"
+            ],
+            "rule": "domicile"
+          },
+          {
+            "id": "d:venus:saturn",
+            "from": "venus",
+            "to": "saturn",
+            "depends_on": [
+              "lon:venus"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "jupiter": {
+            "path": [
+              "jupiter",
+              "venus",
+              "saturn"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "mercury": {
+            "path": [
+              "mercury",
+              "jupiter",
+              "venus",
+              "saturn"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 2
+          },
+          "moon": {
+            "path": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "saturn": {
+            "path": [
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 0
+          },
+          "sun": {
+            "path": [
+              "sun",
+              "jupiter",
+              "venus",
+              "saturn"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 2
+          },
+          "venus": {
+            "path": [
+              "venus",
+              "saturn"
+            ],
+            "terminal": [
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 0
+          }
+        }
+      },
+      {
+        "id": "terminal:mars",
+        "type": "self",
+        "members": [
+          "mars"
+        ],
+        "origins": [
+          "mars"
+        ],
+        "numerator": 1,
+        "denominator": 7,
+        "coverage": 0.14285714285714285,
+        "external_origins": [],
+        "feeders": {
+          "direct": [],
+          "indirect": []
+        },
+        "first_entry": {
+          "mars": {
+            "origins": [],
+            "count": 0
+          }
+        },
+        "main_entries": [],
+        "internal_edges": [
+          {
+            "id": "d:mars:mars",
+            "from": "mars",
+            "to": "mars",
+            "depends_on": [
+              "lon:mars"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "mars": {
+            "path": [
+              "mars"
+            ],
+            "terminal": [
+              "mars"
+            ],
+            "steps_to_terminal": 0
+          }
+        }
+      }
+    ],
+    "focus": [
+      "saturn",
+      "venus",
+      "moon",
+      "sun",
+      "pluto",
+      "uranus",
+      "jupiter",
+      "neptune"
+    ]
+  },
+  {
+    "date": "2012-06-21 18:45",
+    "city": "London",
+    "completeness": "full",
+    "terminals": [
+      {
+        "id": "terminal:moon",
+        "type": "self",
+        "members": [
+          "moon"
+        ],
+        "origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "moon",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "numerator": 7,
+        "denominator": 7,
+        "coverage": 1.0,
+        "external_origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "feeders": {
+          "direct": [
+            "mercury",
+            "sun"
+          ],
+          "indirect": [
+            "jupiter",
+            "mars",
+            "saturn",
+            "venus"
+          ]
+        },
+        "first_entry": {
+          "moon": {
+            "origins": [
+              "jupiter",
+              "mars",
+              "mercury",
+              "saturn",
+              "sun",
+              "venus"
+            ],
+            "count": 6
+          }
+        },
+        "main_entries": [
+          "moon"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:moon:moon",
+            "from": "moon",
+            "to": "moon",
+            "depends_on": [
+              "lon:moon"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "jupiter": {
+            "path": [
+              "jupiter",
+              "mercury",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 2
+          },
+          "mars": {
+            "path": [
+              "mars",
+              "mercury",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 2
+          },
+          "mercury": {
+            "path": [
+              "mercury",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 1
+          },
+          "moon": {
+            "path": [
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 0
+          },
+          "saturn": {
+            "path": [
+              "saturn",
+              "venus",
+              "mercury",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 3
+          },
+          "sun": {
+            "path": [
+              "sun",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 1
+          },
+          "venus": {
+            "path": [
+              "venus",
+              "mercury",
+              "moon"
+            ],
+            "terminal": [
+              "moon"
+            ],
+            "steps_to_terminal": 2
+          }
+        }
+      }
+    ],
+    "focus": [
+      "moon",
+      "jupiter",
+      "sun",
+      "mercury",
+      "mars",
+      "neptune",
+      "uranus"
+    ]
+  },
+  {
+    "date": "2000-06-21 12:00",
+    "city": "Longyearbyen",
+    "completeness": "partial",
+    "terminals": [
+      {
+        "id": "terminal:moon:saturn:venus",
+        "type": "multi_node_cycle",
+        "members": [
+          "moon",
+          "saturn",
+          "venus"
+        ],
+        "origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "moon",
+          "saturn",
+          "sun",
+          "venus"
+        ],
+        "numerator": 7,
+        "denominator": 7,
+        "coverage": 1.0,
+        "external_origins": [
+          "jupiter",
+          "mars",
+          "mercury",
+          "sun"
+        ],
+        "feeders": {
+          "direct": [
+            "jupiter",
+            "mars",
+            "mercury",
+            "sun"
+          ],
+          "indirect": []
+        },
+        "first_entry": {
+          "moon": {
+            "origins": [
+              "mars",
+              "mercury",
+              "sun"
+            ],
+            "count": 3
+          },
+          "saturn": {
+            "origins": [],
+            "count": 0
+          },
+          "venus": {
+            "origins": [
+              "jupiter"
+            ],
+            "count": 1
+          }
+        },
+        "main_entries": [
+          "moon"
+        ],
+        "internal_edges": [
+          {
+            "id": "d:moon:saturn",
+            "from": "moon",
+            "to": "saturn",
+            "depends_on": [
+              "lon:moon"
+            ],
+            "rule": "domicile"
+          },
+          {
+            "id": "d:saturn:venus",
+            "from": "saturn",
+            "to": "venus",
+            "depends_on": [
+              "lon:saturn"
+            ],
+            "rule": "domicile"
+          },
+          {
+            "id": "d:venus:moon",
+            "from": "venus",
+            "to": "moon",
+            "depends_on": [
+              "lon:venus"
+            ],
+            "rule": "domicile"
+          }
+        ],
+        "paths": {
+          "jupiter": {
+            "path": [
+              "jupiter",
+              "venus",
+              "moon",
+              "saturn"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "mars": {
+            "path": [
+              "mars",
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "mercury": {
+            "path": [
+              "mercury",
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "moon": {
+            "path": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 0
+          },
+          "saturn": {
+            "path": [
+              "saturn",
+              "venus",
+              "moon"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 0
+          },
+          "sun": {
+            "path": [
+              "sun",
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 1
+          },
+          "venus": {
+            "path": [
+              "venus",
+              "moon",
+              "saturn"
+            ],
+            "terminal": [
+              "moon",
+              "saturn",
+              "venus"
+            ],
+            "steps_to_terminal": 0
+          }
+        }
+      }
+    ],
+    "focus": [
+      "moon",
+      "saturn",
+      "venus",
+      "sun",
+      "mercury"
+    ]
+  }
+]

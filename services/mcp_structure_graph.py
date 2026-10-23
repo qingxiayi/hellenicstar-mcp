@@ -23,6 +23,8 @@ def validate_graph_output(d):
     from services.natal_structure_graph import TEN, SIGN_KEYS, TRADITIONAL_RULERS, MODERN_RULERS, topology, _aspect_layers
     from services.mcp_validation import require, longitude, house
     json.dumps(d, allow_nan=False)
+    from services.natal_policy_context import validate_supplementary
+    validate_supplementary(d)
     require(d['schema_version'] == 'natal-structure-v1', '/schema_version', 'known_graph_schema')
     require(d['completeness'] in ('full', 'partial'), '/completeness', 'explicit_completeness')
     require(d['interpretations'] == [], '/interpretations', 'calculation_only')
