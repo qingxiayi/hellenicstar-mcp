@@ -18,7 +18,7 @@ BIRTH = dict(year=1990, month=4, day=15, hour=18, minute=0,
 
 def test_every_exposed_tool_has_an_audited_classification():
     names = {tool.name for tool in asyncio.run(m.mcp.list_tools())}
-    assert len(names) == 46
+    assert len(names) == 48
     assert names == registered_tools()
 
 

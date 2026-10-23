@@ -15,6 +15,7 @@ ASPECT_NAMES = {0: {'合','合相'},60:{'六分','六分相','六合相'},90:{'�
 # Explicit registry: a newly exposed calculation cannot silently bypass checks.
 CONTRACTS = {
     'calculate_natal_salience': ('natal_salience', {'schema_version':str, 'completeness':str, 'birth_context':dict, 'settings':dict, 'source_graph':dict, 'core_structures':list, 'priority_planets':list, 'planet_profiles':dict, 'candidate_planets':list, 'focus_selection':dict, 'attention_layers':dict, 'planet_condition_assessments':dict, 'relationship_views':dict, 'jones_view':dict, 'view_comparison':dict, 'priority_aspects':list, 'priority_configurations':list, 'house_ruler_links':list, 'global_distribution':dict, 'evidence_index':dict, 'reading_plan':dict, 'evidence_matrix':dict, 'resource_checks':dict, 'priority_decisions':dict, 'resource_decisions':dict, 'reception_facts':dict, 'aspect_dynamics':dict, 'supplementary_contacts':dict, 'policy_comparison':dict, 'selection_audit':list, 'availability':dict, 'method':dict, 'layer_availability':dict, 'interpretations':list}, 'tests/test_natal_salience.py'),
+    'calculate_relationship_observation': ('relationship_observation', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'source_geometry': dict, 'relationship_profiles': dict, 'contacts': list, 'observation_paths': list, 'activation_clusters': list, 'natal_configurations': dict, 'configuration_memberships': dict, 'configuration_activations': list, 'configuration_bridges': list, 'natal_backgrounds': dict, 'observation_review': dict, 'structure_display': dict, 'natal_observation_candidates': dict, 'review_paths': list, 'overlay_contexts': list, 'observation_comparisons': dict, 'observation_route_policy': dict, 'observation_complexes': dict, 'observation_complex_links': dict, 'timing_observations': dict, 'relationship_context_observations': dict, 'house_ruler_comparisons': dict, 'hemisphere_backgrounds': dict, 'special_contact_observations': dict, 'scenario_observation_lenses': dict, 'house_overlays': list, 'layer_availability': dict, 'interpretations': list}, 'tests/test_relationship_observation.py'),
     'calculate_natal_structure_graph': ('natal_structure', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'nodes': list, 'facts': dict, 'dispositor': dict, 'aspects': dict, 'houses': dict, 'conditions': dict, 'receptions': dict, 'layer_availability': dict, 'interpretations': list}, 'tests/test_mcp_structure_graph.py'),
     "scan_planetary_aspects": ("planetary_scan", {"settings": dict, "event_count": int, "events": list, "windows": list, "year_summary": list}, "tests/test_planetary_aspect_scan.py"),
     'search_birthplace': ('location', {'options': list}, 'tests/test_mcp_natal.py'),
@@ -64,6 +65,7 @@ RENDER_SOURCES = {
 # Metadata tools are audited separately from calculation tools: they do not
 # produce calculation_reference values or enter the claim-recomputation registry.
 META_CONTRACTS = {
+    'prepare_relationship_observation_note': {'record': dict, 'persisted': bool, 'boundary': str},
     'calculate_natal_structure_graph': ('natal_structure', {'schema_version': str, 'completeness': str, 'birth_context': dict, 'settings': dict, 'nodes': list, 'facts': dict, 'dispositor': dict, 'aspects': dict, 'houses': dict, 'conditions': dict, 'receptions': dict, 'layer_availability': dict, 'interpretations': list}, 'tests/test_mcp_structure_graph.py'),
     'get_capabilities': {'schema_version': str, 'versions': dict,
                          'tool_count': int, 'tools': list, 'algorithm_registry': dict},
@@ -511,7 +513,10 @@ def validate_output(tool, data, args):
         require(tool in CONTRACTS,'/','tool_has_contract')
         require(isinstance(data,dict) and data.get('status')=='ok','/status','successful_result_required')
         fields(data,CONTRACTS[tool][1])
-        if tool == 'calculate_natal_salience':
+        if tool == 'calculate_relationship_observation':
+            from services.relationship_observation import validate_observation_output
+            validate_observation_output(data, args)
+        elif tool == 'calculate_natal_salience':
             from services.mcp_salience import validate_salience_output
             validate_salience_output(data,args)
         elif tool == 'calculate_natal_structure_graph':
@@ -534,6 +539,12 @@ def validate_meta_output(tool, data):
         require(isinstance(data, dict) and data.get('status') == 'ok',
                 '/status', 'successful_result_required')
         fields(data, META_CONTRACTS[tool])
+        if tool == 'prepare_relationship_observation_note':
+            record = data['record']
+            fields(record, {'statement': str, 'author_role': str, 'provenance': str, 'source_anchor': dict}, '/record')
+            require(record['provenance'] == 'HUMAN_REPORTED' and record['is_calculation_fact'] is False
+                    and record['statement_verification'] == 'not_verified' and data['persisted'] is False,
+                    '/record', 'human_statement_separate_from_calculations')
         if tool == 'recommend_workflow':
             from services.mcp_envelope import registered_tools
             from services.mcp_workflow import WORKFLOWS

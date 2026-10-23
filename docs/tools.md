@@ -27,6 +27,8 @@
 - `calculate_secondary_progressions`
 - `render_secondary_progressions_chart`
 - `calculate_relationship_charts`
+- `calculate_relationship_observation`
+- `prepare_relationship_observation_note`
 - `render_composite_chart`
 - `calculate_davison_chart`
 - `render_davison_chart`
@@ -69,3 +71,5 @@ Additive `reading_plan`, `evidence_matrix` and `resource_checks` outputs provide
 ## Parallel Jones perspective (v4)
 
 `calculate_natal_salience` now returns `jones_view` and `view_comparison`. Request both with `include=["jones_view", "view_comparison"]`; add `schema_version` if needed in a selective response. These retain upstream shape roles, uncertainty and actual selected-orb contacts, alongside natal roles. They never promote natal focus, combine scores, or declare independent corroboration. The old `chart_pattern` natal selection family is removed; focal membership may change while complete profiles remain. Upstream core-opposition thresholds are disclosed separately from the default 6-degree contact view. See [contract and migration](natal-jones-parallel-view.md). See the release verification record for deployment status.
+
+关系观察和人工记录参数见 [relationship-observation.md](relationship-observation.md)，时间层见 [relationship-observation-timing.md](relationship-observation-timing.md)。

@@ -14,6 +14,7 @@ from versioning import get_version_info
 SCHEMA_VERSION = "calculation-envelope-v1"
 
 NATAL_SOURCE_TOOLS = frozenset({
+    "calculate_relationship_observation",
     "calculate_natal_chart",
     "render_natal_chart",
     "render_jones_pattern",
@@ -60,6 +61,7 @@ INDEPENDENT_CALCULATION_TOOLS = frozenset({
 })
 
 UTILITY_TOOLS = frozenset({
+    "prepare_relationship_observation_note",
     "search_birthplace",
     "resolve_birth_coordinates",
     "get_capabilities",

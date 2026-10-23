@@ -1,0 +1,45 @@
+{
+  "scope": "Synthetic geometry for source-backed observation actions; not reconstructed historical charts or biographical validation",
+  "cases": [
+    {
+      "id": "taylor_moon_venus_quincunx",
+      "source": "Chapter Two / Chart work / Elizabeth Taylor, PDF p36",
+      "action": "Inspect Moon-Venus quincunx with separate natal backgrounds",
+      "a_points": {"moon": 0, "venus": 150},
+      "minor_orbs_degrees": {"150": 1},
+      "expected_pair": ["moon", "venus"],
+      "expected_angle": 150
+    },
+    {
+      "id": "taylor_parental_rulers_semisquare",
+      "source": "Chapter Two / Chart work / Taylor, PDF p38",
+      "action": "Inspect an actual semi-square between fourth and tenth house rulers",
+      "a_points": {"moon": 0, "saturn": 45},
+      "minor_orbs_degrees": {"45": 1},
+      "expected_pair": ["moon", "saturn"],
+      "expected_angle": 45,
+      "parental_ruler_pair": true
+    },
+    {
+      "id": "tom_sun_pluto_saturn_yod",
+      "source": "Chapter Six / Chart work / Tom Cruise, PDF p134",
+      "action": "Recognize Sun-Pluto sextile with two quincunxes to Saturn",
+      "a_points": {"sun": 0, "pluto": 60, "saturn": 210},
+      "minor_orbs_degrees": {"150": 1},
+      "sextile_orb_degrees": 6,
+      "expected_yod": ["sun", "pluto", "saturn"],
+      "expected_apex": "saturn"
+    },
+    {
+      "id": "garfunkel_yod_conjunction_satellite",
+      "source": "Chapter Seven / Simon and Garfunkel, PDF p176",
+      "action": "Inspect Mercury Yod with Venus and Saturn-Uranus conjunction background",
+      "a_points": {"venus": 0, "saturn": 60, "uranus": 68, "mercury": 210},
+      "minor_orbs_degrees": {"150": 1},
+      "sextile_orb_degrees": 6,
+      "expected_yod": ["venus", "saturn", "mercury"],
+      "expected_apex": "mercury",
+      "expected_satellite": "uranus"
+    }
+  ]
+}

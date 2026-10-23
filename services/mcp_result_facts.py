@@ -31,7 +31,9 @@ ClaimValueType = Union[
     None
 ]
 
-ReferenceInputType = Union[Scalar, ScalarDict, ScalarList]
+# Bounded nested input for explicit relationship contexts: role dictionaries and
+# additional-type lists. Tool-specific models still validate keys and semantics.
+ReferenceInputType = Union[Scalar, ScalarDict, ScalarList, Dict[str, Union[Scalar, ScalarDict, ScalarList]]]
 
 
 class CalculationReference(BaseModel):

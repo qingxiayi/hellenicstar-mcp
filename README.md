@@ -5,7 +5,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 
-独立的占星计算与星图渲染 MCP 服务，提供 **46 个工具**，支持 stdio 和
+独立的占星计算与星图渲染 MCP 服务，提供 **48 个工具**，支持 stdio 和
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
 不包含课程、会员、登录、支付或 AI 报告服务，不需要模型 API Key。
 
@@ -284,3 +284,10 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
 
 - **问题反馈**：欢迎通过 GitHub [Issues](https://github.com/qingxiayi/hellenicstar-mcp/issues) 提交 Bug 或功能建议。
 - **开源支持**：如果这个项目对你的学习或探索有所启发，欢迎在页面右上角为我们点一颗 **⭐️ Star** 支持一下！
+
+
+## 关系观察：双方本命结构的连接
+
+新增 `calculate_relationship_observation` 和 `prepare_relationship_observation_note`。从一条跨盘接触分别查看双方的本命结构，保留亲密、友谊、工作与家庭场景；接触只计一次，人工陈述与计算分开。本命使用平均月交点，已发布的本命重点 v4 保持原行为，不输出匹配分数或心理诊断。
+
+[API and boundaries](docs/relationship-observation.md) · [Timing options](docs/relationship-observation-timing.md)

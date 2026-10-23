@@ -153,8 +153,8 @@ def topology(planets, rulers):
     }
 
 
-def motifs(edges):
-    """Enumerate seven specified geometric templates over the ten planets."""
+def motifs(edges, point_ids=TEN):
+    """Enumerate bounded templates; callers must disclose their point/orb scope."""
     lookup = {frozenset((edge['from'], edge['to'])): edge for edge in edges}
     result = []
 
@@ -170,7 +170,7 @@ def motifs(edges):
         (120, 120, 120): 'grand_trine', (60, 60, 120): 'minor_grand_trine',
         (60, 120, 180): 'wedge', (90, 90, 180): 't_square',
     }
-    for members in itertools.combinations(TEN, 3):
+    for members in itertools.combinations(point_ids, 3):
         component_edges = [lookup.get(frozenset(pair))
                            for pair in itertools.combinations(members, 2)]
         if any(edge is None for edge in component_edges):
@@ -178,7 +178,7 @@ def motifs(edges):
         kind = triples.get(tuple(sorted(edge['angle'] for edge in component_edges)))
         if kind:
             add(kind, members, component_edges)
-    for members in itertools.combinations(TEN, 4):
+    for members in itertools.combinations(point_ids, 4):
         component_edges = [lookup.get(frozenset(pair))
                            for pair in itertools.combinations(members, 2)]
         if any(edge is None for edge in component_edges):

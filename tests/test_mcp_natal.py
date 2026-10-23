@@ -138,7 +138,7 @@ def test_mcp_streamable_http_protocol_lists_and_calls_tools():
                     async with ClientSession(streams[0], streams[1]) as session:
                         await session.initialize()
                         names = {t.name for t in (await session.list_tools()).tools}
-                        assert names == {"calculate_natal_salience", "calculate_natal_structure_graph", "scan_planetary_aspects", "calculate_lots", "search_birthplace", "resolve_birth_coordinates", "calculate_natal_chart",
+                        assert names == {"prepare_relationship_observation_note", "calculate_natal_salience", "calculate_relationship_observation", "calculate_natal_structure_graph", "scan_planetary_aspects", "calculate_lots", "search_birthplace", "resolve_birth_coordinates", "calculate_natal_chart",
                                          "render_jones_pattern", "verify_natal_claims", "verify_calculation_claims",
                                          "get_capabilities", "get_agent_protocol", "recommend_workflow",
                                          "render_natal_chart", "calculate_classical_factors",

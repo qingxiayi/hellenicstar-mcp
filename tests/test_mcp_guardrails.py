@@ -166,7 +166,7 @@ def test_actual_mcp_contract_clarifies_partial_inputs_and_verifies_claims():
                             return json.loads(response.content[0].text)
 
                         tools = {t.name: t for t in (await session.list_tools()).tools}
-                        assert len(tools) == 46
+                        assert len(tools) == 48
                         assert {"verify_natal_claims", "get_capabilities", "get_agent_protocol"} <= set(tools)
                         for name in ("calculate_natal_chart", "render_natal_chart",
                                      "calculate_classical_factors", "calculate_solar_arc",

@@ -6,7 +6,7 @@
 
 [English](README_en.md) | [中文说明](README.md)
 
-**HellenicStar Astrology MCP** is a standalone astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server with **46 tools in the current source** for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.). Deployed instances may differ; inspect their `tools/list`. Natal priorities v4 separates the Jones perspective into `jones_view`, with a side-by-side `view_comparison`. Jones no longer promotes natal priority membership or attention groups (`attention_layers` v3). Complete profiles and relationship facts remain unchanged; lists can change because the former Jones anchor is removed. See [parallel views and migration](docs/natal-jones-parallel-view.md). Deployment evidence is recorded separately.
+**HellenicStar Astrology MCP** is a standalone astronomical calculation and Hellenistic astrology MCP (Model Context Protocol) server with **48 tools in the current source** for AI agents (Claude Desktop, Cursor, Codex, WorkBuddy, etc.). Deployed instances may differ; inspect their `tools/list`. Natal priorities v4 separates the Jones perspective into `jones_view`, with a side-by-side `view_comparison`. Jones no longer promotes natal priority membership or attention groups (`attention_layers` v3). Complete profiles and relationship facts remain unchanged; lists can change because the former Jones anchor is removed. See [parallel views and migration](docs/natal-jones-parallel-view.md). Deployment evidence is recorded separately.
 
 By coupling the classical Swiss Ephemeris engine with rigorous Hellenistic rules and structured claim verification, it supplies calculated chart data and checks submitted factual claims. These checks do not guarantee that an LLM’s final interpretation is accurate or free of hallucinations.
 
@@ -48,7 +48,7 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities (46 Tools)
+## Core Capabilities (48 Tools)
 
 - **Planetary Aspect Cycles & Arabic Lots**:
   - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.
@@ -141,3 +141,10 @@ pytest tests/ -q
 - Astronomical calculation core relies on **Swiss Ephemeris** (AGPL-3.0 / Professional dual license).
 - Geographic resolution utilizes **GeoNames** (CC BY 4.0) and **timezonefinder**.
 - See [NOTICE.md](NOTICE.md) for full third-party notices and licenses.
+
+
+## Relationship observation
+
+Two new tools expose deterministic relationship observations and separate caller-owned human notes. Contacts are counted once, with two directional views and bounded natal context. Love, friendship, work and family contexts select observation angles without removing geometry. Natal mean nodes and the existing natal priorities v4 are preserved; no compatibility score or psychological diagnosis.
+
+[API and boundaries](docs/relationship-observation.md) · [Timing options](docs/relationship-observation-timing.md)

@@ -79,6 +79,9 @@ def tool_clarification(name, arguments, parameter_names):
         fields.append("location_id")
     absent = [field for field in fields if missing(arguments.get(field))]
     for person in ("person_a", "person_b"):
+        if (name == 'calculate_relationship_observation' and person == 'person_b'
+                and arguments.get('mode') == 'natal' and arguments.get(person) is None):
+            continue
         if person in parameter_names:
             birth = arguments.get(person)
             birth = birth.model_dump() if hasattr(birth, "model_dump") else (birth or {})

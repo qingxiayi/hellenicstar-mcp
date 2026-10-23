@@ -279,7 +279,7 @@ def tool(**options):
         protected_compute = (
             fn.__name__ in (set(CONTRACTS) - {"search_birthplace", "resolve_birth_coordinates"})
             or fn.__name__ in RENDER_SOURCES
-            or fn.__name__ in {"verify_natal_claims", "verify_calculation_claims"}
+            or fn.__name__ in {"verify_natal_claims", "verify_calculation_claims", "prepare_relationship_observation_note"}
         )
         if fn.__name__ in CONTRACTS:
             register_calculation(fn)
@@ -329,7 +329,7 @@ def tool(**options):
                     result = checked_result(fn.__name__, result, arguments)
                 elif fn.__name__ in META_CONTRACTS:
                     issues = (validate_meta_output(fn.__name__, result)
-                              if result.get('status') == 'ok' or fn.__name__ != 'recommend_workflow'
+                              if result.get('status') == 'ok' or fn.__name__ not in ('recommend_workflow', 'prepare_relationship_observation_note')
                               else [])
                     if issues:
                         result = {'status': 'validation_failed', 'tool': fn.__name__,
@@ -701,6 +701,46 @@ def calculate_relationship_charts(person_a: BirthInput | None = None, person_b: 
                                   orb_profile: str = "greene") -> dict:
     return ext.relationship_data(person_a=person_a.model_dump(),
                                  person_b=person_b.model_dump(), orb_profile=orb_profile)
+
+
+@tool(annotations=READ_ONLY, description="John Green relationship observation v0.14. mode=synastry requires two exact births; mode=natal accepts person_a alone or both people and computes natal profiles without cross-contacts. All natal points remain available, including untriggered points. sort_by=orb (default), relationship_indicators or natal_hard_aspects changes display order only. Human notes use prepare_relationship_observation_note separately. Returns unique cross-contacts, two observation paths per contact, one-hop natal context, supported bounded natal aspect configurations (including Chiron), actual contact links between both natal configurations, static natal priority background under its separately disclosed policy, directed house overlays and factual indicators. Configuration memberships and natal identities never add direct contacts. observation_review provides evidence-backed indicator, inner/outer and tightness reasons with parallel lenses, never a weighted score or inferred client difficulty. structure_display folds contained configurations and bridges while keeping every raw row and partial overlap. natal_observation_candidates records source-backed selection reasons even without partner contacts. review_paths links actual contact endpoints, one-hop natal context, house rulers and overlays without propagating activation. overlay_contexts preserves target ownership; observation_comparisons groups reciprocal contacts and both natal backgrounds without scoring. observation_complexes separately groups conjunction-pair neighborhoods and named-pattern conjunction satellites, including axis endpoint variants, without recursive expansion or whole-complex activation claims. Shared natal planet pairs and exact descendant-sign correspondences are factual comparisons, not semantic matches. Relationship-indicator sorting uses target-point selection roles. scenario_observation_lenses attaches source-backed topics, conditions and actual point/house references to each selected context; this is not a planet whitelist or psychological interpretation. Optional unconfirmed conditions must not be asserted as client facts. Reuse an explicitly stated relationship context; if unknown, ask the user before calling. The legacy love default is not evidence of user confirmation. No composite, scores or psychological flags. Axis endpoint equivalents share one contact. john_green profile uses 10 degrees for conjunction/square/trine/opposition and 5 degrees for tight display. Sextiles are not evaluated unless sextile_orb_degrees (0-10) is supplied; minor aspects require include_minor_aspects=true and explicit minor_orbs_degrees keys 30/45/135/150; overlapping orb windows are rejected. Yod context requires explicit 60 and 150 degree orbs. Optional include_timing=true requires timing with one of at (offset-aware ISO timestamp), date (YYYY-MM-DD), or month (YYYY-MM) with optional month_part (early/middle/late), or event=childbirth with explicit family parent/child roles, plus explicit transit_orbs_degrees and progression_orbs_degrees. Timing provides a selected-instant snapshot. Optional timing.window_start and window_end (offset-aware ISO timestamps) request a numerical interval search, with a duration from one second to 31 days and the snapshot inside [start,end). window_scan returns exact events and clipped orb windows over every supported point pair, including pairs absent at the snapshot. It reuses source engines and root refinement; interval mesh and bounds are engineering rules. Simultaneous synastry endpoint windows require the same transit and actual interval overlap, not merely two hits somewhere in the date range. Non-instant dates are illustrative UTC-noon samples with fast transits excluded; early/middle/late means calendar days 1-10/11-20/21-end and samples day 5/15/25. These boundaries and sample times are engineering conventions, not known meeting times or interval scans. The timing dictionary also accepts angle_progression_method (naibod default or solar_arc_in_ra) and include_progressed_synastry (boolean, default true). When progressed synastry is enabled, progressed_synastry_comparison compares natal geometry with the selected progressed pair under the same progression_orbs_degrees. It distinguishes same/different aspect and presence on only one side; a node-convention mismatch is marked not comparable. Existing wide-orb static contacts are contextual references, not the comparison baseline. This does not infer first appearance, duration, relationship outcome or internal progressed configurations. No inherited 10-degree timing orbs. Childbirth resolves the child birth through the existing timezone/fold resolver and exposes parental contacts as references, not extra evidence. Natal nodes are verified mean nodes despite legacy field names; childbirth uses mean nodes throughout. Explicit-date timing retains its true transit/progressed nodes and discloses the different natal convention in node_conventions. Timing requires synastry mode and preserves static counts, and links existing contacts and bounded natal contexts without predictions. See timing_observations and its availability limits. relationship_context accepts additional_types, caller-supplied a/b roles (parent/child, siblings, supervisor/employee, colleagues), and cohabiting. Roles must match a selected family/work type. Optional creative_project and early_or_sibling_like_friendship accept true/false/null, require work/friendship respectively, and never infer context. Conditional DSC/seventh-house topics retain actual houses. observation_complex_links references each contact once with both owners core/context memberships, including axis/Yod complexes; no pair-product expansion. Parallel traditional/modern ruler backgrounds and special contact lenses do not add contacts or weights. Missing layers remain explicit, including in summary results. See docs/relationship-observation.md.")
+def calculate_relationship_observation(
+    person_a: BirthInput | None = None, person_b: BirthInput | None = None,
+    relationship_type: Literal['love', 'friendship', 'work', 'family'] = 'love',
+    house_system: Literal['placidus'] = 'placidus',
+    orb_profile: Literal['john_green'] = 'john_green',
+    ruler_profile: Literal['traditional', 'modern'] = 'traditional',
+    parental_house_mapping_profile: Literal['john_green', 'reversed'] = 'john_green',
+    sextile_orb_degrees: Annotated[float, Field(strict=True, ge=0, le=10, allow_inf_nan=False)] | None = None,
+    include_minor_aspects: Annotated[bool, Field(strict=True)] = False,
+    minor_orbs_degrees: dict[str, Annotated[float, Field(strict=True, ge=0, le=10, allow_inf_nan=False)]] | None = None,
+    relationship_context: dict | None = None,
+    include_timing: Annotated[bool, Field(strict=True)] = False,
+    timing: dict | None = None,
+    mode: Literal['synastry', 'natal'] = 'synastry',
+    sort_by: Literal['orb', 'relationship_indicators', 'natal_hard_aspects'] = 'orb',
+) -> dict:
+    from services.relationship_observation import calculate_observation_data
+    return calculate_observation_data(
+        person_a=person_a.model_dump(), person_b=person_b.model_dump() if person_b is not None else None,
+        relationship_type=relationship_type, house_system=house_system, orb_profile=orb_profile,
+        ruler_profile=ruler_profile, parental_house_mapping_profile=parental_house_mapping_profile,
+        sextile_orb_degrees=sextile_orb_degrees, include_minor_aspects=include_minor_aspects,
+        include_timing=include_timing, mode=mode, sort_by=sort_by,
+        minor_orbs_degrees=minor_orbs_degrees, relationship_context=relationship_context, timing=timing)
+
+
+@tool(annotations=READ_ONLY, description="Prepare a human observation note for caller-owned storage. Requires an unchanged calculate_relationship_observation calculation_reference, person a/b and an explicitly supplied human statement. Optionally link to a natal point and question ID. Recomputes the source anchor only; does not verify the statement, infer answers, diagnose, persist notes or change calculation facts/counts. Never invent client reports.")
+def prepare_relationship_observation_note(
+    reference: CalculationReference, person: Literal['a', 'b'],
+    statement: Annotated[str, Field(strict=True, min_length=1, max_length=4000)],
+    author_role: Literal['client_report', 'practitioner_note'],
+    point: str | None = None, question_id: str | None = None,
+) -> dict:
+    from services.relationship_observation_notes import prepare_note
+    return prepare_note(reference=reference.model_dump(), person=person, statement=statement,
+                        author_role=author_role, point=point, question_id=question_id)
+
 
 
 @tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the midpoint composite chart of two people as a 720px PNG wheel shown to the user.")
