@@ -1,12 +1,7 @@
 """希腊星智算法注册表 (Algorithm Registry).
 
-本次 Sprint 1 Step 2 阶段依照审计基线只登记 5 项核心基础算法：
-1. planetary_longitudes (行星经度)
-2. axes_and_placidus_houses (四轴与普拉西度宫位)
-3. whole_sign_houses (整宫制)
-4. lunar_nodes (月交点)
-5. chiron (凯龙星)
-相位、绘图、组合盘、返照盘、月相、流年等自研算法留待后续补登。
+登记本命基础算法及后续计算模块的实际源码、计算约定与边界。
+登记不代表独立精度验证，也不代表某次请求执行了全部依赖。
 """
 from dataclasses import dataclass, asdict
 from typing import Dict, Any, Optional
@@ -130,3 +125,67 @@ def get_algorithm_entry(key: str) -> Optional[Dict[str, Any]]:
 
 def list_algorithms() -> Dict[str, Dict[str, Any]]:
     return {k: asdict(v) for k, v in ALGORITHM_REGISTRY.items()}
+
+
+# Source locators for the calculation families added after the original natal
+# registry. This is declared provenance, not an independent accuracy certificate.
+def _register_calculation(key, name, file_path, symbol, model, *,
+                          source='hybrid', version='UNKNOWN', precision='UNKNOWN',
+                          fallback=None, notes=None):
+    ALGORITHM_REGISTRY[key] = AlgorithmEntry(
+        key=key, name=name, category='calculation', source=source,
+        implementation=f'{file_path[:-3].replace("/", ".")}.{symbol}',
+        file_path=file_path, code_anchor=f'def {symbol}(',
+        code_location=f'{file_path}::{symbol}',
+        coordinate_system='Tropical Zodiac; geocentric longitudes and declared local houses where applicable',
+        calculation_model=model, fallback=fallback, precision=precision,
+        version_history=version,
+        notes=notes or 'Declared source dependency; runtime execution path and independent numerical accuracy are not established by this registration.')
+
+
+_register_calculation('natal_structure_graph', 'Natal structure graph',
+    'services/natal_structure_graph.py', 'calculate_structure_graph',
+    'Validated natal source; directed traditional/modern dispositors, cycles and basins; symmetric aspect layers, motifs, house rulers and source-fact dependencies. No ranking or psychological inference.',
+    version='natal-structure-v1',
+    fallback='On unavailable Placidus houses, house-independent partial graph with explicit unavailable axes and houses.')
+_register_calculation('natal_salience', 'Natal priority selection',
+    'services/natal_salience.py', 'build_salience',
+    'Versioned engineering selection rules over the full natal graph. Separate candidate planets, terminal/configuration groups, complete ten-planet profiles and dependency evidence. No importance score, unique core or psychological diagnosis.',
+    source='proprietary', version='natal-priorities-v4')
+_register_calculation('natal_aspect_dynamics', 'Natal aspect dynamics',
+    'services/natal_aspect_dynamics.py', 'calculate_dynamics',
+    'Swiss Ephemeris positions and speeds; applying/separating geometry and bounded first exact contacts with station/sign-change context. Search horizon is a caller setting, not a prediction.')
+_register_calculation('jones_pattern', 'Jones pattern and parallel natal view',
+    'services/jones_pattern.py', 'calculate_jones_pattern',
+    'Ten-planet circular distribution classified by the local Jones/Sellar implementation. natal_jones_view projects classification, roles, uncertainty and selected-orb contacts separately from natal priority selection.',
+    source='proprietary', version='jones-miniapp-5 / natal-jones-view-v1',
+    notes='Local operationalization of Jones/Sellar methods; see docs/natal-jones-parallel-view.md. No independent vote, natal promotion or psychological verification.')
+_register_calculation('planetary_aspect_scan', 'Planetary aspect interval scan',
+    'services/planetary_aspect_scan.py', 'scan',
+    'Shared transit_utils ephemeris positions; unwrap directed relative longitudes, split relative-speed reversals, bracket and bisect exact and orb-boundary crossings. Node convention and interval bounds are explicit.',
+    precision='Numerical stopping criteria TIME_TOL=0.05/86400 Julian days and ANGLE_TOL=1e-7 degrees; these are solver tolerances, not a guarantee of astronomical accuracy.')
+_register_calculation('current_sky', 'Current sky and lunar phase',
+    'services/sky_now.py', 'sky_at',
+    'Swiss Ephemeris at a fixed instant: longitudes, phase/illumination, lunation and event searches under local declared aspect and visibility conventions.')
+_register_calculation('aspect_windows', 'Active aspect windows',
+    'services/aspect_windows.py', 'aspect_groups',
+    'PointResolver and transit_utils bracket roots of absolute angular deviation minus configured orb. Uses sky_now orb policy; includes derived lots where location permits. Bounded searches expose availability.')
+_register_calculation('lunar_return', 'Lunar return',
+    'services/lunar_return.py', 'compute_lunar_return_full',
+    'Resolve birth JD, solve transiting Moon longitude equal to natal Moon, compute return houses at residence and explicit natal/return overlays and aspects.')
+_register_calculation('secondary_progressions', 'Secondary progressions',
+    'services/secondary_progressions.py', 'compute_secondary_progressions',
+    'Day-for-year symbolic technique, Swiss Ephemeris progressed positions; Naibod or solar-arc-in-RA progressed angles are explicitly selected. Internal and natal comparison aspects use declared orb matrices.',
+    notes='Symbolic time mapping is a technique convention, not a physical causal claim; angle methods are distinct. See services/secondary_progressions.py.')
+_register_calculation('timeline_synthesis', 'Timeline synthesis',
+    'services/timeline_synthesis.py', 'compute_timeline_synthesis',
+    'Merge bounded time-lord, secondary-progression and transit events in stable order. Resonance groups share explicit time windows and focus; they are not independent evidence or predictions.')
+_register_calculation('relationship_observation', 'Relationship observation',
+    'services/relationship_observation.py', 'calculate_observation_data',
+    'Two natal geometries; unique direct contacts, directional paths, bounded one-hop context, overlays and explicit scenario lenses. John Green source locators and ENGINE_DECISION boundaries are returned by provenance().',
+    version='john-green-observation-v0.14',
+    notes='See docs/relationship-observation.md and per-result provenance. No compatibility score, diagnosis, inferred human history or automatic IFS mapping. Human notes are caller statements, never calculation facts.')
+_register_calculation('relationship_observation_timing', 'Relationship timing observations',
+    'services/relationship_observation_timing.py', 'calculate_timing_sources',
+    'Optional fixed-time transit/progression observations and bounded interval scanning with explicit orbs. Natal mean-node versus explicit-date true-node conventions are disclosed; date-only noon samples are illustrative.',
+    notes='Potential dependency only: include_timing=false does not execute it. See timing_provenance(), relationship_observation_windows.py and docs/relationship-observation-timing.md; no outcome prediction.')

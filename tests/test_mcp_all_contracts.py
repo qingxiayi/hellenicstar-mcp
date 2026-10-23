@@ -232,3 +232,14 @@ def test_fresh_worker_initializes_ephemeris_even_when_natal_is_cached():
   finally: apply_ephe_path()
  with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
   assert executor.submit(fresh_worker).result() == swe.FLG_SWIEPH
+
+
+@pytest.mark.parametrize('name', sorted(CONTRACTS))
+def test_every_family_reference_survives_json_number_normalization(name, samples):
+ from services.mcp_result_facts import canonical_numbers
+ raw,args=samples[name]
+ checked=checked_result(name,raw,args)
+ path=PATHS[name]
+ ref=canonical_numbers(json.loads(json.dumps(checked['calculation_reference'])))
+ out=verify_calculation_claims_data(ref,[dict(quote='Transport roundtrip',path=path,value=canonical_numbers(lookup(raw,path)))])
+ assert out.get('counts')==dict(supported=1,contradicted=0,unverified=0),out

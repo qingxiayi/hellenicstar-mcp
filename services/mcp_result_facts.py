@@ -12,7 +12,8 @@ from typing import Dict, List, Union
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, create_model
 from services.mcp_validation import CONTRACTS, VERSION, blocked, validate_output
 
-SCHEMA = 'calculation-reference-v1'
+SCHEMA = 'calculation-reference-v2'
+LEGACY_SCHEMA = 'calculation-reference-v1'
 REGISTRY = {}
 MODELS = {}
 
@@ -83,8 +84,29 @@ def data_payload(data):
     return {k: v for k, v in data.items() if k not in metadata}
 
 
-def fingerprint(data):
-    return hashlib.sha256(json.dumps(data_payload(data),sort_keys=True,ensure_ascii=False,
+def canonical_numbers(value):
+    """Ignore JSON number spelling, without rounding or coercing bool/string.
+
+    JavaScript JSON.parse/stringify turns 3.0 into 3 and -0.0 into 0. These
+    denote the same numeric fact. Nonintegral floats retain every stored digit;
+    large integers are never converted to floats (which could lose precision).
+    """
+    if isinstance(value, dict):
+        return {key: canonical_numbers(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [canonical_numbers(item) for item in value]
+    if type(value) is float and value.is_integer():
+        return int(value)
+    return value
+
+
+def fingerprint(data, *, schema_version=SCHEMA):
+    payload = data_payload(data)
+    if schema_version == SCHEMA:
+        payload = canonical_numbers(payload)
+    elif schema_version != LEGACY_SCHEMA:
+        raise ValueError('Unsupported calculation reference schema')
+    return hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False,
                                     allow_nan=False,separators=(',',':')).encode()).hexdigest()
 
 
@@ -126,12 +148,12 @@ def lookup(data,path):
 
 def exact_equal(a,b):
     # JSON bool and number must remain distinct (True != house 1).
-    return json.dumps(a,sort_keys=True,ensure_ascii=False,allow_nan=False)==json.dumps(b,sort_keys=True,ensure_ascii=False,allow_nan=False)
+    return json.dumps(canonical_numbers(a),sort_keys=True,ensure_ascii=False,allow_nan=False)==json.dumps(canonical_numbers(b),sort_keys=True,ensure_ascii=False,allow_nan=False)
 
 
 def verify_calculation_claims_data(reference,claims):
     ref=CalculationReference.model_validate(reference)
-    if ref.schema_version!=SCHEMA or ref.tool not in REGISTRY:
+    if ref.schema_version not in (SCHEMA, LEGACY_SCHEMA) or ref.tool not in REGISTRY:
         return {'status':'invalid_reference','next_action':'recalculate_source','error':'引用版本或数据工具不受支持。'}
     if not 1<=len(claims)<=100 or len(json.dumps([reference,claims],ensure_ascii=False))>100_000:
         return {'status':'invalid_input','error':'每次核对 1–100 项，输入总量不可超过 100000 字符。'}
@@ -154,7 +176,7 @@ def verify_calculation_claims_data(reference,claims):
     except (ValidationError,TypeError,ValueError):
         return {'status':'invalid_reference','next_action':'recalculate_source','error':'引用输入不符合原工具契约。'}
     if out.get('status')!='ok': return out
-    if out['calculation_reference']['fingerprint']!=ref.fingerprint:
+    if fingerprint(out, schema_version=ref.schema_version)!=ref.fingerprint:
         return {'status':'reference_mismatch','next_action':'recalculate_source','error':'原结果已变化或引用被改动，请重新计算后提交。'}
     rows=[]
     for raw in claims:

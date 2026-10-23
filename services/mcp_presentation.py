@@ -37,12 +37,16 @@ def validate_selection(detail_level, include):
 
 def _summarize(value, path, omitted):
     if isinstance(value, list):
+        # Membership lists (planet IDs, terminal members, roles, etc.) are
+        # indivisible facts, not previews of rows. Keep them fully verifiable.
+        if all(not isinstance(item, (dict, list)) for item in value):
+            return list(value)
         if len(value) > SUMMARY_LIMIT:
             omitted[path] = len(value) - SUMMARY_LIMIT
         return [_summarize(item, f"{path}/{index}", omitted)
                 for index, item in enumerate(value[:SUMMARY_LIMIT])]
     if isinstance(value, dict):
-        return {key: _summarize(item, f"{path}/{key}", omitted)
+        return {key: _summarize(item, f"{path}/{key.replace('~', '~0').replace('/', '~1')}", omitted)
                 for key, item in value.items()}
     return value
 
@@ -62,12 +66,14 @@ def project_result(result: dict, detail_level: str, include: list[str] | None) -
     projected = {}
     for key, value in result.items():
         if key in CONTROL_FIELDS or key in selected:
-            projected[key] = (_summarize(value, f"/{key}", omitted)
+            projected[key] = (_summarize(value, "/" + key.replace("~", "~0").replace("/", "~1"), omitted)
                               if detail_level == "summary" and key in selected else value)
     projected["presentation"] = {
         "detail_level": detail_level,
         "included_fields": sorted(selected),
         "omitted_array_items": omitted,
+        "is_truncated": bool(omitted),
+        "verification_instruction": "References verify the full checked result. For truncated arrays or objects containing them, request detail_level=full before claiming the whole value; displayed scalar fields retain their original JSON Pointer paths.",
         "reference_scope": "full_checked_result",
     }
     return projected

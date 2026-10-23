@@ -3,7 +3,7 @@
 The registry describes known dependencies of a tool, not the execution path of
 an individual request. In particular, caches and ephemeris fallbacks are not
 observed here. Unregistered techniques must never be attributed to one of the
-five natal entries merely because they use the same ephemeris library.
+natal entries merely because they use the same ephemeris library.
 """
 
 from algorithm_registry import get_algorithm_entry
@@ -79,9 +79,23 @@ REGISTERED_NATAL_KEYS = (
     "chiron",
 )
 
+# Audited family-specific dependencies. A render/verification inherits its source.
+TOOL_ALGORITHM_KEYS = {
+    "calculate_natal_structure_graph": REGISTERED_NATAL_KEYS + ("natal_structure_graph", "jones_pattern"),
+    "calculate_natal_salience": REGISTERED_NATAL_KEYS + ("natal_structure_graph", "natal_salience", "natal_aspect_dynamics", "jones_pattern"),
+    "scan_planetary_aspects": ("planetary_aspect_scan",),
+    "get_current_sky": ("current_sky",),
+    "calculate_aspect_windows": ("aspect_windows", "current_sky"),
+    "calculate_lunar_return": ("lunar_return",),
+    "calculate_secondary_progressions": ("secondary_progressions",),
+    "calculate_timeline_synthesis": REGISTERED_NATAL_KEYS + ("timeline_synthesis", "secondary_progressions"),
+    "calculate_relationship_observation": REGISTERED_NATAL_KEYS + ("natal_structure_graph", "natal_salience", "relationship_observation", "relationship_observation_timing", "secondary_progressions"),
+}
+
 _ENTRY_FIELDS = (
     "key", "source", "implementation", "file_path", "code_anchor",
     "code_location", "fallback", "precision", "version_history",
+    "calculation_model", "coordinate_system", "notes",
 )
 
 
@@ -105,7 +119,11 @@ def declared_provenance(tool: str, arguments: dict) -> dict:
 
     source_tool = (_reference_tool(arguments) if tool in DYNAMIC_SOURCE_TOOLS
                    else RENDER_SOURCES.get(tool, tool))
-    if source_tool in NATAL_SOURCE_TOOLS:
+    if source_tool in TOOL_ALGORITHM_KEYS:
+        coverage = "partial"
+        scope = "declared_dependencies"
+        keys = TOOL_ALGORITHM_KEYS[source_tool]
+    elif source_tool in NATAL_SOURCE_TOOLS:
         coverage = "partial"
         scope = "declared_dependencies"
         keys = REGISTERED_NATAL_KEYS

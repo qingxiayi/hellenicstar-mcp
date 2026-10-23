@@ -12,13 +12,15 @@
 
 出生地搜索出现多个候选时请用户选择。工具返回 `needs_clarification`、`required_fields` 或 DST fold 候选时，要求用户补齐并重新调用。不要把失败或 `validation_failed` 响应当作正常计算结果。
 
-数据工具可选传 `detail_level="summary"`，让每个返回数组最多显示前 5 项；`include` 可传顶层内容字段名列表，例如本命盘的 `["planets", "aspects"]`。省略两个参数时返回原有完整结果。结果的 `presentation.omitted_array_items` 标明各数组省略项数；需要全部条目时用 `detail_level="full"` 重新调用。`include` 不影响计算，服务端仍对完整结果做检查；`calculation_reference` 与本命 `fact_reference` 始终指向完整结果。引用已显示字段时仍按原结果路径核验，不要把摘要当成完整数据集。
+数据工具可选传 `detail_level="summary"`，让对象行列表最多显示前 5 项；行星 ID、结构成员等标量列表保留完整，避免把成员名单误当成预览；`include` 可传顶层内容字段名列表，例如本命盘的 `["planets", "aspects"]`。省略两个参数时返回原有完整结果。结果的 `presentation.is_truncated` 标明是否发生截断，`presentation.omitted_array_items` 标明各数组省略项数；需要全部条目时用 `detail_level="full"` 重新调用。`include` 不影响计算，服务端仍对完整结果做检查；`calculation_reference` 与本命 `fact_reference` 始终指向完整结果。引用已显示字段时仍按原结果路径核验，不要把摘要当成完整数据集。
 
 ## 版本、算法出处与不确定性
 
 成功结果的 `calculation_envelope` 给出协议、引擎、数据 schema、插件和子模块版本，并列出当前注册表已审计的算法依赖。`registered_algorithms` 只是已登记子集：相位、返照、行运、绘图等实现尚未全部登记。`execution_path: UNKNOWN` 表示未记录本次缓存和兜底分支；不能把静态依赖说成逐次运行轨迹。算法项的 `precision` 或 `version_history` 为 `UNKNOWN` 时，保持未知，不推造精度或算法版本。
 
-`calculation_reference` 和本命的 `fact_reference` 用于结果复算及字段核验；其 fingerprint 不是签名，也不证明算法独立正确。Envelope 是元数据，不能当成占星事实提交核验。
+`calculation_reference` 和本命的 `fact_reference` 用于结果复算及字段核验；其 fingerprint 不是签名，也不证明算法独立正确。新引用使用 `calculation-reference-v2`：数值 `3` 与 `3.0`、`0` 与 `-0.0` 在指纹和字段比较中等价，不舍入其他数值，也不把布尔值或字符串当作数字。未改动的 v1 引用仍按旧指纹规则核验；经过数值表示转换而失配的旧引用需重新计算取得 v2。
+
+Envelope 是元数据，不能当成占星事实提交核验。
 
 ## 引用计算事实
 

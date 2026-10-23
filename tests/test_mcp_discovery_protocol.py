@@ -25,10 +25,11 @@ def test_capabilities_reflect_live_tools_and_algorithm_registry():
         assert listed[name]["description"] == (tool.description or "")
         assert listed[name]["input_schema"] == tool.inputSchema
 
-    natal_keys = set(list_algorithms())
+    from services.mcp_envelope import REGISTERED_NATAL_KEYS
+    natal_keys = set(REGISTERED_NATAL_KEYS)
     assert set(listed["calculate_natal_chart"]["registered_algorithm_keys"]) == natal_keys
-    assert listed["get_current_sky"]["registered_algorithm_keys"] == []
-    assert listed["calculate_aspect_windows"]["provenance_coverage"] == "unregistered"
+    assert listed["get_current_sky"]["registered_algorithm_keys"] == ["current_sky"]
+    assert listed["calculate_aspect_windows"]["provenance_coverage"] == "partial"
     assert listed["get_capabilities"]["provenance_coverage"] == "not_applicable"
     assert "calculation_reference" not in capabilities
     assert validate_meta_output("get_capabilities", capabilities) == []

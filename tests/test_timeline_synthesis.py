@@ -308,7 +308,7 @@ def test_public_timeline_tool_envelope_quality_and_claim_recalculation():
     assert result["status"] == "ok"
     assert result["quality"]["status"] == "passed"
     assert result["calculation_envelope"]["tool"] == "calculate_timeline_synthesis"
-    assert result["calculation_envelope"]["provenance"]["coverage"] == "unregistered"
+    assert result["calculation_envelope"]["provenance"]["coverage"] == "partial"
     first = result["events"][0]
     verified = asyncio.run(mcp_server.verify_calculation_claims(
         reference=CalculationReference.model_validate(result["calculation_reference"]),

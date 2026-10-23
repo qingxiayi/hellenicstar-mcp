@@ -65,11 +65,12 @@ def test_render_envelope_preserves_image_and_text_consistency():
     assert "calculation_envelope" not in result.structuredContent["calculation_source"]
 
 
-def test_independent_tools_do_not_claim_the_natal_implementations():
+def test_independent_tools_declare_their_own_implementations():
     for tool in ("get_current_sky", "calculate_aspect_windows"):
         provenance = calculation_envelope(tool, {})["provenance"]
-        assert provenance["coverage"] == "unregistered"
-        assert provenance["registered_algorithms"] == []
+        assert provenance["coverage"] == "partial"
+        keys = {entry["key"] for entry in provenance["registered_algorithms"]}
+        assert keys and "planetary_longitudes" not in keys
     for tool in ("search_birthplace", "resolve_birth_coordinates"):
         provenance = calculation_envelope(tool, {})["provenance"]
         assert provenance["coverage"] == "not_applicable"
@@ -80,3 +81,23 @@ def test_clarification_is_unchanged():
     result = asyncio.run(m.calculate_natal_chart(year=1990))
     assert result["status"] == "needs_clarification"
     assert "calculation_envelope" not in result
+
+
+def test_new_family_registrations_have_real_source_anchors():
+    from pathlib import Path
+    from algorithm_registry import list_algorithms
+    from services.mcp_envelope import INDEPENDENT_CALCULATION_TOOLS, declared_provenance
+    root = Path(__file__).resolve().parents[1]
+    for entry in list_algorithms().values():
+        assert entry['code_anchor'] in (root / entry['file_path']).read_text(), entry['key']
+    for tool in INDEPENDENT_CALCULATION_TOOLS | {'calculate_relationship_observation'}:
+        provenance = declared_provenance(tool, {})
+        assert provenance['coverage'] == 'partial'
+        assert provenance['scope'] == 'declared_dependencies'
+        assert provenance['execution_path'] == 'UNKNOWN'
+        assert provenance['registered_algorithms']
+        assert all(e['calculation_model'] and e['notes'] for e in provenance['registered_algorithms'])
+    for tool in ('calculate_natal_salience', 'calculate_natal_structure_graph', 'scan_planetary_aspects', 'calculate_relationship_observation'):
+        direct = declared_provenance(tool, {})
+        verified = declared_provenance('verify_calculation_claims', {'reference': {'tool': tool}})
+        assert verified['registered_algorithms'] == direct['registered_algorithms']

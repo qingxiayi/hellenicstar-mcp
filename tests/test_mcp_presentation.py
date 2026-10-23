@@ -73,3 +73,36 @@ def test_fastmcp_call_accepts_controls():
     assert result["status"] == "ok"
     assert len(result["planets"]) == 5
     assert "aspects" not in result
+
+
+def test_summary_preserves_membership_lists_and_marks_row_previews():
+    from copy import deepcopy
+    from services.mcp_presentation import project_result
+    source = {'status': 'ok', 'focus_selection': {
+        'planet_ids': ['p' + str(i) for i in range(9)], 'broad_selection': True},
+        'rows': [{'members': ['p' + str(i) for i in range(9)], 'id': i} for i in range(8)],
+        'a/b~c': list(range(10)), 'nested/a': [{'rows': [{}] * 7}]}
+    before = deepcopy(source)
+    summary = project_result(source, 'summary', None)
+    assert source == before
+    assert summary['focus_selection'] == source['focus_selection']
+    assert summary['rows'][0] == source['rows'][0]
+    assert summary['a/b~c'] == source['a/b~c']
+    assert summary['presentation']['is_truncated'] is True
+    assert summary['presentation']['omitted_array_items'] == {'/rows': 3, '/nested~1a/0/rows': 2}
+
+
+def test_real_natal_summary_focus_selection_is_a_complete_verifiable_fact():
+    async def run():
+        birth = dict(year=2000, month=1, day=1, hour=12, minute=0,
+                     location_id='coord:39.904200,116.407400')
+        for orb in (6, 8):
+            full = await m.calculate_natal_salience(**birth, orb_view=orb)
+            short = await m.calculate_natal_salience(**birth, orb_view=orb, detail_level='summary')
+            assert short['focus_selection'] == full['focus_selection']
+            assert short['calculation_reference'] == full['calculation_reference']
+            result = await m.verify_calculation_claims(reference=CalculationReference(**short['calculation_reference']),
+                claims=[CalculationClaim(quote='Complete membership', path='/focus_selection/planet_ids',
+                                         value=short['focus_selection']['planet_ids'])])
+            assert result['counts']['supported'] == 1
+    asyncio.run(run())

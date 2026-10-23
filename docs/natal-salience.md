@@ -204,7 +204,7 @@
 
 此前未发布的 `functional-v1` 已从运行接口、发现参数和当前输出撤下；传入旧参数会被拒绝。实验文本仅保留在 [历史目录](archive/functional-v1/README.md)，不属于当前功能。此前验证见 [算法验收记录](validation/natal-algorithm-only-2026-10-22.md)；本轮动态验证见 [动态验收记录](validation/natal-dynamics-2026-10-22.md)。
 
-新工具独立注册输出校验、可复算引用和工具发现，文献覆盖诚实标记为 `unregistered`。`verify_calculation_claims` 可核验如 `/core_structures/0/denominator` 的值；核验只确认与确定规则一致，不验证解释。
+新工具独立注册输出校验、可复算引用和工具发现，算法来源已登记为 `partial`（已声明依赖，非独立算法验证）。`verify_calculation_claims` 可核验如 `/core_structures/0/denominator` 的值；核验只确认与确定规则一致，不验证解释。
 
 测试覆盖外行星不改变七星传统终端、输入顺序/重复不改变规范化结果、逆行不影响定位核心、缺轴点无虚假结论、完整画像不被紧密门槛裁剪、多终端及三颗以上环、两套分母、对轴合并、构型包含、MCP真实stdio与复算。
 

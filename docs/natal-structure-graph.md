@@ -63,7 +63,7 @@ Placidus 预检失败时，返回 `status="partial"`。定位、相位、尊贵�
 
 结果经过结构检查后附带 `calculation_reference`，可提交给 `verify_calculation_claims`。例如引用 `/dispositor/traditional/paths/sun/terminal` 的精确值，或 `/completeness`。`source_pointer` 指向起盘源数据中的字段；核验接口的 JSON Pointer 则指向图谱返回值，两者不可混用。`source_sha256` 和引用指纹只用于复算一致性，不是签名。
 
-图谱规则尚未作为独立条目加入算法文献注册表，因此发现接口诚实标记 `provenance_coverage=unregistered`。复用既有星历不等于图谱规则已获独立验证。
+图谱规则及其本命基础依赖已加入算法来源注册表，发现接口标记 `provenance_coverage=partial`，明确列出实现位置和计算边界。复用既有星历不等于图谱规则已获独立验证。
 
 可复现的合成样本验证：
 
