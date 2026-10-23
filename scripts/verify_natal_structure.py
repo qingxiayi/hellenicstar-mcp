@@ -28,6 +28,17 @@ def check_graph(planets, got, rules):
     assert {tuple(t['members']):sorted(t['basin']) for t in got['terminals']}==oracle(planets,rules)
 
 
+
+def checked_salience(args):
+    """Audit the real adapter, including supplementary facts and dynamics."""
+    from services.mcp_salience import calculate_salience_data
+    data = calculate_salience_data(**args)
+    assert data['status'] == 'ok', data
+    issues = validate_output('calculate_natal_salience', data, args)
+    assert not issues, issues
+    return data
+
+
 def main():
     rows=json.loads((Path(__file__).resolve().parents[1]/'tests/fixtures/natal-structure-synthetic.json').read_text())
     counts=Counter();failures=[];elapsed=[]; candidate_sets=Counter(); terminal_shapes=Counter()
@@ -48,12 +59,9 @@ def main():
                 ps={n['id']:{'longitude':n['lon']} for n in d['nodes']}
                 for policy,rules in [('traditional',TRADITIONAL_RULERS),('modern',MODERN_RULERS)]:check_graph(ps,d['dispositor'][policy],rules)
                 counts[d['completeness']]+=1
-                from services.natal_salience import build_salience
-                salience=build_salience(d)
+                salience=checked_salience(args)
                 selected={k:v for k,v in ps.items() if k in salience['scope_comparison']['classical7']['origins']}
                 check_graph(selected,{'terminals':[{'members':t['members'],'basin':t['origins']} for t in salience['core_structures']]},TRADITIONAL_RULERS)
-                checked=dict(salience,status='ok',settings=salience['method']['config'],source_graph=d,completeness=d['completeness'],birth_context=d['birth_context'],layer_availability=d['layer_availability'],interpretations=[])
-                assert not validate_output('calculate_natal_salience',checked,args)
                 if d['completeness']=='full':
                     candidate_sets[str(len(salience['priority_planets']))]+=1
                     terminal_shapes.update(t['type'] for t in salience['core_structures'])

@@ -26,3 +26,5 @@ Algorithm registration now declares actual module/symbol locators, method bounda
 - No calculation engine, selection policy, tool input schema, transport configuration or Mini Program file was changed.
 
 Deployment, CI and public HTTPS acceptance are recorded separately after execution.
+
+The broader check also exposed an outdated standalone audit script: it manually built salience without the current supplementary/dynamics inputs and then compared it to the production validator. The script now invokes the real adapter. Two additional full/partial regression tests pass. Replaying 1294 synthetic civil births and 20000 independently enumerated topology checks completes without failures; this supplements, rather than replaces, the full suite above.
