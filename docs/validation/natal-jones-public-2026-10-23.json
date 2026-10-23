@@ -1,0 +1,34 @@
+{
+  "tool_count": 46,
+  "schema_change": "natal salience orb default 8 to 6 only",
+  "legacy_fact_comparison": "unchanged",
+  "selective_delivery": "passed",
+  "cases": {
+    "full": {
+      "schema": "natal-priorities-v4",
+      "completeness": "full",
+      "orb_view": 6,
+      "profiles": 10,
+      "comparison_rows": 10,
+      "jones_pattern": "Bowl",
+      "claims": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "polar": {
+      "schema": "natal-priorities-v4",
+      "completeness": "partial",
+      "orb_view": 6,
+      "profiles": 10,
+      "comparison_rows": 10,
+      "jones_pattern": "Hourglass",
+      "claims": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    }
+  }
+}

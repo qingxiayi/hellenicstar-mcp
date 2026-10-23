@@ -48,8 +48,12 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 
 ---
 
-## Core Capabilities
+## Core Capabilities (46 Tools)
 
+- **Planetary Aspect Cycles & Arabic Lots**:
+  - `scan_planetary_aspects`: Scan multi-decade exact aspects, orb windows, and year summaries for arbitrary celestial body pairs.
+  - `calculate_lots`: Calculate Hellenistic and Arabic lots on demand with formulas and sect reversal info.
+- **Natal structure graph**: `calculate_natal_structure_graph` returns the full factual graph; [natal priorities](docs/natal-salience.md) and the [parallel Jones view](docs/natal-jones-parallel-view.md) provide separate review perspectives.
 
 ### 1. High-Precision Natal & Astronomical Charting
 - **House Systems**: Placidus, Whole Sign, and traditional quadrant frameworks.
