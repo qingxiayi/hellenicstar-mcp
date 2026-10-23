@@ -1,0 +1,27 @@
+{
+  "synthetic_birth_inputs": 1294,
+  "counts": {
+    "full": 1245,
+    "rejected": 13,
+    "partial": 36
+  },
+  "failures": [],
+  "independent_topology_checks": 20000,
+  "max_input_seconds": 0.378,
+  "priority_candidate_counts_full": {
+    "6": 363,
+    "4": 69,
+    "5": 247,
+    "7": 337,
+    "8": 175,
+    "10": 5,
+    "9": 41,
+    "3": 7,
+    "2": 1
+  },
+  "salience_terminal_shapes_full": {
+    "multi_node_cycle": 301,
+    "two_node_cycle": 505,
+    "self": 1230
+  }
+}

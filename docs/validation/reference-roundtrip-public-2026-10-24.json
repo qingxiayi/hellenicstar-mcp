@@ -1,0 +1,189 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "mode": "public",
+  "cases": {
+    "natal-6": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "natal-8": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "natal-10": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "graph": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "polar-graph": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "relationship-love": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "relationship-friendship": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "relationship-work": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "relationship-family": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "single-natal": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "timing": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "childbirth": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    "scan": {
+      "facts_unchanged": true,
+      "old_reference_supported": true,
+      "new_reference_counts": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    }
+  },
+  "requested_matrix": [
+    {
+      "orb_view": 6,
+      "detail": "full",
+      "focus_count": 9,
+      "native": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "javascript": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    {
+      "orb_view": 6,
+      "detail": "summary",
+      "focus_count": 9,
+      "native": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "javascript": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    {
+      "orb_view": 8,
+      "detail": "full",
+      "focus_count": 9,
+      "native": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "javascript": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    },
+    {
+      "orb_view": 8,
+      "detail": "summary",
+      "focus_count": 9,
+      "native": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      },
+      "javascript": {
+        "supported": 1,
+        "contradicted": 1,
+        "unverified": 0
+      }
+    }
+  ],
+  "tool_count": 48,
+  "input_schemas_unchanged": true,
+  "human_note_nonpersistent": true,
+  "timing_window_and_childbirth_passed": true
+}
