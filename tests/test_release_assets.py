@@ -44,3 +44,45 @@ def test_calculation_quality_references_shipped_regressions():
     from services.mcp_validation import CONTRACTS
     for _, _, regression in CONTRACTS.values():
         assert (ROOT / regression).is_file(), regression
+
+
+def test_source_archive_ships_installation_and_distribution_files(tmp_path, monkeypatch):
+    import importlib.util
+    import json
+    import tarfile
+    spec = importlib.util.spec_from_file_location('build_release', ROOT / 'scripts/build_release.py')
+    release = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(release)
+    expected = {'README.md', 'README_en.md', 'glama.json', 'docs/quickstart.md',
+                'docs/glama-build-spec.json', 'docs/distribution.md', 'scripts/smoke_install.py'}
+    for relative in expected:
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes((ROOT / relative).read_bytes())
+    for relative in ('.env', 'data/location.db', 'cache/private.json', '.venv/private.py'):
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text('must not ship')
+    (tmp_path / 'linked.py').symlink_to(ROOT / 'mcp_server.py')
+    monkeypatch.setattr(release, 'ROOT', tmp_path)
+    release.main()
+    manifest = json.loads((tmp_path / 'dist/source-manifest.json').read_text())
+    archive_path = tmp_path / 'dist/hellenicstar-mcp-source.tar.gz'
+    assert manifest['archive_sha256'] == hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    assert set(manifest['files']) == expected
+    with tarfile.open(archive_path) as archive:
+        assert set(archive.getnames()) == {'hellenicstar-mcp/' + p for p in expected}
+        for relative, checksum in manifest['files'].items():
+            assert hashlib.sha256(archive.extractfile('hellenicstar-mcp/' + relative).read()).hexdigest() == checksum
+
+
+def test_installer_smoke_over_real_stdio(tmp_path):
+    import json
+    image = tmp_path / 'smoke.png'
+    result = subprocess.run([sys.executable, str(ROOT / 'scripts/smoke_install.py'),
+                             '--image', str(image)], capture_output=True, text=True, timeout=120)
+    assert result.returncode == 0, result.stderr
+    summary = json.loads(result.stdout)
+    assert summary['status'] == 'ok'
+    assert summary['claim_counts'] == {'supported': 1, 'contradicted': 1, 'unverified': 0}
+    assert image.read_bytes().startswith(b'\x89PNG\r\n\x1a\n')

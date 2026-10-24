@@ -1,0 +1,15 @@
+{
+  "baseImage": "debian:trixie-slim",
+  "buildSteps": [
+    "apt-get update && apt-get install -y --no-install-recommends build-essential gcc librsvg2-bin fonts-noto-cjk fonts-noto-core fonts-noto-extra && rm -rf /var/lib/apt/lists/*",
+    "uv venv /app/.venv && uv pip install --python /app/.venv/bin/python -r requirements.lock"
+  ],
+  "cmdArguments": [
+    "/app/.venv/bin/python",
+    "/app/mcp_server.py"
+  ],
+  "nodeVersion": "22",
+  "pythonVersion": "3.12",
+  "pinnedCommit": null,
+  "placeholderArguments": {}
+}

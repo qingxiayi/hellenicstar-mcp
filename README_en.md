@@ -1,7 +1,7 @@
 # HellenicStar Astrology MCP Server
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![MCP](https://img.shields.io/badge/Protocol-MCP-orange.svg)](https://modelcontextprotocol.io/)
 
 [English](README_en.md) | [中文说明](README.md)
@@ -12,24 +12,14 @@ By coupling the classical Swiss Ephemeris engine with rigorous Hellenistic rules
 
 ---
 
-## Quick Start: Connect to Claude Desktop
+## Quick Start
 
-Add this server to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "hellenicstar": {
-      "command": "/absolute/path/to/hellenicstar-mcp/.venv/bin/python",
-      "args": ["/absolute/path/to/hellenicstar-mcp/mcp_server.py"]
-    }
-  }
-}
-```
-
-*stdio mode returns crisp PNG charts directly to MCP clients that support image content.*
-
----
+Follow [Quick start (English / 中文)](docs/quickstart.md#english): install Python 3.12
+and system dependencies, run the real MCP smoke check, then configure your client.
+The first example uses coordinates and needs no city database, AMap key or model API key.
+Current CI covers macOS and Linux with Python 3.12; native Windows and other Python
+versions are outside that CI matrix. Automatic client configuration depends on the
+client and granted permissions. PNG display requires MCP image-content support.
 
 ## Why HellenicStar MCP?
 
@@ -39,11 +29,11 @@ Add this server to your `claude_desktop_config.json`:
 
 `calculate_natal_salience` extracts rule-based natal priorities from the complete graph: terminal groups, main external entries, multiple candidate categories and complete planet profiles. It defaults to a uniform inclusive 6-degree natal aspect view; 8/10-degree views remain explicit alternatives. It compares seven- and ten-origin scopes without scores or a mandatory single core. A layered reading plan starts with all terminals and maximal configurations; an evidence matrix distinguishes selection from context, and resource checks reference specific states/aspects. Candidate coverage is not a concise shortlist. Role index v4 and resource dimensions v3 separate structural roles and resource relationships, counterpart state and topic applicability without a global importance or support grade. Profiles expose triplicity roles, intrinsic conditions, and candidate routes through dispositors, dignity relations, all five major aspects and shared configurations. Reception facts separate host/guest direction, dignity bases, sign geometry and the selected degree-aspect view; applying/separating is computed from relative speed, with bounded first-exact searches and station/ingress facts. Four explicit reception criteria are selectable; no unlimited perfection or efficacy claim. Calculation and selection only; the experimental interpretation policy has been withdrawn. See [rules and limitations](docs/natal-salience.md).
 
-Generic LLMs (like Claude or GPT) struggle with astrological calculations: they hallucinate planetary longitudes, misplace house cusps, invent non-existent aspects, and produce vague astrological Barnum statements.
+Generated prose can contain incorrect coordinates, house assignments or aspects. Recompute and check the specific fields used in an interpretation.
 
-HellenicStar solves this by strictly separating **Computation** from **Interpretation**:
-1. **Verified Calculation Engine**: Uses Swiss Ephemeris (`pyswisseph`) with true/mean node handling, accurate precession, and IANA historical Daylight Saving Time (DST) fold disambiguation.
-2. **Fact Auditing & Anti-Hallucination**: Every data endpoint enforces an audited schema and returns a `calculation_reference`. LLMs can call `verify_calculation_claims` or `verify_natal_claims` to audit their own draft against recomputed facts before presenting interpretations.
+HellenicStar separates **Computation** from **Interpretation**:
+1. **Calculation Engine**: Uses Swiss Ephemeris (`pyswisseph`) with technique-specific true/mean node conventions and IANA civil-time handling. Registered regression checks and selected external comparisons are documented in [release evidence](docs/release-status.md); they do not certify every algorithm or input.
+2. **Structured Fact Verification**: Registered calculation tools validate their output contracts and attach a `calculation_reference` to successful results. LLMs can call `verify_calculation_claims` or `verify_natal_claims` to audit their own draft against recomputed facts before presenting interpretations.
 3. **Local-First Deployment**: Calculations can run locally with coordinate input or an installed offline location database. Optional AMap lookup and remote HTTP deployment are also available. A connected AI client may send birth data and tool results to its model provider; local MCP execution alone does not guarantee that data stays on the computer.
 
 ---
@@ -56,13 +46,13 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 - **Natal structure graph**: `calculate_natal_structure_graph` returns the full factual graph; [natal priorities](docs/natal-salience.md) and the [parallel Jones view](docs/natal-jones-parallel-view.md) provide separate review perspectives.
 
 ### 1. High-Precision Natal & Astronomical Charting
-- **House Systems**: Placidus, Whole Sign, and traditional quadrant frameworks.
-- **Geocoding & Historical DST**: WGS-84 coordinate resolution via `resolve_birth_coordinates`; full support for historical DST changes (including China 1986–1991 DST transition ambiguities).
-- **Ephemeris Precision**: Sub-arcsecond planetary coordinates, True/Mean Lunar Nodes, and Chiron.
+- **House Systems**: Placidus and Whole Sign; supported options depend on the tool.
+- **Geocoding & Historical DST**: WGS-84 coordinate resolution via `resolve_birth_coordinates`; IANA-based historical civil-time handling, with explicit fold choices for ambiguous repeated times.
+- **Ephemeris Data**: Planetary coordinates, lunar nodes and Chiron from the configured Swiss Ephemeris files. Node convention, numerical method and validation coverage depend on the tool; no uniform sub-arcsecond accuracy claim is made for all outputs.
 
 ### 2. Classical & Hellenistic Astrology Suite
-- **Sect & Triplicity**: Diurnal/nocturnal sect identification and Dorothean triplicity ruler three-phase life assessments.
-- **Essential Dignities**: Complete evaluation across Domicile, Exaltation, Triplicity, Bounds (Egyptian terms), and Decans (Chaldean faces) with Demetra George scoring.
+- **Sect & Triplicity**: Diurnal/nocturnal sect identification and Dorothean triplicity ruler roles; life-stage interpretation remains separate.
+- **Essential Dignities**: Computes dignity fields for Domicile, Exaltation, Triplicity, Bounds (Egyptian terms), and Decans (Chaldean faces) with the configured scoring rules and disclosed provenance.
 - **Solar States**: Cazimi (<17'), Combust (<8.5°), Under the Beams (<17°), and orientality status.
 - **Arabic Parts & Lots**: Accurate daytime/nighttime calculation of the Part of Fortune, Part of Spirit, and additional Hellenistic lots, including Whole Sign Fortune chart projection.
 - **Time Lords**: Complete Zodiacal Releasing (L1 through L4 periods, peaking, and loosening of the bond) and Firdaria planetary rulers.
@@ -78,7 +68,7 @@ HellenicStar solves this by strictly separating **Computation** from **Interpret
 - Relocation charts with preserved natal geometry.
 
 ### 5. High-Resolution Visual Rendering
-- Automatic generation of 720px publication-quality SVG/PNG natal wheels, dual-wheel transit charts, and Marc Edmund Jones planetary pattern geometry rings.
+- Automatic generation of SVG/PNG natal wheels, dual-wheel transit charts, and Marc Edmund Jones planetary pattern geometry where supported by the renderer.
 
 ---
 
@@ -103,30 +93,15 @@ Example request after providing birth details and a resolved `location_id`: “D
 
 See [docs/tools.md](docs/tools.md) for the complete tool list.
 
-## Installation
+## Installation and validation
 
-### Prerequisites
-- **Python**: 3.12+
-- **System tools**: `librsvg` (for PNG rendering) and `node` (for Jones geometric layout).
-  - macOS: `brew install librsvg node`
-  - Ubuntu/Debian: `sudo apt install librsvg2-bin nodejs fonts-noto-cjk fonts-noto-core`
-
-### Setup
-```bash
-git clone https://github.com/qingxiayi/hellenicstar-mcp.git
-cd hellenicstar-mcp
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.lock
-```
-
-### Verification
-Run the contract test suite to verify your environment:
-```bash
-pytest tests/ -q
-```
-
----
+Use the [shared quick-start guide](docs/quickstart.md) for installation, client configuration,
+coordinate-based calculation, PNG rendering and positive/negative claim verification.
+For contributor checks, install `requirements-dev.lock`, build the optional GeoNames
+city database as described in [the Chinese README](README.md#可复现的离线地名库), then run
+`bash scripts/verify.sh`. Runtime dependencies alone do not provide all independent
+comparison libraries; missing optional comparisons are skips, not passes.
+See [current release evidence](docs/release-status.md) for tested platforms and limits.
 
 ## Scope & Non-Goals
 
@@ -148,3 +123,7 @@ pytest tests/ -q
 Two new tools expose deterministic relationship observations and separate caller-owned human notes. Contacts are counted once, with two directional views and bounded natal context. Love, friendship, work and family contexts select observation angles without removing geometry. Natal mean nodes and the existing natal priorities v4 are preserved; no compatibility score or psychological diagnosis.
 
 [API and boundaries](docs/relationship-observation.md) · [Timing options](docs/relationship-observation-timing.md)
+
+## Releases and platform configuration
+
+[Source releases](https://github.com/qingxiayi/hellenicstar-mcp/releases) · [Glama build configuration and distribution](docs/distribution.md)

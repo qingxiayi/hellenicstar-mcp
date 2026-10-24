@@ -7,7 +7,7 @@ import tarfile
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_FILES = {
     '.gitignore', '.dockerignore', 'Dockerfile', 'LICENSE', 'NOTICE.md', 'README.md',
-    'CONTRIBUTING.md', 'SECURITY.md', 'requirements.txt', 'requirements.lock',
+    'README_en.md', 'glama.json', 'CONTRIBUTING.md', 'SECURITY.md', 'requirements.txt', 'requirements.lock',
     'requirements-dev.txt', 'requirements-dev.lock',
 }
 SOURCE_DIRS = {'services', 'engine', 'assets', 'ephe', 'static_mcp', 'scripts', 'tests', 'docs', '.github'}

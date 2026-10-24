@@ -140,70 +140,23 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
 完整列表：[docs/tools.md](docs/tools.md)。使用协议：[docs/mcp-agent-protocol.md](docs/mcp-agent-protocol.md)。
 核对工具检查提交的计算事实，不独立验证心理解释，也不代表整个报告已经正确。
 
-## 零门槛安装：直接把这段话发给你的 AI 助手（最推荐）
+## 安装、接入和首次验证
 
-如果你不太懂代码或命令，只要你的电脑上安装了 **WorkBuddy、Codex、Cursor、Windsurf 或 Claude Code**，你**完全不需要手动敲终端命令**！
+先完成依赖安装，再配置客户端，最后用一个示例检查计算、图片和字段核验。
+按 [快速开始（中文 / English）](docs/quickstart.md) 操作；首次验证使用坐标，
+不需要地名库、高德 Key 或模型 API Key。已持续验证的平台为 macOS 和 Linux / Python 3.12；
+Windows 原生安装及其他 Python 版本不属于当前 CI 覆盖范围。
 
-👉 **直接复制下面这段话，发给你电脑上的 AI 助手即可：**
+也可以把下面的请求交给具有本机终端和 MCP 配置权限的 AI 助手：
 
-> “帮我把这个开源占星 MCP 项目安装到本地并配置启用：  
-> 项目地址：https://github.com/qingxiayi/hellenicstar-mcp  
-> 请帮我：  
-> 1. 用 git clone 下载到本地；  
-> 2. 使用 uv 或 python 虚拟环境安装 requirements.lock 依赖；  
-> 3. 将它配置为当前环境可用的 MCP 服务（运行 mcp_server.py）；  
-> 4. 跑一个样例测试：计算 1990年4月15日 18:00 巴黎的本命盘并画出星盘图，向我汇报安装结果。”
+> 帮我安装 https://github.com/qingxiayi/hellenicstar-mcp 。先阅读 docs/quickstart.md，
+> 使用 Python 3.12 安装 requirements.lock 及所需系统依赖，运行
+> `.venv/bin/python scripts/smoke_install.py`，再按当前客户端支持的方式配置 MCP。
+> 分别报告安装、自检、客户端连接及图片显示结果；遇到缺失权限或依赖时说明具体原因。
 
-你的 AI 助手在自己电脑里收到后，就会自动在后台克隆、装好依赖并直接挂载工具。完成后你就可以在对话里直接让它排盘了！
-
----
-
-## 安装
-
-克隆或下载解压本项目，进入 `hellenicstar-mcp`。推荐使用 Python 3.12：
-
-```bash
-# 推荐方式（使用 uv 极速安装，能有效避免新版 pip 编译源码包报 EEXIST 错误）：
-uv venv
-uv pip install -r requirements.lock
-
-# 或传统 pip 方式：
-python3.12 -m venv .venv
-source .venv/bin/activate  # Windows 为: .venv\Scripts\activate
-python -m pip install -r requirements.lock
-```
-
-PNG 需要 `rsvg-convert` 和中文/符号字体；琼斯几何计算需要 Node.js。
-macOS 安装 `brew install librsvg node`；Ubuntu/Debian 安装
-`librsvg2-bin nodejs fonts-noto-cjk fonts-noto-core fonts-noto-extra`。
-安装字体后，运行图像测试并检查实际版式。坐标排盘不需要地名库或高德 Key。
-
-## 接入
-
-支持通用 MCP stdio 配置的客户端可添加以下配置，替换两处绝对路径：
-
-```json
-{
-  "mcpServers": {
-    "hellenicstar": {
-      "command": "/absolute/path/hellenicstar-mcp/.venv/bin/python",
-      "args": ["/absolute/path/hellenicstar-mcp/mcp_server.py"]
-    }
-  }
-}
-```
-
-stdio 直接返回图片内容，不提供 HTTP 图片链接；需要支持 MCP 图片内容的客户端才能显示。HTTP 图片链接只有运行对应 HTTP 服务时才可访问。
-本地 HTTP：
-
-```bash
-.venv/bin/python -m uvicorn mcp_server:app --host 127.0.0.1 --port 5000 --workers 1
-```
-
-端点为 `http://127.0.0.1:5000/mcp`。公开部署须设置域名、支持联系和对应源代码地址，
-并配置 HTTPS 代理，见 [部署说明](docs/deployment.md) 和 [SECURITY.md](SECURITY.md)。
-默认没有用户认证；并发设置是单进程配置，不是已测量的用户容量。
-
+能否自动配置取决于客户端支持、操作系统及已授予的权限，部分客户端需要手动配置或重启。
+stdio 图片需要客户端支持 MCP image 内容；自检成功不代表每个客户端都能显示图片。
+本地 HTTP 和公开部署的配置见 [部署说明](docs/deployment.md) 与 [SECURITY.md](SECURITY.md)。
 
 ## 地点与时间
 
@@ -291,3 +244,7 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
 新增 `calculate_relationship_observation` 和 `prepare_relationship_observation_note`。从一条跨盘接触分别查看双方的本命结构，保留亲密、友谊、工作与家庭场景；接触只计一次，人工陈述与计算分开。本命使用平均月交点，已发布的本命重点 v4 保持原行为，不输出匹配分数或心理诊断。
 
 [API and boundaries](docs/relationship-observation.md) · [Timing options](docs/relationship-observation-timing.md)
+
+## 发行与平台配置
+
+[正式发行包](https://github.com/qingxiayi/hellenicstar-mcp/releases) · [Glama 构建与渠道说明](docs/distribution.md)
