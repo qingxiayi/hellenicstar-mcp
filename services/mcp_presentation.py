@@ -1,7 +1,8 @@
 """Optional MCP response projection; calculation and validation stay full size."""
 
 from inspect import Parameter, Signature
-from typing import Literal
+from typing import Annotated, Literal
+from pydantic import Field
 
 
 CONTROL_FIELDS = frozenset({
@@ -17,9 +18,9 @@ def public_signature(source: Signature) -> Signature:
     params = list(source.parameters.values())
     params.extend((
         Parameter("detail_level", Parameter.KEYWORD_ONLY, default="full",
-                  annotation=Literal["full", "summary"]),
+                  annotation=Annotated[Literal["full", "summary"], Field(description="full returns complete calculation content. summary previews up to five object/nested rows per list, preserves scalar membership lists, and reports omitted counts. References still identify the full calculation.")]),
         Parameter("include", Parameter.KEYWORD_ONLY, default=None,
-                  annotation=list[str] | None),
+                  annotation=Annotated[list[str] | None, Field(description="Optional 1-30 top-level content field names, each 1-80 characters. Omit to return all content. Control/provenance fields remain; unknown or control field names return invalid_input with available_fields.")]),
     ))
     return source.replace(parameters=params)
 
