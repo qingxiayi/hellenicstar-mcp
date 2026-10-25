@@ -235,7 +235,16 @@ GitHub Actions 配有 Python 3.12 的 macOS/Linux 检查；实际执行结果以
   <p><b>关注微信公众号，获取最新案例实录与算法更新</b></p>
 </div>
 
-- **问题反馈**：欢迎通过 GitHub [Issues](https://github.com/qingxiayi/hellenicstar-mcp/issues) 提交 Bug 或功能建议。
+欢迎使用、商用和二次开发，请遵守 [AGPL-3.0](LICENSE) 及第三方许可。反馈和贡献都是自愿的，不需要登记才能使用。
+
+- [报告问题](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=bug_report.md)：安装、调用、计算或渲染异常；模板会引导你提供复现信息。
+- [提出建议](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=feature_request.md)：告诉我们想解决什么问题，不需要会写代码。
+- [分享用途](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=showcase.md)：自愿介绍用 HellenicStar 做了什么；经你明确同意后才在项目文档中展示。
+- [贡献代码或文档](CONTRIBUTING.md)：提交 PR，由维护者审核后决定是否合并。贡献者保留版权，贡献沿用项目许可。
+
+Issue 和 PR 是公开的，请勿上传真实客户出生资料、私人经历、密钥或未脱敏日志。
+计算差异请说明对照来源与计算设置；使用虚构或可合法公开的测试案例。安全问题见 [SECURITY.md](SECURITY.md)。
+
 - **开源支持**：如果这个项目对你的学习或探索有所启发，欢迎在页面右上角为我们点一颗 **⭐️ Star** 支持一下！
 
 

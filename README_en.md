@@ -117,6 +117,20 @@ See [current release evidence](docs/release-status.md) for tested platforms and 
 - Geographic resolution utilizes **GeoNames** (CC BY 4.0) and **timezonefinder**.
 - See [NOTICE.md](NOTICE.md) for full third-party notices and licenses.
 
+## Feedback, contributions and use cases
+
+Use, commercial use and modification are welcome under [AGPL-3.0](LICENSE) and applicable third-party licenses.
+Feedback and contributions are voluntary; registration is not required to use the project.
+
+- [Report a problem](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=bug_report.md): installation, tool calls, calculations or rendering. The template helps you provide reproduction details.
+- [Suggest an improvement](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=feature_request.md): explain the problem you want to solve; no coding required.
+- [Share your use case](https://github.com/qingxiayi/hellenicstar-mcp/issues/new?template=showcase.md): optionally tell us what you built. Featuring it in project documentation requires your explicit permission.
+- [Contribute code or documentation](CONTRIBUTING.md): submit a PR for maintainer review. Contributors retain copyright and provide their changes under the project license.
+
+Issues and PRs are public. Never upload private birth records, personal stories, credentials or unredacted logs.
+For calculation differences, identify reference sources and settings, using synthetic or lawfully public cases.
+See [SECURITY.md](SECURITY.md) for sensitive reports.
+
 
 ## Relationship observation
 
