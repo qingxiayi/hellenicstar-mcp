@@ -1,6 +1,6 @@
 # Current release
 
-2026-10-25 工作流调用修复已通过本地完整验证（1299 项）；GitHub、部署与平台状态分别见[工作流发布记录](validation/workflow-routing-release-2026-10-25.md)。
+2026-10-25 工作流调用修复 v0.1.4 已发布并部署（源码 `72bc71a`）：本地 1299 项测试、Linux/macOS CI 及公网调用通过；Glama 0.1.4 已发布，最新 TDQS 为 3.9/5（A）。小程序未改动。详见[工作流发布记录](validation/workflow-routing-release-2026-10-25.md)。
 
 # Current release status
 
