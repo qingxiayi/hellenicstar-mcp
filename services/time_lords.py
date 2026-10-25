@@ -25,7 +25,7 @@ except ImportError:  # pragma: no cover - Python 3.8 compatibility
     from backports.zoneinfo import ZoneInfo  # type: ignore
 
 
-ENGINE_VERSION = "time-lords-2"
+ENGINE_VERSION = "time-lords-3"
 FIRDARIA_YEAR_DAYS = 365.2425
 
 PLANETS: Dict[str, Dict[str, str]] = {
@@ -244,7 +244,16 @@ def calculate_firdaria(
 
     current_row = next((row for row in rows if row["is_current"]), None)
     return {
-        "tradition": "bonatti" if normalized_tradition == "bonatti" else "abu_mashar",
+        "tradition": normalized_tradition,
+        "effective_tradition": "bonatti" if normalized_tradition == "bonatti" else "abu_mashar",
+        "tradition_note": (
+            "本实现将 al_biruni 作为 abu_mashar 规则的别名：昼夜序列交点置末。"
+            "此映射描述当前实现，不证明历史文献中的全部规则等同。"
+            if normalized_tradition == "al_biruni" else
+            "bonatti 夜生序列将交点置于火星之后；昼生序列不变。"
+            if normalized_tradition == "bonatti" else
+            "本实现采用昼夜序列交点置末的 abu_mashar 规则。"
+        ),
         "sect": "day" if is_diurnal else "night",
         "year_length_days": year_length_days,
         "repeat_after_years": 75,

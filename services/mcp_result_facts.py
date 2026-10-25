@@ -49,7 +49,7 @@ class CalculationClaim(BaseModel):
     model_config = ConfigDict(extra='forbid')
     quote: StrictStr = Field(min_length=1,max_length=1000,description='Exact draft quote; echoed, not semantically parsed.')
     path: StrictStr = Field(min_length=1,max_length=500,description='Exact JSON Pointer to the source result field, e.g. /jones_pattern/high_focus_planet. Include adjacent role/time/planet fields in a separate claim to retain context.')
-    value: ClaimValueType = Field(description='Exact claimed source value, including row objects for events/roles. No fuzzy rounding or semantic interpretation.')
+    value: ClaimValueType = Field(description='Exact claimed source value. Use scalar values, scalar lists, flat row objects or lists of flat rows. For a nested object containing arrays (such as settings), submit separate exact paths for its scalar fields and scalar lists instead of the whole object. No fuzzy rounding or semantic interpretation.')
 
 
 def register(fn):

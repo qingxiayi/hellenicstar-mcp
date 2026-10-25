@@ -112,7 +112,7 @@ mcp = FastMCP(
         "Report the scope actually received; status=ok alone does not establish complete receipt. "
         "Only calculate a natal chart when the user supplies an exact birth date and time. "
         "Search for the birthplace, or call resolve_birth_coordinates for WGS84 coordinates. "
-        "Use the returned location_id for all chart tools; ask the user to choose if a place is ambiguous. "
+        "Use the returned location_id for all chart tools. Follow search next_action: use_location_id proceeds; ask_user requires a choice unless that exact ID was already confirmed. "
         "Never guess a missing time or a daylight-saving fold. "
         "When required_fields or clarification is returned, ask the user for those values and retry; "
         "never invent missing minutes or silently choose a house system or solar-return location. "
@@ -381,7 +381,7 @@ def tool(**options):
                     return _wheel_result(data, None, "")
                 return data
         if selectable:
-            run_in_thread.__signature__ = public_signature(signature)
+            run_in_thread.__signature__ = public_signature(signature, content_fields=CONTRACTS[fn.__name__][1])
             options['description'] = options.get('description', '') + (
                 ' Optional detail_level=summary previews object/nested rows (up to five), preserves complete scalar membership lists, and marks truncation; '
                 'include selects top-level content fields. Omit both for the original full result. '
@@ -395,7 +395,7 @@ def tool(**options):
     return decorate
 
 
-@tool(annotations=READ_ONLY, description="Search birthplace candidates and return canonical location IDs, regions and timezones. Ask the user to choose when multiple locations match.")
+@tool(annotations=READ_ONLY, description="Search birthplace candidates and return canonical location IDs, regions and timezones. If supplied by the user, include country/state as City, Country or City, State, Country. One exact database-name match within an explicitly supplied verified region uses next_action=use_location_id; use it and state the selected city without asking again. next_action=ask_user means unresolved candidates: ask for the missing region or city/district choice, unless that exact location_id was already confirmed. Never choose by population or list order.")
 def search_birthplace(query: str) -> dict:
     return find_birthplace(query)
 
@@ -512,7 +512,7 @@ def calculate_time_lords(
     *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
     day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
     location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD; omission uses the current UTC date. Evaluated at 12:00 UTC, not at local midnight.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Selects the reported profection house system. Reuse a confirmed user choice; omission requests clarification.')] = None,
-    tradition: Annotated[str, Field(description='Firdaria tradition: abu_mashar (default), al_biruni or bonatti. Changes the Firdaria convention, not the selected profection house system.')] = "abu_mashar", fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
+    tradition: Annotated[str, Field(description='Firdaria request name: abu_mashar (default), al_biruni or bonatti. This implementation maps al_biruni to abu_mashar rules (nodes last); bonatti moves the nodes after Mars for night births. Result tradition preserves the request; effective_tradition and tradition_note disclose the implemented rules. This alias is not a claim of historical equivalence. Profection house_system is independent.')] = "abu_mashar", fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return calculate_time_lord_data(year=year, month=month, day=day, hour=hour,
                                     minute=minute, location_id=location_id,
@@ -808,7 +808,7 @@ def render_relocation_chart(
     return _wheel_result(info, png, "空间重置盘")
 
 
-@tool(annotations=READ_ONLY, description="Sky at one moment, independent of any birth chart: lunar phase and illumination, Moon sign, void-of-course window, recent and next lunations and eclipses, retrograde planets and stations, planet-to-planet aspects and patterns. moment is ISO 8601 with a timezone offset; defaults to now.")
+@tool(annotations=READ_ONLY, description="Sky at one moment, with no birthplace or geographic location required: lunar phase, Moon sign, void-of-course window, lunations/eclipses, retrograde planets, stations and aspects. moment is ISO 8601 with an offset; defaults to now. include=retrograde_planets returns only planets retrograde at that moment and their next direct station; stations_today covers only that Beijing calendar day. This is not a complete annual retrograde calendar. For a yearly request, explain this limit or verify each boundary from actual dated results; do not ask for a city or switch to a house chart merely to get station dates.")
 def get_current_sky(moment: str | None = None) -> dict:
     return ext.sky_data(moment=moment)
 
@@ -912,7 +912,7 @@ def verify_natal_claims(reference: NatalFactReference,
     return verify_natal_claims_data(reference.model_dump(), [claim.model_dump() for claim in claims])
 
 
-@tool(annotations=READ_ONLY, description="Verify source-field claims from any registered calculation: classical/Jones roles, transits, directions, returns, relationship, time lords, releasing, sky and locations. Copy calculation_reference unchanged; submit exact JSON Pointer paths and values from the draft. Use complete event/role row objects to preserve planet, time and chart context. Server recomputes and checks the source before comparison. Fix contradicted claims and reverify; mark unverified claims. This checks submitted field values, NOT prose semantics, missing claims, psychological explanations or independent algorithm correctness.")
+@tool(annotations=READ_ONLY, description="Verify source-field claims from any registered calculation: classical/Jones roles, transits, directions, returns, relationship, time lords, releasing, sky and locations. Copy calculation_reference unchanged; submit exact JSON Pointer paths and values from the draft. Use complete flat event/role row objects to preserve planet, time and chart context. Use scalar values, scalar lists, flat row objects or lists of flat rows. For a nested object containing arrays (such as settings), submit separate exact paths for its scalar fields and scalar lists instead of the whole object. Server recomputes and checks the source before comparison. Fix contradicted claims and reverify; mark unverified claims. This checks submitted field values, NOT prose semantics, missing claims, psychological explanations or independent algorithm correctness.")
 def verify_calculation_claims(reference: CalculationReference,
                              claims: Annotated[list[CalculationClaim], Field(min_length=1,max_length=100)]) -> dict:
     return verify_calculation_claims_data(reference.model_dump(), [c.model_dump() for c in claims])

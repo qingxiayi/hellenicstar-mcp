@@ -18,13 +18,16 @@ def search_birthplace(query: str) -> dict:
     query = (query or "").strip()
     if len(query) < 2 or len(query) > 100:
         return {"status": "invalid_input", "error": "地点关键词需为 2–100 个字符"}
-    options = _search_city_options(query, limit=10)
+    options = _search_city_options(query, limit=10, prefer_exact=True)
     result = {"status": "ok" if options else "not_found", "options": options}
-    if len(options) > 1:
-        guidance = clarification(["location_id"], prompt="找到多个地点，请让用户确认地区后选择对应的 location_id。")
+    if len(options) > 1 or any(o.get("region_verified") is False for o in options):
+        guidance = clarification(["location_id"], prompt="地点仍有多个候选或所填地区未核实，请确认地区后选择对应的 location_id。")
         result.update({key: guidance[key] for key in ("required_fields", "clarification", "next_action")})
     elif not options:
         result["next_action"] = "refine_location_query"
+    else:
+        result["next_action"] = "use_location_id"
+
     return result
 
 
@@ -486,6 +489,8 @@ def calculate_time_lord_data(*, year: int, month: int, day: int, hour: int,
         "as_of": ref_day.isoformat(),
         "firdaria": {
             "tradition": fird["tradition"], "sect": fird["sect"],
+            "effective_tradition": fird["effective_tradition"],
+            "tradition_note": fird["tradition_note"],
             "year_length_days": fird["year_length_days"],
             "major_periods": [{"lord": _lord(m["ruler"]), "start": m["start_date"],
                                "end": m["end_date"], "age_start": m["start_age"],

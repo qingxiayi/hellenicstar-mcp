@@ -415,7 +415,7 @@ def _is_query_chinese(s):
     return any("一" <= ch <= "鿿" for ch in (s or ""))
 
 
-def _search_city_options(query, limit=10):
+def _search_city_options(query, limit=10, *, prefer_exact=False):
     q = (query or "").strip()
     if not q:
         return []
@@ -576,6 +576,15 @@ def _search_city_options(query, limit=10):
         options.append(item)
 
     final = [item for item in options[:limit] if item["city"]]
+    # Only narrow explicit country/state queries with one exact DB-name match.
+    # Unscoped homonyms, multiple exact matches and unverified regions still ask.
+    if prefer_exact and (country_code or us_state) and not unverified_region:
+        exact_ids = {row["location_id"] for row in rows if row["exact_match"]}
+        if len(exact_ids) == 1:
+            exact_options = [item for item in final if item["location_id"] in exact_ids]
+            if len(exact_options) == 1:
+                return [{**exact_options[0], "match_basis": "unique_exact_match_in_explicit_region"}]
+
     if unverified_region:
         for item in final:
             item["requested_region"] = unverified_region

@@ -304,6 +304,11 @@ def domain_checks(tool,d,args):
             for level,field in enumerate(('level1','level2_in_current_level1','level3_in_current_level2'),1): periods(lot[field],'/lots/'+key+'/'+field,level)
     elif family=='releasing_l4': periods(d['level4'],'/level4',4)
     elif family=='time_lords':
+        requested = args.get('tradition', 'abu_mashar')
+        require(d['firdaria'].get('tradition') == requested,
+                '/firdaria/tradition', 'requested_tradition_preserved')
+        require(d['firdaria'].get('effective_tradition') == ('bonatti' if requested == 'bonatti' else 'abu_mashar'),
+                '/firdaria/effective_tradition', 'effective_rules_disclosed')
         periods(d['firdaria']['major_periods'],'/firdaria/major_periods')
         periods(d['firdaria']['sub_periods_in_current_major'],'/firdaria/sub_periods_in_current_major')
         rows=d['annual_profections']['years']; periods(rows,'/annual_profections/years')

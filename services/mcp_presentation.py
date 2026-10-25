@@ -13,14 +13,22 @@ CONTROL_FIELDS = frozenset({
 SUMMARY_LIMIT = 5
 
 
-def public_signature(source: Signature) -> Signature:
+def public_signature(source: Signature, *, content_fields=()) -> Signature:
     """Expose optional controls without adding them to recomputation inputs."""
     params = list(source.parameters.values())
+    known = sorted(set(content_fields) - CONTROL_FIELDS)
+    include_description = (
+        "Optional 1-30 top-level content field names, each 1-80 characters. Omit to return all content. "
+        "Control/provenance fields remain; unknown or control field names return invalid_input with available_fields."
+    )
+    if known:
+        include_description += " Known selectable fields: " + ", ".join(known) + ". Use these exact names."
+
     params.extend((
         Parameter("detail_level", Parameter.KEYWORD_ONLY, default="full",
                   annotation=Annotated[Literal["full", "summary"], Field(description="full returns complete calculation content. summary previews up to five object/nested rows per list, preserves scalar membership lists, and reports omitted counts. References still identify the full calculation.")]),
         Parameter("include", Parameter.KEYWORD_ONLY, default=None,
-                  annotation=Annotated[list[str] | None, Field(description="Optional 1-30 top-level content field names, each 1-80 characters. Omit to return all content. Control/provenance fields remain; unknown or control field names return invalid_input with available_fields.")]),
+                  annotation=Annotated[list[str] | None, Field(description=include_description)]),
     ))
     return source.replace(parameters=params)
 
