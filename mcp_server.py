@@ -517,12 +517,12 @@ class BirthInput(BaseModel):
     fold: StrictInt | None = Field(default=None, description="0 or 1 only for a repeated DST time")
 
 
-@tool(annotations=READ_ONLY, description="Solar arc directions (true solar arc) for an age range. Returns directed points conjoining natal axes, directed axes conjoining natal points, the full hard-aspect matrix with exact dates, and directed positions at the age on as_of. Defaults to five years either side of as_of (today); ages 0-80. Optional wheel_age selects the directed position age explicitly.")
+@tool(annotations=READ_ONLY, description='Calculate true solar-arc directions over an age interval: directed-point/axis contacts, the hard-aspect matrix with exact dates, and directed positions at wheel_age. Use for solar-arc timing; choose calculate_secondary_progressions for day-for-year progressions, calculate_transits_to_natal for actual transits, or render_solar_arc_biwheel for an image. Requires exact local birth date/time and a confirmed birthplace location_id; omitted prerequisites return needs_clarification. Defaults to a five-year window on either side of the selected wheel age, clipped to ages 0-80. Returns calculation data, not event predictions.')
 def calculate_solar_arc(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, age_from: float | None = None, age_to: float | None = None,
-    as_of: str | None = None, fold: StrictInt | None = None, wheel_age: float | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, age_from: Annotated[float | None, Field(description='Start age in years. Must satisfy 0 <= age_from < age_to <= 80. Omit for max(0, selected wheel age minus 5).')] = None, age_to: Annotated[float | None, Field(description='End age in years, at most 80 and greater than age_from. Omit for min(80, selected wheel age plus 5).')] = None,
+    as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD, default current UTC date, evaluated at 12:00 UTC. Determines wheel age when wheel_age is omitted; that derived age is clipped to 0-80.')] = None, fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None, wheel_age: Annotated[float | None, Field(description='Optional directed-position age in years, 0-80. Overrides the age derived from as_of and centers omitted age-range bounds on this age; explicit age_from/age_to remain unchanged.')] = None
 ) -> dict:
     return ext.solar_arc_data(year=year, month=month, day=day, hour=hour, minute=minute,
                               location_id=location_id, age_from=age_from, age_to=age_to,
@@ -616,13 +616,13 @@ def calculate_solar_return(
                                  house_system=house_system, fold=fold)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the solar return chart for target_year as a 720px PNG wheel shown to the user. Same inputs as calculate_solar_return.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG solar-return wheel for target_year. Use for the return chart image; use calculate_solar_return for the exact return moment, chart data and natal overlay, or render_lunar_return_chart for a lunar return. Requires exact local birth date/time, birthplace location_id, target_year, explicit residence_location_id and house_system. The residence is the user-chosen return location; never silently reuse the birthplace. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
 def render_solar_return_chart(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, target_year: StrictInt | None = None,
-    residence_location_id: str | None = None, house_system: str | None = None,
-    fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, target_year: Annotated[StrictInt | None, Field(description='Required target year of the solar return; distinct from the birth year. Confirm the year with the user.')] = None,
+    residence_location_id: Annotated[str | None, Field(description='Required user-confirmed return/residence location ID from search_birthplace or resolve_birth_coordinates. Use the birthplace ID only if the user explicitly chooses that location.')] = None, house_system: Annotated[str | None, Field(description='Required explicit house-system choice: placidus or whole_sign. Reuse a confirmed user choice; omission requests clarification.')] = None,
+    fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> CallToolResult:
     info, png = ext.render_solar_return_png(
         year=year, month=month, day=day, hour=hour, minute=minute,
@@ -743,8 +743,8 @@ def prepare_relationship_observation_note(
 
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the midpoint composite chart of two people as a 720px PNG wheel shown to the user.")
-def render_composite_chart(person_a: BirthInput | None = None, person_b: BirthInput | None = None) -> CallToolResult:
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render the midpoint composite chart of two people as a 720px PNG wheel. Use for geometric midpoint positions; use calculate_relationship_charts for structured composite/synastry data or render_davison_chart for a physical time-space midpoint chart. Supply two complete BirthInput objects with exact local birth dates/times and separately confirmed birthplace IDs. This chart does not score compatibility or predict relationship outcomes. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
+def render_composite_chart(person_a: Annotated[BirthInput | None, Field(description='First person: year, month, day, hour (0-23), minute (0-59) in birthplace local civil time, plus confirmed location_id from search_birthplace or resolve_birth_coordinates. All six are needed; fold is 0/1 only for a user-confirmed repeated DST time. Do not guess missing fields.')] = None, person_b: Annotated[BirthInput | None, Field(description="Second person: complete year, month, day, hour (0-23), minute (0-59) and their own confirmed birthplace location_id, using local civil time. Request fold 0/1 for an ambiguous repeated DST time. Do not copy the first person's location by default.")] = None) -> CallToolResult:
     info, png = ext.render_composite_png(person_a=person_a.model_dump(),
                                          person_b=person_b.model_dump())
     return _wheel_result(info, png, "组合中点盘")
@@ -800,12 +800,12 @@ def get_current_sky(moment: str | None = None) -> dict:
     return ext.sky_data(moment=moment)
 
 
-@tool(annotations=READ_ONLY, description="House ruler dispositor chains for all twelve houses, in both the traditional and modern track. Each chain follows the house ruler to the ruler of its sign until it reaches a planet in its own sign or loops. Also marks the chart ruler and the angular, succedent and cadent crosses.")
+@tool(annotations=READ_ONLY, description='Calculate house-ruler dispositor chains for all twelve houses, with traditional and modern tracks, chart ruler and angular/succedent/cadent crosses. Use for house-based rulership paths; use calculate_natal_structure_graph for the wider relationship graph or calculate_classical_factors for dignities. Supply exact local birth date/time, a confirmed birthplace location_id and explicit house_system. Omitted prerequisites return needs_clarification; do not infer them. Both rulership tracks are returned regardless of house system. Data only; no psychological interpretation.')
 def calculate_house_rulers(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, house_system: str | None = None,
-    fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Selects house cusps and placements, not traditional versus modern rulers; both ruler tracks are returned. Reuse a confirmed user choice.')] = None,
+    fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return ext.house_ruler_data(year=year, month=month, day=day, hour=hour,
                                 minute=minute, location_id=location_id,
@@ -866,12 +866,12 @@ def render_transit_biwheel(
     return _wheel_result(info, png, "行运双盘")
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render a two-ring wheel with the natal chart inside and the solar arc directed positions outside. Give age directly, or as_of (YYYY-MM-DD) to use the age on that date; defaults to today. Ages 0-80.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a PNG biwheel with natal positions inside and true solar-arc directed positions outside. Use for a visual at one age; use calculate_solar_arc for event tables or render_transit_biwheel for actual transits. Requires exact local birth date/time and a confirmed birthplace location_id. age takes precedence over the age derived from as_of; the selected age must be 0-80. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
 def render_solar_arc_biwheel(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, age: float | None = None, as_of: str | None = None,
-    fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, age: Annotated[float | None, Field(description='Directed age in years, 0-80 inclusive. Takes precedence over as_of for wheel positions. Omit to derive age from the reference date; out-of-range derived ages are rejected, not clipped.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD, default current UTC date at 12:00 UTC. Used to derive age only when age is omitted; if supplied it must be valid even with explicit age.')] = None,
+    fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> CallToolResult:
     info, png = ext.render_solar_arc_biwheel_png(
         year=year, month=month, day=day, hour=hour, minute=minute,
