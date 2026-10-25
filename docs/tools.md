@@ -1,5 +1,24 @@
 # MCP tools
 
+## 按任务选择 / Choose by task
+
+先区分“现在天空是什么”“它与某个人的本命盘有什么关系”和“何时精确成相”：
+
+| 任务 / Task | 数据 / Data | 图片 / Image |
+| --- | --- | --- |
+| 天空星体位置，不需要本命或当地宫位 / Sky positions only | `get_current_sky` | — |
+| 指定时刻、地点的天象盘 / Sky chart with local houses | `calculate_sky_chart` | `render_sky_chart` |
+| 一个时刻的行运对本命相位 / Transit-to-natal snapshot | `get_transit_snapshot` | `render_transit_biwheel` |
+| 一段时间内精确行运日期 / Exact transit dates over a range | `calculate_transits_to_natal` | — |
+| 次限月相周期 / Progressed lunation cycle | `calculate_progressed_lunation` | — |
+| 法达与年小限 / Firdaria and annual profections | `calculate_time_lords` | — |
+| 黄道释放 / Zodiacal releasing | `calculate_zodiacal_releasing` | — |
+| 琼斯分布格局 / Jones distribution | `calculate_classical_factors` includes Jones | `render_jones_pattern` |
+
+`moment` 是带时区的时刻；`as_of` 是 YYYY-MM-DD 参考日期，以上相关工具按 UTC 中午评估。出生年月日时分使用出生地民用时间，不能把行运时刻填进出生字段。天象盘的地点是观察地点，不要求是出生地。精确行运工具的四轴事件只支持合相，不能把空结果解释为没有其他四轴相位。
+
+Render tools calculate and validate their own source; a preceding data call is unnecessary solely to draw the image. Choose data tools when structured fields are needed. Image display requires a client supporting MCP image content. For a broader task, start with `recommend_workflow` and follow `get_agent_protocol`.
+
 本地本命重点接口新增 `planet_condition_assessments`（状态事实与三分3/2/1尊贵计分对照，非重要性排名）；见[计算口径](natal-condition-views.md)。线上工具与字段以实际返回和发布验收记录为准。
 
 - `search_birthplace`

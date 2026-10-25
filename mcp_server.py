@@ -459,11 +459,11 @@ def render_natal_chart(
     return _wheel_result(metadata, png, "本命盘")
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the same Jones pattern distribution ring shown in the Mini Program: ten planetary glyphs, occupied fans, true longitude dots, gap, angles and focus points. Returns a visible 720px PNG plus the pattern and boundary status. Requires an exact local birth date, time and location_id; supports coordinate IDs from resolve_birth_coordinates.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG Jones distribution ring: ten planetary glyphs, occupied fans, true-longitude dots, gap, angles and focus points, with pattern and boundary status. Use for the whole-chart distribution visual; use render_natal_chart for a standard natal wheel or calculate_classical_factors for Jones classification alongside classical factors. Requires exact local birth date/time and confirmed birthplace location_id. Boundary cases are not a unique psychological diagnosis. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
 def render_jones_pattern(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> CallToolResult:
     info, png = render_jones_pattern_png(
         year=year, month=month, day=day, hour=hour, minute=minute,
@@ -494,12 +494,12 @@ def calculate_zodiacal_releasing(
                                     as_of=as_of, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Firdaria and annual profections. Returns all firdaria major periods, the sub-periods of the major period containing as_of, and annual profection years from one year before to three years after as_of. tradition: abu_mashar (default), al_biruni or bonatti; house_system applies to profection houses.")
+@tool(annotations=READ_ONLY, description='Calculate Firdaria and annual profections for as_of: major periods through the configured age-100 horizon, sub-periods within the active major period, and profection years from one year before to three years after the current year, clipped to the available report. Use calculate_zodiacal_releasing for releasing from Fortune/Spirit instead. Requires exact local birth date/time, confirmed birthplace location_id and explicit house_system; missing prerequisites return needs_clarification. Returns timing tables and lords, not event predictions.')
 def calculate_time_lords(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, as_of: str | None = None, house_system: str | None = None,
-    tradition: str = "abu_mashar", fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD; omission uses the current UTC date. Evaluated at 12:00 UTC, not at local midnight.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Selects the reported profection house system. Reuse a confirmed user choice; omission requests clarification.')] = None,
+    tradition: Annotated[str, Field(description='Firdaria tradition: abu_mashar (default), al_biruni or bonatti. Changes the Firdaria convention, not the selected profection house system.')] = "abu_mashar", fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return calculate_time_lord_data(year=year, month=month, day=day, hour=hour,
                                     minute=minute, location_id=location_id,
@@ -555,11 +555,11 @@ def calculate_timeline_synthesis(
                                        fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Transit positions at one moment and the transit-to-natal aspects within orb at that moment. moment is ISO 8601 with a timezone offset, for example 2026-10-08T12:00:00+08:00; defaults to now.")
+@tool(annotations=READ_ONLY, description='Get calculation data for transiting planets and their active aspects to one natal chart at a single moment, including orb, orb limit and applying status where available. Use calculate_transits_to_natal for exact event dates over a range, render_transit_biwheel for an image, or calculate_sky_chart for a chart without natal comparison. Requires exact local birth date/time and confirmed birthplace location_id; missing birth inputs return needs_clarification. This is a snapshot within configured orbs, not an exact-event search or a prediction.')
 def get_transit_snapshot(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, moment: str | None = None, fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, moment: Annotated[str | None, Field(description='Transit instant in ISO 8601 with timezone offset, for example 2026-10-25T12:00:00+08:00 or a Z suffix. Omit for now. Distinct from the local civil birth date and time.')] = None, fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return ext.transit_snapshot_data(year=year, month=month, day=day, hour=hour,
                                      minute=minute, location_id=location_id,
@@ -590,11 +590,11 @@ def calculate_house_ingresses(
                                   from_date=from_date, to_date=to_date, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Secondary progressed lunation cycle (eight phases, each 45 degrees from the exact phase): current phase on as_of, next phase, the lifetime phase timeline with progressed Sun and Moon positions, and transiting Saturn's natal house at each phase change.")
+@tool(annotations=READ_ONLY, description='Calculate the secondary progressed Sun-Moon lunation cycle: current and next phase on as_of, eight 45-degree phases, and a timeline through age 100 with progressed positions and transiting Saturn natal-house context. Use for progressed lunar phases; use calculate_secondary_progressions for broader progressed positions and contacts, or get_current_sky for actual sky positions. Requires exact local birth date/time and confirmed birthplace location_id. Missing birth inputs return needs_clarification. Returns calculation data, not life-event predictions.')
 def calculate_progressed_lunation(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, as_of: str | None = None, fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD; omission uses the current UTC date. Evaluated at 12:00 UTC, not at local midnight.')] = None, fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return ext.progressed_lunation_data(year=year, month=month, day=day, hour=hour,
                                         minute=minute, location_id=location_id,
@@ -847,18 +847,18 @@ def calculate_sky_chart(moment: str | None = None,
     return ext.sky_chart_data(moment=moment, location_id=location_id)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the chart for any moment and place as a 720px PNG wheel shown to the user. Same inputs as calculate_sky_chart.")
-def render_sky_chart(moment: str | None = None,
-                     location_id: str | None = None) -> CallToolResult:
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG tropical Placidus wheel for one moment and selected place, with chart positions calculated to minute precision. No birth data is needed. Use calculate_sky_chart for structured chart data, get_current_sky for sky positions without local houses, or render_transit_biwheel to compare the sky with a natal chart. Requires confirmed location_id; moment defaults to now. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
+def render_sky_chart(moment: Annotated[str | None, Field(description='Chart instant in ISO 8601 with timezone offset, for example 2026-10-25T12:00:00+08:00 or a Z suffix. Omit for now; chart calculation uses local time truncated to the minute.')] = None,
+                     location_id: Annotated[str | None, Field(description='Required confirmed chart-place ID from search_birthplace or resolve_birth_coordinates, not a city name. Supplies coordinates and timezone for Placidus houses; need not be a birthplace.')] = None) -> CallToolResult:
     info, png = ext.render_sky_chart_png(moment=moment, location_id=location_id)
     return _wheel_result(info, png, "天象盘")
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render a two-ring wheel with the natal chart inside and the transiting planets outside at one moment, with the cross-chart aspects drawn in the centre. moment is ISO 8601 with a timezone offset; defaults to now.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a PNG biwheel with natal positions inside, transiting planets outside and cross-chart aspects at one moment. Use get_transit_snapshot for structured positions/aspects, calculate_transits_to_natal for exact event dates over a range, or render_sky_chart for a standalone sky wheel. Requires exact local birth date/time and confirmed birthplace location_id; moment selects the transit instant, not a second birth. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
 def render_transit_biwheel(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, moment: str | None = None, fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, moment: Annotated[str | None, Field(description='Transit instant in ISO 8601 with timezone offset, for example 2026-10-25T12:00:00+08:00 or a Z suffix. Omit for now. Distinct from the local civil birth date and time.')] = None, fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> CallToolResult:
     info, png = ext.render_transit_biwheel_png(
         year=year, month=month, day=day, hour=hour, minute=minute,
