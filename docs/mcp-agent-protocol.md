@@ -8,7 +8,9 @@
 
 先调用 `get_capabilities` 读取当前工具、参数结构及已登记算法。它来自运行中的工具注册表；不要依据旧工具名单臆测现有能力。根据用户目标选择最小必要工具：地点先用 `search_birthplace`，经纬度用 `resolve_birth_coordinates`；本命盘用 `calculate_natal_chart`；古典要素、黄道释放、法达、行运、太阳弧、返照、关系盘和天象各用其对应工具。只有用户需要看图时调用 `render_*` 工具。
 
-不确定该走哪条已支持的计算路径时，可调用 `recommend_workflow(goal=用户的需求)`。它只提供现有工具的调用顺序和所需资料，不做计算，也不替用户选缺失的出生时间或地点。返回 `needs_clarification` 时，请用户从列出的内容中选择；不要把一个含多种技法的需求擅自缩成一种。
+不确定该走哪条已支持的计算路径时，可调用 `recommend_workflow(goal=用户的需求)`。它只提供现有工具的调用顺序和所需资料，不做计算，也不替用户选缺失的出生时间或地点。返回 `needs_clarification` 时，根据 `question` 澄清；若用户已明确需要全部候选内容，分别为每个目标取得流程，不再强迫只选一个，也不要丢弃其中任何一项。
+
+推荐结果的 `status=ok` 只表示路径已确定。`input_readiness=not_checked` 表示推荐器没有检查用户资料；调用方须结合对话核对 `required_information`，只追问缺失或含糊的必需项，已有确认资料直接复用。用户回答后继续原目标，不必从头重复询问。`output_mode=image_only` 时可直接调用流程中的绘图工具，其内部计算并校验来源；仅数据请求不需要绘图工具。该推荐器不保存对话、不直接向用户发送问题，也不能保证客户端 AI 遵循指引；计算工具的参数检查仍然生效。
 
 出生地搜索出现多个候选时请用户选择。工具返回 `needs_clarification`、`required_fields` 或 DST fold 候选时，要求用户补齐并重新调用。不要把失败或 `validation_failed` 响应当作正常计算结果。
 

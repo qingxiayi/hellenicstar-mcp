@@ -961,7 +961,7 @@ def get_agent_protocol() -> dict:
             'uri': AGENT_PROTOCOL_URI, 'content': protocol_text()}
 
 
-@tool(annotations=READ_ONLY, description="Recommend a short tool workflow for one stated goal, such as natal, classical, releasing, time_lords, transits, solar_arc, solar_return, relationship or sky. Ambiguous goals return choices. This only routes existing tools; it does not calculate a chart or infer missing birth information.")
+@tool(annotations=READ_ONLY, description="Recommend existing tools for a stated astrology goal, time scope and desired data/image output. Preserve the full request, including multiple techniques. Ambiguous goals return choices and a question; retain every requested task. An ok result selects a route, not input readiness: check required_information against the conversation, ask only for missing or ambiguous prerequisites, then call the tools. Image-only routes use renderers directly. This does not calculate, infer birth data or manage conversation state.")
 def recommend_workflow(goal: str) -> dict:
     import asyncio
 

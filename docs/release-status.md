@@ -1,3 +1,7 @@
+# Current release
+
+2026-10-25 工作流调用修复已通过本地完整验证（1299 项）；GitHub、部署与平台状态分别见[工作流发布记录](validation/workflow-routing-release-2026-10-25.md)。
+
 # Current release status
 
 Six additional tool definitions and task-selection guidance are deployed at `897944e`; public calls pass. See [the six-tool verification record](validation/six-tool-guidance-2026-10-25.md) for CI and Glama publication status.
