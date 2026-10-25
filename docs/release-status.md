@@ -1,5 +1,7 @@
 # Current release status
 
+Six additional tool definitions and task-selection guidance are deployed at `897944e`; public calls pass. See [the six-tool verification record](validation/six-tool-guidance-2026-10-25.md) for CI and Glama publication status.
+
 Version v0.1.2 is published and deployed: five tool definitions now explain inputs and routing, with calculation behavior unchanged. Community contribution and voluntary feedback guidance is included. See [the 2026-10-25 verification record](validation/tool-definition-followup-2026-10-25.md) for CI, public runtime checks and separate channel status.
 
 The reference round-trip, summary membership and algorithm registration repair is deployed and public. Natal v4 and relationship observation v0.14 calculation facts are retained. See [the 2026-10-24 release verification](validation/reference-roundtrip-release-2026-10-24.md).

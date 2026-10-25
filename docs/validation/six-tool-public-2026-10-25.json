@@ -1,0 +1,35 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "tools": 48,
+  "schemas_and_descriptions_match": true,
+  "results": {
+    "calculate_progressed_lunation": {
+      "status": "ok",
+      "inline_pngs": 0
+    },
+    "calculate_time_lords": {
+      "status": "ok",
+      "inline_pngs": 0
+    },
+    "get_transit_snapshot": {
+      "status": "ok",
+      "inline_pngs": 0
+    },
+    "render_jones_pattern": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    },
+    "render_transit_biwheel": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    },
+    "render_sky_chart": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    }
+  },
+  "missing_input": "needs_clarification"
+}
