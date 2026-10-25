@@ -12,6 +12,12 @@ By coupling the classical Swiss Ephemeris engine with rigorous Hellenistic rules
 
 ---
 
+## Guided requests and direct professional use
+
+Describe a goal in everyday language, or specify a tool, technique and supported parameters directly. Workflow discovery is optional; explicit requests keep their methods, time ranges and output scope, including multiple techniques. Reuse confirmed inputs and report unsupported settings rather than substituting them.
+
+Focused questions can select relevant fields. Full research data remains available and is still the API default. Large relationship results may exceed a client's response limit; calculation success alone does not prove complete delivery. See the [agent protocol](docs/mcp-agent-protocol.md).
+
 ## Quick Start
 
 Follow [Quick start (English / 中文)](docs/quickstart.md#english): install Python 3.12
