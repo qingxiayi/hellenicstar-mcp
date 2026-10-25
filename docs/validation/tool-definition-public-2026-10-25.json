@@ -1,0 +1,31 @@
+{
+  "endpoint": "https://hellenicstar.com/mcp",
+  "tools": 48,
+  "schemas_and_descriptions_match": true,
+  "results": {
+    "calculate_house_rulers": {
+      "status": "ok",
+      "inline_pngs": 0
+    },
+    "calculate_solar_arc": {
+      "status": "ok",
+      "inline_pngs": 0
+    },
+    "render_solar_arc_biwheel": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    },
+    "render_composite_chart": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    },
+    "render_solar_return_chart": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    }
+  },
+  "missing_input": "needs_clarification"
+}

@@ -36,3 +36,22 @@ Glama listing metadata sync and Glama version publication are separate actions. 
 - https://glama.ai/mcp/servers/qingxiayi/hellenicstar-mcp
 - https://github.com/punkpeye/awesome-mcp-servers/pull/16607
 - [Previous definition review](tool-definition-review-2026-10-24.md)
+
+## Published release and standalone deployment
+
+- GitHub release [v0.1.2](https://github.com/qingxiayi/hellenicstar-mcp/releases/tag/v0.1.2) targets `cbcda24ae13c0b2a659a7d4387b05aab22cc7e6b`.
+- [CI run 40150198569](https://github.com/qingxiayi/hellenicstar-mcp/actions/runs/40150198569) passed on macOS and Ubuntu.
+- Source archive: 313 files; SHA256 `0bbd82edf491d6b9106eaac796a7a5dce7f3a15298fd6e4bf9f6a18b571bc04b`.
+- On the production host, all Python files except `mcp_server.py` match the previous release. All 48 tool definitions match after removing descriptions. Two real calculation outputs and three rendered outputs have identical hashes before and after the change.
+- The isolated MCP service switched to `tool-definitions-cbcda24` at 2026-10-25 09:56:31 Asia/Shanghai. Existing chart storage, location database, caches and service security settings were retained. The corresponding-source URL points to the exact deployed commit.
+- A real public HTTPS client initialized, listed 48 tools with the expected schemas/descriptions, called all five changed tools successfully, received three inline PNGs, and downloaded each image URL with HTTP 200. Missing birth input still returns `needs_clarification`. See [public acceptance evidence](tool-definition-public-2026-10-25.json).
+- Mini Program PID `1086608` and start time `2026-10-11 01:01:02 CST` stayed unchanged. Only the standalone MCP service restarted.
+- Rollback is available on the host with `sudo sh /tmp/rollback-hellenicstar-cbcda24.sh`; it disables only the new service drop-in and restarts only MCP.
+
+Glama repository sync was verified at `cbcda24`; its public README contains the new voluntary feedback links. Build test `01a170a6-6263-7ffd-b596-b8d41434a25f` succeeded and discovered the updated tools. Version publication and its new TDQS evaluation are tracked separately below.
+
+### Glama publication blocker (2026-10-25)
+
+Both build tests succeeded at the intended source commit: `01a170a6-6263-7ffd-b596-b8d41434a25f` and the subsequent Build & Release test `01a170ca-d5a7-7a18-8f4e-6f48e4a0f542`. However, the existing Make Release link navigated to a build-log page without a release form, and Build & Release completed its build without adding a release. The verified releases list still shows 0.1.1 as latest. Auto-Release is enabled, but its setting is not evidence of successful publication. No additional builds were started after these checks.
+
+The latest evaluated release remains 0.1.1, with average TDQS 4.0/5 across 48 tools. New version publication and the five updated definitions' evaluation remain unconfirmed. GitHub v0.1.2 and the standalone public service are already published/deployed; this is a Glama publication blocker, not a runtime failure.
