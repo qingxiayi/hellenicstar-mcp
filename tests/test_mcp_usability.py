@@ -54,7 +54,7 @@ def test_time_lords_mcp_roundtrip_and_validation_reject_mislabeled_result(tradit
 
 @pytest.mark.parametrize('query,expected', [
     ('Paris, France','gn:2988507'), ('巴黎, 法国','gn:2988507'),
-    ('London, UK','gn:2643743'), ('London, Canada','gn:6058560')])
+    ('London, Canada','gn:6058560')])
 def test_explicit_region_unique_exact_city_proceeds(query, expected):
     result = search_birthplace(query)
     assert result['next_action'] == 'use_location_id'
@@ -92,3 +92,27 @@ def test_single_candidate_with_unverified_region_still_asks(monkeypatch):
     result = natal.search_birthplace('Paris, Unknown region, France')
     assert result['next_action'] == 'ask_user'
     assert result['required_fields'] == ['location_id']
+
+
+def test_explicit_region_distinguishes_prefixes_from_exact_homonyms(tmp_path, monkeypatch):
+    import sqlite3
+    from services import mcp_compat_utils as locations
+    for exact_count in (1, 2):
+        db = tmp_path / f'locations-{exact_count}.db'
+        with sqlite3.connect(db) as conn:
+            conn.execute('CREATE TABLE places (location_id TEXT, country_code TEXT, lat_wgs84 REAL, lng_wgs84 REAL, tz_iana TEXT, admin1 TEXT, population INTEGER)')
+            conn.execute('CREATE TABLE place_names (location_id TEXT, name TEXT, name_lower TEXT, lang TEXT, is_preferred INTEGER)')
+            names = ['London'] * exact_count + ['London Bridge']
+            for i, name in enumerate(names):
+                conn.execute('INSERT INTO places VALUES (?, ?, ?, ?, ?, ?, ?)',
+                             (f'fixture:{i}', 'GB', 51.5, -0.1, 'Europe/London', 'ENG', 1000-i))
+                conn.execute('INSERT INTO place_names VALUES (?, ?, ?, ?, ?)',
+                             (f'fixture:{i}', name, name.lower(), 'main', 1))
+        monkeypatch.setattr(locations, 'DEFAULT_DB_PATH', str(db))
+        result = search_birthplace('London, UK')
+        if exact_count == 1:
+            assert result['next_action'] == 'use_location_id'
+            assert [o['location_id'] for o in result['options']] == ['fixture:0']
+        else:
+            assert result['next_action'] == 'ask_user'
+            assert {'fixture:0', 'fixture:1'} <= {o['location_id'] for o in result['options']}
