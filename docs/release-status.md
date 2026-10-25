@@ -1,5 +1,7 @@
 # Current release
 
+2026-10-25 专业直达与按需读取指引 v0.1.5 已发布并部署（源码 `17a7c13`）：48 个工具的参数及计算逻辑保持不变，本地与 Linux/macOS CI 各 1299 项测试通过，8 个 AI 使用场景和公网验收通过。Glama 0.1.5 已发布；新版评分尚未评完，不能把 45 个工具的 4.3 平均分当作旧 3.9 整体分的提升。小程序未改动。详见[发布验证记录](validation/direct-and-guided-use-release-2026-10-25.md)。
+
 2026-10-25 工作流调用修复 v0.1.4 已发布并部署（源码 `72bc71a`）：本地 1299 项测试、Linux/macOS CI 及公网调用通过；Glama 0.1.4 已发布，最新 TDQS 为 3.9/5（A）。小程序未改动。详见[工作流发布记录](validation/workflow-routing-release-2026-10-25.md)。
 
 # Current release status

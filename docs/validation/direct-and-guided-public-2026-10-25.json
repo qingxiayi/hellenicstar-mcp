@@ -1,0 +1,74 @@
+{
+  "source": "17a7c13a4f46748e5baf2af7812edd9b45661e1f",
+  "endpoint": "https://hellenicstar.com/mcp",
+  "checks": {
+    "今天的行运到年底有哪些精确日期": {
+      "goal": "transits",
+      "first_tool": "calculate_transits_to_natal"
+    },
+    "只画琼斯格局图": {
+      "goal": "jones",
+      "first_tool": "render_jones_pattern"
+    },
+    "只要本命盘数据，不要图片": {
+      "goal": "natal",
+      "first_tool": "calculate_natal_chart"
+    },
+    "黄道释放的第四层": {
+      "goal": "releasing_l4",
+      "first_tool": "calculate_zodiacal_releasing"
+    },
+    "画本命盘和天象": {
+      "status": "needs_clarification",
+      "goals": [
+        "natal",
+        "sky_chart"
+      ]
+    },
+    "画太阳弧和天象": {
+      "status": "needs_clarification",
+      "goals": [
+        "sky_chart",
+        "solar_arc"
+      ]
+    },
+    "calculate_natal_chart_missing": {
+      "status": "needs_clarification",
+      "required_fields": [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+        "location_id",
+        "house_system"
+      ]
+    },
+    "render_jones_pattern_missing": {
+      "status": "needs_clarification",
+      "required_fields": [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+        "location_id"
+      ]
+    },
+    "calculate_natal_chart_complete": {
+      "status": "ok"
+    },
+    "calculate_transits_to_natal_complete": {
+      "status": "ok"
+    },
+    "render_jones_pattern_complete": {
+      "status": "ok",
+      "inline_pngs": 1,
+      "image_url_http_status": 200
+    }
+  },
+  "direct_use_instructions": true,
+  "tool_count": 48,
+  "schemas_and_descriptions_match": true,
+  "protocol_surfaces_match": true
+}
