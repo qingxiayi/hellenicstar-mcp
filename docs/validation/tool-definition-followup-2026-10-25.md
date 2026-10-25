@@ -4,7 +4,7 @@
 
 Glama's TDQS administration page for release 0.1.1 reports **4.0/5 average across 48 tools**, compared with the recorded 0.1.0 average of 3.9/5. The public overview displays **3.7/5** as a separate overall score, alongside server-level disambiguation, naming, tool-count and completeness factors. These values must not be presented as the same metric. This is definition quality, not proof of calculation correctness.
 
-The two tools improved on 2026-10-24 now read: calculate_natal_salience 4.6/5 and render_saturn_jupiter_cycles 4.8/5. Today's changes have not yet received a new evaluation.
+The two tools improved on 2026-10-24 now read: calculate_natal_salience 4.6/5 and render_saturn_jupiter_cycles 4.8/5. These were the baseline values; the completed 0.1.2 evaluation is recorded below.
 
 ## Scoped improvements
 
@@ -50,8 +50,24 @@ Glama listing metadata sync and Glama version publication are separate actions. 
 
 Glama repository sync was verified at `cbcda24`; its public README contains the new voluntary feedback links. Build test `01a170a6-6263-7ffd-b596-b8d41434a25f` succeeded and discovered the updated tools. Version publication and its new TDQS evaluation are tracked separately below.
 
-### Glama publication blocker (2026-10-25)
+### Earlier Glama publication delay (resolved)
 
 Both build tests succeeded at the intended source commit: `01a170a6-6263-7ffd-b596-b8d41434a25f` and the subsequent Build & Release test `01a170ca-d5a7-7a18-8f4e-6f48e4a0f542`. However, the existing Make Release link navigated to a build-log page without a release form, and Build & Release completed its build without adding a release. The verified releases list still shows 0.1.1 as latest. Auto-Release is enabled, but its setting is not evidence of successful publication. No additional builds were started after these checks.
 
 The latest evaluated release remains 0.1.1, with average TDQS 4.0/5 across 48 tools. New version publication and the five updated definitions' evaluation remain unconfirmed. GitHub v0.1.2 and the standalone public service are already published/deployed; this is a Glama publication blocker, not a runtime failure.
+
+### Glama release and evaluation confirmed
+
+The subsequent live check confirmed release **0.1.2**, published **2026-10-25 10:09 Asia/Shanghai**, associated with build `01a170ca-d5a7-7a18-8f4e-6f48e4a0f542`. The earlier unconfirmed-publication status is superseded. The exact cause of the delay was not established.
+
+TDQS for the selected latest release is **4.1/5 across all 48 tools**, up from 4.0 for 0.1.1 and 3.9 for 0.1.0. The five changed tool definitions now score:
+
+| Tool | 0.1.1 | 0.1.2 |
+| --- | --- | --- |
+| calculate_house_rulers | 3.2 | 4.6 |
+| render_solar_arc_biwheel | 3.2 | 4.7 |
+| calculate_solar_arc | 3.3 | 4.8 |
+| render_composite_chart | 3.3 | 4.8 |
+| render_solar_return_chart | 3.3 | 4.8 |
+
+This is tool-definition quality, not a new independent calculation-accuracy certification. No further rebuild or production deployment was needed for this verification.
