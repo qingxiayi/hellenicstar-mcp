@@ -19,6 +19,15 @@ The HTTP process sweeps expired files every minute and refuses expired reads;
 stopped processes cannot delete files until restarted. Do not cache `/mcp/` in the
 reverse proxy. The application sets `Cache-Control: no-store`.
 
+The separate internal natal PNG cache defaults to a 512 MiB content-byte budget
+and a seven-day lifetime from creation (`CHART_CACHE_MAX_BYTES` and
+`CHART_CACHE_TTL_SECONDS`). Expired entries are not served from the cache; writes
+evict expired and oldest entries before admitting new data. Maintenance also runs
+on cache access, but idle or stopped services do not delete internal files on a
+timer. Oversized images and cache failures fall back to the rendered response.
+The budget is not a filesystem quota and does not cover public image files or
+other state. See docs/deployment.md for directory isolation and configuration.
+
 The application caches calculation results in memory and does not create user accounts.
 IP rate-limit counters and optional geocoding caches are local SQLite files. Platform,
 proxy and client logs must be configured by each operator. When serving modified

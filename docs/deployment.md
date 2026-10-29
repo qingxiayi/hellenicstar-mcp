@@ -12,7 +12,10 @@ not a running public service. Configure the following before exposing HTTP:
 | MCP_LOCATION_DB_PATH | Optional offline SQLite database (default data/location.db) |
 | MCP_GEO_CACHE_PATH | Writable optional geocoding cache |
 | MCP_RATE_LIMIT_DB_PATH | Writable IP counter database |
-| MCP_CHART_DIR | Writable chart cache directory |
+| MCP_CHART_DIR | Writable directory for publicly linked images (seven-day lifetime) |
+| CHART_CACHE_DIR | Optional internal natal PNG cache; default `/var/cache/hellenicstar/charts` |
+| CHART_CACHE_MAX_BYTES | Internal PNG content-byte budget; default `536870912` (512 MiB) |
+| CHART_CACHE_TTL_SECONDS | Internal PNG lifetime since creation; default `604800` (seven days) |
 | MCP_COMPUTE_MAX_ACTIVE | Active calculations per worker; default 2 |
 | MCP_COMPUTE_MAX_WAITING | Waiting calculations per worker; default 4 |
 | MCP_COMPUTE_WAIT_TIMEOUT_SECONDS | Queue wait timeout; default 15 seconds |
@@ -21,6 +24,36 @@ not a running public service. Configure the following before exposing HTTP:
 The concurrency defaults are configuration choices, not a measured capacity claim.
 Use one worker until the intended server has been measured. Do not publish a capacity
 number based on laptop tests.
+
+The internal natal cache is separate from `MCP_CHART_DIR`. Provision a writable
+`CHART_CACHE_DIR` for the service user if disk caching is wanted; an unavailable
+cache falls back to rendering. The Dockerfile does not provision the default
+internal path. Keep the two directories separate and give all workers sharing an
+internal directory the same limits. Restart all workers together when upgrading
+the cache implementation so older writers cannot bypass the new admission lock.
+Keep this directory under the service account's exclusive control; do not let
+other users replace its subdirectories. Linked hash paths and special PNG files
+are refused rather than read or written outside the accounted layout.
+
+Internal writes reserve space under a cross-process lock, first removing expired
+PNGs and then evicting the oldest writes until the new image fits. Hits do not
+extend lifetime. An image larger than the budget is returned without being cached;
+cache write failures also leave the rendered response usable. Fixed lock stripes
+bound newly created lock files (64 render locks and one maintenance lock).
+
+Expired internal entries are refused on reads. Cleanup runs on the first cache
+access per worker, on subsequent accesses at most once per minute, and before
+every write; a requested expired entry is removed immediately. Idle or stopped
+services do not perform background internal-cache deletion. This differs from the
+HTTP public-image cleanup loop. Setting either internal limit to `0` disables
+cache reads and writes, leaving existing files for operator removal. Invalid or
+negative values use the bounded defaults and log a warning.
+
+The budget covers managed internal PNG content bytes and reserves space before
+staging a new file. It is not a filesystem quota: allow headroom for filesystem
+metadata, existing legacy lock files, public images, databases and logs. If cleanup
+cannot delete enough data, new cache writes are skipped. For a hard storage
+boundary, place this directory on an appropriately sized filesystem or quota.
 
 Run behind an HTTPS reverse proxy:
 
