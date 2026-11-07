@@ -11,7 +11,7 @@ CLASSIFICATION = ('family_en', 'family_zh', 'variant_en', 'is_variant', 'state',
                   'borderline', 'borderline_reasons', 'borderline_alternates',
                   'span_deg', 'high_focus_longitude')
 GEOMETRY = ('midpoint_bowl', 'midpoint_loco', 'midpoint_bundle', 'cog_bowl',
-            'crossing_point', 'group_axis')
+            'crossing_point', 'group_axis', 'bowl_axis')
 
 
 def project_observation_details(upstream):
@@ -19,7 +19,7 @@ def project_observation_details(upstream):
     return dict(
         classification={k: copy.deepcopy(upstream[k]) for k in CLASSIFICATION if k in upstream},
         roles=[{k: copy.deepcopy(role[k]) for k in
-                ('planet_name', 'role_type', 'role_label', 'longitude', 'partners') if k in role}
+                ('planet_name', 'role_type', 'role_label', 'longitude', 'partners', 'geometry_marks') if k in role}
                for role in upstream.get('key_roles', [])],
         roles_available='key_roles' in upstream,
         geometry={k: copy.deepcopy(upstream[k]) for k in GEOMETRY if k in upstream},
@@ -49,6 +49,7 @@ def build_jones_view(graph, result):
             identity_status='recognized' if p else 'unrecognized',
             associated_members=[dict(planet=_planet(r.get('planet_name')), raw=copy.deepcopy(r))
                                 for r in raw.get('partners', [])],
+            **({'geometry_marks': copy.deepcopy(raw['geometry_marks'])} if 'geometry_marks' in raw else {}),
             source_refs=[f'/source_graph/jones/observation_details/roles/{i}']))
     # Old graph snapshots may carry only a focus label. Keep it separate from
     # complete roles, without fabricating a handle/leader or certainty state.

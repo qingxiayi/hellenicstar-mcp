@@ -1872,6 +1872,95 @@ def _build_key_roles(
 # Flask / API 序列化
 # ──────────────────────────────────────────────────────────────
 
+def _bowl_axis_geometry(result, planet_meta=None):
+    """Keep geometric axis contacts, handle conjunction and real oppositions separate.
+
+    Uses unrounded boundary longitudes. The 8-degree axis tolerance follows the
+    existing handle-centering rule; it is not a new planetary aspect orb.
+    """
+    pattern, extra = result.pattern_en, result.extra
+    handles = []
+    if pattern in ("ConjHandle", "TwoHandle"):
+        boundary = extra.get("conj_handle" if pattern == "ConjHandle" else "two_handle") or {}
+        handles = [(boundary.get(f"h{i}_name", ""), boundary.get(f"h{i}_long")) for i in (1, 2)]
+    elif pattern in ("Bucket", "Sling", "Fanhandle"):
+        boundary = extra.get("bucket") or {}
+        handles = [(boundary.get("handle_name", ""), boundary.get("handle_long"))]
+    elif pattern == "Bowl":
+        midpoint = extra.get("midpoint_bowl") or {}
+        boundary = {"left_edge": midpoint.get("left_long"), "right_edge": midpoint.get("right_long")}
+    else:
+        return None
+    left, right = boundary.get("left_edge"), boundary.get("right_edge")
+    if left is None or right is None:
+        return None
+    void = (left + (right - left) % 360 / 2) % 360
+    bottom = (void + 180) % 360
+    axis_orb = 8.0
+
+    def distance(a, b):
+        return abs((a - b + 180) % 360 - 180)
+
+    def contact(lon):
+        dev = distance(lon, void)
+        return {
+            "void_midpoint_conjunction": {"label": "合虚空中点", "deviation_deg": round(dev, 4),
+                                          "within_orb": dev <= axis_orb},
+            "bowl_bottom_opposition": {"label": "对分碗底几何点", "deviation_deg": round(dev, 4),
+                                       "within_orb": dev <= axis_orb},
+        }
+
+    handles = [(_name_to_cn(name), lon) for name, lon in handles if lon is not None]
+    handle_names = {name for name, _ in handles}
+    centre_planets = []
+    centre_longitudes = {}
+    if planet_meta:
+        for name in PLANET_NAMES_ZH:
+            cn = _name_to_cn(name)
+            meta = planet_meta.get(cn) or planet_meta.get(name) or {}
+            lon = meta.get("abs_pos")
+            if lon is None or cn in handle_names:
+                continue
+            dev = distance(lon, bottom)
+            if dev <= 10.0:
+                centre_longitudes[cn] = lon
+                centre_planets.append({"planet_name": cn, "longitude": round(lon % 360, 4),
+                                       "bottom_deviation_deg": round(dev, 4),
+                                       "is_anchor": dev <= COG_ANCHOR_ORB})
+
+    individual = []
+    for name, lon in handles:
+        oppositions = []
+        for planet in centre_planets:
+            # Use original position for the decision, not the displayed rounding.
+            dev = abs(180 - distance(lon, centre_longitudes[planet["planet_name"]]))
+            oppositions.append({"planet_name": planet["planet_name"], "label": "对分碗底附近行星",
+                                "deviation_deg": round(dev, 4), "within_orb": dev <= SELLAR_OPPOSITION_ORB})
+        individual.append({"planet_name": name, "longitude": round(lon % 360, 4), **contact(lon),
+                           "centre_planet_oppositions": oppositions})
+    pair = None
+    group = None
+    if len(handles) == 2:
+        sep = distance(handles[0][1], handles[1][1])
+        pair = {"label": "两把手彼此合相", "separation_deg": round(sep, 4),
+                "within_orb": sep <= CONJ_HANDLE_ORB}
+        if pattern == "ConjHandle":
+            delta = (handles[1][1] - handles[0][1] + 180) % 360 - 180
+            midpoint = (handles[0][1] + delta / 2) % 360
+            group = {"label": "合相把手组中点", "kind": "geometric_midpoint",
+                     "longitude": round(midpoint, 4), **contact(midpoint)}
+    return {
+        "bowl_bottom": {"label": "碗底（占据弧中点）", "longitude": round(bottom, 4)},
+        "void_midpoint": {"label": "虚空中点（碗底对点）", "longitude": round(void, 4)},
+        "orbs_deg": {"axis_contact": axis_orb, "handle_conjunction": CONJ_HANDLE_ORB,
+                     "centre_planet_neighborhood": 10.0, "bottom_anchor": COG_ANCHOR_ORB,
+                     "planet_opposition": SELLAR_OPPOSITION_ORB},
+        "centre_planets_evaluated": planet_meta is not None,
+        "centre_planets": centre_planets,
+        "handles": individual, "handle_pair_conjunction": pair, "handle_group_midpoint": group,
+    }
+
+
 def result_to_dict(
     result: PatternResult,
     planet_meta: Optional[Dict[str, Dict]] = None,
@@ -2021,6 +2110,7 @@ def result_to_dict(
             _cog["partners"] = sorted(_partners, key=lambda p: p["orb"])
 
     return {
+        "bowl_axis":            _bowl_axis_geometry(result, planet_meta),
         "pattern_en":           result.pattern_en,
         "pattern_zh":           result.pattern_zh,
         "confidence":           result.confidence,
@@ -2303,9 +2393,11 @@ def _two_handle_from_two_group(
     if main_span > 180.0:
         return None
 
-    # 主群（8 颗）两端的边界星——双把手解读须含（与 _check_two_handle 字段对齐）
+    # 与 _check_two_handle / _bucket_void_midpoint 的方向约定一致：
+    # left_edge → right_edge 为空白弧，即主群尾端 → 主群首端。
+    # big 按占据弧顺序排列（可能跨 0°）；反过来会让碗底翻转 180°。
     big = group_b if small is group_a else group_a
-    le, re = sorted_longs[big[0]], sorted_longs[big[-1]]
+    le, re = sorted_longs[big[-1]], sorted_longs[big[0]]
 
     h1_name, h2_name, h1_idx, h2_idx = _find_pair_names(
         h1, h2, orig_longs, names)

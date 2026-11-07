@@ -19,7 +19,7 @@ from engine.jones import (
 from services.jones_pattern_guide import pattern_guide, role_guide
 
 
-ENGINE_VERSION = "jones-miniapp-5"
+ENGINE_VERSION = "jones-miniapp-7"
 
 PLANETS = (
     ("sun", "太阳", "☉"),
@@ -112,6 +112,46 @@ def _clean_planet_name(name):
     return value.strip() or None
 
 
+def _handle_geometry_marks(axis: Dict, planet_name: str) -> List[Dict]:
+    """Name computed contacts for each handle, without inferring them from its type."""
+    handle = next((h for h in axis.get("handles", []) if h["planet_name"] == planet_name), None)
+    if handle is None:
+        return []
+    orbs = axis["orbs_deg"]
+    contact = handle["void_midpoint_conjunction"]
+    marks = [{"code": "handle_on_bowl_axis", "label": "合虚空中点／对分碗底几何点",
+              "matched": contact["within_orb"], "deviation_deg": contact["deviation_deg"],
+              "orb_deg": orbs["axis_contact"]}]
+    pair = axis.get("handle_pair_conjunction")
+    if pair is not None:
+        marks.append({"code": "handle_pair_conjunction", "label": "两把手彼此合相",
+                      "matched": pair["within_orb"], "deviation_deg": pair["separation_deg"],
+                      "orb_deg": orbs["handle_conjunction"]})
+    group = axis.get("handle_group_midpoint")
+    if group is not None:
+        contact = group["void_midpoint_conjunction"]
+        marks.append({"code": "handle_group_on_bowl_axis", "label": "合相把手组中点对准碗底轴",
+                      "matched": contact["within_orb"], "deviation_deg": contact["deviation_deg"],
+                      "orb_deg": orbs["axis_contact"]})
+    for opposition in handle["centre_planet_oppositions"]:
+        marks.append({"code": "handle_opposes_centre_planet",
+                      "label": f"对分碗底附近的{opposition['planet_name']}（实际行星）",
+                      "target_planet_name": opposition["planet_name"],
+                      "matched": opposition["within_orb"], "deviation_deg": opposition["deviation_deg"],
+                      "orb_deg": orbs["planet_opposition"]})
+    return marks
+
+
+def _geometry_marks_text(marks: List[Dict]) -> str:
+    # Existing clients already render role.description. Keep the role label and
+    # type stable; these explicit results need no new front-end component.
+    return "".join(
+        f"{mark['label']}：{'成立' if mark['matched'] else '不成立'}"
+        f"（偏离{mark['deviation_deg']:g}°，容许度{mark['orb_deg']:g}°）。"
+        for mark in marks
+    )
+
+
 def calculate_jones_pattern(planets: Dict[str, Dict]) -> Dict:
     """Return the mini-program's stable, pattern-scoped Jones DTO."""
     longitudes = _longitudes(planets)
@@ -144,6 +184,7 @@ def calculate_jones_pattern(planets: Dict[str, Dict]) -> Dict:
     # Bucket midpoint is derived from the nine-planet bowl boundaries rather
     # than from the largest gap after the handle is put back into the wheel.
     engine_geometry = result_to_dict(result, planet_meta=planet_meta)
+    bowl_axis = engine_geometry.get("bowl_axis") or {}
     sellar = engine_geometry.get('sellar_focus')
     core_opposition = None
     if sellar and sellar.get('opp_name'):
@@ -189,9 +230,15 @@ def calculate_jones_pattern(planets: Dict[str, Dict]) -> Dict:
         # 碗中心复合合相：承重墙卡片带上合相伙伴，前端据此显示两颗星并在盘面标亮。
         if role["role_type"] == "cog_bowl" and cog_partners:
             entry["partners"] = cog_partners
+        if role["role_type"] in ("handle", "handle1", "handle2", "handle_left", "handle_right"):
+            marks = _handle_geometry_marks(bowl_axis, name)
+            if marks:
+                entry["geometry_marks"] = marks
+                entry["description"] += _geometry_marks_text(marks)
         key_roles.append(entry)
     return {
         "engine_version": ENGINE_VERSION,
+        "bowl_axis": engine_geometry.get("bowl_axis"),
         "pattern_en": pattern,
         "pattern_zh": result.pattern_zh,
         "family_en": family,
