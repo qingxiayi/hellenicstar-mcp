@@ -1,3 +1,16 @@
+# Current release: v0.1.8
+
+2026-11-07: Jones bowl-axis and individual-handle geometry correction published as
+[v0.1.8](https://github.com/qingxiayi/hellenicstar-mcp/releases/tag/v0.1.8), source
+`f404fa451947c649fcf96ea6fcf25428699c57ef`. The maintainer HTTPS service runs this
+commit. Local validation: 1396 tests and 11 subtests passed; Ubuntu/macOS CI passed;
+production-candidate validation: 1330 passed, 66 skipped, 11 subtests passed.
+Six pattern families and the Jones PNG were verified through the public MCP.
+All 48 input schemas remain unchanged. See [algorithm changes](jones-bowl-axis.md)
+and [distribution verification](validation/jones-platform-sync-2026-11-07.md).
+
+The records below describe earlier releases and historical preparation stages.
+
 # Current release
 
 2026-10-25 专业直达与按需读取指引 v0.1.5 已发布并部署（源码 `17a7c13`）：48 个工具的参数及计算逻辑保持不变，本地与 Linux/macOS CI 各 1299 项测试通过，8 个 AI 使用场景和公网验收通过。Glama 0.1.5 已发布；新版评分尚未评完，不能把 45 个工具的 4.3 平均分当作旧 3.9 整体分的提升。小程序未改动。详见[发布验证记录](validation/direct-and-guided-use-release-2026-10-25.md)。
