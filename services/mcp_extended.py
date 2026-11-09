@@ -361,6 +361,7 @@ def solar_return_data(*, year, month, day, hour, minute, location_id, target_yea
                          "house_system": sr["house_system"]},
         "chart": _compact({
             "planets": single["planets"], "angles": single["angles"],
+            "special_points": single["special_points"],
             "house_cusps": single["houses"]["cusps"], "aspects": single["aspects"],
             "angular_planets": single["angular_planets"],
             "lunation_phase": single["lunation_phase"],
@@ -506,6 +507,12 @@ def render_solar_return_png(*, year, month, day, hour, minute, location_id, targ
     single = sr["single"]
     planets = {k: {"lon": v["longitude"], "retrograde": v.get("retrograde", False)}
                for k, v in single["planets"].items() if k in _WHEEL_POINTS}
+    for source, target in (("chiron", "chiron"),
+                           ("true_north_lunar_node", "north_node"),
+                           ("true_south_lunar_node", "south_node")):
+        point = single["special_points"][source]
+        planets[target] = {"lon": point["longitude"],
+                           "retrograde": point.get("retrograde", False)}
     aspects = [{"p1": a["point1"], "p2": a["point2"], "angle": a["angle"], "orb": a["orb"]}
                for a in single["aspects"] if a["point1"] in planets and a["point2"] in planets]
     asc = single["angles"]["ascendant"]["longitude"]

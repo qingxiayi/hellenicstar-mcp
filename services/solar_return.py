@@ -648,6 +648,7 @@ def compute_solar_return_full(birth_year, birth_month, birth_day, birth_hour, bi
         # ═══ 单盘层（13）═══
         'single': {
             'planets': sr_planets,                                              # 1
+            'special_points': sr['special_points'],
             'angles': sr_axes,                                                  # 2
             'houses': sr['houses'],                                             # 3
             'sun_house': sr_planets['sun']['house'],                            # 4
