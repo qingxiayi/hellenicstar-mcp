@@ -484,12 +484,12 @@ def render_jones_pattern(
     return _wheel_result(info, png, "琼斯格局分布图")
 
 
-@tool(annotations=READ_ONLY, description="Hellenistic chart factors from the same natal calculation: sect, planet sect status, essential dignity and condition tags, triplicity lords of the sect light and ascendant, Lot of Fortune and Lot of Spirit, lunar phase, and the Jones whole-chart pattern. Data only, no interpretation text.")
+@tool(annotations=READ_ONLY, description='Calculate natal sect, essential dignities and condition tags, sect-light triplicity lords, Fortune/Spirit, lunar phase and Jones classification. Use for classical factors; use calculate_natal_chart for positions/houses, calculate_natal_structure_graph for dispositor and aspect relationships, calculate_natal_salience for candidate focus groups, or calculate_lots for selected lot formulas. Requires exact local birth date/time, confirmed birthplace location_id and explicit house_system; omitted inputs return needs_clarification. Returns structured factors, not interpretation.')
 def calculate_classical_factors(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, house_system: str | None = None,
-    fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Exact birth year in the Gregorian local civil calendar; required for calculation, never guessed.')] = None, month: Annotated[StrictInt | None, Field(description='Local civil birth month, 1-12.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Local civil birth day, valid for the supplied year and month.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact local civil birth hour, 0-23; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact local civil birth minute, 0-59.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID from search_birthplace or resolve_birth_coordinates; not a city name.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Reuse a confirmed choice; omission requests clarification.')] = None,
+    fold: Annotated[StrictInt | None, Field(description='For repeated local time during DST rollback, use user-confirmed 0 (first) or 1 (second); otherwise omit.')] = None
 ) -> dict:
     return calculate_classical_data(year=year, month=month, day=day, hour=hour,
                                     minute=minute, location_id=location_id,
@@ -591,12 +591,12 @@ def calculate_saturn_jupiter_cycles(
                                    as_of=as_of, max_age=max_age, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Transiting Saturn and Jupiter entering natal Placidus houses from birth to age 84, including retrograde re-entries. Optional planet (saturn or jupiter) and optional from_date/to_date (YYYY-MM-DD) filters.")
+@tool(annotations=READ_ONLY, description='Find dates when transiting Saturn or Jupiter enters a natal Placidus house, including retrograde re-entries, within birth to age 84. Use for house-boundary crossings; use calculate_saturn_jupiter_cycles for natal-axis cycles, calculate_transits_to_natal for aspects to natal points, or get_transit_snapshot for one moment. Requires exact local birth date/time and confirmed birthplace location_id; missing inputs return needs_clarification. Returns event_count and events with entered/left house, entry type and UTC/local times. Date filters do not extend the lifetime horizon.')
 def calculate_house_ingresses(
-    *, year: StrictInt | None = None, month: StrictInt | None = None,
-    day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, planet: str | None = None, from_date: str | None = None,
-    to_date: str | None = None, fold: StrictInt | None = None
+    *, year: Annotated[StrictInt | None, Field(description='Exact birth year in the Gregorian local civil calendar; required for calculation, never guessed.')] = None, month: Annotated[StrictInt | None, Field(description='Local civil birth month, 1-12.')] = None,
+    day: Annotated[StrictInt | None, Field(description='Local civil birth day, valid for the supplied year and month.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact local civil birth hour, 0-23; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact local civil birth minute, 0-59.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID from search_birthplace or resolve_birth_coordinates; not a city name.')] = None, planet: Annotated[str | None, Field(description='saturn or jupiter; omit to return both. This tool does not scan other bodies.')] = None, from_date: Annotated[str | None, Field(description='Optional inclusive lower filter, YYYY-MM-DD in UTC. Omit for the start of the birth-to-age-84 result.')] = None,
+    to_date: Annotated[str | None, Field(description='Optional inclusive upper filter, YYYY-MM-DD in UTC; must not precede from_date. Omit for the end of the birth-to-age-84 result.')] = None, fold: Annotated[StrictInt | None, Field(description='For repeated local time during DST rollback, use user-confirmed 0 (first) or 1 (second); otherwise omit.')] = None
 ) -> dict:
     return ext.house_ingress_data(year=year, month=month, day=day, hour=hour,
                                   minute=minute, location_id=location_id, planet=planet,
@@ -709,7 +709,7 @@ def render_secondary_progressions_chart(
     return _wheel_result(info, png, "次限推进双圈盘")
 
 
-@tool(annotations=READ_ONLY, description="Relationship charts for two people with exact birth data: synastry aspects, each person's planets in the other's Placidus houses, the midpoint composite chart, composite-to-natal aspects and shared house patterns. orb_profile: greene (default) or tight.")
+@tool(annotations=READ_ONLY, description='Calculate geometric charts for two exact births: synastry aspects, reciprocal Placidus house overlays, midpoint composite, composite-to-natal aspects and shared house patterns. Use for chart data or composite positions; use calculate_relationship_observation for contacts with natal context and observation paths, calculate_davison_chart for a time-space midpoint chart, or render_composite_chart for a composite image. orb_profile: greene (default) or tight. No compatibility score.')
 def calculate_relationship_charts(person_a: BirthInput | None = None, person_b: BirthInput | None = None,
                                   orb_profile: str = "greene") -> dict:
     return ext.relationship_data(person_a=person_a.model_dump(),
@@ -930,13 +930,13 @@ def calculate_lots(
                               lots=lots, house_system=house_system, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Scan exact planetary aspects over UTC inclusive date ranges (1800–2399, max 200 years). Arbitrary supported body pair and angles [0,180]; tropical geocentric apparent Swiss Ephemeris, mean nodes by default. Uses bracketed roots and relative-speed station splits. mode=orb_window returns clipped entry/exit windows plus exact events; orb_deg is separate from exact. output_precision: exact_datetime, date, year_summary. timezone_name is optional IANA zone. Cycle IDs and hit indices are query-local directed-angle groups, not universal cycle numbering. See docs/planetary-aspect-scan.md.")
+@tool(annotations=READ_ONLY, description='Find exact aspects or orb entry/exit windows between two moving sky bodies across a date range. No birth data or location is needed. Use calculate_transits_to_natal for a moving planet against fixed natal points; use calculate_aspect_windows for all active pairs at one moment, including location-dependent lots. Returns event_count and events, windows or year_summary according to mode/precision. Tropical geocentric apparent Swiss Ephemeris; nodes are mean unless explicitly true. Cycle IDs and hit indices are query-local, not universal numbering. See docs/planetary-aspect-scan.md.')
 def scan_planetary_aspects(
-    planet_a: str, planet_b: str, start_date: str, end_date: str,
-    aspects: list[float] | None = None,
-    mode: Literal["exact", "orb_window"] = "exact", orb_deg: float = 1.0,
-    output_precision: Literal["exact_datetime", "date", "year_summary"] = "exact_datetime",
-    timezone_name: str | None = None,
+    planet_a: Annotated[str, Field(description='First moving sky body: sun, moon, mercury, venus, mars, jupiter, saturn, uranus, neptune, pluto, chiron, ceres, pallas, juno, vesta, pholus, north_node, south_node, true_north_node, true_south_node or mean_apogee. English names are case-insensitive.')], planet_b: Annotated[str, Field(description='Second moving sky body; same vocabulary as planet_a. Must differ from planet_a; an opposing north/south node pair is also invalid because separation is constant.')], start_date: Annotated[str, Field(description='Inclusive UTC start date, exactly YYYY-MM-DD. Range must lie in 1800-2399, be ordered and span at most 200 years.')], end_date: Annotated[str, Field(description='Inclusive UTC end date, exactly YYYY-MM-DD. Events before the next UTC midnight are included; timezone_name does not change these boundaries.')],
+    aspects: Annotated[list[float] | None, Field(description='Optional list of 1-32 angles in degrees, each 0-180. Defaults to [0,60,90,120,180]; e.g. [0] for conjunctions.')] = None,
+    mode: Annotated[Literal["exact", "orb_window"], Field(description='exact returns exact crossings; orb_window also returns entry/exit intervals clipped to the query range, with truncation flags.')] = "exact", orb_deg: Annotated[float, Field(description='Orb radius in degrees, strictly between 0 and 30; default 1. Used for orb_window boundaries, not as a tolerance for exact events.')] = 1.0,
+    output_precision: Annotated[Literal["exact_datetime", "date", "year_summary"], Field(description='exact_datetime returns timestamps; date returns calendar dates; year_summary returns per-year counts and leaves events empty. This changes presentation, not the scanned events.')] = "exact_datetime",
+    timezone_name: Annotated[str | None, Field(description='Optional IANA zone, e.g. Asia/Shanghai. Adds local event times and selects the calendar year for year_summary; query bounds remain UTC.')] = None,
 ) -> dict:
     from services.planetary_aspect_scan import scan
     return scan(planet_a, planet_b, start_date, end_date, aspects, mode,

@@ -50,7 +50,7 @@ WORKFLOWS = {
         "steps": [("calculate_solar_arc", "取得太阳弧方向与相位矩阵")],
     },
     "solar_return": {
-        "label": "太阳返照", "patterns": (r"太阳返照|太阳回归|solar return",),
+        "label": "太阳返照", "patterns": (r"太阳返照|太阳回归|日返|日反|solar return",),
         "needed": _BIRTH + ["目标年份 target_year", "返照所在地 residence_location_id",
                            "宫制 placidus 或 whole_sign"],
         "steps": [("calculate_solar_return", "取得返照盘与本命叠加数据")],
@@ -116,6 +116,19 @@ for _goal, _render in _IMAGE_STEPS.items():
 WORKFLOWS["solar_arc"]["image_needed"] = _BIRTH + ["绘图年龄 age 或参考日期 as_of（可选）；图片显示一个年龄，不是年龄区间"]
 
 WORKFLOWS.update({
+    "planetary_aspect_scan": {
+        "label": "两颗天空星体相位日期扫描",
+        "patterns": (r"行星相位扫描|天空相位扫描|planetary aspect scan|scan planetary aspects",),
+        "needed": ["两颗天空星体 planet_a / planet_b", "UTC 日期范围 start_date / end_date（YYYY-MM-DD）", "相位角度 aspects 与模式 mode（可选）"],
+        "steps": [("scan_planetary_aspects", "查两颗运动星体的精确相位或容许度窗口；不需要出生资料或地点")],
+        "needs_location": False,
+    },
+    "lots": {
+        "label": "指定希腊点与阿拉伯点",
+        "patterns": (r"阿拉伯点|希腊点|\blots\b|(?:福点|精神点|爱神点).{0,4}(?:公式|黄经)",),
+        "needed": _BIRTH + ["所需 lots 名称（可选）；宫制默认 whole_sign，支持 placidus"],
+        "steps": [("calculate_lots", "取得指定点的黄经、星座、宫位与昼夜公式；古典综合要素另用 classical")],
+    },
     "sky_chart": {
         "label": "指定地点天象盘", "patterns": (r"(?:当前|今日|今天)?天象盘|sky chart|(?:画|绘制|出图)\s*(?:一张|一下)?\s*(?:当前|今日|今天)?(?:天象|天空)",),
         "needed": ["已确认的观测地点 location_id", "观测时刻 moment（带时区；可选，默认当前时刻）"],
@@ -193,6 +206,7 @@ _SPECIALIZES = {
     "releasing_l4": {"releasing"},
     "relationship_observation": {"relationship"},
     "house_ingresses": {"saturn_jupiter_cycles"},
+    "lots": {"classical"},
 }
 _EVENT_SCOPE = re.compile(
     r"精确(?:发生)?(?:日期|时间|相位)|起止|区间|到年底|到明年|未来|"
@@ -275,14 +289,14 @@ def recommend(goal: str, available_tools: set[str]) -> dict:
         required_tools.add(renderer[0])
     if key != "natal" and not image_only:
         required_tools.add(_VERIFY["tool"])
-    if key != "sky":
+    if spec.get("needs_location", key != "sky"):
         required_tools.add("search_birthplace")
     missing = required_tools - available_tools
     if missing:
         return {"status": "unavailable", "error": "所需工具当前未注册。",
                 "missing_tools": sorted(missing)}
     steps = []
-    if key != "sky":
+    if spec.get("needs_location", key != "sky"):
         searches = 2 if key in {"solar_return", "lunar_return", "relationship", "davison", "relocation", "composite", "relationship_observation"} else 1
         steps.append({"tool": "search_birthplace", "when": "尚未确认地点 ID 时；已有确认 ID 则跳过",
                       "purpose": spec.get("location_purpose", "确认出生地" if searches == 1 else "分别确认所需地点")})

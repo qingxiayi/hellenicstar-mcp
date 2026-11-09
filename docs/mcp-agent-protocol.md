@@ -17,6 +17,27 @@
 
 地点搜索时将用户已给出的国家/州写入 `City, Country` 或 `City, State, Country`。服务在明确且已核实的区域内只有一个名称精确匹配时返回 `next_action=use_location_id`，直接使用并注明所选城市；`next_action=ask_user` 表示仍需确认，询问尚缺的地区或市/区选择。已确认同一地点 ID 时复用，不重复搜索或询问；不能按人口或列表顺序自行消除歧义。
 
+## 相近工具怎样选择
+
+先区分对象（天空、本命、两人）、时间范围（一个时刻、日期区间）和输出（数据、图片），再选择工具。明确请求直接调用；不要为了收集更多数据自动把同组工具全部调用。
+
+| 用户真正需要的内容 | 首选工具 | 相邻需求的区别 |
+| --- | --- | --- |
+| 本命行星的星座、宫位、相位 | `calculate_natal_chart` | 完整定位链/相位网络用 `calculate_natal_structure_graph`；候选重点用 `calculate_natal_salience` |
+| 派系、尊贵、状态、三分主星或琼斯分类 | `calculate_classical_factors` | 某个希腊点的公式和位置用 `calculate_lots`；十二宫宫主链用 `calculate_house_rulers` |
+| 两颗天空星体在一段日期内何时成相位 | `scan_planetary_aspects` | 两颗星体都在运动，不用出生资料、地点；不能代替天空星体对固定本命位置的行运 |
+| 天空星体何时与我的本命点成精确相位 | `calculate_transits_to_natal` | 要出生资料和日期区间；四轴只支持合相；某一刻的容许度内相位用 `get_transit_snapshot` |
+| 土星、木星什么时候进入我的某宫 | `calculate_house_ingresses` | 本命 Placidus 宫头越界；土木四轴周期用 `calculate_saturn_jupiter_cycles` |
+| 某时刻的一般天象、月相、逆行状态 | `get_current_sky` | 不用地点；需要当地宫位和四轴用 `calculate_sky_chart`，不能为一般天象追问出生地 |
+| 某时刻活跃的各对星体相位及剩余窗口 | `calculate_aspect_windows` | 包含福点/精神点，故需要地点；指定两颗天空星体跨日期扫描用 `scan_planetary_aspects` |
+| 两人的比较盘、组合中点盘数据 | `calculate_relationship_charts` | 接触与双方本命背景的观察路径用 `calculate_relationship_observation`；时空中点用 `calculate_davison_chart` |
+| 次限整张盘的位置与本命接触 | `calculate_secondary_progressions` | 只研究次限日月阶段用 `calculate_progressed_lunation`；太阳弧是另一种技法，不能互换 |
+| 只要一张星盘图片 | 对应 `render_*` | 不必先调用同名计算工具；只要数据不出图；未提供的图片类型不能用近似图冒充 |
+
+例如“2026 年木星与土星何时成刑相”选择天空相位扫描；“2026 年土星何时刑我的本命金星”选择本命行运；“现在土星与我的本命金星是否在容许度内”选择行运快照。多技法时间线只用于用户明确要综合时间线，不能代替单一技法的完整明细。
+
+此表帮助调用方选择工具，不保证所有客户端模型都能正确执行。遇到不支持的对象、角度、日期跨度或图片类型，应说明边界，不静默替换。
+
 ## 可选的流程目录
 
 `recommend_workflow` 是无状态的关键词目录，不是任意自然语言理解器。先理解用户意图、否定、背景、时间范围和输出要求，再传入一个已知目标键（例如 `relationship_observation`）或明确的技法表达。保留原始需求在对话中，不能在归一化时丢掉时间范围或数据/图片要求；已知工具时可以直接调用。
