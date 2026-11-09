@@ -1,3 +1,11 @@
+# Current release: v0.1.9
+
+2026-11-09: Solar-return Chiron and lunar nodes are now included in MCP chart data
+and PNG wheels. GitHub v0.1.9, maintainer HTTPS and Glama 0.1.9 all use source
+`594f77a70eb7bc771ee1e64b2514031a5180443d`. Local tests, Ubuntu/macOS CI,
+production-candidate tests and public MCP checks passed. See
+[release verification](validation/solar-return-release-2026-11-09.md).
+
 # Current release: v0.1.8
 
 2026-11-07: Jones bowl-axis and individual-handle geometry correction published as
