@@ -1,3 +1,7 @@
+# 2026-11-09 — Tool-selection guidance v0.1.10
+
+GitHub and production MCP now run `f866baa`. Glama source synchronization remains pending; its last confirmed release is 0.1.9. See [verification and rollback](validation/tool-selection-release-2026-11-09.md). No Mini Program frontend publication.
+
 # Current release: v0.1.9
 
 2026-11-09: Solar-return Chiron and lunar nodes are now included in MCP chart data
