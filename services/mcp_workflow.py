@@ -50,7 +50,7 @@ WORKFLOWS = {
         "steps": [("calculate_solar_arc", "取得太阳弧方向与相位矩阵")],
     },
     "solar_return": {
-        "label": "太阳返照", "patterns": (r"太阳返照|太阳回归|日返|日反|solar return",),
+        "label": "太阳返照", "patterns": (r"太阳返照|太阳回归|日返|solar return",),
         "needed": _BIRTH + ["目标年份 target_year", "返照所在地 residence_location_id",
                            "宫制 placidus 或 whole_sign"],
         "steps": [("calculate_solar_return", "取得返照盘与本命叠加数据")],

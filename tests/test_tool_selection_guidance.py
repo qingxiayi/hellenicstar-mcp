@@ -17,7 +17,6 @@ def tools():
     ('土木进宫', 'calculate_house_ingresses'),
     ('福点公式', 'calculate_lots'),
     ('日返', 'calculate_solar_return'),
-    ('日反', 'calculate_solar_return'),
 ])
 def test_nearby_requests_have_distinct_routes(tools, phrase, expected):
     result = recommend(phrase,set(tools))
