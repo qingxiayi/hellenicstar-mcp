@@ -34,8 +34,10 @@ def test_emma_2026_timeline_is_stable_and_matches_existing_event_families(emma):
     elapsed = monotonic() - started
     second = compute_timeline_synthesis(natal, birth, 2026)
     assert first == second
-    # This is a local performance budget on a fixed sample, not a production SLA.
-    assert elapsed < 2.0
+    # v3 scans all major slow-planet contacts plus padded transit/progression
+    # orb intervals. Allow shared Linux runners headroom (measured 2.3–3.6s
+    # on the release server); this fixed-sample guard is not a production SLA.
+    assert elapsed < 10.0
     assert first["event_count"] == len(first["events"])
     assert first["events"] == sorted(first["events"], key=_sort_key)
     assert {row["technique"] for row in first["events"]} == set(TECHNIQUE_PRIORITY)
@@ -61,7 +63,7 @@ def test_three_year_window_is_bounded_and_preserves_prior_year(emma):
     natal, birth = emma
     started = monotonic()
     wide = compute_timeline_synthesis(natal, birth, 2026, 3)
-    assert monotonic() - started < 2.0
+    assert monotonic() - started < 10.0
     narrow = compute_timeline_synthesis(natal, birth, 2026)
     assert all("2026-01-01" <= row["date"] < "2029-01-01"
                for row in wide["events"])
