@@ -180,7 +180,11 @@ _register_calculation('secondary_progressions', 'Secondary progressions',
 _register_calculation('timeline_synthesis', 'Timeline synthesis',
     'services/timeline_synthesis.py', 'compute_timeline_synthesis',
     'Merge bounded time-lord, secondary-progression and transit events, orb windows and progressed phase context. Resonance groups share explicit time windows and focus; they are not independent evidence or predictions.',
-    version='timeline-synthesis-3')
+    version='timeline-synthesis-4')
+_register_calculation('timeline_reading', 'Timeline reading views',
+    'services/timeline_reading.py', 'build_reading_views',
+    'Project-defined interval sweep, physical axis equivalence, direct natal context and reading order; not an author algorithm or psychological synthesis.',
+    version='timeline-reading-1', precision='Derived from existing rounded source intervals and natal facts; no new ephemeris search.')
 _register_calculation('timeline_aspect_windows', 'Timeline orb intervals',
     'services/timeline_windows.py', 'compute_aspect_windows',
     'Swiss Ephemeris positions with station-aware sampling and orb boundary roots; fixed natal targets, civil-day or day-for-year time scales, query-clipped intervals and explicit unknown search boundaries.',

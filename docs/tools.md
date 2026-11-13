@@ -97,3 +97,5 @@ Additive `reading_plan`, `evidence_matrix` and `resource_checks` outputs provide
 ## 综合时间线 / Multi-technique timeline
 
 `calculate_timeline_synthesis` combines timing data over 1–3 birthplace calendar years. Version 3 expands slow-planet transits to ten natal planets, adds progressed Sun ingresses and lunation context, and returns continuous orb intervals in `aspect_windows`. Secondary planetary aspects and Moon ingresses already existed before this release. Read [field definitions and limits](timeline-synthesis.md) before interpreting exact events, clipped windows or unknown boundaries. Resonance groups remain a same-target timing rule, not inferred psychological themes.
+
+The local v4 candidate adds `natal_context`, `reading_windows`, `exact_contacts`, `concurrent_segments`, `window_overlaps`, `reading_layers` and `reading_counts`. It is not deployed. Intersections and direct natal relationships explain grouping; axis-equivalent records are deduplicated only in the new reading views. Raw v3 fields remain unchanged.

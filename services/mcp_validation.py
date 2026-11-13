@@ -26,7 +26,7 @@ CONTRACTS = {
     'calculate_time_lords': ('time_lords', {'birth_context': dict, 'as_of': str, 'firdaria': dict, 'annual_profections': dict}, 'tests/test_time_lords.py'),
     'calculate_solar_arc': ('solar_arc', {'birth_context': dict, 'settings': dict, 'aspect_matrix': list, 'axis_contacts_by_directed_points': list, 'directed_axes_to_natal_points': list, 'directed_positions_at_wheel_age': dict, 'cross_aspects_at_wheel_age': list}, 'tests/test_solar_arc_matrix.py'),
     'calculate_transits_to_natal': ('transit_events', {'birth_context': dict, 'settings': dict, 'event_count': int, 'events': list}, 'tests/test_transit_lifetime.py'),
-    'calculate_timeline_synthesis': ('timeline_synthesis', {'birth_context': dict, 'engine_version': str, 'settings': dict, 'event_count': int, 'events': list, 'resonances': list, 'aspect_window_count': int, 'aspect_windows': list, 'progressed_context': dict}, 'tests/test_timeline_synthesis.py'),
+    'calculate_timeline_synthesis': ('timeline_synthesis', {'birth_context': dict, 'engine_version': str, 'settings': dict, 'event_count': int, 'events': list, 'resonances': list, 'aspect_window_count': int, 'aspect_windows': list, 'progressed_context': dict, 'natal_context': dict, 'reading_windows': list, 'exact_contacts': list, 'window_overlaps': list, 'concurrent_segments': list, 'reading_layers': dict, 'reading_counts': dict}, 'tests/test_timeline_synthesis.py'),
     'get_transit_snapshot': ('transit_snapshot', {'birth_context': dict, 'moment': str, 'transit_positions': dict, 'active_aspects_to_natal': list}, 'tests/test_transit_natal.py'),
     'calculate_saturn_jupiter_cycles': ('cycles', {'birth_context': dict, 'as_of': str, 'natal': dict, 'range': dict, 'saturn_events': list, 'jupiter_events': list, 'aspects': list, 'saturn_phases': list, 'jupiter_phases': list, 'stats': dict, 'current': dict}, 'tests/test_transit_golden_cases.py'),
     'calculate_house_ingresses': ('ingresses', {'birth_context': dict, 'settings': dict, 'events': list, 'event_count': int}, 'tests/test_transit_lifetime.py'),
@@ -422,6 +422,8 @@ def domain_checks(tool,d,args):
                     and row['event_count']==len(sources)
                     and instant(row['start_utc'])<=instant(row['end_utc']),
                     path,'resonance_matches_source_events')
+        from services.timeline_reading import validate_reading_views
+        validate_reading_views(d, require)
     elif family=='transit_snapshot':
         require(len(d['transit_positions'])>=10,'/transit_positions','transit_planets_present')
     elif family=='cycles':

@@ -94,3 +94,7 @@ Envelope 是元数据，不能当成占星事实提交核验。
 ## 本命结构图谱
 
 需要定位链、闭环、汇聚、构型或共享依赖时调用 `calculate_natal_structure_graph`。检查 `completeness` 和 `layer_availability`；`status=ok` 不等于宫位层完整。结构中心性不直接等于心理核心。用原样 `calculation_reference` 核验所引用的图谱字段。
+
+### 本地 v4 阅读视图（尚未部署）
+
+先读 `reading_layers` 确定阅读顺序，再取其引用的完整数组。`concurrent_segments` 表示真正同期；`window_overlaps` 只添加同目标或直接本命相位的关联依据。`natal_context` 只提供一层本命事实，两种宫制、传统/现代替代宫主分开，不递归激活宫主链。`reading_windows`、`exact_contacts` 对等价轴点接触去重；旧 `resonances` 未去重，不与新数组叠加计数。数组引用只对该次完整结果有效；摘要和 `include` 不重编号。新的计算引用覆盖这些阅读规则，可用 `verify_calculation_claims` 核对字段事实。不能把这些事实转写成已经判定的心理主题或现实事件。

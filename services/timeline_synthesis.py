@@ -16,7 +16,7 @@ from services.ephemeris_guard import apply_ephe_path, EXPECTED_SHA256
 from services.solar_arc_engine import MAX_SUPPORTED_AGE, TROPICAL_YEAR_DAYS
 
 
-ENGINE_VERSION = "timeline-synthesis-3"
+ENGINE_VERSION = "timeline-synthesis-4"
 MAX_SPAN_YEARS = 3
 SECONDARY_SCAN_DAYS = 7  # civil days for planets other than the Moon
 SECONDARY_MOON_SCAN_DAYS = 1  # resolves a short exit and re-entry within a week
@@ -389,9 +389,12 @@ def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
     windows = compute_aspect_windows(
         snapshot, _jd_from_utc(start), _jd_from_utc(end), events, _TRANSIT_PLANETS,
         _utc_second_text)
+    from services.timeline_reading import build_reading_views, policy as reading_policy
+    reading = build_reading_views(natal, events, windows)
     return {
         "engine_version": ENGINE_VERSION,
         "settings": {"target_year": target_year, "span_years": span_years,
+                     "reading_policy": reading_policy(),
                      "timezone": zone.key, "interval_semantics": "start_inclusive_end_exclusive",
                      "secondary_scan_days": SECONDARY_SCAN_DAYS,
                      "secondary_moon_scan_days": SECONDARY_MOON_SCAN_DAYS,
@@ -423,4 +426,5 @@ def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
         "aspect_window_count": len(windows), "aspect_windows": windows,
         "progressed_context": _progressed_context(snapshot, start, end),
         "resonances": _resonances(events),
+        **reading,
     }

@@ -88,7 +88,7 @@ TOOL_ALGORITHM_KEYS = {
     "calculate_aspect_windows": ("aspect_windows", "current_sky"),
     "calculate_lunar_return": ("lunar_return",),
     "calculate_secondary_progressions": ("secondary_progressions",),
-    "calculate_timeline_synthesis": REGISTERED_NATAL_KEYS + ("timeline_synthesis", "secondary_progressions", "timeline_aspect_windows", "progressed_lunation"),
+    "calculate_timeline_synthesis": REGISTERED_NATAL_KEYS + ("timeline_synthesis", "secondary_progressions", "timeline_aspect_windows", "progressed_lunation", "timeline_reading"),
     "calculate_relationship_observation": REGISTERED_NATAL_KEYS + ("natal_structure_graph", "natal_salience", "relationship_observation", "relationship_observation_timing", "secondary_progressions"),
 }
 
