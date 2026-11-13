@@ -1,0 +1,263 @@
+{
+  "tool_count": 48,
+  "input_contract_unchanged": true,
+  "engine_version": "timeline-synthesis-3",
+  "event_count": 84,
+  "aspect_window_count": 84,
+  "transit_event_count": 65,
+  "old_events_preserved": true,
+  "matches_local_calculation": true,
+  "phase_angle_absolute_tolerance_degrees": 1e-09,
+  "phase_angle_deltas_degrees": {
+    "sun_lon": 0.0,
+    "moon_lon": 1.580957587066223e-12,
+    "angle_diff": 1.5916157281026244e-12
+  },
+  "unrelated_sky_scan_unchanged": true,
+  "selective_read_verified": true,
+  "claim_verification": {
+    "status": "ok",
+    "calculation_reference": {
+      "schema_version": "calculation-reference-v2",
+      "tool": "calculate_timeline_synthesis",
+      "input": {
+        "year": 1990,
+        "month": 4,
+        "day": 15,
+        "hour": 18,
+        "minute": 0,
+        "location_id": "gn:2988507",
+        "target_year": 2026,
+        "span_years": 3,
+        "fold": null
+      },
+      "fingerprint": "ce6a93cba2e9a6ac40c5a49741b97ad42a7723bdf9dceab7cc22e98c34dccd25"
+    },
+    "claims": [
+      {
+        "quote": "Release smoke engine_version",
+        "path": "/engine_version",
+        "claimed_value": "timeline-synthesis-3",
+        "verdict": "supported",
+        "evidence": {
+          "tool": "calculate_timeline_synthesis",
+          "path": "/engine_version",
+          "value": "timeline-synthesis-3"
+        }
+      },
+      {
+        "quote": "Release smoke event_count",
+        "path": "/event_count",
+        "claimed_value": 84,
+        "verdict": "supported",
+        "evidence": {
+          "tool": "calculate_timeline_synthesis",
+          "path": "/event_count",
+          "value": 84
+        }
+      },
+      {
+        "quote": "Release smoke aspect_window_count",
+        "path": "/aspect_window_count",
+        "claimed_value": 84,
+        "verdict": "supported",
+        "evidence": {
+          "tool": "calculate_timeline_synthesis",
+          "path": "/aspect_window_count",
+          "value": 84
+        }
+      },
+      {
+        "quote": "Window boundary",
+        "path": "/aspect_windows/0/start_utc",
+        "claimed_value": "2025-12-31T23:00:00Z",
+        "verdict": "supported",
+        "evidence": {
+          "tool": "calculate_timeline_synthesis",
+          "path": "/aspect_windows/0/start_utc",
+          "value": "2025-12-31T23:00:00Z"
+        }
+      },
+      {
+        "quote": "Progressed phase",
+        "path": "/progressed_context/phase_at_start/phase_num",
+        "claimed_value": 8,
+        "verdict": "supported",
+        "evidence": {
+          "tool": "calculate_timeline_synthesis",
+          "path": "/progressed_context/phase_at_start/phase_num",
+          "value": 8
+        }
+      }
+    ],
+    "counts": {
+      "supported": 5,
+      "contradicted": 0,
+      "unverified": 0
+    },
+    "assessment": "submitted_claims_supported",
+    "coverage": {
+      "submitted_claims": 5,
+      "checked_claims": 5,
+      "quote_semantics_checked": false,
+      "full_report_checked": false,
+      "independent_algorithm_verification": false
+    },
+    "next_action": "use_verified_facts",
+    "calculation_envelope": {
+      "schema_version": "calculation-envelope-v1",
+      "tool": "verify_calculation_claims",
+      "versions": {
+        "protocol_version": "0.1.0",
+        "engine_version": "0.1.0",
+        "data_schema_version": "0.1.0",
+        "plugin_manifest_version": "not_applicable",
+        "sub_modules": {
+          "calc": "v2",
+          "renderer": "13",
+          "jones_pattern": "jones-miniapp-7",
+          "progressed_phase": "progressed-lunation-4",
+          "solar_arc": "true-solar-arc-1",
+          "time_lords": "time-lords-3",
+          "transit": "precise-ephemeris-1"
+        }
+      },
+      "provenance": {
+        "scope": "declared_dependencies",
+        "coverage": "partial",
+        "registered_algorithms": [
+          {
+            "key": "planetary_longitudes",
+            "source": "kerykeion",
+            "implementation": "kerykeion.AstrologicalSubjectFactory",
+            "file_path": "engine/natal_chart.py",
+            "code_anchor": "AstrologicalSubjectFactory",
+            "code_location": "engine/natal_chart.py:3800",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "通过 kerykeion subject 提取十大行星 (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto) 经度与逆行状态",
+            "coordinate_system": "Tropical Zodiac, Geocentric",
+            "notes": "先尝试 KrInstance（5.12.9 中不存在），except 分支使用 AstrologicalSubjectFactory (engine/natal_chart.py:3770-3783)；行星经度提取位于 engine/natal_chart.py:3800-3806"
+          },
+          {
+            "key": "axes_and_placidus_houses",
+            "source": "pyswisseph",
+            "implementation": "swe.houses(jd, lat, lng, b'P')",
+            "file_path": "engine/natal_chart.py",
+            "code_anchor": "swe.houses(jd, lat, lng, b'P')",
+            "code_location": "engine/natal_chart.py:2674",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "瑞士星历表 houses 函数计算普拉西度分宫制，四轴由 ascmc 输出派生 (ASC=ascmc[0], MC=ascmc[1], DESC=ASC+180, IC=MC+180)",
+            "coordinate_system": "Tropical Zodiac (回归黄道)",
+            "notes": "四轴提取与规范化逻辑位于 engine/natal_chart.py:2677-2680"
+          },
+          {
+            "key": "whole_sign_houses",
+            "source": "proprietary",
+            "implementation": "hellenistic.whole_sign_house(lon, asc_lon)",
+            "file_path": "hellenistic.py",
+            "code_anchor": "def whole_sign_house(lon: float, asc_lon: float) -> int:",
+            "code_location": "hellenistic.py:104",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "自研整宫算法：以上升点所在星座 (int(asc_lon // 30)) 为第 1 宫，每 30° 递增一宫",
+            "coordinate_system": "Tropical Zodiac (回归黄道)",
+            "notes": "实现为纯数学取模计算：(int(lon // 30) - int(asc_lon // 30) + 12) % 12 + 1"
+          },
+          {
+            "key": "lunar_nodes",
+            "source": "pyswisseph",
+            "implementation": "swe.calc_ut(jd_node, swe.MEAN_NODE)",
+            "file_path": "engine/natal_chart.py",
+            "code_anchor": "swe.calc_ut(jd_node, swe.MEAN_NODE)",
+            "code_location": "engine/natal_chart.py:3820",
+            "fallback": "kerykeion subject.true_north_lunar_node (engine/natal_chart.py:3837)",
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "瑞士星历表计算平均交点 (MEAN_NODE)，南交点为北交点对冲 180°",
+            "coordinate_system": "Tropical Zodiac, Geocentric",
+            "notes": "主路径代码使用 swe.MEAN_NODE（平均交点）；swisseph 失败时兜底读取 kerykeion 的 true_north_lunar_node（真交点），两者口径不一致"
+          },
+          {
+            "key": "chiron",
+            "source": "hybrid",
+            "implementation": "swe.calc_ut(jd, swe.CHIRON)",
+            "file_path": "engine/natal_chart.py",
+            "code_anchor": "swe.calc_ut(jd, swe.CHIRON)",
+            "code_location": "engine/natal_chart.py:3853",
+            "fallback": "JPL Horizons 补算 _jpl_chiron (services/calculator.py:900-948)；使用 ObsEclLon（其黄道参考系是否与主路径一致为 UNKNOWN）；该兜底依赖外网连接与 astroquery，若缺失库则静默跳过，网络失败时打印 Warning 跳过",
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "瑞士星历表 swe.CHIRON（常数 15，依赖 ephe/seas_18.se1 小行星历表）",
+            "coordinate_system": "Tropical Zodiac, Geocentric",
+            "notes": "当 engine 未能产出 chiron（如缺 seas_18.se1）时，由 calculator.py 捕获并调用 astroquery.jplhorizons 获取小行星 2060 数据"
+          },
+          {
+            "key": "timeline_synthesis",
+            "source": "hybrid",
+            "implementation": "services.timeline_synthesis.compute_timeline_synthesis",
+            "file_path": "services/timeline_synthesis.py",
+            "code_anchor": "def compute_timeline_synthesis(",
+            "code_location": "services/timeline_synthesis.py::compute_timeline_synthesis",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "timeline-synthesis-3",
+            "calculation_model": "Merge bounded time-lord, secondary-progression and transit events, orb windows and progressed phase context. Resonance groups share explicit time windows and focus; they are not independent evidence or predictions.",
+            "coordinate_system": "Tropical Zodiac; geocentric longitudes and declared local houses where applicable",
+            "notes": "Declared source dependency; runtime execution path and independent numerical accuracy are not established by this registration."
+          },
+          {
+            "key": "secondary_progressions",
+            "source": "hybrid",
+            "implementation": "services.secondary_progressions.compute_secondary_progressions",
+            "file_path": "services/secondary_progressions.py",
+            "code_anchor": "def compute_secondary_progressions(",
+            "code_location": "services/secondary_progressions.py::compute_secondary_progressions",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "UNKNOWN",
+            "calculation_model": "Day-for-year symbolic technique, Swiss Ephemeris progressed positions; Naibod or solar-arc-in-RA progressed angles are explicitly selected. Internal and natal comparison aspects use declared orb matrices.",
+            "coordinate_system": "Tropical Zodiac; geocentric longitudes and declared local houses where applicable",
+            "notes": "Symbolic time mapping is a technique convention, not a physical causal claim; angle methods are distinct. See services/secondary_progressions.py."
+          },
+          {
+            "key": "timeline_aspect_windows",
+            "source": "hybrid",
+            "implementation": "services.timeline_windows.compute_aspect_windows",
+            "file_path": "services/timeline_windows.py",
+            "code_anchor": "def compute_aspect_windows(",
+            "code_location": "services/timeline_windows.py::compute_aspect_windows",
+            "fallback": null,
+            "precision": "Minute-level boundary tolerance; bounded search, not life-event duration.",
+            "version_history": "timeline-synthesis-3",
+            "calculation_model": "Swiss Ephemeris positions with station-aware sampling and orb boundary roots; fixed natal targets, civil-day or day-for-year time scales, query-clipped intervals and explicit unknown search boundaries.",
+            "coordinate_system": "Tropical Zodiac; geocentric longitudes and declared local houses where applicable",
+            "notes": "Declared source dependency; runtime execution path and independent numerical accuracy are not established by this registration."
+          },
+          {
+            "key": "progressed_lunation",
+            "source": "hybrid",
+            "implementation": "services.progressed_phase.phase_snapshot",
+            "file_path": "services/progressed_phase.py",
+            "code_anchor": "def phase_snapshot(",
+            "code_location": "services/progressed_phase.py::phase_snapshot",
+            "fallback": null,
+            "precision": "UNKNOWN",
+            "version_history": "progressed-lunation-4",
+            "calculation_model": "Day-for-year progressed Moon minus progressed Sun longitude; eight 45-degree phases. Timeline boundaries use solve_phase_age in the same module.",
+            "coordinate_system": "Tropical Zodiac; geocentric longitudes and declared local houses where applicable",
+            "notes": "Declared source dependency; runtime execution path and independent numerical accuracy are not established by this registration."
+          }
+        ],
+        "execution_path": "UNKNOWN",
+        "source_tool": "calculate_timeline_synthesis"
+      }
+    }
+  },
+  "source_commit": "eda9bcd5ce97db733d6e3f42641d162bb7dafb8b",
+  "sample_note": "Synthetic regression fixture: 1990-04-15 18:00 Europe/Paris, gn:2988507; 2026–2028. No user birth data."
+}

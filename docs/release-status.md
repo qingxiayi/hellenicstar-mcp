@@ -1,9 +1,15 @@
-# 2026-11-13 — Timeline synthesis v0.1.11 preparation
+# Current release: v0.1.11 — 2026-11-13
 
-Timeline engine v3 adds expanded transits, progressed context and continuous orb
-windows. Local verification: 1424 tests and 11 subtests passed. Publication and
-runtime acceptance are tracked separately; this source-preparation entry is not a
-claim of deployment. See [field definitions](timeline-synthesis.md).
+GitHub v0.1.11, maintainer HTTPS MCP and Glama 0.1.11 use source
+`eda9bcd5ce97db733d6e3f42641d162bb7dafb8b`. Timeline synthesis v3 expands
+transits, adds progressed Sun ingress/lunation context and continuous orb windows.
+Local and final Ubuntu/macOS suites each passed 1424 tests and 11 subtests;
+public calculations and selective reading passed. See [field definitions](timeline-synthesis.md)
+and [channel verification, performance adjustment and rollback](validation/timeline-synthesis-release-2026-11-13.md).
+Smithery's previous URL returns 404; its publication is not claimed.
+The Mini Program service was unchanged.
+
+The entries below are historical snapshots, including earlier pending states.
 
 # 2026-11-09 — Tool-selection guidance v0.1.10
 

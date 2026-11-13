@@ -1,5 +1,10 @@
 # Distribution and platform builds
 
+Current release: **v0.1.11 / 2026-11-13**. GitHub, maintainer HTTPS MCP and
+Glama 0.1.11 use `eda9bcd5ce97db733d6e3f42641d162bb7dafb8b`. See
+[verified channel states](validation/timeline-synthesis-release-2026-11-13.md);
+Smithery is not a confirmed published channel.
+
 ## Source release
 
 GitHub releases distribute the source archive, per-file `source-manifest.json`, and
