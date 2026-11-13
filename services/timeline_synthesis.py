@@ -6,7 +6,9 @@ Intervals are half-open; all displayed dates use the birth-place time zone.
 """
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
+import calendar
+import re
 from importlib.metadata import version
 from zoneinfo import ZoneInfo
 
@@ -352,26 +354,70 @@ def _resonance_row(focus: str, rows: list[dict], start_utc: str, end_utc: str) -
             "event_count": len(rows)}
 
 
-def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
-                               span_years: int = 1, *, snapshot=None) -> dict:
-    """Compute one to three complete birth-place calendar years.
+def _local_day_start(day, zone):
+    # At a skipped midnight, use its forward-normalized valid wall time.
+    # A wholly skipped civil date is rejected rather than silently renamed.
+    midnight = datetime.combine(day, datetime.min.time(), tzinfo=zone)
+    valid = midnight.astimezone(timezone.utc).astimezone(zone)
+    if valid.date() != day:
+        raise ValueError("查询边界日期在出生地时区不存在，请选择有效日期")
+    return valid
+
+
+def resolve_timeline_range(birth_context: dict, target_year=None, span_years=1,
+                           start_date=None):
+    """Resolve an explicit, reproducible calendar-year or anniversary interval."""
+    if isinstance(span_years, bool) or not isinstance(span_years, int) or not 1 <= span_years <= MAX_SPAN_YEARS:
+        raise ValueError("span_years 需在 1–3")
+    if target_year is not None and start_date is not None:
+        raise ValueError("target_year 与 start_date 只能选择一个")
+    if start_date is not None:
+        if not isinstance(start_date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", start_date):
+            raise ValueError("start_date 需为 YYYY-MM-DD，不接受 today 等相对日期")
+        try:
+            first = date.fromisoformat(start_date)
+        except ValueError as exc:
+            raise ValueError("start_date 需为有效日期") from exc
+        if not 1900 <= first.year <= 2099:
+            raise ValueError("start_date 起始年份需在 1900–2099")
+        end_year = first.year + span_years
+        last = first.replace(year=end_year, day=min(first.day, calendar.monthrange(end_year, first.month)[1]))
+        mode = 'rolling_years'
+    else:
+        if isinstance(target_year, bool) or not isinstance(target_year, int) or not 1900 <= target_year <= 2099:
+            raise ValueError("需提供 target_year（1900–2099）或 start_date")
+        first, last = date(target_year, 1, 1), date(target_year + span_years, 1, 1)
+        mode = 'calendar_years'
+    zone = ZoneInfo(birth_context['tz_iana'])
+    birth_local = datetime.fromisoformat(birth_context['civil_dt']).replace(
+        tzinfo=zone, fold=birth_context.get('fold') or 0)
+    requested = _local_day_start(first, zone)
+    start = max(requested, birth_local)
+    end = _local_day_start(last, zone)
+    if end <= birth_local or end > birth_local + timedelta(days=100 * 365.2425):
+        raise ValueError("时间线需在出生后、黄道释放的 100 年窗口内")
+    metadata = dict(mode=mode, requested_start_date=first.isoformat(),
+                    end_date_exclusive=last.isoformat(),
+                    start_local=start.isoformat(), end_local=end.isoformat(),
+                    start_utc=start.astimezone(timezone.utc).isoformat().replace('+00:00', 'Z'),
+                    end_utc=end.astimezone(timezone.utc).isoformat().replace('+00:00', 'Z'),
+                    clipped_to_birth=start > requested,
+                    anniversary_policy='same_month_day_feb29_clamped_to_feb28',
+                    midnight_policy='first_occurrence_gap_forward_skipped_date_rejected')
+    return start, end, metadata
+
+
+def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int | None = None,
+                               span_years: int = 1, *, snapshot=None, start_date: str | None = None) -> dict:
+    """Compute one to three calendar years or years from an explicit local date.
 
     ``natal`` is the validated ``services.calculator.compute`` result; ``birth``
     contains canonical location_id and resolved fold. Supplying a forecast
     snapshot avoids a second natal calculation in callers that already have it.
     """
-    if isinstance(target_year, bool) or not isinstance(target_year, int) or not 1900 <= target_year <= 2099:
-        raise ValueError("target_year 需在 1900–2099")
-    if isinstance(span_years, bool) or not isinstance(span_years, int) or not 1 <= span_years <= MAX_SPAN_YEARS:
-        raise ValueError("span_years 需在 1–3")
+    start, end, query_range = resolve_timeline_range(
+        natal['birth_context'], target_year, span_years, start_date)
     zone = ZoneInfo(natal["birth_context"]["tz_iana"])
-    birth_local = datetime(birth["year"], birth["month"], birth["day"],
-                           birth["hour"], birth["minute"], tzinfo=zone,
-                           fold=natal["birth_context"].get("fold") or 0)
-    start = max(datetime(target_year, 1, 1, tzinfo=zone), birth_local)
-    end = datetime(target_year + span_years, 1, 1, tzinfo=zone)
-    if end <= birth_local or end > birth_local + timedelta(days=100 * 365.2425):
-        raise ValueError("时间线需在出生后、黄道释放的 100 年窗口内")
     if snapshot is None:
         from services.forecast_natal import build_forecast_natal
         snapshot = build_forecast_natal(birth)
@@ -394,6 +440,7 @@ def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
     return {
         "engine_version": ENGINE_VERSION,
         "settings": {"target_year": target_year, "span_years": span_years,
+                     "start_date": start_date, "query_range": query_range,
                      "reading_policy": reading_policy(),
                      "timezone": zone.key, "interval_semantics": "start_inclusive_end_exclusive",
                      "secondary_scan_days": SECONDARY_SCAN_DAYS,

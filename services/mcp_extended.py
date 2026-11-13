@@ -109,13 +109,13 @@ def _forecast_snapshot(body: dict):
 
 
 def timeline_synthesis_data(*, year, month, day, hour, minute, location_id,
-                            target_year, span_years=1, fold=None) -> dict:
+                            target_year=None, span_years=1, fold=None, start_date=None) -> dict:
     """MCP-only projection of the bounded multi-technique timeline."""
     try:
         result, body = _validated(year, month, day, hour, minute, location_id, fold)
         from services.timeline_synthesis import compute_timeline_synthesis
         timeline = compute_timeline_synthesis(result, body, target_year, span_years,
-                                              snapshot=_forecast_snapshot(body))
+                                              snapshot=_forecast_snapshot(body), start_date=start_date)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
     return {"status": "ok", "birth_context": result["birth_context"], **timeline}

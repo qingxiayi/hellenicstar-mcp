@@ -71,7 +71,7 @@ def tool_clarification(name, arguments, parameter_names):
             fields.append("age_or_as_of")
     if name == "calculate_transits_to_natal":
         fields.extend(("from_date", "to_date"))
-    if name == "calculate_timeline_synthesis":
+    if name == "calculate_timeline_synthesis" and missing(arguments.get("start_date")):
         fields.append("target_year")
     if name == "calculate_zodiacal_releasing_l4":
         fields.extend(("lot", "parent_start", "parent_sign"))
@@ -93,5 +93,5 @@ def tool_clarification(name, arguments, parameter_names):
     if name == "calculate_timeline_synthesis" and "target_year" in absent:
         for item in out["clarification"]["required"]:
             if item["field"] == "target_year":
-                item["prompt"] = "请确认时间线目标年份。"
+                item["prompt"] = "请提供目标年份 target_year，或滚动查询的起始日期 start_date（YYYY-MM-DD）。"
     return out

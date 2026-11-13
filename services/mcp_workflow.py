@@ -88,7 +88,7 @@ WORKFLOWS = {
     },
     "timeline_synthesis": {
         "label": "多技法综合时间线", "patterns": (r"多技法|综合时间线|timeline synthesis",),
-        "needed": _BIRTH + ["目标年份 target_year", "跨度 span_years（1–3 年，可选）"],
+        "needed": _BIRTH + ["目标年份 target_year 或明确起始日期 start_date（二选一）", "跨度 span_years（1–3 年，默认 1；未来一年用 start_date）"],
         "steps": [("calculate_timeline_synthesis", "取得带来源的跨技法时间线与重合时段")],
     },
     "saturn_jupiter_cycles": {

@@ -328,12 +328,16 @@ def domain_checks(tool,d,args):
             if args.get('to_date'): require(t.date()<=date.fromisoformat(args['to_date']),'/events','event_before_range_end')
             if family=='ingresses': require(r['entered_house']!=r['left_house'],'/events','ingress_changes_house')
     elif family=='timeline_synthesis':
-        from services.timeline_synthesis import NATURES, TECHNIQUE_PRIORITY, WEIGHTS, _sort_key
+        from services.timeline_synthesis import NATURES, TECHNIQUE_PRIORITY, WEIGHTS, _sort_key, resolve_timeline_range
         s=d['settings']
-        require(s['target_year']==args['target_year'] and s['span_years']==args['span_years'],
+        require(s['target_year']==args.get('target_year') and s['start_date']==args.get('start_date')
+                and s['span_years']==args.get('span_years',1),
                 '/settings','timeline_window_matches_input')
         require(1<=s['span_years']<=3 and s['timezone']==d['birth_context']['tz_iana'],
                 '/settings','timeline_window_and_timezone')
+        query_start, query_end, expected_range = resolve_timeline_range(
+            d['birth_context'], args.get('target_year'), args.get('span_years',1), args.get('start_date'))
+        require(s['query_range']==expected_range, '/settings/query_range', 'resolved_range_matches_input')
         require(d['event_count']==len(d['events']),'/event_count','count_matches_rows')
         require(d['events']==sorted(d['events'],key=_sort_key),'/events','stable_event_order')
         zone=ZoneInfo(s['timezone'])
@@ -353,7 +357,7 @@ def domain_checks(tool,d,args):
                     and local.tzinfo is not None and local==utc.astimezone(zone)
                     and local.utcoffset()==utc.astimezone(zone).utcoffset()
                     and row['date']==local.date().isoformat()
-                    and s['target_year']<=local.year<s['target_year']+s['span_years'],
+                    and query_start<=utc<query_end,
                     path,'timeline_event_instant_and_calendar')
             source=row['source']
             if row['weight']!='exact':
@@ -362,8 +366,6 @@ def domain_checks(tool,d,args):
                         and opened<=utc<closed,path+'/source','timeline_period_covers_event')
         require(d['aspect_window_count']==len(d['aspect_windows']),
                 '/aspect_window_count','count_matches_rows')
-        query_start=datetime(s['target_year'],1,1,tzinfo=zone)
-        query_end=datetime(s['target_year']+s['span_years'],1,1,tzinfo=zone)
         for i,row in enumerate(d['aspect_windows']):
             path=f'/aspect_windows/{i}'
             fields(row,{'technique':str,'planet':str,'target':str,'angle':float,
@@ -396,7 +398,7 @@ def domain_checks(tool,d,args):
                         path,'window_matches_exact_event')
         progressed=d['progressed_context']
         phase(progressed['phase_at_start'],'/progressed_context/phase_at_start')
-        require(query_start<=instant(progressed['as_of_utc'])<query_end,
+        require(instant(progressed['as_of_utc'])==query_start,
                 '/progressed_context/as_of_utc','context_inside_query')
         changes=progressed['phase_transitions']
         require(changes==sorted(changes,key=lambda r:r['exact_utc']),

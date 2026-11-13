@@ -40,7 +40,7 @@
 
 ## 综合时间线的读取顺序
 
-`calculate_timeline_synthesis` 查询 1–3 个出生地日历年。先读 `progressed_context` 的次限日月与月相背景，再对照 `aspect_windows` 的持续配置、`events` 的精确接触和活动周期。可用 `include` 分别读取这些顶层字段及 `aspect_window_count`、`event_count`；需要完整条目时保持 `detail_level="full"`。
+`calculate_timeline_synthesis` 查询 1–3 个出生地日历年或从明确日期起的滚动年。先读 `progressed_context` 的次限日月与月相背景，再对照 `aspect_windows` 的持续配置、`events` 的精确接触和活动周期。可用 `include` 分别读取这些顶层字段及 `aspect_window_count`、`event_count`；需要完整条目时保持 `detail_level="full"`。
 
 旧版已含次限行星合刑冲和次限月亮换座；v3 增加次限太阳换座、次限月相背景及相位区间，并将木土天海冥行运扩展到本命十行星的五大相位。行运四轴仍仅合相。`exact_event_indices` 只对应同次响应的完整 `events` 顺序，不能跨查询或用截断后的列表重新编号。
 
@@ -95,6 +95,8 @@ Envelope 是元数据，不能当成占星事实提交核验。
 
 需要定位链、闭环、汇聚、构型或共享依赖时调用 `calculate_natal_structure_graph`。检查 `completeness` 和 `layer_availability`；`status=ok` 不等于宫位层完整。结构中心性不直接等于心理核心。用原样 `calculation_reference` 核验所引用的图谱字段。
 
-### 本地 v4 阅读视图（尚未部署）
+### v4 阅读视图
 
 先读 `reading_layers` 确定阅读顺序，再取其引用的完整数组。`concurrent_segments` 表示真正同期；`window_overlaps` 只添加同目标或直接本命相位的关联依据。`natal_context` 只提供一层本命事实，两种宫制、传统/现代替代宫主分开，不递归激活宫主链。`reading_windows`、`exact_contacts` 对等价轴点接触去重；旧 `resonances` 未去重，不与新数组叠加计数。数组引用只对该次完整结果有效；摘要和 `include` 不重编号。新的计算引用覆盖这些阅读规则，可用 `verify_calculation_claims` 核对字段事实。不能把这些事实转写成已经判定的心理主题或现实事件。
+
+用户说“未来一年”时，按出生地时区确定今天的明确日期，使用 `start_date` 和 `span_years=1`；说“2027 年”时使用 `target_year=2027`。两种起点互斥。先向用户说明实际查询起止，使用 `settings.query_range` 的排他结束日；不要将未来十二个月替换为一个日历年。起点背景和活动周期已按真实查询起点计算。
