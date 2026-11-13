@@ -10,6 +10,7 @@
 | 指定时刻、地点的天象盘 / Sky chart with local houses | `calculate_sky_chart` | `render_sky_chart` |
 | 一个时刻的行运对本命相位 / Transit-to-natal snapshot | `get_transit_snapshot` | `render_transit_biwheel` |
 | 一段时间内精确行运日期 / Exact transit dates over a range | `calculate_transits_to_natal` | — |
+| 多技法阶段背景、精确接触及持续区间 / Multi-technique timeline | `calculate_timeline_synthesis` | — |
 | 次限月相周期 / Progressed lunation cycle | `calculate_progressed_lunation` | — |
 | 法达与年小限 / Firdaria and annual profections | `calculate_time_lords` | — |
 | 黄道释放 / Zodiacal releasing | `calculate_zodiacal_releasing` | — |
@@ -92,3 +93,7 @@ Additive `reading_plan`, `evidence_matrix` and `resource_checks` outputs provide
 `calculate_natal_salience` now returns `jones_view` and `view_comparison`. Request both with `include=["jones_view", "view_comparison"]`; add `schema_version` if needed in a selective response. These retain upstream shape roles, uncertainty and actual selected-orb contacts, alongside natal roles. They never promote natal focus, combine scores, or declare independent corroboration. The old `chart_pattern` natal selection family is removed; focal membership may change while complete profiles remain. Upstream core-opposition thresholds are disclosed separately from the default 6-degree contact view. See [contract and migration](natal-jones-parallel-view.md). See the release verification record for deployment status.
 
 关系观察和人工记录参数见 [relationship-observation.md](relationship-observation.md)，时间层见 [relationship-observation-timing.md](relationship-observation-timing.md)。
+
+## 综合时间线 / Multi-technique timeline
+
+`calculate_timeline_synthesis` combines timing data over 1–3 birthplace calendar years. Version 3 expands slow-planet transits to ten natal planets, adds progressed Sun ingresses and lunation context, and returns continuous orb intervals in `aspect_windows`. Secondary planetary aspects and Moon ingresses already existed before this release. Read [field definitions and limits](timeline-synthesis.md) before interpreting exact events, clipped windows or unknown boundaries. Resonance groups remain a same-target timing rule, not inferred psychological themes.

@@ -179,7 +179,16 @@ _register_calculation('secondary_progressions', 'Secondary progressions',
     notes='Symbolic time mapping is a technique convention, not a physical causal claim; angle methods are distinct. See services/secondary_progressions.py.')
 _register_calculation('timeline_synthesis', 'Timeline synthesis',
     'services/timeline_synthesis.py', 'compute_timeline_synthesis',
-    'Merge bounded time-lord, secondary-progression and transit events in stable order. Resonance groups share explicit time windows and focus; they are not independent evidence or predictions.')
+    'Merge bounded time-lord, secondary-progression and transit events, orb windows and progressed phase context. Resonance groups share explicit time windows and focus; they are not independent evidence or predictions.',
+    version='timeline-synthesis-3')
+_register_calculation('timeline_aspect_windows', 'Timeline orb intervals',
+    'services/timeline_windows.py', 'compute_aspect_windows',
+    'Swiss Ephemeris positions with station-aware sampling and orb boundary roots; fixed natal targets, civil-day or day-for-year time scales, query-clipped intervals and explicit unknown search boundaries.',
+    version='timeline-synthesis-3', precision='Minute-level boundary tolerance; bounded search, not life-event duration.')
+_register_calculation('progressed_lunation', 'Progressed lunation phase',
+    'services/progressed_phase.py', 'phase_snapshot',
+    'Day-for-year progressed Moon minus progressed Sun longitude; eight 45-degree phases. Timeline boundaries use solve_phase_age in the same module.',
+    version='progressed-lunation-4')
 _register_calculation('relationship_observation', 'Relationship observation',
     'services/relationship_observation.py', 'calculate_observation_data',
     'Two natal geometries; unique direct contacts, directional paths, bounded one-hop context, overlays and explicit scenario lenses. John Green source locators and ENGINE_DECISION boundaries are returned by provenance().',

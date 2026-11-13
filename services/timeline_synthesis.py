@@ -1,7 +1,7 @@
 """Deterministic, data-only synthesis of existing timing calculations.
 
 The caller supplies the already validated natal result and birth input. This
-module does not change any Mini Program route or any existing MCP tool.
+module supplies the MCP timeline without changing any Mini Program route.
 Intervals are half-open; all displayed dates use the birth-place time zone.
 """
 from __future__ import annotations
@@ -16,7 +16,7 @@ from services.ephemeris_guard import apply_ephe_path, EXPECTED_SHA256
 from services.solar_arc_engine import MAX_SUPPORTED_AGE, TROPICAL_YEAR_DAYS
 
 
-ENGINE_VERSION = "timeline-synthesis-2"
+ENGINE_VERSION = "timeline-synthesis-3"
 MAX_SPAN_YEARS = 3
 SECONDARY_SCAN_DAYS = 7  # civil days for planets other than the Moon
 SECONDARY_MOON_SCAN_DAYS = 1  # resolves a short exit and re-entry within a week
@@ -34,11 +34,20 @@ WEIGHTS = frozenset({"context", "marker", "exact"})
 _SECONDARY_ASPECTS = (0, 90, 180)  # subset of existing progression aspect angles
 _TRANSIT_PLANETS = ("jupiter", "saturn", "uranus", "neptune", "pluto")
 _AXES = ("asc", "mc", "dsc", "ic")
+_NATAL_PLANETS = ("sun", "moon", "mercury", "venus", "mars", "jupiter",
+                  "saturn", "uranus", "neptune", "pluto")
 
 
 def _utc_from_jd(jd: float) -> datetime:
     year, month, day, hour = swe.revjul(jd, swe.GREG_CAL)
     return datetime(year, month, day, tzinfo=timezone.utc) + timedelta(hours=hour)
+
+
+def _utc_second_text(jd: float) -> str:
+    # JD doubles may recover a civil boundary a few microseconds early.
+    # Round to the advertised second instead of truncating into the prior day.
+    moment = _utc_from_jd(jd) + timedelta(microseconds=500_000)
+    return moment.replace(microsecond=0).isoformat().replace('+00:00', 'Z')
 
 
 def _jd_from_utc(moment: datetime) -> float:
@@ -204,7 +213,7 @@ def _secondary_events(events: list, snapshot, start: datetime, end: datetime,
             next_jd = min(prior_jd + step, prog_hi)
             next_lon = position(body_id, next_jd)
             targets = []
-            if planet == "moon":
+            if planet in ("sun", "moon"):
                 for index in range(12):
                     targets.append((index * 30.0, "sign_ingress", "", 0))
             for natal_key, natal_lon in natal_targets.items():
@@ -242,19 +251,61 @@ def _secondary_events(events: list, snapshot, start: datetime, end: datetime,
 
 def _transit_events(events: list, snapshot, start: datetime, end: datetime,
                     zone: ZoneInfo) -> None:
-    from services.transit_natal import compute_filtered_events
+    from services.transit_natal import compute_filtered_events, ASPECT_ANGLES
     data = compute_filtered_events(snapshot, _jd_from_utc(start), _jd_from_utc(end),
-                                   planets=_TRANSIT_PLANETS, natal_points=_AXES,
-                                   aspects=(0.0,), max_days=None,
+                                   planets=_TRANSIT_PLANETS, natal_points=_NATAL_PLANETS + _AXES,
+                                   aspects=ASPECT_ANGLES, max_days=None,
                                    collapse_series=False)
     for row in data["events"]:
         when = _moment(row["exact_utc"])
-        events.append(_event("transits", "axis_contact", "exact", when, zone,
-                             f"axis:{row['natal_point']}",
+        axis = row['natal_point'] in _AXES
+        events.append(_event("transits", "axis_contact" if axis else "exact_aspect", "exact", when, zone,
+                             f"{'axis' if axis else 'planet'}:{row['natal_point']}",
                              {"planet": row["transit_planet"], "target": row["natal_point"],
-                              "angle": 0, "direction": row["direction"],
+                              "angle": row['angle'], "directed_angle": row['directed_angle'],
+                              "direction": row["direction"], "series_id": row['series_id'],
                               "contact_index": row["contact_index"],
                               "contact_total": row["contact_total"]}))
+
+
+def _progressed_context(snapshot, start, end):
+    """State at query start and all eight-phase boundaries in the query.
+
+    Kept outside exact aspect events: a phase transition is not a contact with
+    one natal planet and must not create a spurious resonance on that planet.
+    """
+    from services import progressed_phase
+    from services.secondary_progressions import SIGNS_ZH
+
+    birth_jd = snapshot.birth_jd_ut
+    lo, hi = _jd_from_utc(start), _jd_from_utc(end)
+    age_lo, age_hi = (lo - birth_jd) / TROPICAL_YEAR_DAYS, (hi - birth_jd) / TROPICAL_YEAR_DAYS
+    phase = progressed_phase.phase_snapshot(birth_jd, age_lo)
+    transitions = []
+    for index in range(8):
+        age = progressed_phase.solve_phase_age(birth_jd, index * 45, age_lo, age_hi)
+        if age is None:
+            continue
+        jd = birth_jd + age * TROPICAL_YEAR_DAYS
+        if not lo <= jd < hi:
+            continue
+        at = _utc_from_jd(jd)
+        transitions.append({
+            'phase_num': index + 1,
+            'phase_name': progressed_phase.NatalChartCalculator.PHASE_NAMES[index],
+            'exact_utc': at.isoformat(timespec='seconds').replace('+00:00', 'Z'),
+            'local_at': at.astimezone(start.tzinfo).isoformat(timespec='seconds'),
+            'date': at.astimezone(start.tzinfo).date().isoformat(),
+        })
+    transitions.sort(key=lambda r: r['exact_utc'])
+    return {
+        'as_of_utc': start.astimezone(timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z'),
+        'phase_at_start': phase,
+        'sun_sign_at_start': SIGNS_ZH[int(phase['sun_lon'] // 30)],
+        'moon_sign_at_start': SIGNS_ZH[int(phase['moon_lon'] // 30)],
+        'phase_transitions': transitions,
+        'time_precision': 'minute',
+    }
 
 
 def _resonances(events: list[dict]) -> list[dict]:
@@ -331,6 +382,13 @@ def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
     events.sort(key=_sort_key)
     for index, row in enumerate(events):
         row["index"] = index
+    from services.timeline_windows import (compute_aspect_windows, TRANSIT_PADDING_DAYS,
+                                           SECONDARY_PADDING_DAYS)
+    from services.transit_natal import ORBS
+    from services.secondary_progressions import PROG_TO_NATAL_ORBS
+    windows = compute_aspect_windows(
+        snapshot, _jd_from_utc(start), _jd_from_utc(end), events, _TRANSIT_PLANETS,
+        _utc_second_text)
     return {
         "engine_version": ENGINE_VERSION,
         "settings": {"target_year": target_year, "span_years": span_years,
@@ -339,9 +397,30 @@ def compute_timeline_synthesis(natal: dict, birth: dict, target_year: int,
                      "secondary_moon_scan_days": SECONDARY_MOON_SCAN_DAYS,
                      "secondary_root_tolerance_civil_minutes": 1,
                      "resonance_window_days": RESONANCE_WINDOW_DAYS,
+                     "transit_planets": list(_TRANSIT_PLANETS),
+                     "transit_natal_planets": list(_NATAL_PLANETS),
+                     "transit_planet_aspects": [0, 60, 90, 120, 180],
+                     "transit_axis_aspects": [0],
+                     "secondary_aspects": list(_SECONDARY_ASPECTS),
+                     "secondary_sign_ingress_planets": ['sun', 'moon'],
+                     "window_policy": {
+                         "meaning": "orb_membership_not_life_event_duration",
+                         "transit_orbs_by_group": {group: {str(k): v for k, v in orbs.items()}
+                                                    for group, orbs in ORBS.items()},
+                         "transit_orb_groups": {p: 'fast' if p == 'jupiter' else 'slow'
+                                                for p in _TRANSIT_PLANETS},
+                         "secondary_orbs": {str(k): PROG_TO_NATAL_ORBS[k] for k in _SECONDARY_ASPECTS},
+                         "transit_search_padding_days": TRANSIT_PADDING_DAYS,
+                         "secondary_search_padding_days": SECONDARY_PADDING_DAYS,
+                         "boundary_precision": "minute",
+                         "clipped_to_query": True,
+                         "unknown_boundaries": "null_with_search_or_birth_limit_status",
+                     },
                      "pyswisseph_package_version": version("pyswisseph"),
                      "pyswisseph_version": swe.version,
                      "ephemeris_expected_sha256": dict(EXPECTED_SHA256)},
         "event_count": len(events), "events": events,
+        "aspect_window_count": len(windows), "aspect_windows": windows,
+        "progressed_context": _progressed_context(snapshot, start, end),
         "resonances": _resonances(events),
     }

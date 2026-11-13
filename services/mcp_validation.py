@@ -26,7 +26,7 @@ CONTRACTS = {
     'calculate_time_lords': ('time_lords', {'birth_context': dict, 'as_of': str, 'firdaria': dict, 'annual_profections': dict}, 'tests/test_time_lords.py'),
     'calculate_solar_arc': ('solar_arc', {'birth_context': dict, 'settings': dict, 'aspect_matrix': list, 'axis_contacts_by_directed_points': list, 'directed_axes_to_natal_points': list, 'directed_positions_at_wheel_age': dict, 'cross_aspects_at_wheel_age': list}, 'tests/test_solar_arc_matrix.py'),
     'calculate_transits_to_natal': ('transit_events', {'birth_context': dict, 'settings': dict, 'event_count': int, 'events': list}, 'tests/test_transit_lifetime.py'),
-    'calculate_timeline_synthesis': ('timeline_synthesis', {'birth_context': dict, 'engine_version': str, 'settings': dict, 'event_count': int, 'events': list, 'resonances': list}, 'tests/test_timeline_synthesis.py'),
+    'calculate_timeline_synthesis': ('timeline_synthesis', {'birth_context': dict, 'engine_version': str, 'settings': dict, 'event_count': int, 'events': list, 'resonances': list, 'aspect_window_count': int, 'aspect_windows': list, 'progressed_context': dict}, 'tests/test_timeline_synthesis.py'),
     'get_transit_snapshot': ('transit_snapshot', {'birth_context': dict, 'moment': str, 'transit_positions': dict, 'active_aspects_to_natal': list}, 'tests/test_transit_natal.py'),
     'calculate_saturn_jupiter_cycles': ('cycles', {'birth_context': dict, 'as_of': str, 'natal': dict, 'range': dict, 'saturn_events': list, 'jupiter_events': list, 'aspects': list, 'saturn_phases': list, 'jupiter_phases': list, 'stats': dict, 'current': dict}, 'tests/test_transit_golden_cases.py'),
     'calculate_house_ingresses': ('ingresses', {'birth_context': dict, 'settings': dict, 'events': list, 'event_count': int}, 'tests/test_transit_lifetime.py'),
@@ -360,6 +360,51 @@ def domain_checks(tool,d,args):
                 opened=instant(source['start_utc']); closed=instant(source['end_utc'])
                 require(opened.tzinfo is not None and closed.tzinfo is not None
                         and opened<=utc<closed,path+'/source','timeline_period_covers_event')
+        require(d['aspect_window_count']==len(d['aspect_windows']),
+                '/aspect_window_count','count_matches_rows')
+        query_start=datetime(s['target_year'],1,1,tzinfo=zone)
+        query_end=datetime(s['target_year']+s['span_years'],1,1,tzinfo=zone)
+        for i,row in enumerate(d['aspect_windows']):
+            path=f'/aspect_windows/{i}'
+            fields(row,{'technique':str,'planet':str,'target':str,'angle':float,
+                        'orb_limit':float,'start_utc':str,'end_utc':str,
+                        'entry_status':str,'exit_status':str,'exact_event_indices':list},path)
+            opened,closed=instant(row['start_utc']),instant(row['end_utc'])
+            require(query_start<=opened<closed<=query_end and row['orb_limit']>0
+                    and row['technique'] in ('transits','secondary_progressions'),
+                    path,'valid_clipped_aspect_window')
+            for key,status,bound in [('orb_entry_utc','entry_status',opened),
+                                      ('orb_exit_utc','exit_status',closed)]:
+                value=row[key]
+                require((value is None and row[status] in ('birth_limit','search_limit'))
+                        or (isinstance(value,str) and row[status]=='found'),
+                        path+'/'+key,'boundary_status_matches_value')
+                if value is not None:
+                    boundary=instant(value)
+                    require(boundary<=bound if key=='orb_entry_utc' else boundary>=bound,
+                            path+'/'+key,'boundary_contains_clipped_window')
+            indices=row['exact_event_indices']
+            require(len(indices)==len(set(indices))
+                    and all(type(j) is int and 0<=j<len(d['events']) for j in indices),
+                    path,'window_valid_event_indices')
+            for j in indices:
+                event=d['events'][j]; source=event['source']
+                require(event['technique']==row['technique']
+                        and source.get('planet')==row['planet'] and source.get('target')==row['target']
+                        and source.get('angle')==row['angle']
+                        and opened<=instant(event['exact_utc'])<closed,
+                        path,'window_matches_exact_event')
+        progressed=d['progressed_context']
+        phase(progressed['phase_at_start'],'/progressed_context/phase_at_start')
+        require(query_start<=instant(progressed['as_of_utc'])<query_end,
+                '/progressed_context/as_of_utc','context_inside_query')
+        changes=progressed['phase_transitions']
+        require(changes==sorted(changes,key=lambda r:r['exact_utc']),
+                '/progressed_context/phase_transitions','phase_transition_order')
+        for row in changes:
+            require(1<=row['phase_num']<=8 and row['phase_name']==PHASES[row['phase_num']-1]
+                    and query_start<=instant(row['exact_utc'])<query_end,
+                    '/progressed_context/phase_transitions','phase_transition_matches_window')
         for i,row in enumerate(d['resonances']):
             path=f'/resonances/{i}'
             fields(row,{'focus':str,'start_utc':str,'end_utc':str,

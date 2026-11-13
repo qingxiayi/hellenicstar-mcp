@@ -1,3 +1,10 @@
+# 2026-11-13 — Timeline synthesis v0.1.11 preparation
+
+Timeline engine v3 adds expanded transits, progressed context and continuous orb
+windows. Local verification: 1424 tests and 11 subtests passed. Publication and
+runtime acceptance are tracked separately; this source-preparation entry is not a
+claim of deployment. See [field definitions](timeline-synthesis.md).
+
 # 2026-11-09 — Tool-selection guidance v0.1.10
 
 GitHub and production MCP now run `f866baa`. Glama source synchronization remains pending; its last confirmed release is 0.1.9. See [verification and rollback](validation/tool-selection-release-2026-11-09.md). No Mini Program frontend publication.

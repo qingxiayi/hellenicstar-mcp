@@ -555,7 +555,7 @@ def calculate_transits_to_natal(
                                    target_scope=target_scope, planet=planet, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Data-only multi-technique timeline for target_year and 1–3 birthplace calendar years. Includes active Firdaria and Zodiacal Releasing L1/L2 periods, progressed Moon sign ingresses and hard aspects to natal points, and Jupiter through Pluto conjunctions with natal axes. Events have stable UTC/local timestamps and source fields; resonances only group matching points across at least two techniques within 30 days. No predictive interpretations.")
+@tool(annotations=READ_ONLY, description="Data-only multi-technique timeline for target_year and 1–3 birthplace calendar years. Includes active Firdaria and Zodiacal Releasing L1/L2 periods; progressed Sun/Moon sign ingresses and planetary hard aspects to natal planets/axes; Jupiter through Pluto major aspects to ten natal planets and conjunctions only to natal axes. aspect_windows reports transit and progression orb intervals, including active intervals without an exact hit; unknown entry/exit boundaries are null with explicit search limits. progressed_context supplies the phase at query start and progressed lunar phase transitions. Exact transit events retain all repeated contacts and series IDs. Events have UTC/local timestamps; resonances only group matching points across at least two techniques within 30 days, not psychological themes or window overlaps. No predictive interpretations.")
 def calculate_timeline_synthesis(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,

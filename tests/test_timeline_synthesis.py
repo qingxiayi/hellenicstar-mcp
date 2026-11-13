@@ -189,7 +189,8 @@ def test_transit_timeline_keeps_middle_retrograde_contact(emma):
                                        collapse_series=False, **args)
     assert len(complete["events"]) > len(collapsed["events"])
     timeline = compute_timeline_synthesis(natal, birth, 2026, 3, snapshot=snapshot)
-    actual = [row for row in timeline["events"] if row["technique"] == "transits"]
+    actual = [row for row in timeline["events"] if row["technique"] == "transits"
+              and row["nature"] == "axis_contact"]
     assert len(actual) == len(complete["events"])
     jupiter_asc = [row for row in actual if row["source"]["planet"] == "jupiter"
                    and row["source"]["target"] == "asc"]
