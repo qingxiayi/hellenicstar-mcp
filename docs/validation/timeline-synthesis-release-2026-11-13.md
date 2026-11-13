@@ -57,6 +57,22 @@ No automatic psychological-theme selection or new resonance policy is claimed.
   remains open and unmerged. Its version-independent repository link remains valid;
   this release does not establish directory acceptance.
 
+## Distribution follow-up (2026-11-13)
+
+GitHub's release-record commit `a5532fa` also passed both CI jobs. The published
+release tag and active MCP service remain on `eda9bcd`. A live browser check of
+the Glama public listing confirmed the expanded transit coverage, `aspect_windows`
+and `progressed_context` description. A separate web-reader response still showed
+the old README; it was not used as evidence of a stale live listing.
+
+Smithery's [official notice](https://www.smithery.ai/future) confirms its 2026-10-31
+connection-service shutdown. Accounts/API keys and the former API/CLI publishing
+workflow are no longer a supported update route; only the non-proxied public
+directory remains. Its old publishing guide returns 404 and no current project
+entry/submission route was confirmed. [Distribution instructions](../distribution.md)
+now state this limitation and provide the direct maintainer MCP URL. This follow-up
+changes documentation only; no new calculation release or service restart.
+
 ## Deployment and rollback
 
 MCP working directory: `/www/wwwroot/hellenicstar-mcp-releases/timeline-eda9bcd`.

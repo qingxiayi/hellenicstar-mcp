@@ -34,10 +34,27 @@ optional database not present in the image; coordinate resolution works without 
 The repository Dockerfile serves HTTP and is a separate recipe. `glama.json` records
 the existing maintainer; it is not a deployment specification.
 
-## Smithery
+## Direct hosted connection
 
-A configuration file or GitHub link alone does not establish a published Smithery
-entry. The current [publishing guide](https://smithery.ai/docs/build/publish) supports
-an existing public HTTPS Streamable HTTP service or a prebuilt local MCPB bundle.
-Record the actual listing and scan result after publication. A directory entry,
-a successful scan, and a real calculation call are separate checks.
+The maintainer's Streamable HTTP endpoint is `https://hellenicstar.com/mcp`.
+Clients connecting to this address use the maintainer deployment directly; they do
+not depend on Smithery proxy URLs. GitHub source releases and Glama builds remain
+separate distribution channels. For local installation, see [quickstart](quickstart.md).
+
+## Smithery — former publishing workflow retired
+
+Checked on 2026-11-13 against Smithery's [official transition notice](https://www.smithery.ai/future).
+Smithery shut down connection management on 2026-10-31, including its MCP proxy,
+managed identity, accounts/API keys, API, Connect and Toolbox. Its CLI/SDKs are
+deprecated. Smithery remains a public, non-proxied directory powered by Arcade;
+retained verified entries show direct server URLs.
+
+Our previously referenced server URL and the former `/docs/build/publish` guide
+both return 404. No HellenicStar listing or current self-service submission path
+was confirmed. Do not follow the former account/CLI publishing instructions or
+report this as a queued version update. A retained public directory is not evidence
+that this project's listing was accepted. If Smithery provides a new submission
+process, verify that process separately before using it.
+
+This platform change does not prevent direct use of the maintainer HTTPS endpoint,
+GitHub installation or the published Glama build.

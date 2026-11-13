@@ -6,7 +6,9 @@ transits, adds progressed Sun ingress/lunation context and continuous orb window
 Local and final Ubuntu/macOS suites each passed 1424 tests and 11 subtests;
 public calculations and selective reading passed. See [field definitions](timeline-synthesis.md)
 and [channel verification, performance adjustment and rollback](validation/timeline-synthesis-release-2026-11-13.md).
-Smithery's previous URL returns 404; its publication is not claimed.
+Smithery's former publishing workflow has been retired following its 2026-10-31
+service shutdown; only a public directory remains. No HellenicStar entry is
+confirmed. See [current channel instructions](distribution.md).
 The Mini Program service was unchanged.
 
 The entries below are historical snapshots, including earlier pending states.
