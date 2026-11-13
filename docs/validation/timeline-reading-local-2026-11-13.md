@@ -1,5 +1,8 @@
 # Timeline reading v4 — local acceptance
 
+Historical local checkpoint. This work was subsequently released as v0.1.12;
+see [completed release verification](timeline-reading-release-2026-11-13.md).
+
 2026-11-13. This candidate is local only. No public service, GitHub release,
 Glama listing or Mini Program was updated in this step. The deployed timeline
 engine remains v3 according to the preceding release verification.

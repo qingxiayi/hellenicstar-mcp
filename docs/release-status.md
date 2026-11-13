@@ -1,3 +1,16 @@
+# Current release: v0.1.12 — 2026-11-13
+
+GitHub v0.1.12, maintainer HTTPS MCP and Glama 0.1.12 use
+`e4c9f554d16e7e2d9241026895bc94aeee451b22`. Timeline synthesis v4 adds rolling
+one-to-three-year date ranges, actual interval overlaps, direct natal context,
+axis-equivalent grouping and three reading layers. Local, Ubuntu and macOS
+complete suites each passed 1459 tests and 11 subtests; production candidate
+checks and public calculations passed. See [release evidence and rollback](validation/timeline-reading-release-2026-11-13.md)
+and [usage and limits](timeline-synthesis.md). Smithery is not a confirmed
+published channel. Existing clients may need a schema refresh.
+
+The following records describe earlier releases and their states at that time.
+
 # Current release: v0.1.11 — 2026-11-13
 
 GitHub v0.1.11, maintainer HTTPS MCP and Glama 0.1.11 use source

@@ -1,0 +1,82 @@
+{
+  "source": "e4c9f554d16e7e2d9241026895bc94aeee451b22",
+  "tool_count": 48,
+  "cases": {
+    "calendar1": {
+      "range": {
+        "mode": "calendar_years",
+        "requested_start_date": "2027-01-01",
+        "end_date_exclusive": "2028-01-01",
+        "start_local": "2027-01-01T00:00:00+01:00",
+        "end_local": "2028-01-01T00:00:00+01:00",
+        "start_utc": "2026-12-31T23:00:00Z",
+        "end_utc": "2027-12-31T23:00:00Z",
+        "clipped_to_birth": false,
+        "anniversary_policy": "same_month_day_feb29_clamped_to_feb28",
+        "midnight_policy": "first_occurrence_gap_forward_skipped_date_rejected"
+      },
+      "events": 38,
+      "windows": 38,
+      "reading_counts": {
+        "reading_windows": 38,
+        "exact_contacts": 30,
+        "window_overlaps": 122,
+        "concurrent_segments": 54
+      },
+      "quality": "passed"
+    },
+    "rolling1": {
+      "range": {
+        "mode": "rolling_years",
+        "requested_start_date": "2026-11-13",
+        "end_date_exclusive": "2027-11-13",
+        "start_local": "2026-11-13T00:00:00+01:00",
+        "end_local": "2027-11-13T00:00:00+01:00",
+        "start_utc": "2026-11-12T23:00:00Z",
+        "end_utc": "2027-11-12T23:00:00Z",
+        "clipped_to_birth": false,
+        "anniversary_policy": "same_month_day_feb29_clamped_to_feb28",
+        "midnight_policy": "first_occurrence_gap_forward_skipped_date_rejected"
+      },
+      "events": 37,
+      "windows": 36,
+      "reading_counts": {
+        "reading_windows": 36,
+        "exact_contacts": 28,
+        "window_overlaps": 123,
+        "concurrent_segments": 52
+      },
+      "quality": "passed"
+    },
+    "rolling3": {
+      "range": {
+        "mode": "rolling_years",
+        "requested_start_date": "2026-11-13",
+        "end_date_exclusive": "2029-11-13",
+        "start_local": "2026-11-13T00:00:00+01:00",
+        "end_local": "2029-11-13T00:00:00+01:00",
+        "start_utc": "2026-11-12T23:00:00Z",
+        "end_utc": "2029-11-12T23:00:00Z",
+        "clipped_to_birth": false,
+        "anniversary_policy": "same_month_day_feb29_clamped_to_feb28",
+        "midnight_policy": "first_occurrence_gap_forward_skipped_date_rejected"
+      },
+      "events": 94,
+      "windows": 93,
+      "reading_counts": {
+        "reading_windows": 91,
+        "exact_contacts": 80,
+        "window_overlaps": 303,
+        "concurrent_segments": 158
+      },
+      "quality": "passed"
+    }
+  },
+  "public_matches_local": true,
+  "float_absolute_tolerance_degrees": 1e-09,
+  "claim_checks_per_case": 4,
+  "selective_reading_verified": true,
+  "other_tool_input_schemas_unchanged": true,
+  "unrelated_sky_scan_unchanged": true,
+  "mixed_start_selectors_rejected": true
+}
