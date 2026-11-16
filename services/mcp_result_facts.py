@@ -64,6 +64,9 @@ def normalize_arguments(args, *, tool=None):
     """Freeze moving defaults ONCE so a later verification uses the same instant."""
     now=datetime.now(timezone.utc)
     args=dict(args)
+    if 'house_system' in args and (args['house_system'] is None or
+                                  isinstance(args['house_system'], str) and not args['house_system'].strip()):
+        args['house_system'] = 'placidus'
     if 'moment' in args and args['moment'] in (None,''):
         args['moment']=now.isoformat(timespec='seconds')
     age_only_secondary = (tool in {'calculate_secondary_progressions',
@@ -80,7 +83,7 @@ def json_args(args):
 
 def data_payload(data):
     metadata = ('fact_reference', 'calculation_reference', 'quality',
-                'interpretation_workflow', 'calculation_envelope')
+                'interpretation_workflow', 'calculation_envelope', 'house_system_notice')
     return {k: v for k, v in data.items() if k not in metadata}
 
 

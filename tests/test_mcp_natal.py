@@ -297,7 +297,7 @@ def test_extended_tools_match_the_miniprogram_services():
 
     events = ext.transit_events_data(**BIRTH, from_date="2026-01-01", to_date="2026-12-31")
     direct = compute_range_events(snap, swe.julday(2026, 1, 1, 0), swe.julday(2026, 12, 31, 24),
-                                  target_scope="all")
+                                  target_scope="all", collapse_series=False)
     assert [e["exact_utc"] for e in events["events"]] == [e["exact_utc"] for e in direct["events"]]
 
     ret = ext.solar_return_data(**BIRTH, target_year=2026, residence_location_id=PARIS)

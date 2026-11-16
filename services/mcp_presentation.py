@@ -9,6 +9,7 @@ CONTROL_FIELDS = frozenset({
     "status", "birth_context", "settings", "calculation_reference",
     "fact_reference", "quality", "interpretation_workflow",
     "calculation_envelope", "presentation", "completeness", "layer_availability",
+    "house_system_notice",
 })
 SUMMARY_LIMIT = 5
 

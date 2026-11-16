@@ -97,12 +97,18 @@ def natal_from_summary(summary, chart_id):
     if not valid_cusps(cusps):
         raise ValueError('本命宫头顺序或对宫关系无效')
     asc, mc = longitude(svg['asc_lon']), longitude(svg['mc_lon'])
-    if separation(asc, cusps[0]) > EPS or separation(mc, cusps[9]) > EPS:
-        raise ValueError('本命四轴与普拉西度宫头不一致')
+    from services.house_systems import house_system_spec
+    system = summary.get('house_system', 'placidus')
+    house_system_spec(system)
+    expected_first = (asc // 30) * 30 if system == 'whole_sign' else asc
+    if separation(expected_first, cusps[0]) > EPS:
+        raise ValueError('本命上升与所选宫制第一宫宫头不一致')
+    if system not in ('whole_sign', 'equal') and separation(mc, cusps[9]) > EPS:
+        raise ValueError('本命中天与所选象限宫制第十宫宫头不一致')
     axes = dict(zip(AXES, [asc, (asc + 180) % 360, mc, (mc + 180) % 360]))
     return {'id': chart_id, 'name': summary.get('name', ''), 'planets': planets,
             'axes': {k: {'longitude': v} for k, v in axes.items()},
-            'houses': {'system': 'placidus', 'status': 'ok', 'cusps': cusps},
+            'houses': {'system': system, 'status': 'ok', 'cusps': cusps},
             'birth_context': deepcopy(summary.get('birth_context', {})),
             'source_aspects': deepcopy(svg.get('aspects', [])),
             'missing_points': [p for p in DISPLAY_PLANETS if p not in planets]}
@@ -152,7 +158,7 @@ def natal_house_patterns(first, second):
     """Return only complete A/B patterns formed from each natal chart's own houses.
 
     This is deliberately not aspect geometry.  Each planet stays in its owner's
-    Placidus natal house; the two occupancy maps are merely laid over one another.
+    selected natal house; the two occupancy maps are merely laid over one another.
     Zodiac signs, degrees and axes do not participate.  Natal lunar nodes do
     participate as explicitly requested.  A pattern is returned only when every
     required house is occupied and both people contribute.
@@ -184,26 +190,37 @@ def natal_house_patterns(first, second):
             'empty_houses': [row['house'] for row in houses if not row['members']],
         })
     return {
-        'house_system': 'placidus',
+        'house_system': first['houses'].get('system', 'placidus'),
         'rule': 'combined_own_natal_house_occupancy',
         'patterns': rows,
     }
 
 
 def composite_chart(first, second):
+    system = first['houses']['system']
+    if system != second['houses']['system']:
+        raise ValueError('双方需使用同一种宫制')
     planets = {p: midpoint(first['planets'][p]['longitude'], second['planets'][p]['longitude'])
                for p in DISPLAY_PLANETS if p in first['planets'] and p in second['planets']}
     axes = {p: midpoint(first['axes'][p]['longitude'], second['axes'][p]['longitude']) for p in AXES}
     cusp_results = [midpoint(a, b) for a, b in zip(first['houses']['cusps'], second['houses']['cusps'])]
     cusps = [r['longitude'] for r in cusp_results]
+    method = 'midpoint_of_' + system + '_cusps'
+    if system in ('whole_sign', 'equal'):
+        # Midpoint whole-sign cusp longitudes can fall at 15 degrees: those
+        # would not be whole-sign houses. Construct from the midpoint ASC.
+        asc = axes['ascendant']['longitude']
+        start = ((asc // 30) * 30 if system == 'whole_sign' else asc) if asc is not None else None
+        cusps = [(start + 30 * i) % 360 for i in range(12)] if start is not None else [None] * 12
+        method = system + '_from_midpoint_ascendant'
     status = 'ok' if valid_cusps(cusps) else ('ambiguous' if None in cusps else 'invalid_order')
     # Do not sort/relabel houses. Even individually valid midpoints can cross.
-    if status == 'ok' and any(separation(axes[p]['longitude'], cusps[i]) > EPS
+    if status == 'ok' and system not in ('whole_sign', 'equal') and any(separation(axes[p]['longitude'], cusps[i]) > EPS
                               for p, i in [('ascendant', 0), ('midheaven', 9)]):
         status = 'axis_mismatch'
     return {'id': 'composite', 'planets': planets, 'axes': axes,
             'missing_points': [p for p in DISPLAY_PLANETS if p not in planets],
-            'houses': {'system': 'midpoint_of_placidus_cusps', 'status': status,
+            'houses': {'system': method, 'house_system': system, 'status': status,
                        'cusps': cusps if status == 'ok' else None,
                        'raw_midpoints': cusp_results},
             'ambiguous_points': [k for k, v in {**planets, **axes}.items() if v['status'] != 'ok']}
@@ -251,8 +268,10 @@ def build_relationship_charts(first_summary, second_summary, orb_profile='greene
         if a_hits and b_hits:
             common.append({'composite_point': p, 'a_contact_ids': a_hits, 'b_contact_ids': b_hits})
     return {'schema_version': 1,
-            'method': {'zodiac': 'tropical', 'natal_source': 'services.calculator.compute',
+            'method': {'zodiac': 'tropical', 'natal_source': ('services.natal_positions.calculate_positions'
+                       if first_summary.get('house_system') else 'services.calculator.compute'),
                        'composite': 'short_arc_midpoints_preserve_cusp_labels',
+                       'composite_house_method': composite['houses']['system'],
                        'orb_profile': orb_profile, 'orbs': ORB_PROFILES[orb_profile],
                        'geometry_library': 'kerykeion', 'library_version': version('kerykeion'),
                        'time_accuracy': 'exact_required', 'applying': 'not_defined_for_static_cross_charts',

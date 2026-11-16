@@ -221,3 +221,21 @@ __all__ = [
     "ANGULAR_HOUSES", "HOUSE_CROSSES", "MODERN_RULERS", "TRADITIONAL_RULERS",
     "build_house_ruler_chains", "trace_ruler_chain",
 ]
+
+
+def build_selected_house_ruler_chains(planets, frame):
+    """Generic house geometry with the existing traditional/modern ruler policy."""
+    rows = []
+    for cross in HOUSE_CROSSES:
+        for house in cross['houses']:
+            row = _house_row(house, frame.cusps[house - 1], planets, frame.ascmc[0],
+                             cross['id'], cross['positions'][house])
+            for track in row['tracks']:
+                for node in track['nodes']:
+                    node.pop('house_p', None)
+                    node.pop('house_w', None)
+                    node['house'] = frame.house_of(planets[node['planet']]['longitude'])
+            rows.append(row)
+    return {'houses': sorted(rows, key=lambda r: r['house']),
+            'crosses': [{'id': c['id'], 'name': c['name'], 'houses': list(c['houses'])}
+                        for c in HOUSE_CROSSES]}

@@ -33,13 +33,14 @@ def search_birthplace(query: str) -> dict:
 
 def _compute_source(*, year: int, month: int, day: int, hour: int,
                     minute: int, location_id: str,
-                    house_system: str, fold: int | None) -> dict:
+                    house_system: str, fold: int | None, chart_only: bool = False) -> dict:
     """Validate birth inputs once, then use the Mini Program calculation entry point."""
     values = dict(year=year, month=month, day=day, hour=hour, minute=minute,
                   location_id=location_id, house_system=house_system)
     absent = [field for field in (*BIRTH_FIELDS, "house_system") if missing(values[field])]
     if absent:
-        raise ClarificationRequired(absent)
+        from services.house_systems import HOUSE_SYSTEMS as all_systems
+        raise ClarificationRequired(absent, house_systems=all_systems if chart_only else HOUSE_SYSTEMS)
     if not all(isinstance(v, int) and not isinstance(v, bool)
                for v in (year, month, day, hour, minute)):
         raise ValueError("出生日期和时间必须是整数")
@@ -50,10 +51,15 @@ def _compute_source(*, year: int, month: int, day: int, hour: int,
         raise ValueError("出生时间超出范围")
     if not isinstance(location_id, str) or not location_id.strip():
         raise ValueError("请先用 search_birthplace 选择 location_id")
-    if house_system not in HOUSE_SYSTEMS:
-        raise ValueError("house_system 只支持 placidus 或 whole_sign")
+    from services.house_systems import house_system_spec
+    house_system_spec(house_system)
+    if not chart_only and house_system not in HOUSE_SYSTEMS:
+        raise ValueError("此方法目前只支持 placidus 或 whole_sign；通用排盘支持更多宫制。")
     if fold is not None and (isinstance(fold, bool) or fold not in (0, 1)):
         raise ValueError("fold 只支持 0 或 1")
+    if chart_only:
+        from services.natal_positions import calculate_positions
+        return calculate_positions(year, month, day, hour, minute, location_id.strip(), house_system, fold)
     return compute("", year, month, day, hour, minute, "",
                    location_id=location_id.strip(), fold=fold)
 
@@ -79,14 +85,11 @@ def calculate_natal_data(*, year: int, month: int, day: int, hour: int,
     try:
         result = _compute_source(year=year, month=month, day=day, hour=hour,
                                  minute=minute, location_id=location_id,
-                                 house_system=house_system, fold=fold)
+                                 house_system=house_system, fold=fold, chart_only=True)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
 
-    house_key = HOUSE_SYSTEMS[house_system]
-    asc_sign = int(result["asc_lon"] // 30) % 12
-    cusps = (result["cusps"] if house_system == "placidus"
-             else [((asc_sign + i) % 12) * 30.0 for i in range(12)])
+    cusps = result["cusps"]
     table = {
         "status": "ok",
         "input": {"year": year, "month": month, "day": day,
@@ -98,7 +101,7 @@ def calculate_natal_data(*, year: int, month: int, day: int, hour: int,
                      "longitude_unit": "degrees_0_360", "coordinate_datum": "WGS84"},
         "planets": [
             {"key": p["key"], "name": p["cn"], "longitude": p["lon"],
-             "sign": p["sign"], "house": p[house_key],
+             "sign": p["sign"], "house": p["house"],
              "retrograde": p["retrograde"]}
             for p in result["natal_planets_full"]
             if p["key"] in {"sun", "moon", "mercury", "venus", "mars",
@@ -132,7 +135,7 @@ def render_natal_chart_png(*, year: int, month: int, day: int, hour: int,
     try:
         result = _compute_source(year=year, month=month, day=day, hour=hour,
                                  minute=minute, location_id=location_id,
-                                 house_system=house_system, fold=fold)
+                                 house_system=house_system, fold=fold, chart_only=True)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc), None
 
@@ -369,19 +372,19 @@ def calculate_classical_data(*, year: int, month: int, day: int, hour: int,
 def calculate_lots_data(*, year: int, month: int, day: int, hour: int,
                         minute: int, location_id: str,
                         lots: list[str] | None = None,
-                        house_system: str = "whole_sign",
+                        house_system: str = "placidus",
                         fold: int | None = None) -> dict:
     """Calculate Hellenistic and Arabic lots on demand."""
     try:
         result = _compute_source(year=year, month=month, day=day, hour=hour,
                                  minute=minute, location_id=location_id,
-                                 house_system=house_system, fold=fold)
+                                 house_system=house_system, fold=fold, chart_only=True)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
 
     from services.classical_engine import compute_lots
     is_diurnal = (result["sect"] == "日生人")
-    planets_map = {p["key"]: p["lon"] for p in result["natal_planets_full"]}
+    planets_map = result["planet_longitudes"]
     asc_lon = result["asc_lon"]
     sun_lon = planets_map["sun"]
     moon_lon = planets_map["moon"]
@@ -390,7 +393,7 @@ def calculate_lots_data(*, year: int, month: int, day: int, hour: int,
     lots_list = compute_lots(
         asc_lon=asc_lon, sun_lon=sun_lon, moon_lon=moon_lon,
         planets_map=planets_map, cusps=cusps, is_diurnal=is_diurnal,
-        requested_lots=lots, house_system=house_system)
+        requested_lots=lots, house_system=house_system, cusps_system=house_system)
     return {
         "status": "ok",
         "birth_context": result["birth_context"],
@@ -463,16 +466,19 @@ def calculate_time_lord_data(*, year: int, month: int, day: int, hour: int,
             raise ValueError("tradition 只支持 abu_mashar、al_biruni 或 bonatti")
         result = _compute_source(year=year, month=month, day=day, hour=hour,
                                  minute=minute, location_id=location_id,
-                                 house_system=house_system, fold=fold)
+                                 house_system=house_system, fold=fold, chart_only=True)
         ref_day, now = _reference_moment(as_of)
-        from services.time_lords import (calculate_annual_profections_report,
-                                         calculate_firdaria_report)
-        body = _birth_body(year, month, day, hour, minute, location_id,
-                           result["birth_context"]["fold"])
-        fird = calculate_firdaria_report(dict(body), max_age=100,
-                                         tradition=tradition, now=now)["firdaria"]
-        prof = calculate_annual_profections_report(dict(body), max_age=100,
-                                                   now=now)["annual_profections"]
+        from datetime import datetime, timezone
+        from zoneinfo import ZoneInfo
+        from services.time_lords import calculate_annual_profections, calculate_firdaria
+        ctx = result["birth_context"]
+        birth_local = datetime.fromisoformat(ctx["civil_dt"]).replace(
+            tzinfo=ZoneInfo(ctx["tz_iana"]), fold=ctx["fold"])
+        fird = calculate_firdaria(
+            birth_local.astimezone(timezone.utc), ctx["tz_iana"], result["sect"] == "日生人",
+            max_age=100, tradition=tradition, now=now)
+        # The traditional annual method advances signs, not quadrant cusps.
+        prof = calculate_annual_profections(result["asc_lon"], birth_local, max_age=100, now=now)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
 
@@ -502,12 +508,16 @@ def calculate_time_lord_data(*, year: int, month: int, day: int, hour: int,
                  "is_current": r["is_current"]} for r in sub_rows],
         },
         "annual_profections": {
-            "house_system": house_system,
+            "house_system": "whole_sign",
+            "method": "annual_whole_sign",
+            "natal_house_system": house_system,
             "boundary": prof["boundary"],
             "years": [{"age": r["age"], "start": r["start_date"], "end": r["end_date"],
-                       "house": r["systems"][house_system]["house"],
-                       "sign": r["systems"][house_system]["sign"]["name_zh"],
-                       "lord_of_year": _lord(r["systems"][house_system]["lord"]),
+                       "house": r["systems"]["whole_sign"]["house"],
+                       "sign": r["systems"]["whole_sign"]["sign"]["name_zh"],
+                       "lord_of_year": _lord(r["systems"]["whole_sign"]["lord"]),
+                       "lord_natal_house": next(p["house"] for p in result["natal_planets_full"]
+                                                if p["key"] == r["systems"]["whole_sign"]["lord"]["key"]),
                        "is_current": r["is_current"]} for r in window],
         },
     }

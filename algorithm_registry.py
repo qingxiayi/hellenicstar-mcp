@@ -50,16 +50,16 @@ ALGORITHM_REGISTRY: Dict[str, AlgorithmEntry] = {
         name="Axes and Placidus Houses",
         category="axes_and_houses",
         source="pyswisseph",
-        implementation="swe.houses(jd, lat, lng, b'P')",
-        file_path="engine/natal_chart.py",
-        code_anchor="swe.houses(jd, lat, lng, b'P')",
-        code_location="engine/natal_chart.py:2674",
+        implementation="services.house_systems.calculate_houses(..., system='placidus')",
+        file_path="services/house_systems.py",
+        code_anchor="def calculate_houses(",
+        code_location="services/house_systems.py::calculate_houses",
         coordinate_system="Tropical Zodiac (回归黄道)",
         calculation_model="瑞士星历表 houses 函数计算普拉西度分宫制，四轴由 ascmc 输出派生 (ASC=ascmc[0], MC=ascmc[1], DESC=ASC+180, IC=MC+180)",
         fallback=None,
         precision="UNKNOWN",
         version_history="UNKNOWN",
-        notes="四轴提取与规范化逻辑位于 engine/natal_chart.py:2677-2680",
+        notes="Legacy method reports explicitly select Placidus via the shared registry; no silent fallback.",
     ),
 
     # 3. 整宫制
@@ -142,6 +142,25 @@ def _register_calculation(key, name, file_path, symbol, model, *,
         version_history=version,
         notes=notes or 'Declared source dependency; runtime execution path and independent numerical accuracy are not established by this registration.')
 
+
+_register_calculation('selected_house_geometry', 'Selected house geometry',
+    'services/house_systems.py', 'calculate_houses',
+    'Swiss Ephemeris P/W/E/K/R/O/C tropical cusps, real ASC/MC, half-open ecliptic longitude placements. No cusp orb or mundane latitude correction.',
+    source='pyswisseph',
+    notes='Explicit failures for unsupported or degenerate geometry; positional tools share one selected-system source. Website comparisons are documented separately.')
+
+_register_calculation('arabic_lots', 'Declared lot formulas',
+    'services/classical_engine.py', 'compute_lots',
+    'Declared day/night lot formulas use actual ASC and planetary longitudes; selected cusps affect placement only. Each lot discloses its formula and reversal convention.')
+_register_calculation('firdaria', 'Firdaria',
+    'services/time_lords.py', 'calculate_firdaria',
+    'Declared sect-dependent period sequences and year length, independent of natal house system.')
+_register_calculation('annual_profections', 'Annual sign profections',
+    'services/time_lords.py', 'calculate_annual_profections',
+    'MCP selects the whole-sign result: one sign per birthday, traditional sign ruler; selected natal houses locate the year lord only. The shared service retains its separate legacy cusp-ruler view.')
+_register_calculation('relationship_geometry', 'Synastry and midpoint composite',
+    'services/relationship_charts.py', 'build_relationship_charts',
+    'Selected natal cusps for reciprocal overlays; short-arc point and axis midpoints. Quadrant composite cusps use corresponding cusp midpoints; whole/equal houses are built from midpoint ASC. Antipodal ambiguities and invalid cusp sequences remain explicit.')
 
 _register_calculation('natal_structure_graph', 'Natal structure graph',
     'services/natal_structure_graph.py', 'calculate_structure_graph',

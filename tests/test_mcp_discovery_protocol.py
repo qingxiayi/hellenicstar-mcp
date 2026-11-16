@@ -25,8 +25,7 @@ def test_capabilities_reflect_live_tools_and_algorithm_registry():
         assert listed[name]["description"] == (tool.description or "")
         assert listed[name]["input_schema"] == tool.inputSchema
 
-    from services.mcp_envelope import REGISTERED_NATAL_KEYS
-    natal_keys = set(REGISTERED_NATAL_KEYS)
+    natal_keys = {"planetary_longitudes", "selected_house_geometry", "lunar_nodes", "chiron"}
     assert set(listed["calculate_natal_chart"]["registered_algorithm_keys"]) == natal_keys
     assert listed["get_current_sky"]["registered_algorithm_keys"] == ["current_sky"]
     assert listed["calculate_aspect_windows"]["provenance_coverage"] == "partial"

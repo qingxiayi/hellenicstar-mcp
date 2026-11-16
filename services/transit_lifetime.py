@@ -154,11 +154,13 @@ def compute_range_events(
     target_scope: str = "all",
     natal_point: str | None = None,
     aspects=None,
+    collapse_series: bool = True,
 ) -> dict:
     """按用户指定的起止时间查询精确相位，不预算整个生命框架。
 
     这是终身板块的主查询入口：默认只算最近一年，老师可以自行输入任意区间。
     单次跨度上限 ``MAX_RANGE_YEARS`` 年，避免一次请求拖垮 2 核生产机。
+    默认保留小程序的首末展示；MCP 精确明细显式传 False，返回全部接触。
     """
     if to_jd <= from_jd:
         raise ValueError("结束时间必须晚于开始时间")
@@ -200,6 +202,7 @@ def compute_range_events(
         axis_result = transit_natal.compute_filtered_events(
             snapshot, from_jd, to_jd,
             planets=planets, natal_points=axis_points, aspects=(0.0,), max_days=None,
+            collapse_series=collapse_series,
         )
         event_rows.extend(axis_result["events"])
     if ordinary_points:
@@ -207,6 +210,7 @@ def compute_range_events(
             snapshot, from_jd, to_jd,
             planets=planets, natal_points=ordinary_points,
             aspects=selected_aspects, max_days=None,
+            collapse_series=collapse_series,
         )
         event_rows.extend(point_result["events"])
     event_rows.sort(key=lambda row: (

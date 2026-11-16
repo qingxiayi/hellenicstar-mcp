@@ -472,6 +472,7 @@ def build_observation(source_geometry, birth_context, settings, natal_graphs=Non
 
 def calculate_observation_data(*, person_a, person_b=None, **options):
     from services.mcp_natal import _compute_source, _input_error
+    from services.house_systems import HouseCalculationError
     from services.calculator import BirthContextError
     from services.mcp_contract import ClarificationRequired
     try:
@@ -495,10 +496,10 @@ def calculate_observation_data(*, person_a, person_b=None, **options):
                 raise
             except ClarificationRequired as exc:
                 raise ClarificationRequired([f'person_{who}.{k}' for k in exc.response['required_fields']]) from None
-            except RuntimeError as exc:
+            except (HouseCalculationError, RuntimeError) as exc:
                 # The legacy adapter wraps Swiss house errors in RuntimeError.
                 # Recognize only that explicit failure; never hide other engine bugs.
-                if not str(exc).startswith('引擎计算失败: swisseph.houses:'):
+                if not isinstance(exc, HouseCalculationError) and not str(exc).startswith('引擎计算失败: swisseph.houses:'):
                     raise
                 return dict(status='unavailable', failed_person=who,
                     error='Placidus houses could not be calculated; observation v0.14 requires houses and angles.',

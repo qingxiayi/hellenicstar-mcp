@@ -52,7 +52,7 @@ HellenicStar separates **Computation** from **Interpretation**:
 - **Natal structure graph**: `calculate_natal_structure_graph` returns the full factual graph; [natal priorities](docs/natal-salience.md) and the [parallel Jones view](docs/natal-jones-parallel-view.md) provide separate review perspectives.
 
 ### 1. High-Precision Natal & Astronomical Charting
-- **House Systems**: Placidus and Whole Sign; supported options depend on the tool.
+- **House Systems**: Seven systems for general charts, defaulting to disclosed Placidus; method-specific limits remain explicit.
 - **Geocoding & Historical DST**: WGS-84 coordinate resolution via `resolve_birth_coordinates`; IANA-based historical civil-time handling, with explicit fold choices for ambiguous repeated times.
 - **Ephemeris Data**: Planetary coordinates, lunar nodes and Chiron from the configured Swiss Ephemeris files. Node convention, numerical method and validation coverage depend on the tool; no uniform sub-arcsecond accuracy claim is made for all outputs.
 
@@ -151,3 +151,5 @@ Two new tools expose deterministic relationship observations and separate caller
 [Source releases](https://github.com/qingxiayi/hellenicstar-mcp/releases) · [Glama build configuration and distribution](docs/distribution.md)
 
 For the next year from an explicit date use `start_date="YYYY-MM-DD", span_years=1`; for calendar year 2027 use `target_year=2027, span_years=1`. The start selectors are mutually exclusive. The anniversary end is exclusive; `settings.query_range` records the resolved local/UTC bounds.
+
+General chart data and rendering support Placidus, Whole Sign, Equal, Koch, Regiomontanus, Porphyry and Campanus. Method-specific tools keep explicit restrictions; see [house-system support](docs/house-systems.md).

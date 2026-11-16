@@ -101,3 +101,13 @@ Additive `reading_plan`, `evidence_matrix` and `resource_checks` outputs provide
 Version 4 adds `natal_context`, `reading_windows`, `exact_contacts`, `concurrent_segments`, `window_overlaps`, `reading_layers` and `reading_counts`. Deployment status is recorded separately. Intersections and direct natal relationships explain grouping; axis-equivalent records are deduplicated only in the new reading views. Raw v3 fields remain unchanged.
 
 Choose `target_year` for full calendar years or `start_date` (explicit YYYY-MM-DD) for rolling years, never both. `span_years` defaults to 1. The end anniversary is exclusive; Feb 29 clamps to Feb 28. Read `settings.query_range` before interpreting duration. Backgrounds, active periods and all reading views use those actual bounds.
+
+## 宫位制
+
+通用本命、宫主星、日返、月返、次限、戴维森与迁居工具及对应图片支持七种宫制。古典分析等方法保留明确限制，参见 [完整范围与计算口径](house-systems.md)。
+
+## 精确行运重复接触
+
+`calculate_transits_to_natal` 返回查询区间内每一次精确接触，包括中间逆行命中。
+`settings.contact_policy` 为 `all_exact_contacts`；`contact` 保留接触序列中的真实序号及总次数。
+小程序共享服务默认的首次/末次展示不因 MCP 的这一设置而改变。

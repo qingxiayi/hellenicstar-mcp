@@ -67,7 +67,7 @@ _calc_cache = _LRUCache(200)  # {token: full_data_dict}
 # Moshier；services/ephemeris_guard.py 现在把我们的目录钉进查找列表。位置随之
 # 变动，最大 0.403 角秒（月亮），度分显示看不出差别，但 v1 缓存里存的是 Moshier
 # 结果，必须失效重算。
-CALC_VERSION = "v2"
+CALC_VERSION = "v3"  # Shared house geometry; exact cusps belong to the starting house.
 
 
 
@@ -163,14 +163,8 @@ class BirthContextError(ValueError):
         self.candidates = tuple(candidates)   # tuple[ResolvedBirthContext]
 
 
-def compute(name, year, month, day, hour, minute, city, lat=None, lng=None, tz=None,
-            location_id=None, fold=None):
-    """
-    完整计算本命盘 + 古典评分 + 福点盘。
-    返回 MCP 计算和渲染所需数据，不生成解读或课程作业。
-    location_id / fold: 新解析链入参（下拉签发的 canonical id / 秋拨歧义所选 fold）。
-    tz: 旧形参，保留兼容旧调用方但已忽略——时区现由 resolver 单一来源决定（plan §5.4）。
-    """
+def resolve_birth_context(year, month, day, hour, minute, city="", lat=None, lng=None,
+                          location_id=None, fold=None):
     from services.birth_input import validated_birth_values
     year, month, day, hour, minute = validated_birth_values(
         year, month, day, hour, minute)
@@ -202,6 +196,22 @@ def compute(name, year, month, day, hour, minute, city, lat=None, lng=None, tz=N
         # NONEXISTENT / INVALID_TZ / AMBIGUOUS-未选 fold / INVALID_FOLD：显式报错，
         # 绝不静默兜底或替用户选 fold。携带 status + candidates 供 API 层分流。
         raise BirthContextError(res.status.value, res.message, res.candidates)
+
+    return ctx
+
+
+def compute(name, year, month, day, hour, minute, city, lat=None, lng=None, tz=None,
+            location_id=None, fold=None):
+    """
+    完整计算本命盘 + 古典评分 + 福点盘。
+    返回 MCP 计算和渲染所需数据，不生成解读或课程作业。
+    location_id / fold: 新解析链入参（下拉签发的 canonical id / 秋拨歧义所选 fold）。
+    tz: 旧形参，保留兼容旧调用方但已忽略——时区现由 resolver 单一来源决定（plan §5.4）。
+    """
+    from services.birth_input import validated_birth_values
+    year, month, day, hour, minute = validated_birth_values(year, month, day, hour, minute)
+    ctx = resolve_birth_context(year, month, day, hour, minute, city, lat, lng, location_id, fold)
+    snapshot = ctx.snapshot
 
     token = _ctx_token(name, ctx)
 

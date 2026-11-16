@@ -8,6 +8,8 @@ from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, Icon, ImageContent, TextContent, ToolAnnotations
 from pydantic import BaseModel, Field, StrictInt, StrictFloat, StrictBool
 from typing import Annotated, Literal
+from services.house_systems import HOUSE_SYSTEMS as GENERIC_HOUSE_SYSTEMS
+GenericHouseSystem = Literal[tuple(GENERIC_HOUSE_SYSTEMS)]
 from starlette.requests import Request
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse, Response
@@ -20,7 +22,7 @@ from services.mcp_natal import (calculate_classical_data, calculate_lots_data, c
                                 search_birthplace as find_birthplace)
 from services import mcp_extended as ext
 from services import rate_limit
-from services.mcp_contract import tool_clarification
+from services.mcp_contract import tool_clarification, house_system_notice
 from services.mcp_facts import NatalClaim, NatalFactReference, verify_natal_claims_data
 from services.mcp_validation import (CONTRACTS, META_CONTRACTS, RENDER_SOURCES,
                                      blocked, validate_meta_output)
@@ -115,7 +117,7 @@ mcp = FastMCP(
         "Use the returned location_id for all chart tools. Follow search next_action: use_location_id proceeds; ask_user requires a choice unless that exact ID was already confirmed. "
         "Never guess a missing time or a daylight-saving fold. "
         "When required_fields or clarification is returned, ask the user for those values and retry; "
-        "never invent missing minutes or silently choose a house system or solar-return location. "
+        "never invent missing minutes or a solar-return location. If no house system is specified, use Placidus and disclose it; preserve any explicit supported choice. Offer a different supported system without blocking calculation. Fixed method rules, including whole-sign annual profections, remain explicit. "
         "Reuse choices already explicitly supplied by the user, without asking again. "
         "For natal interpretations, first call calculate_natal_chart and keep its fact_reference unchanged. "
         "Before presenting the interpretation, submit its natal sign, house, retrograde and aspect "
@@ -288,6 +290,11 @@ def tool(**options):
     """
     def decorate(fn):
         signature = inspect.signature(fn)
+        if 'house_system' in signature.parameters:
+            options['description'] = options.get('description', '') + (
+                ' House-system policy: reuse an explicitly chosen supported system; otherwise default to placidus. '
+                'Do not block for an unspecified house system. Disclose house_system_notice to the user '
+                'and offer recalculation in another supported system if wanted; method-specific rules remain separate.')
         selectable = fn.__name__ in CONTRACTS
         protected_compute = (
             fn.__name__ in (set(CONTRACTS) - {"search_birthplace", "resolve_birth_coordinates"})
@@ -357,10 +364,14 @@ def tool(**options):
                     if isinstance(result.structuredContent, dict) and result.structuredContent.get('status') == 'ok':
                         data = {**result.structuredContent,
                                 'calculation_envelope': calculation_envelope(fn.__name__, arguments)}
+                        if 'house_system' in arguments:
+                            data['house_system_notice'] = house_system_notice(fn.__name__, arguments['house_system'])
                         result.structuredContent = data
                         result.content[0] = TextContent(type='text', text=json.dumps(data, ensure_ascii=False))
                 elif isinstance(result, dict) and result.get('status') == 'ok':
                     result = {**result, 'calculation_envelope': calculation_envelope(fn.__name__, arguments)}
+                    if 'house_system' in arguments:
+                        result['house_system_notice'] = house_system_notice(fn.__name__, arguments['house_system'])
                 if selectable and isinstance(result, dict):
                     result = project_result(result, detail_level, include)
                 tool_logger.info("tool_completed name=%s", fn.__name__)
@@ -415,11 +426,11 @@ def resolve_birth_coordinates(latitude: float, longitude: float) -> dict:
         return {"status": "invalid_input", "error": str(exc)}
 
 
-@tool(annotations=READ_ONLY, description="Calculate a tropical natal chart data table from an exact local birth date and time and a selected location_id. Choose placidus or whole_sign houses. If a repeated civil time is ambiguous, ask the user to choose fold 0 or 1 and call again. Do not guess an unknown birth time. For any natal interpretation, REQUIRED NEXT STEP before the final answer: call verify_natal_claims with this result's unchanged fact_reference and the draft's sign, house, retrograde and aspect claims. Correct contradicted claims and identify unverified ones before presenting the interpretation.")
+@tool(annotations=READ_ONLY, description="Calculate a tropical natal chart data table from an exact local birth date and time and a selected location_id. Choose placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus houses. If a repeated civil time is ambiguous, ask the user to choose fold 0 or 1 and call again. Do not guess an unknown birth time. For any natal interpretation, REQUIRED NEXT STEP before the final answer: call verify_natal_claims with this result's unchanged fact_reference and the draft's sign, house, retrograde and aspect claims. Correct contradicted claims and identify unverified ones before presenting the interpretation.")
 def calculate_natal_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, house_system: str | None = None,
+    location_id: str | None = None, house_system: GenericHouseSystem | None = "placidus",
     fold: StrictInt | None = None
 ) -> dict:
     return calculate_natal_data(year=year, month=month, day=day, hour=hour,
@@ -459,11 +470,11 @@ def calculate_natal_salience(
                                    distribution_points=distribution_points,reception_policy=reception_policy,dynamics_days=dynamics_days)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the existing natal chart wheel as a 720px PNG shown to the user. Requires an exact birth date, local time and selected location_id; supports placidus or whole_sign. Ask about ambiguous civil time instead of guessing fold.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the existing natal chart wheel as a 720px PNG shown to the user. Requires an exact birth date, local time and selected location_id; supports placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus. Ask about ambiguous civil time instead of guessing fold.")
 def render_natal_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
-    location_id: str | None = None, house_system: str | None = None,
+    location_id: str | None = None, house_system: GenericHouseSystem | None = "placidus",
     fold: StrictInt | None = None
 ) -> CallToolResult:
     metadata, png = render_natal_chart_png(
@@ -484,11 +495,11 @@ def render_jones_pattern(
     return _wheel_result(info, png, "琼斯格局分布图")
 
 
-@tool(annotations=READ_ONLY, description='Calculate natal sect, essential dignities and condition tags, sect-light triplicity lords, Fortune/Spirit, lunar phase and Jones classification. Use for classical factors; use calculate_natal_chart for positions/houses, calculate_natal_structure_graph for dispositor and aspect relationships, calculate_natal_salience for candidate focus groups, or calculate_lots for selected lot formulas. Requires exact local birth date/time, confirmed birthplace location_id and explicit house_system; omitted inputs return needs_clarification. Returns structured factors, not interpretation.')
+@tool(annotations=READ_ONLY, description='Calculate natal sect, essential dignities and condition tags, sect-light triplicity lords, Fortune/Spirit, lunar phase and Jones classification. Use for classical factors; use calculate_natal_chart for positions/houses, calculate_natal_structure_graph for dispositor and aspect relationships, calculate_natal_salience for candidate focus groups, or calculate_lots for selected lot formulas. Requires exact local birth date/time, confirmed birthplace location_id with optional house_system (default placidus); missing birth inputs return needs_clarification. Returns structured factors, not interpretation.')
 def calculate_classical_factors(
     *, year: Annotated[StrictInt | None, Field(description='Exact birth year in the Gregorian local civil calendar; required for calculation, never guessed.')] = None, month: Annotated[StrictInt | None, Field(description='Local civil birth month, 1-12.')] = None,
     day: Annotated[StrictInt | None, Field(description='Local civil birth day, valid for the supplied year and month.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact local civil birth hour, 0-23; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact local civil birth minute, 0-59.')] = None,
-    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID from search_birthplace or resolve_birth_coordinates; not a city name.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Reuse a confirmed choice; omission requests clarification.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID from search_birthplace or resolve_birth_coordinates; not a city name.')] = None, house_system: Annotated[str | None, Field(description='Optional: placidus (default) or whole_sign. Reuse an explicit choice; disclose the selected system.')] = "placidus",
     fold: Annotated[StrictInt | None, Field(description='For repeated local time during DST rollback, use user-confirmed 0 (first) or 1 (second); otherwise omit.')] = None
 ) -> dict:
     return calculate_classical_data(year=year, month=month, day=day, hour=hour,
@@ -507,11 +518,11 @@ def calculate_zodiacal_releasing(
                                     as_of=as_of, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description='Calculate Firdaria and annual profections for as_of: major periods through the configured age-100 horizon, sub-periods within the active major period, and profection years from one year before to three years after the current year, clipped to the available report. Use calculate_zodiacal_releasing for releasing from Fortune/Spirit instead. Requires exact local birth date/time, confirmed birthplace location_id and explicit house_system; missing prerequisites return needs_clarification. Returns timing tables and lords, not event predictions.')
+@tool(annotations=READ_ONLY, description='Calculate Firdaria and annual profections for as_of: major periods through the configured age-100 horizon, sub-periods within the active major period, and profection years from one year before to three years after the current year, clipped to the available report. Use calculate_zodiacal_releasing for releasing from Fortune/Spirit instead. Requires exact local birth date/time, confirmed birthplace location_id with optional house_system (default placidus); missing birth prerequisites return needs_clarification. Annual profections always advance one whole sign per year; house_system selects natal placement of the year lord, not a different time-lord sequence. Firdaria periods are independent of house system. Returns timing tables and lords, not event predictions.')
 def calculate_time_lords(
     *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
     day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
-    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD; omission uses the current UTC date. Evaluated at 12:00 UTC, not at local midnight.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Selects the reported profection house system. Reuse a confirmed user choice; omission requests clarification.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, as_of: Annotated[str | None, Field(description='Reference date YYYY-MM-DD; omission uses the current UTC date. Evaluated at 12:00 UTC, not at local midnight.')] = None, house_system: Annotated[GenericHouseSystem | None, Field(description='Optional natal house-system choice from the seven supported systems; default placidus. Selects natal placement of the year lord; annual profection signs and lords always use whole signs. Omission defaults to placidus; disclose the selected system.')] = "placidus",
     tradition: Annotated[str, Field(description='Firdaria request name: abu_mashar (default), al_biruni or bonatti. This implementation maps al_biruni to abu_mashar rules (nodes last); bonatti moves the nodes after Mars for night births. Result tradition preserves the request; effective_tradition and tradition_note disclose the implemented rules. This alias is not a claim of historical equivalence. Profection house_system is independent.')] = "abu_mashar", fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return calculate_time_lord_data(year=year, month=month, day=day, hour=hour,
@@ -542,7 +553,7 @@ def calculate_solar_arc(
                               as_of=as_of, fold=fold, wheel_age=wheel_age)
 
 
-@tool(annotations=READ_ONLY, description="Exact transits of Jupiter, Mars, Saturn, Uranus, Neptune and Pluto to the natal chart between from_date and to_date (YYYY-MM-DD, at most 3 years). target_scope: all, axes or points. IMPORTANT: axes include conjunctions (0 degrees) ONLY; other axis aspects are not supported. Points use the listed major aspects. Empty axis events do not mean no other axis aspects. Optional planet: jupiter, mars, saturn, uranus, neptune or pluto. Times are given in UTC and birthplace local time.")
+@tool(annotations=READ_ONLY, description="Exact transits of Jupiter, Mars, Saturn, Uranus, Neptune and Pluto to the natal chart between from_date and to_date (YYYY-MM-DD, at most 3 years). target_scope: all, axes or points. IMPORTANT: axes include conjunctions (0 degrees) ONLY; other axis aspects are not supported. Points use the listed major aspects. Empty axis events do not mean no other axis aspects. Optional planet: jupiter, mars, saturn, uranus, neptune or pluto. Returns every exact contact in the requested interval, including intermediate retrograde repeats; contact reports the index/total in its contact series. Times are given in UTC and birthplace local time.")
 def calculate_transits_to_natal(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
@@ -616,12 +627,12 @@ def calculate_progressed_lunation(
                                         as_of=as_of, fold=fold)
 
 
-@tool(annotations=READ_ONLY, description="Solar return chart for target_year: exact return moment, chart positions, angles, cusps and aspects, overlay with the natal chart, and monthly progressed return Moon contacts. Explicit residence_location_id (from search_birthplace) is required; use the birthplace ID only when the user chooses it. house_system: placidus or whole_sign.")
+@tool(annotations=READ_ONLY, description="Solar return chart for target_year: exact return moment, chart positions, angles, cusps and aspects, overlay with the natal chart, and monthly progressed return Moon contacts. Explicit residence_location_id (from search_birthplace) is required; use the birthplace ID only when the user chooses it. house_system: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def calculate_solar_return(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, target_year: StrictInt | None = None,
-    residence_location_id: str | None = None, house_system: str | None = None,
+    residence_location_id: str | None = None, house_system: GenericHouseSystem | None = "placidus",
     fold: StrictInt | None = None
 ) -> dict:
     return ext.solar_return_data(year=year, month=month, day=day, hour=hour,
@@ -631,12 +642,12 @@ def calculate_solar_return(
                                  house_system=house_system, fold=fold)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG solar-return wheel for target_year. Use for the return chart image; use calculate_solar_return for the exact return moment, chart data and natal overlay, or render_lunar_return_chart for a lunar return. Requires exact local birth date/time, birthplace location_id, target_year, explicit residence_location_id and house_system. The residence is the user-chosen return location; never silently reuse the birthplace. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG solar-return wheel for target_year. Use for the return chart image; use calculate_solar_return for the exact return moment, chart data and natal overlay, or render_lunar_return_chart for a lunar return. Requires exact local birth date/time, birthplace location_id, target_year, explicit residence_location_id and house_system. The residence is the user-chosen return location; never silently reuse the birthplace. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.')
 def render_solar_return_chart(
     *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
     day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
     location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, target_year: Annotated[StrictInt | None, Field(description='Required target year of the solar return; distinct from the birth year. Confirm the year with the user.')] = None,
-    residence_location_id: Annotated[str | None, Field(description='Required user-confirmed return/residence location ID from search_birthplace or resolve_birth_coordinates. Use the birthplace ID only if the user explicitly chooses that location.')] = None, house_system: Annotated[str | None, Field(description='Required explicit house-system choice: placidus or whole_sign. Reuse a confirmed user choice; omission requests clarification.')] = None,
+    residence_location_id: Annotated[str | None, Field(description='Required user-confirmed return/residence location ID from search_birthplace or resolve_birth_coordinates. Use the birthplace ID only if the user explicitly chooses that location.')] = None, house_system: Annotated[GenericHouseSystem | None, Field(description='Optional house-system choice (default placidus): placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus. Reuse a confirmed user choice; omission defaults to placidus.')] = "placidus",
     fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> CallToolResult:
     info, png = ext.render_solar_return_png(
@@ -646,13 +657,13 @@ def render_solar_return_chart(
     return _wheel_result(info, png, f"{target_year} 太阳返照盘")
 
 
-@tool(annotations=READ_ONLY, description="Lunar return chart for target_year and target_month in the residence's civil calendar: exact return moment, chart positions, angles, cusps, aspects, and natal overlay. Explicit residence_location_id (from search_birthplace) is required; house_system: placidus or whole_sign. target_day selects the nearer return if two occur in one month.")
+@tool(annotations=READ_ONLY, description="Lunar return chart for target_year and target_month in the residence's civil calendar: exact return moment, chart positions, angles, cusps, aspects, and natal overlay. Explicit residence_location_id (from search_birthplace) is required; house_system: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus. target_day selects the nearer return if two occur in one month.")
 def calculate_lunar_return(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, target_year: StrictInt | None = None,
     target_month: StrictInt | None = None, target_day: StrictInt | None = None,
-    residence_location_id: str | None = None, house_system: str | None = None,
+    residence_location_id: str | None = None, house_system: GenericHouseSystem | None = "placidus",
     fold: StrictInt | None = None
 ) -> dict:
     return ext.lunar_return_data(year=year, month=month, day=day, hour=hour,
@@ -663,13 +674,13 @@ def calculate_lunar_return(
                                 house_system=house_system, fold=fold)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the lunar return chart as a 720px PNG wheel shown to the user. Same inputs as calculate_lunar_return.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the lunar return chart as a 720px PNG wheel shown to the user. Same inputs as calculate_lunar_return. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def render_lunar_return_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, target_year: StrictInt | None = None,
     target_month: StrictInt | None = None, target_day: StrictInt | None = None,
-    residence_location_id: str | None = None, house_system: str | None = None,
+    residence_location_id: str | None = None, house_system: GenericHouseSystem | None = "placidus",
     fold: StrictInt | None = None
 ) -> CallToolResult:
     info, png = ext.render_lunar_return_png(
@@ -680,12 +691,12 @@ def render_lunar_return_chart(
     return _wheel_result(info, png, f"{target_year}-{target_month:02d} 月亮返照盘" if target_month else "月亮返照盘")
 
 
-@tool(annotations=READ_ONLY, description="Secondary progressions (Day-for-a-Year) chart: progressed planets, angles, natal aspects and lunation phase. Specify as_of or age; angle_progression_method defaults to naibod, or choose solar_arc_in_ra.")
+@tool(annotations=READ_ONLY, description="Secondary progressions (Day-for-a-Year) chart: progressed planets, angles, natal aspects and lunation phase. Specify as_of or age; angle_progression_method defaults to naibod, or choose solar_arc_in_ra. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def calculate_secondary_progressions(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, age: float | None = None, as_of: str | None = None,
-    house_system: str | None = None, fold: StrictInt | None = None,
+    house_system: GenericHouseSystem | None = "placidus", fold: StrictInt | None = None,
     angle_progression_method: str = "naibod"
 ) -> dict:
     return ext.secondary_progressions_data(year=year, month=month, day=day, hour=hour,
@@ -695,12 +706,12 @@ def calculate_secondary_progressions(
                                           angle_progression_method=angle_progression_method)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render secondary progressions as a 760px bi-wheel PNG shown to the user (natal inside, progressed outside). Same inputs as calculate_secondary_progressions.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render secondary progressions as a 760px bi-wheel PNG shown to the user (natal inside, progressed outside). Same inputs as calculate_secondary_progressions. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def render_secondary_progressions_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, age: float | None = None, as_of: str | None = None,
-    house_system: str | None = None, fold: StrictInt | None = None,
+    house_system: GenericHouseSystem | None = "placidus", fold: StrictInt | None = None,
     angle_progression_method: str = "naibod"
 ) -> CallToolResult:
     info, png = ext.render_secondary_progressions_biwheel_png(
@@ -711,11 +722,11 @@ def render_secondary_progressions_chart(
     return _wheel_result(info, png, "次限推进双圈盘")
 
 
-@tool(annotations=READ_ONLY, description='Calculate geometric charts for two exact births: synastry aspects, reciprocal Placidus house overlays, midpoint composite, composite-to-natal aspects and shared house patterns. Use for chart data or composite positions; use calculate_relationship_observation for contacts with natal context and observation paths, calculate_davison_chart for a time-space midpoint chart, or render_composite_chart for a composite image. orb_profile: greene (default) or tight. No compatibility score.')
+@tool(annotations=READ_ONLY, description='Calculate geometric charts for two exact births: synastry aspects, reciprocal selected-system house overlays, midpoint composite, composite-to-natal aspects and shared house patterns. Use for chart data or composite positions; use calculate_relationship_observation for contacts with natal context and observation paths, calculate_davison_chart for a time-space midpoint chart, or render_composite_chart for a composite image. orb_profile: greene (default) or tight. Seven house systems are supported. Composite quadrant cusps use corresponding cusp midpoints; whole-sign/equal houses are constructed from the midpoint Ascendant, with independent midpoint MC. This is not the ARMC/reference-place composite method. No compatibility score.')
 def calculate_relationship_charts(person_a: BirthInput | None = None, person_b: BirthInput | None = None,
-                                  orb_profile: str = "greene") -> dict:
+                                  orb_profile: str = "greene", house_system: GenericHouseSystem = "placidus") -> dict:
     return ext.relationship_data(person_a=person_a.model_dump(),
-                                 person_b=person_b.model_dump(), orb_profile=orb_profile)
+                                 person_b=person_b.model_dump(), orb_profile=orb_profile, house_system=house_system)
 
 
 @tool(annotations=READ_ONLY, description="For a focused question, use include to request needed top-level fields (for initial contact inspection: contacts and counts), then fetch further context as needed. For explicitly requested complete research data, keep detail_level=full and omit include; full remains the default. A successful calculation does not guarantee that a client received an untruncated result. John Green relationship observation v0.14. mode=synastry requires two exact births; mode=natal accepts person_a alone or both people and computes natal profiles without cross-contacts. All natal points remain available, including untriggered points. sort_by=orb (default), relationship_indicators or natal_hard_aspects changes display order only. Human notes use prepare_relationship_observation_note separately. Returns unique cross-contacts, two observation paths per contact, one-hop natal context, supported bounded natal aspect configurations (including Chiron), actual contact links between both natal configurations, static natal priority background under its separately disclosed policy, directed house overlays and factual indicators. Configuration memberships and natal identities never add direct contacts. observation_review provides evidence-backed indicator, inner/outer and tightness reasons with parallel lenses, never a weighted score or inferred client difficulty. structure_display folds contained configurations and bridges while keeping every raw row and partial overlap. natal_observation_candidates records source-backed selection reasons even without partner contacts. review_paths links actual contact endpoints, one-hop natal context, house rulers and overlays without propagating activation. overlay_contexts preserves target ownership; observation_comparisons groups reciprocal contacts and both natal backgrounds without scoring. observation_complexes separately groups conjunction-pair neighborhoods and named-pattern conjunction satellites, including axis endpoint variants, without recursive expansion or whole-complex activation claims. Shared natal planet pairs and exact descendant-sign correspondences are factual comparisons, not semantic matches. Relationship-indicator sorting uses target-point selection roles. scenario_observation_lenses attaches source-backed topics, conditions and actual point/house references to each selected context; this is not a planet whitelist or psychological interpretation. Optional unconfirmed conditions must not be asserted as client facts. Reuse an explicitly stated relationship context; if unknown, ask the user before calling. The legacy love default is not evidence of user confirmation. No composite, scores or psychological flags. Axis endpoint equivalents share one contact. john_green profile uses 10 degrees for conjunction/square/trine/opposition and 5 degrees for tight display. Sextiles are not evaluated unless sextile_orb_degrees (0-10) is supplied; minor aspects require include_minor_aspects=true and explicit minor_orbs_degrees keys 30/45/135/150; overlapping orb windows are rejected. Yod context requires explicit 60 and 150 degree orbs. Optional include_timing=true requires timing with one of at (offset-aware ISO timestamp), date (YYYY-MM-DD), or month (YYYY-MM) with optional month_part (early/middle/late), or event=childbirth with explicit family parent/child roles, plus explicit transit_orbs_degrees and progression_orbs_degrees. Timing provides a selected-instant snapshot. Optional timing.window_start and window_end (offset-aware ISO timestamps) request a numerical interval search, with a duration from one second to 31 days and the snapshot inside [start,end). window_scan returns exact events and clipped orb windows over every supported point pair, including pairs absent at the snapshot. It reuses source engines and root refinement; interval mesh and bounds are engineering rules. Simultaneous synastry endpoint windows require the same transit and actual interval overlap, not merely two hits somewhere in the date range. Non-instant dates are illustrative UTC-noon samples with fast transits excluded; early/middle/late means calendar days 1-10/11-20/21-end and samples day 5/15/25. These boundaries and sample times are engineering conventions, not known meeting times or interval scans. The timing dictionary also accepts angle_progression_method (naibod default or solar_arc_in_ra) and include_progressed_synastry (boolean, default true). When progressed synastry is enabled, progressed_synastry_comparison compares natal geometry with the selected progressed pair under the same progression_orbs_degrees. It distinguishes same/different aspect and presence on only one side; a node-convention mismatch is marked not comparable. Existing wide-orb static contacts are contextual references, not the comparison baseline. This does not infer first appearance, duration, relationship outcome or internal progressed configurations. No inherited 10-degree timing orbs. Childbirth resolves the child birth through the existing timezone/fold resolver and exposes parental contacts as references, not extra evidence. Natal nodes are verified mean nodes despite legacy field names; childbirth uses mean nodes throughout. Explicit-date timing retains its true transit/progressed nodes and discloses the different natal convention in node_conventions. Timing requires synastry mode and preserves static counts, and links existing contacts and bounded natal contexts without predictions. See timing_observations and its availability limits. relationship_context accepts additional_types, caller-supplied a/b roles (parent/child, siblings, supervisor/employee, colleagues), and cohabiting. Roles must match a selected family/work type. Optional creative_project and early_or_sibling_like_friendship accept true/false/null, require work/friendship respectively, and never infer context. Conditional DSC/seventh-house topics retain actual houses. observation_complex_links references each contact once with both owners core/context memberships, including axis/Yod complexes; no pair-product expansion. Parallel traditional/modern ruler backgrounds and special contact lenses do not add contacts or weights. Missing layers remain explicit, including in summary results. See docs/relationship-observation.md.")
@@ -759,36 +770,36 @@ def prepare_relationship_observation_note(
 
 
 @tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render the midpoint composite chart of two people as a 720px PNG wheel. Use for geometric midpoint positions; use calculate_relationship_charts for structured composite/synastry data or render_davison_chart for a physical time-space midpoint chart. Supply two complete BirthInput objects with exact local birth dates/times and separately confirmed birthplace IDs. This chart does not score compatibility or predict relationship outcomes. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
-def render_composite_chart(person_a: Annotated[BirthInput | None, Field(description='First person: year, month, day, hour (0-23), minute (0-59) in birthplace local civil time, plus confirmed location_id from search_birthplace or resolve_birth_coordinates. All six are needed; fold is 0/1 only for a user-confirmed repeated DST time. Do not guess missing fields.')] = None, person_b: Annotated[BirthInput | None, Field(description="Second person: complete year, month, day, hour (0-23), minute (0-59) and their own confirmed birthplace location_id, using local civil time. Request fold 0/1 for an ambiguous repeated DST time. Do not copy the first person's location by default.")] = None) -> CallToolResult:
+def render_composite_chart(person_a: Annotated[BirthInput | None, Field(description='First person: year, month, day, hour (0-23), minute (0-59) in birthplace local civil time, plus confirmed location_id from search_birthplace or resolve_birth_coordinates. All six are needed; fold is 0/1 only for a user-confirmed repeated DST time. Do not guess missing fields.')] = None, person_b: Annotated[BirthInput | None, Field(description="Second person: complete year, month, day, hour (0-23), minute (0-59) and their own confirmed birthplace location_id, using local civil time. Request fold 0/1 for an ambiguous repeated DST time. Do not copy the first person's location by default.")] = None, house_system: GenericHouseSystem = "placidus") -> CallToolResult:
     info, png = ext.render_composite_png(person_a=person_a.model_dump(),
-                                         person_b=person_b.model_dump())
+                                         person_b=person_b.model_dump(), house_system=house_system)
     return _wheel_result(info, png, "组合中点盘")
 
 
-@tool(annotations=READ_ONLY, description="Davison relationship chart (time-space midpoint chart) for two people with exact birth data: calculates the real physical midpoint in time (UT) and geographic coordinates, casting an independent chart with its own real axes, houses and planetary positions. Supports placidus or whole_sign; orb_profile: greene (default) or tight.")
+@tool(annotations=READ_ONLY, description="Davison relationship chart (time-space midpoint chart) for two people with exact birth data: calculates the real physical midpoint in time (UT) and geographic coordinates, casting an independent chart with its own real axes, houses and planetary positions. Supports placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus; orb_profile: greene (default) or tight.")
 def calculate_davison_chart(person_a: BirthInput | None = None, person_b: BirthInput | None = None,
-                            house_system: str = "placidus", orb_profile: str = "greene") -> dict:
+                            house_system: GenericHouseSystem = "placidus", orb_profile: str = "greene") -> dict:
     return ext.davison_data(person_a=person_a.model_dump(),
                             person_b=person_b.model_dump(),
                             house_system=house_system,
                             orb_profile=orb_profile)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the Davison relationship chart (time-space midpoint chart) of two people as a 720px PNG wheel shown to the user. Same inputs as calculate_davison_chart.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the Davison relationship chart (time-space midpoint chart) of two people as a 720px PNG wheel shown to the user. Same inputs as calculate_davison_chart. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def render_davison_chart(person_a: BirthInput | None = None, person_b: BirthInput | None = None,
-                         house_system: str = "placidus") -> CallToolResult:
+                         house_system: GenericHouseSystem = "placidus") -> CallToolResult:
     info, png = ext.render_davison_png(person_a=person_a.model_dump(),
                                        person_b=person_b.model_dump(),
                                        house_system=house_system)
     return _wheel_result(info, png, "时空中点盘")
 
 
-@tool(annotations=READ_ONLY, description="Relocation chart: recalculates ascendant, midheaven and house cusps for a new residence location while keeping the exact natal birth moment (UT) and planetary longitudes unchanged. relocation_location_id (from search_birthplace) is required; house_system: placidus (default) or whole_sign.")
+@tool(annotations=READ_ONLY, description="Relocation chart: recalculates ascendant, midheaven and house cusps for a new residence location while keeping the exact natal birth moment (UT) and planetary longitudes unchanged. relocation_location_id (from search_birthplace) is required; house_system: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus (default: placidus).")
 def calculate_relocation_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, relocation_location_id: str | None = None,
-    house_system: str = "placidus", fold: StrictInt | None = None
+    house_system: GenericHouseSystem = "placidus", fold: StrictInt | None = None
 ) -> dict:
     return ext.relocation_data(year=year, month=month, day=day, hour=hour,
                                minute=minute, location_id=location_id,
@@ -796,12 +807,12 @@ def calculate_relocation_chart(
                                house_system=house_system, fold=fold)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the relocation chart as a 720px PNG wheel shown to the user. Same inputs as calculate_relocation_chart.")
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description="Render the relocation chart as a 720px PNG wheel shown to the user. Same inputs as calculate_relocation_chart. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.")
 def render_relocation_chart(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, relocation_location_id: str | None = None,
-    house_system: str = "placidus", fold: StrictInt | None = None
+    house_system: GenericHouseSystem = "placidus", fold: StrictInt | None = None
 ) -> CallToolResult:
     info, png = ext.render_relocation_png(
         year=year, month=month, day=day, hour=hour, minute=minute,
@@ -815,11 +826,11 @@ def get_current_sky(moment: str | None = None) -> dict:
     return ext.sky_data(moment=moment)
 
 
-@tool(annotations=READ_ONLY, description='Calculate house-ruler dispositor chains for all twelve houses, with traditional and modern tracks, chart ruler and angular/succedent/cadent crosses. Use for house-based rulership paths; use calculate_natal_structure_graph for the wider relationship graph or calculate_classical_factors for dignities. Supply exact local birth date/time, a confirmed birthplace location_id and explicit house_system. Omitted prerequisites return needs_clarification; do not infer them. Both rulership tracks are returned regardless of house system. Data only; no psychological interpretation.')
+@tool(annotations=READ_ONLY, description='Calculate house-ruler dispositor chains for all twelve houses, with traditional and modern tracks, chart ruler and angular/succedent/cadent crosses. Use for house-based rulership paths; use calculate_natal_structure_graph for the wider relationship graph or calculate_classical_factors for dignities. Supply exact local birth date/time, a confirmed birthplace location_id with optional house_system (default placidus). Missing birth prerequisites return needs_clarification; do not infer them. Both rulership tracks are returned regardless of house system. Data only; no psychological interpretation. Supported house systems: placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus.')
 def calculate_house_rulers(
     *, year: Annotated[StrictInt | None, Field(description='Birth year in the Gregorian calendar, using local civil time at the confirmed birthplace. Required for calculation; do not guess missing birth data.')] = None, month: Annotated[StrictInt | None, Field(description='Birth month, 1-12, in the birthplace local civil calendar.')] = None,
     day: Annotated[StrictInt | None, Field(description='Birth day of month, valid for the supplied year and month in the birthplace local civil calendar.')] = None, hour: Annotated[StrictInt | None, Field(description='Exact birth hour, 0-23, in birthplace local civil time; do not substitute noon for an unknown time.')] = None, minute: Annotated[StrictInt | None, Field(description='Exact birth minute, 0-59, in birthplace local civil time.')] = None,
-    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, house_system: Annotated[str | None, Field(description='Required explicit choice: placidus or whole_sign. Selects house cusps and placements, not traditional versus modern rulers; both ruler tracks are returned. Reuse a confirmed user choice.')] = None,
+    location_id: Annotated[str | None, Field(description='Confirmed birthplace ID returned by search_birthplace or resolve_birth_coordinates; not a city name. Resolve ambiguous places before calling.')] = None, house_system: Annotated[GenericHouseSystem | None, Field(description='Optional choice (default placidus): placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus. Selects house cusps and placements, not traditional versus modern rulers; both ruler tracks are returned. Reuse a confirmed user choice.')] = "placidus",
     fold: Annotated[StrictInt | None, Field(description='For a repeated local time at a DST rollback, ask the user to choose 0 (first occurrence) or 1 (second). Otherwise omit; never guess.')] = None
 ) -> dict:
     return ext.house_ruler_data(year=year, month=month, day=day, hour=hour,
@@ -856,16 +867,16 @@ def calculate_aspect_windows(moment: str | None = None,
     return ext.aspect_window_data(moment=moment, location_id=location_id)
 
 
-@tool(annotations=READ_ONLY, description="A full chart cast for any moment and place rather than for a birth: planets, Placidus houses, axes, aspects, aspect patterns, lunar phase and planetary motion including retrograde shadow periods. moment is ISO 8601 with a timezone offset; defaults to now.")
+@tool(annotations=READ_ONLY, description="A full chart cast for any moment and place rather than for a birth: planets, selected-system houses, axes, aspects, aspect patterns, lunar phase and planetary motion including retrograde shadow periods. moment is ISO 8601 with a timezone offset; defaults to now.")
 def calculate_sky_chart(moment: str | None = None,
-                        location_id: str | None = None) -> dict:
-    return ext.sky_chart_data(moment=moment, location_id=location_id)
+                        location_id: str | None = None, house_system: GenericHouseSystem = "placidus") -> dict:
+    return ext.sky_chart_data(moment=moment, location_id=location_id, house_system=house_system)
 
 
-@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG tropical Placidus wheel for one moment and selected place, with chart positions calculated to minute precision. No birth data is needed. Use calculate_sky_chart for structured chart data, get_current_sky for sky positions without local houses, or render_transit_biwheel to compare the sky with a natal chart. Requires confirmed location_id; moment defaults to now. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
+@tool(annotations=READ_ONLY, meta=WHEEL_META, description='Render a 720px PNG tropical wheel in the selected house system for one moment and selected place, with chart positions calculated to minute precision. No birth data is needed. Use calculate_sky_chart for structured chart data, get_current_sky for sky positions without local houses, or render_transit_biwheel to compare the sky with a natal chart. Requires confirmed location_id; moment defaults to now. Returns an inline MCP PNG after calculating and validating its source; no prior calculation call is required. stdio has no public image URL and the client must support image content. Missing inputs return needs_clarification without an image; invalid inputs or unavailable rendering return an error without an image.')
 def render_sky_chart(moment: Annotated[str | None, Field(description='Chart instant in ISO 8601 with timezone offset, for example 2026-10-25T12:00:00+08:00 or a Z suffix. Omit for now; chart calculation uses local time truncated to the minute.')] = None,
-                     location_id: Annotated[str | None, Field(description='Required confirmed chart-place ID from search_birthplace or resolve_birth_coordinates, not a city name. Supplies coordinates and timezone for Placidus houses; need not be a birthplace.')] = None) -> CallToolResult:
-    info, png = ext.render_sky_chart_png(moment=moment, location_id=location_id)
+                     location_id: Annotated[str | None, Field(description='Required confirmed chart-place ID from search_birthplace or resolve_birth_coordinates, not a city name. Supplies coordinates and timezone for the selected houses; need not be a birthplace.')] = None, house_system: GenericHouseSystem = "placidus") -> CallToolResult:
+    info, png = ext.render_sky_chart_png(moment=moment, location_id=location_id, house_system=house_system)
     return _wheel_result(info, png, "天象盘")
 
 
@@ -920,12 +931,12 @@ def verify_calculation_claims(reference: CalculationReference,
     return verify_calculation_claims_data(reference.model_dump(), [c.model_dump() for c in claims])
 
 
-@tool(annotations=READ_ONLY, description="Calculate Hellenistic and Arabic lots on demand. Returns name, longitude, sign, house, formula and day/night reversal info. Filter with lots=['fortune', 'spirit', 'eros', 'marriage_male', 'mother', ...]. Data only, no psychological interpretation.")
+@tool(annotations=READ_ONLY, description="Calculate Hellenistic and Arabic lots on demand. Returns name, longitude, sign, house, formula and day/night reversal info. Seven house systems select placement only; longitude formulas and sect do not change. A noncomputed house_placidus comparison is null. Filter with lots=['fortune', 'spirit', 'eros', 'marriage_male', 'mother', ...]. Data only, no psychological interpretation.")
 def calculate_lots(
     *, year: StrictInt | None = None, month: StrictInt | None = None,
     day: StrictInt | None = None, hour: StrictInt | None = None, minute: StrictInt | None = None,
     location_id: str | None = None, lots: list[str] | None = None,
-    house_system: str = "whole_sign", fold: StrictInt | None = None
+    house_system: GenericHouseSystem = "placidus", fold: StrictInt | None = None
 ) -> dict:
     return calculate_lots_data(year=year, month=month, day=day, hour=hour,
                               minute=minute, location_id=location_id,

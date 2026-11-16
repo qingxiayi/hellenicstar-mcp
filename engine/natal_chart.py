@@ -2656,7 +2656,7 @@ class NatalChartCalculator:
 
     def calculate_houses(self, year: int, month: int, day: int,
                          hour: int, minute: int, lat: float, lng: float,
-                         tz_offset: float = 0) -> Dict[str, Any]:
+                         tz_offset: float = 0, house_system: str = "placidus") -> Dict[str, Any]:
         """
         使用swisseph直接计算四轴和宫位
         参数：tz_offset - 时区偏移（小时数），例如：8表示UTC+8
@@ -2670,8 +2670,9 @@ class NatalChartCalculator:
         # 计算儒略日
         jd = swe.julday(year, month, day, utc_time)
 
-        # 计算普拉西度宫位 (b'P' = Placidus)
-        cusps, ascmc = swe.houses(jd, lat, lng, b'P')
+        from services.house_systems import calculate_houses
+        frame = calculate_houses(jd, lat, lng, house_system)
+        cusps, ascmc = frame.cusps, frame.ascmc
 
         # 计算四轴
         asc_lon = ascmc[0] % 360
@@ -2805,62 +2806,9 @@ class NatalChartCalculator:
             "axis_name": axis_name
         }
     def get_planet_house(self, planet_lon: float, cusps: List[float]) -> int:
-        """根据行星经度和宫尖数组，判断行星落入哪个宫位
+        from services.house_systems import house_of
+        return house_of(planet_lon, cusps)
 
-        参数:
-            planet_lon: 行星黄经度 (0-360度)
-            cusps: Swiss Ephemeris返回的宫头数组，cusps[0..11]为第1-12宫宫头
-
-        返回:
-            宫位数字 (1-12)
-        """
-        # cusps数组包含12个值：cusps[0..11]为第1-12宫宫头
-        house_cusps = cusps  # 直接使用12个宫头
-
-        # 处理跨越0度的情况：如果宫头值小于第一个宫头，加360度
-        first_cusp = house_cusps[0]
-        normalized_cusps = []
-        for cusp in house_cusps:
-            if cusp < first_cusp:
-                normalized_cusps.append(cusp + 360.0)
-            else:
-                normalized_cusps.append(cusp)
-
-        # 添加第13个值（第一个宫头+360）以便处理循环
-        normalized_cusps.append(normalized_cusps[0] + 360.0)
-
-        # 将行星经度归一化到0-360度
-        lon = planet_lon % 360.0
-
-        # 如果行星经度小于规范化后的第一个宫头，加360度
-        if lon < normalized_cusps[0]:
-            lon += 360.0
-
-        # 查找行星所在的宫位
-        for i in range(12):
-            lower_bound = normalized_cusps[i]
-            upper_bound = normalized_cusps[i + 1]
-
-            # 检查是否正好等于当前宫头值
-            if lon == lower_bound:
-                # 对于第1宫头，需要特殊处理（可能是第12宫头+360）
-                if i == 0:
-                    # 判断是否为第12宫头+360
-                    if house_cusps[0] < lon:
-                        return 12  # lon是规范化后的第12宫头+360
-                    else:
-                        return 1   # lon是原始的第1宫头
-                else:
-                    # i>0: 正好等于宫头值，属于前一个宫位（即宫位i）
-                    return i
-
-            # 宫位i+1的范围是(lower_bound, upper_bound]
-            # 即不包括下边界（宫头值属于前一个宫位），包括上边界
-            if lower_bound < lon <= upper_bound:
-                return i + 1  # 宫位从1开始
-
-        # 默认返回第12宫（应该不会执行到这里）
-        return 12
 
     def calculate_aspects(self, valid_points: List[Tuple[str, Any]], jd: float = None) -> List[Dict[str, Any]]:
         """计算主要相位，包含入相/出相判断（需传 jd）"""
@@ -3667,7 +3615,8 @@ class NatalChartCalculator:
     def calculate(self, year: int, month: int, day: int,
                   hour: int, minute: int, city: str,
                   country_code: str = "CN",
-                  resolved: Dict[str, Any] = None) -> Dict[str, Any]:
+                  resolved: Dict[str, Any] = None,
+                  house_system: str = "placidus") -> Dict[str, Any]:
         """计算完整本命盘。
 
         resolved（新链 EngineAdapter 注入，plan §5.2）：{lat, lng, utc_offset}。
@@ -3676,6 +3625,8 @@ class NatalChartCalculator:
         因此同喂一个 UTC 瞬间（plan §5.3 单一瞬间不变量）。天文公式本体完全不动。
         """
 
+        from services.house_systems import house_system_spec, HouseCalculationError
+        house_system_spec(house_system)
         try:
             # 检查城市是否在本地坐标映射中（多轮模糊匹配）
             lookup_city = city.strip()
@@ -3771,14 +3722,17 @@ class NatalChartCalculator:
                     subject = KrInstance(
                         "", adj_year, adj_month, adj_day, adj_hour, adj_minute,
                         lng=lng, lat=lat, tz_str=tz_str,
-                        geonames_username="local_cache", online=False
+                        geonames_username="local_cache", online=False,
+                        houses_system_identifier=house_system_spec(house_system).code.decode().replace("E", "A"),
                     )
                 except ImportError:
                     from kerykeion import AstrologicalSubjectFactory
+                    from services.house_systems import house_system_spec
                     subject = AstrologicalSubjectFactory.from_birth_data(
                         "", adj_year, adj_month, adj_day, adj_hour, adj_minute,
                         lng=lng, lat=lat, tz_str=tz_str,
-                        geonames_username="local_cache", online=False
+                        geonames_username="local_cache", online=False,
+                        houses_system_identifier=house_system_spec(house_system).code.decode().replace("E", "A"),
                     )
             else:
                 # 城市不在本地坐标库中
@@ -3794,7 +3748,7 @@ class NatalChartCalculator:
             tz_offset = dst_offset
 
             # 使用swisseph计算四轴和宫位（传入正确时区偏移）
-            houses_result = self.calculate_houses(year, month, day, hour, minute, lat, lng, tz_offset)
+            houses_result = self.calculate_houses(year, month, day, hour, minute, lat, lng, tz_offset, house_system)
             cusps = houses_result["cusps"]
             axes = houses_result["axes"]
 
@@ -3999,7 +3953,7 @@ class NatalChartCalculator:
                 "axes": axes,
                 "houses": {
                     "cusps": cusps,
-                    "system": "Placidus"
+                    "system": house_system_spec(house_system).label
                 },
                 "moon_phase": moon_phase,
                 "aspects": aspects,
@@ -4009,13 +3963,15 @@ class NatalChartCalculator:
                 },
                 "meta": {
                     "calculation_method": "Kerykeion + Swiss Ephemeris",
-                    "house_system": "Placidus",
+                    "house_system": house_system_spec(house_system).label,
                     "aspect_orbs": self.ASPECT_ORBS
                 }
             }
 
             return result
 
+        except HouseCalculationError:
+            raise
         except Exception as e:
             return {
                 "status": "error",

@@ -71,15 +71,8 @@ def _angular_sep(a, b):
 
 
 def _house_of(lon, cusps):
-    lon = _norm(lon)
-    for i in range(12):
-        start = _norm(cusps[i])
-        end = _norm(cusps[(i + 1) % 12])
-        span = _norm(end - start)
-        offset = _norm(lon - start)
-        if offset < span or span == 0:
-            return i + 1
-    return 12
+    from services.house_systems import house_of
+    return house_of(lon, cusps)
 
 
 def _point(lon, retrograde=False, speed=None, house=None):
@@ -124,7 +117,9 @@ def _resolve_birth_jd(year, month, day, hour, minute,
 
 def _chart_at(jd, lat, lng, hsys=b'P'):
     apply_ephe_path()
-    cusps, ascmc = swe.houses(jd, lat, lng, hsys)
+    from services.house_systems import calculate_houses, system_from_code
+    frame = calculate_houses(jd, float(lat), float(lng), system_from_code(hsys))
+    cusps, ascmc = frame.cusps, frame.ascmc
     cusps = list(cusps)
 
     planets = {}
@@ -192,9 +187,11 @@ def compute_secondary_progressions(birth_year, birth_month, birth_day, birth_hou
     参数：
       - age: 事件年龄（岁），如 36.0
       - as_of: 事件日期（ISO 字符串 'YYYY-MM-DD'），若提供则自动由 (as_of - birth) 换算精确年龄
-      - house_system: 'P' (Placidus) 或 'W' (Whole Sign)
+      - house_system: 注册表中的宫制名称或内部 Swiss 代码
     """
-    hsys = b'W' if str(house_system).lower() in ('w', 'whole_sign') else b'P'
+    from services.house_systems import system_from_code, house_system_spec
+    house_system = system_from_code(house_system)
+    hsys = house_system_spec(house_system).code
 
     natal_jd = _resolve_birth_jd(birth_year, birth_month, birth_day, birth_hour, birth_minute,
                                  lat=birth_lat, lng=birth_lng,
@@ -258,7 +255,9 @@ def compute_secondary_progressions(birth_year, birth_month, birth_day, birth_hou
     armc_prog = (armc_nat + ra_arc) % 360.0
     eps_prog = swe.calc_ut(prog_jd, swe.ECL_NUT)[0][0]
 
-    prog_cusps, prog_ascmc = swe.houses_armc(armc_prog, birth_lat, eps_prog, hsys)
+    from services.house_systems import houses_at_armc
+    frame = houses_at_armc(armc_prog, birth_lat, eps_prog, house_system)
+    prog_cusps, prog_ascmc = frame.cusps, frame.ascmc
     prog_cusps = list(prog_cusps)
 
     prog_axes = {
@@ -318,7 +317,7 @@ def compute_secondary_progressions(birth_year, birth_month, birth_day, birth_hou
         'progressed_jd': prog_jd,
         'progressed_ephemeris_date': prog_ephemeris_date,
         'angle_progression_method': angle_progression_method,
-        'house_system': 'whole_sign' if hsys == b'W' else 'placidus',
+        'house_system': house_system,
         'progressed_chart': {
             'planets': prog_planets,
             'special_points': prog_special,

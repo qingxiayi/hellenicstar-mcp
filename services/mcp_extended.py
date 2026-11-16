@@ -58,11 +58,11 @@ def _sign(lon: float) -> dict:
 
 
 def _validated(year, month, day, hour, minute, location_id, fold,
-               house_system="placidus"):
+               house_system="placidus", chart_only=False):
     """Return (natal compute result, service body with the resolved fold)."""
     result = _compute_source(year=year, month=month, day=day, hour=hour,
                              minute=minute, location_id=location_id,
-                             house_system=house_system, fold=fold)
+                             house_system=house_system, fold=fold, chart_only=chart_only)
     body = _birth_body(year, month, day, hour, minute, location_id,
                        result["birth_context"]["fold"])
     return result, body
@@ -187,13 +187,14 @@ def transit_events_data(*, year, month, day, hour, minute, location_id,
         data = compute_range_events(
             _forecast_snapshot(body), lo_jd, hi_jd,
             group=None, planet=planet or None, target_scope=target_scope,
-            natal_point=None, aspects=None)
+            natal_point=None, aspects=None, collapse_series=False)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
     tz_name = result["birth_context"]["tz_iana"]
     return {
         "status": "ok", "birth_context": result["birth_context"],
         "settings": {"from_date": from_date, "to_date": to_date, **data["filters"],
+                     "contact_policy": "all_exact_contacts",
                      "aspects": [0.0] if target_scope == "axes" else data["filters"]["aspects"],
                      "aspects_by_target": {
                          "axes": [0.0] if target_scope in ("all", "axes") else [],
@@ -330,7 +331,7 @@ def _residence(residence_location_id):
 
 def _solar_return_source(year, month, day, hour, minute, location_id, target_year,
                          residence_location_id, house_system, fold):
-    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system)
+    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system, chart_only=True)
     if not isinstance(target_year, int) or not 1800 <= target_year <= 2200:
         raise ValueError("target_year 需在 1800–2200")
     ctx = result["birth_context"]
@@ -339,7 +340,7 @@ def _solar_return_source(year, month, day, hour, minute, location_id, target_yea
     sr = compute_solar_return_full(
         year, month, day, hour, minute, ctx["lat"], ctx["lng"], target_year,
         rlat, rlng, residence_tz=rtz, residence_city="",
-        house_system="W" if house_system == "whole_sign" else "P",
+        house_system=house_system,
         birth_location_id=body["location_id"], birth_fold=body.get("fold"))
     return result, sr, rid
 
@@ -386,7 +387,7 @@ def _rel_aspect(a: dict) -> dict:
             "orb": round(a["orb"], 3), "tight": a.get("tight_contact")}
 
 
-def _relationship_source(person_a: dict, person_b: dict, orb_profile: str):
+def _relationship_source(person_a: dict, person_b: dict, orb_profile: str, house_system="placidus"):
     from services.relationship_charts import ORB_PROFILES, build_relationship_charts
     if orb_profile not in ORB_PROFILES:
         raise ValueError("orb_profile 只支持 greene 或 tight")
@@ -398,8 +399,8 @@ def _relationship_source(person_a: dict, person_b: dict, orb_profile: str):
             summaries[key] = _compute_source(
                 year=p.get("year"), month=p.get("month"), day=p.get("day"),
                 hour=p.get("hour"), minute=p.get("minute"),
-                location_id=p.get("location_id") or "", house_system="placidus",
-                fold=p.get("fold"))
+                location_id=p.get("location_id") or "", house_system=house_system,
+                fold=p.get("fold"), chart_only=True)
         except BirthContextError as exc:
             exc.status_message = f"person_{key}：{exc.status_message}"
             exc.mcp_field_prefix = f"person_{key}."
@@ -412,9 +413,9 @@ def _relationship_source(person_a: dict, person_b: dict, orb_profile: str):
     return summaries, build_relationship_charts(summaries["a"], summaries["b"], orb_profile)
 
 
-def relationship_data(*, person_a: dict, person_b: dict, orb_profile="greene") -> dict:
+def relationship_data(*, person_a: dict, person_b: dict, orb_profile="greene", house_system="placidus") -> dict:
     try:
-        summaries, rc = _relationship_source(person_a, person_b, orb_profile)
+        summaries, rc = _relationship_source(person_a, person_b, orb_profile, house_system)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
     comp = rc["charts"]["composite"]
@@ -422,9 +423,11 @@ def relationship_data(*, person_a: dict, person_b: dict, orb_profile="greene") -
         "status": "ok",
         "birth_context": {"a": summaries["a"]["birth_context"],
                           "b": summaries["b"]["birth_context"]},
-        "settings": {"house_system": "placidus", "orb_profile": orb_profile,
+        "settings": {"house_system": house_system, "orb_profile": orb_profile,
                      "orbs": rc["method"].get("orbs"),
-                     "composite": "short-arc midpoints; composite cusps are midpoints of Placidus cusps"},
+                     "composite": comp["houses"]["system"],
+                     "composite_axes": "short_arc_midpoints",
+                     "composite_house_status": comp["houses"]["status"]},
         "synastry_aspects": [_rel_aspect(a) for a in rc["synastry"]["aspects"]],
         "a_planets_in_b_houses": {_zh(x["point"]): x["house"] for x in rc["synastry"]["a_in_b"]},
         "b_planets_in_a_houses": {_zh(x["point"]): x["house"] for x in rc["synastry"]["b_in_a"]},
@@ -433,7 +436,7 @@ def relationship_data(*, person_a: dict, person_b: dict, orb_profile="greene") -
                         if v.get("longitude") is not None},
             "axes": {_zh(k): _sign(v["longitude"]) for k, v in comp["axes"].items()
                      if v.get("longitude") is not None},
-            "house_cusps": [round(c, 4) for c in comp["houses"]["cusps"]],
+            "house_cusps": [round(c, 4) for c in (comp["houses"]["cusps"] or [])],
             "planet_houses": {_zh(x["point"]): x["house"] for x in comp["point_houses"]},
             "aspects": [_rel_aspect(a) for a in comp["aspects"]],
         },
@@ -476,12 +479,15 @@ _WHEEL_POINTS = {"sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn",
                  "uranus", "neptune", "pluto", "chiron", "north_node", "south_node"}
 
 
-def render_composite_png(*, person_a: dict, person_b: dict) -> tuple[dict, bytes | None]:
+def render_composite_png(*, person_a: dict, person_b: dict, house_system="placidus") -> tuple[dict, bytes | None]:
     try:
-        _summaries, rc = _relationship_source(person_a, person_b, "greene")
+        _summaries, rc = _relationship_source(person_a, person_b, "greene", house_system)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc), None
     comp = rc["charts"]["composite"]
+    if (comp["houses"]["status"] != "ok" or
+            any(comp["axes"][key]["longitude"] is None for key in ("ascendant", "midheaven"))):
+        return {"status": "invalid_input", "error": "组合盘宫头中点不确定或顺序无效，无法绘图"}, None
     planets = {k: {"lon": v["longitude"], "retrograde": False}
                for k, v in comp["planets"].items()
                if k in _WHEEL_POINTS and v.get("longitude") is not None}
@@ -489,10 +495,10 @@ def render_composite_png(*, person_a: dict, person_b: dict) -> tuple[dict, bytes
                 "orb": a["orb"]} for a in comp["aspects"]
                if a["first_point"] in planets and a["second_point"] in planets]
     png = _render(planets, comp["houses"]["cusps"], comp["axes"]["ascendant"]["longitude"],
-                  comp["axes"]["midheaven"]["longitude"], aspects)
+                  comp["axes"]["midheaven"]["longitude"], aspects, system=house_system)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
-    return {"status": "ok"}, png
+    return {"status": "ok", "house_system": house_system}, png
 
 
 def render_solar_return_png(*, year, month, day, hour, minute, location_id, target_year,
@@ -518,7 +524,7 @@ def render_solar_return_png(*, year, month, day, hour, minute, location_id, targ
     asc = single["angles"]["ascendant"]["longitude"]
     cusps = single["houses"]["cusps"]
     png = _render(planets, cusps, asc, single["angles"]["midheaven"]["longitude"], aspects,
-                  system="whole_sign" if house_system == "whole_sign" else "placidus")
+                  system=house_system)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
     return {"status": "ok"}, png
@@ -527,8 +533,7 @@ def render_solar_return_png(*, year, month, day, hour, minute, location_id, targ
 # ── 宫主星定位链 / 福点看护 / 相位格局（本命补充）─────────────────────────
 
 def _chain_node(n: dict, house_system: str) -> dict:
-    house_key = "house_p" if house_system == "placidus" else "house_w"
-    return {"planet": n["planet_zh"], "sign": n["sign_zh"], "house": n[house_key],
+    return {"planet": n["planet_zh"], "sign": n["sign_zh"], "house": n["house"],
             "longitude": n["longitude"], "retrograde": n["retrograde"]}
 
 
@@ -537,12 +542,12 @@ def house_ruler_data(*, year, month, day, hour, minute, location_id,
     """Twelve house-ruler dispositor chains, traditional and modern tracks."""
     try:
         result, _body = _validated(year, month, day, hour, minute, location_id,
-                                   fold, house_system)
+                                   fold, house_system, chart_only=True)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc)
     chains = result["house_ruler_chains"]
     houses = []
-    for house in chains[house_system]:
+    for house in chains["houses"]:
         houses.append({
             "house": house["house"], "cusp_sign": house["sign_zh"],
             "cusp_longitude": house["cusp_lon"], "cross": house["cross"],
@@ -646,7 +651,7 @@ def aspect_window_data(*, moment=None, location_id=None) -> dict:
 
 # ── 天象盘（任一时刻 + 地点的完整盘）─────────────────────────────────────
 
-def _sky_chart_source(moment, location_id):
+def _sky_chart_source(moment, location_id, house_system="placidus"):
     if missing(location_id):
         raise ClarificationRequired(["location_id"])
     when = _parse_moment(moment)
@@ -656,18 +661,17 @@ def _sky_chart_source(moment, location_id):
     if snap is None:
         raise ValueError("请先用 search_birthplace 选择 location_id")
     local = when.astimezone(ZoneInfo(str(snap.tz_iana)))
-    result = compute("天象盘", local.year, local.month, local.day, local.hour,
-                     local.minute, "", location_id=snap.location_id or None,
-                     lat=None if snap.location_id else snap.lat_wgs84,
-                     lng=None if snap.location_id else snap.lng_wgs84,
-                     fold=local.fold)
+    result = _compute_source(
+        year=local.year, month=local.month, day=local.day, hour=local.hour,
+        minute=local.minute, location_id=str(location_id).strip(),
+        house_system=house_system, fold=local.fold, chart_only=True)
     return when, snap, local, result
 
 
-def sky_chart_data(*, moment=None, location_id=None) -> dict:
+def sky_chart_data(*, moment=None, location_id=None, house_system="placidus") -> dict:
     """A full chart cast for any moment and place, not for a birth."""
     try:
-        when, snap, local, result = _sky_chart_source(moment, location_id)
+        when, snap, local, result = _sky_chart_source(moment, location_id, house_system)
         from services.retrograde_motion import motion_status_at
         motion = motion_status_at(_jd(when))
     except (BirthContextError, ValueError) as exc:
@@ -678,12 +682,12 @@ def sky_chart_data(*, moment=None, location_id=None) -> dict:
         "local_time": local.strftime("%Y-%m-%d %H:%M"),
         "location": {"location_id": snap.location_id, "lat": snap.lat_wgs84,
                      "lng": snap.lng_wgs84, "tz_iana": snap.tz_iana},
-        "settings": {"zodiac": "tropical", "house_system": "placidus",
+        "settings": {"zodiac": "tropical", "house_system": house_system,
                      "chart_time_precision": "minute",
                      "chart_moment": local.replace(second=0, microsecond=0).isoformat(),
                      "motion_moment": when.isoformat()},
         "planets": [{"name": p["cn"], "longitude": p["lon"], "sign": p["sign"],
-                     "house": p["house_p"], "retrograde": p["retrograde"]}
+                     "house": p["house"], "retrograde": p["retrograde"]}
                     for p in result["natal_planets_full"]],
         "house_cusps": [{"house": i + 1, "longitude": float(c)}
                         for i, c in enumerate(result["cusps"])],
@@ -695,14 +699,14 @@ def sky_chart_data(*, moment=None, location_id=None) -> dict:
     }
 
 
-def render_sky_chart_png(*, moment=None, location_id=None) -> tuple[dict, bytes | None]:
+def render_sky_chart_png(*, moment=None, location_id=None, house_system="placidus") -> tuple[dict, bytes | None]:
     try:
-        when, snap, local, result = _sky_chart_source(moment, location_id)
+        when, snap, local, result = _sky_chart_source(moment, location_id, house_system)
     except (BirthContextError, ValueError) as exc:
         return _input_error(exc), None
     from services.mcp_compat_utils import _svg_to_png
     from services.chart_svg import generate_chart_svg
-    png = _svg_to_png(generate_chart_svg(system="placidus", **result["svg_data"]), 720)
+    png = _svg_to_png(generate_chart_svg(system=house_system, **result["svg_data"]), 720)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
     return {"status": "ok", "moment": when.isoformat(),
@@ -723,7 +727,7 @@ def _ring_lon(container: dict, key: str):
 
 
 def _biwheel_png(natal: dict, outer: dict, cross_aspects, inner_label: str,
-                 outer_label: str, outer_axes=None, outline_zodiac=False) -> bytes | None:
+                 outer_label: str, outer_axes=None, outline_zodiac=False, system="placidus") -> bytes | None:
     from services.mcp_compat_utils import _svg_to_png
     from services.chart_biwheel_svg import generate_biwheel_svg
     lines = []
@@ -736,7 +740,7 @@ def _biwheel_png(natal: dict, outer: dict, cross_aspects, inner_label: str,
     svg = generate_biwheel_svg(
         inner_planets=natal["planets"], outer_planets=outer["planets"],
         cusps=natal["cusps"], asc_lon=natal["asc_lon"], mc_lon=natal["mc_lon"],
-        cross_aspects=lines, system="placidus",
+        cross_aspects=lines, system=system,
         inner_label=inner_label, outer_label=outer_label, outer_axes=outer_axes)
     if outline_zodiac:
         from services.zodiac_svg_outline import outline_zodiac_text
@@ -790,7 +794,7 @@ def render_solar_arc_biwheel_png(*, year, month, day, hour, minute, location_id,
 
 def _lunar_return_source(year, month, day, hour, minute, location_id, target_year,
                          target_month, target_day, residence_location_id, house_system, fold):
-    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system)
+    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system, chart_only=True)
     if not isinstance(target_year, int) or not 1800 <= target_year <= 2200:
         raise ValueError("target_year 需在 1800–2200")
     if not isinstance(target_month, int) or not 1 <= target_month <= 12:
@@ -804,7 +808,7 @@ def _lunar_return_source(year, month, day, hour, minute, location_id, target_yea
         year, month, day, hour, minute, ctx["lat"], ctx["lng"],
         target_year, target_month, target_day=target_day,
         residence_lat=rlat, residence_lng=rlng, residence_tz=rtz, residence_city="",
-        house_system="W" if house_system == "whole_sign" else "P",
+        house_system=house_system,
         birth_location_id=body["location_id"], birth_fold=body.get("fold"))
     return result, lr, rid
 
@@ -860,7 +864,7 @@ def render_lunar_return_png(*, year, month, day, hour, minute, location_id, targ
     asc = single["angles"]["ascendant"]["longitude"]
     cusps = single["houses"]["cusps"]
     png = _render(planets, cusps, asc, single["angles"]["midheaven"]["longitude"], aspects,
-                  system="whole_sign" if house_system == "whole_sign" else "placidus",
+                  system=house_system,
                   outline_zodiac=True)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
@@ -873,7 +877,7 @@ def _secondary_progressions_source(year, month, day, hour, minute, location_id,
                                    age, as_of, house_system, fold, angle_progression_method):
     if age is not None and as_of is not None:
         raise ValueError("age 与 as_of 请只提供其一")
-    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system)
+    result, body = _validated(year, month, day, hour, minute, location_id, fold, house_system, chart_only=True)
     ctx = result["birth_context"]
     ref_day, ref = _reference_moment(as_of) if as_of is not None else (None, None)
     prog_age = float(age) if age is not None else None
@@ -882,7 +886,7 @@ def _secondary_progressions_source(year, month, day, hour, minute, location_id,
     prog = compute_secondary_progressions(
         year, month, day, hour, minute, ctx["lat"], ctx["lng"],
         age=prog_age, as_of=as_of_str,
-        house_system="W" if house_system == "whole_sign" else "P",
+        house_system=house_system,
         angle_progression_method=angle_progression_method,
         birth_location_id=body["location_id"], birth_fold=body.get("fold"))
     return result, prog, as_of_str
@@ -956,7 +960,7 @@ def render_secondary_progressions_biwheel_png(*, year, month, day, hour, minute,
         "ic": prg_chart["axes"]["imum_coeli"]["longitude"],
     }
     png = _biwheel_png(natal_ring, outer_ring, cross_lines, "本命", age_label,
-                       outer_axes=outer_axes, outline_zodiac=True)
+                       outer_axes=outer_axes, outline_zodiac=True, system=house_system)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
     return {"status": "ok", "age": prog["age"], "as_of": as_of_str,
@@ -981,7 +985,7 @@ def _davison_source(person_a: dict, person_b: dict, house_system="placidus", orb
                 year=p.get("year"), month=p.get("month"), day=p.get("day"),
                 hour=p.get("hour"), minute=p.get("minute"),
                 location_id=p.get("location_id") or "", house_system=house_system,
-                fold=p.get("fold"))
+                fold=p.get("fold"), chart_only=True)
         except BirthContextError as exc:
             exc.status_message = f"person_{key}：{exc.status_message}"
             exc.mcp_field_prefix = f"person_{key}."
@@ -1049,7 +1053,7 @@ def render_davison_png(*, person_a: dict, person_b: dict, house_system="placidus
     mc = chart["axes"]["midheaven"]["longitude"]
     cusps = chart["house_cusps"]
     png = _render(planets, cusps, asc, mc, aspects,
-                  system="whole_sign" if house_system == "whole_sign" else "placidus")
+                  system=house_system)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
     return {"status": "ok"}, png
@@ -1098,7 +1102,7 @@ def _relocation_source(year, month, day, hour, minute, location_id,
     if snap is None:
         raise ValueError("无法解析 relocation_location_id")
     result = _compute_source(year=year, month=month, day=day, hour=hour, minute=minute,
-                             location_id=location_id, house_system=house_system, fold=fold)
+                             location_id=location_id, house_system=house_system, fold=fold, chart_only=True)
     reloc = compute_relocation_chart_full(
         result,
         reloc_lat=snap.lat_wgs84,
@@ -1148,7 +1152,7 @@ def render_relocation_png(*, year, month, day, hour, minute, location_id,
     mc = reloc["axes"]["midheaven"]["longitude"]
     cusps = reloc["house_cusps"]
     png = _render(planets, cusps, asc, mc, aspects,
-                  system="whole_sign" if house_system == "whole_sign" else "placidus")
+                  system=house_system)
     if not png:
         return {"status": "render_failed", "error": "星盘图生成失败"}, None
     return {"status": "ok"}, png

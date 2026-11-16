@@ -20,7 +20,7 @@ WORKFLOWS = {
     },
     "natal": {
         "label": "本命盘", "patterns": (r"本命盘|出生星盘|\bnatal\b|birth chart",),
-        "needed": _BIRTH + ["宫制 placidus 或 whole_sign"],
+        "needed": _BIRTH + ["宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_natal_chart", "取得本命盘数据"),
                   ("verify_natal_claims", "解读前核对星座、宫位、逆行和相位事实")],
     },
@@ -36,7 +36,7 @@ WORKFLOWS = {
     },
     "time_lords": {
         "label": "法达与年小限", "patterns": (r"法达|年小限|firdaria|profection",),
-        "needed": _BIRTH + ["宫制 placidus 或 whole_sign", "参考日期 as_of（可选）"],
+        "needed": _BIRTH + ["本命宫制可选七种；年小限固定逐年推进整宫星座", "参考日期 as_of（可选）"],
         "steps": [("calculate_time_lords", "取得法达与年小限周期")],
     },
     "transits": {
@@ -52,33 +52,33 @@ WORKFLOWS = {
     "solar_return": {
         "label": "太阳返照", "patterns": (r"太阳返照|太阳回归|日返|solar return",),
         "needed": _BIRTH + ["目标年份 target_year", "返照所在地 residence_location_id",
-                           "宫制 placidus 或 whole_sign"],
+                           "宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_solar_return", "取得返照盘与本命叠加数据")],
     },
     "lunar_return": {
         "label": "月亮返照", "patterns": (r"月亮返照|月亮回归|月返|lunar return",),
         "needed": _BIRTH + ["目标年份 target_year", "目标月份 target_month", "返照所在地 residence_location_id",
-                           "宫制 placidus 或 whole_sign"],
+                           "宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_lunar_return", "取得月返盘与本命叠加数据")],
     },
     "secondary_progressions": {
         "label": "次限推进", "patterns": (r"次限推进|次限推运|二次推运|secondary progression",),
-        "needed": _BIRTH + ["查询日期 as_of 或年龄 age（二选一）", "宫制 placidus 或 whole_sign"],
+        "needed": _BIRTH + ["查询日期 as_of 或年龄 age（二选一）", "宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_secondary_progressions", "取得次限星盘、四轴与对本命相位数据")],
     },
     "relationship": {
         "label": "关系盘", "patterns": (r"关系盘|比较盘|synastry|relationship",),
-        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id"],
+        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id", "本命落宫与组合盘宫制可选七种，默认 placidus"],
         "steps": [("calculate_relationship_charts", "取得比较盘与组合中点盘数据")],
     },
     "davison": {
         "label": "时空中点盘", "patterns": (r"时空中点|davison|戴维森",),
-        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id", "宫制 placidus 或 whole_sign"],
+        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id", "宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_davison_chart", "取得时空中点盘数据")],
     },
     "relocation": {
         "label": "空间重置盘", "patterns": (r"空间重置|重置盘|迁居盘|relocation",),
-        "needed": _BIRTH + ["迁居地 relocation_location_id", "宫制 placidus 或 whole_sign"],
+        "needed": _BIRTH + ["迁居地 relocation_location_id", "宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_relocation_chart", "取得空间重置盘四轴与新宫位数据")],
     },
     "sky": {
@@ -126,7 +126,7 @@ WORKFLOWS.update({
     "lots": {
         "label": "指定希腊点与阿拉伯点",
         "patterns": (r"阿拉伯点|希腊点|\blots\b|(?:福点|精神点|爱神点).{0,4}(?:公式|黄经)",),
-        "needed": _BIRTH + ["所需 lots 名称（可选）；宫制默认 whole_sign，支持 placidus"],
+        "needed": _BIRTH + ["所需 lots 名称（可选）；落宫可选七种宫制，默认 placidus；黄经公式不随宫制变化"],
         "steps": [("calculate_lots", "取得指定点的黄经、星座、宫位与昼夜公式；古典综合要素另用 classical")],
     },
     "sky_chart": {
@@ -167,13 +167,13 @@ WORKFLOWS.update({
     },
     "composite": {
         "label": "组合中点盘", "patterns": (r"组合(?:中点)?盘|\bcomposite\b",),
-        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id"],
+        "needed": ["两人的准确出生年月日、小时和分钟", "两人各自确认的出生地 location_id", "本命落宫与组合盘宫制可选七种，默认 placidus"],
         "steps": [("calculate_relationship_charts", "取得组合中点盘及关系盘数据")],
         "render_step": ("render_composite_chart", "生成组合中点盘 PNG；不是比较盘或戴维森盘"),
     },
     "house_rulers": {
         "label": "十二宫宫主定位链", "patterns": (r"宫主|house ruler",),
-        "needed": _BIRTH + ["宫制 placidus 或 whole_sign"],
+        "needed": _BIRTH + ["宫制 placidus, whole_sign, equal, koch, regiomontanus, porphyry, campanus"],
         "steps": [("calculate_house_rulers", "取得十二宫宫主的传统与现代定位链")],
     },
     "aspect_windows": {
@@ -311,6 +311,8 @@ def recommend(goal: str, available_tools: set[str]) -> dict:
             "output_mode": output_mode,
             "next_action": "check_required_information", "input_readiness": "not_checked",
             "clarification_policy": "结合已有对话只询问缺失或含糊的必需资料；资料齐全则继续，不重复询问。推荐成功不代表资料已齐全。",
-            "required_information": list(spec.get("image_needed", spec["needed"]) if image_only else spec["needed"]), "steps": steps,
+            "required_information": [item for item in (spec.get("image_needed", spec["needed"]) if image_only else spec["needed"])
+                                     if "宫制" not in item], "steps": steps,
+            "house_system_policy": "支持宫制选择的工具未指定时默认普拉西度并告知；沿用用户已指定的受支持宫制，可按需重算。固定技法规则不随默认值改变。",
             "first_calculation_tool": first_tool,
             "boundary": "这是工具调用建议，不是计算结果或心理解释；缺少必需资料时向用户确认，不自行补值。"}

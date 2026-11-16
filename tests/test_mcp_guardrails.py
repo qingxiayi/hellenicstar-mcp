@@ -176,7 +176,9 @@ def test_actual_mcp_contract_clarifies_partial_inputs_and_verifies_claims():
                             assert {"month", "day", "hour", "minute", "location_id"} <= set(missing["required_fields"])
                             assert missing["next_action"] == "ask_user"
                         no_house = await call("calculate_natal_chart", BIRTH)
-                        assert no_house["required_fields"] == ["house_system"]
+                        assert no_house["status"] == "ok"
+                        assert no_house["settings"]["house_system"] == "placidus"
+                        assert no_house["house_system_notice"]["house_system"] == "placidus"
                         no_place = await call("calculate_solar_return", {
                             **BIRTH, "target_year": 2026, "house_system": "placidus"})
                         assert no_place["required_fields"] == ["residence_location_id"]

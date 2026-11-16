@@ -102,8 +102,9 @@ def generate_biwheel_svg(*, inner_planets, outer_planets, cusps, asc_lon, mc_lon
     inner_planets / outer_planets: {planet_id: {"lon": float, "retrograde": bool}}
     cusps: twelve natal house cusps; aspects are cross-chart only.
     """
-    if system not in ("placidus", "whole_sign"):
-        system = "placidus"
+    from services.house_systems import house_system_spec, validate_cusps
+    house_system_spec(system)
+    validate_cusps(cusps)
     asc_lon = norm(float(asc_lon))
 
     def sd(lon):

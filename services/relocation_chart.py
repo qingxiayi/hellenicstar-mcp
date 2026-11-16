@@ -59,18 +59,9 @@ def _sign_info(lon: float) -> tuple[int, str]:
     return idx, SIGNS_ZH[idx]
 
 
-def _house_of(lon: float, cusps: list[float]) -> int:
-    norm = _norm(lon)
-    for i in range(12):
-        c1 = cusps[i]
-        c2 = cusps[(i + 1) % 12]
-        if c1 <= c2:
-            if c1 <= norm < c2:
-                return i + 1
-        else:
-            if norm >= c1 or norm < c2:
-                return i + 1
-    return 1
+def _house_of(lon, cusps):
+    from services.house_systems import house_of
+    return house_of(lon, cusps)
 
 
 def compute_relocation_chart_full(
@@ -109,8 +100,9 @@ def compute_relocation_chart_full(
         natal_mc = natal_axes.get("midheaven", {}).get("longitude")
 
     # 1. 迁居地四轴与宫位重算
-    hsys = b'W' if house_system == "whole_sign" else b'P'
-    raw_cusps, ascmc = swe.houses_ex(jd_ut, reloc_lat, reloc_lng, hsys)
+    from services.house_systems import calculate_houses, house_of
+    frame = calculate_houses(jd_ut, reloc_lat, reloc_lng, house_system)
+    raw_cusps, ascmc = frame.cusps, frame.ascmc
     cusps = [_norm(c) for c in raw_cusps[:12]]
 
     reloc_asc = _norm(ascmc[0])
@@ -142,7 +134,10 @@ def compute_relocation_chart_full(
     planets = []
     points_for_aspects = {}
     natal_planets_src = natal_data.get("natal_planets_full") or natal_data.get("planets") or []
-    house_key = "house_w" if house_system == "whole_sign" else "house_p"
+    house_key = "house" if natal_data.get("house_system") == house_system else (
+        "house_w" if house_system == "whole_sign" else "house_p")
+    if house_system not in ("placidus", "whole_sign") and natal_data.get("house_system") != house_system:
+        raise ValueError("迁居盘需要同宫制的本命位置数据")
     if isinstance(natal_planets_src, dict):
         natal_planets_list = [
             {"key": k, "name": v.get("name_zh") or PLANET_ZH.get(k, k),
@@ -167,7 +162,7 @@ def compute_relocation_chart_full(
         lon = _norm(pos[0])
         speed = pos[3]
         is_rx = speed < 0.0
-        new_house = _house_of(lon, cusps) if house_system == "placidus" else whole_sign_house(lon, reloc_asc)
+        new_house = house_of(lon, cusps)
         nat_house = natal_house_map.get(key)
 
         planet_entry = {
@@ -186,7 +181,7 @@ def compute_relocation_chart_full(
     # 凯龙星与交点
     pos_chiron, _ = swe.calc_ut(jd_ut, swe.CHIRON, _FLAGS)
     chiron_lon = _norm(pos_chiron[0])
-    h_chiron_new = _house_of(chiron_lon, cusps) if house_system == "placidus" else whole_sign_house(chiron_lon, reloc_asc)
+    h_chiron_new = house_of(chiron_lon, cusps)
     h_chiron_nat = natal_house_map.get("chiron")
     planets.append({
         "key": "chiron",
@@ -202,7 +197,7 @@ def compute_relocation_chart_full(
 
     pos_node, _ = swe.calc_ut(jd_ut, swe.MEAN_NODE, _FLAGS)
     node_lon = _norm(pos_node[0])
-    h_node_new = _house_of(node_lon, cusps) if house_system == "placidus" else whole_sign_house(node_lon, reloc_asc)
+    h_node_new = house_of(node_lon, cusps)
     natal_cusps = natal_data.get("cusps")
     if house_system == "whole_sign" and natal_asc is not None:
         h_node_nat = whole_sign_house(node_lon, natal_asc)

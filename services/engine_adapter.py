@@ -50,7 +50,8 @@ def _strip_axes_from_result(result: Dict) -> Dict:
 
 
 def calc_from_context(ctx: ResolvedBirthContext, name: str = "",
-                      city: str = "", country_code: str = "CN") -> Dict:
+                      city: str = "", country_code: str = "CN",
+                      house_system: str = "placidus") -> Dict:
     """ResolvedBirthContext → 完整本命盘 data（与旧 get_natal_data 返回同构）。"""
     from engine.natal_chart import NatalChartCalculator
     from adapter import _enhance_with_patterns
@@ -67,7 +68,7 @@ def calc_from_context(ctx: ResolvedBirthContext, name: str = "",
     nc = NatalChartCalculator()
     raw = nc.calculate(
         civ.year, civ.month, civ.day, civ.hour, civ.minute,
-        city, country_code, resolved=resolved,
+        city, country_code, resolved=resolved, house_system=house_system,
     )
     if raw.get("status") != "success":
         raise RuntimeError(f"引擎计算失败: {raw.get('message')}")

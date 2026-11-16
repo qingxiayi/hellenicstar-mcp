@@ -333,16 +333,15 @@ def generate_chart_svg(planets, cusps, asc_lon, mc_lon, aspects, name="", date_s
     生成星盘 SVG。
     
     planets: dict {id: {lon, retrograde}}
-    cusps: list[12] 宫头度数（普拉西度）
+    cusps: list[12] 所选宫制的宫头度数
     asc_lon: ASC 度数
     mc_lon: MC 度数
     aspects: list[{p1, p2, angle, orb}]
-    system: "placidus" 或 "whole_sign"
+    system: services.house_systems 注册表中的宫制名称
     """
-    # API 正常只传这两个值；异常输入统一按 Placidus 兜底，避免后续分支
-    # 对 system 的判断不一致时引用尚未赋值的 asc_sign_start。
-    if system not in ("placidus", "whole_sign"):
-        system = "placidus"
+    from services.house_systems import house_system_spec, validate_cusps
+    house_system_spec(system)
+    validate_cusps(cusps)
     
     def sd(lon):
         return norm(180 - norm(lon - asc_lon))
@@ -437,7 +436,7 @@ def generate_chart_svg(planets, cusps, asc_lon, mc_lon, aspects, name="", date_s
     # 黄道符号全部保持正立。参考移动端星盘的阅读习惯，沿切线排布
     # “度数 / 星座 / 分”，但不旋转字形，避免左右和下半球符号倒置。
     R_badge = Rzod + (Rout - Rzod) * 0.5
-    if system == "placidus":
+    if system != "whole_sign":
         for h in range(1, 13):
             cusp_lon = cusps[h - 1]
             sign_idx = int(cusp_lon // 30) % 12
@@ -527,7 +526,7 @@ def generate_chart_svg(planets, cusps, asc_lon, mc_lon, aspects, name="", date_s
     ]
     # 整宫制四轴与行星共用同一条圆周队列：轴名占行星符号位，
     # 度数／星座／分沿相同半径逐层排列，拥挤时保持黄经顺序局部顺延。
-    if system == "whole_sign":
+    if system in ("whole_sign", "equal"):
         for lbl, axis_lon in axes:
             planet_entries.append({
                 "key": f"axis:{lbl}",
@@ -544,13 +543,13 @@ def generate_chart_svg(planets, cusps, asc_lon, mc_lon, aspects, name="", date_s
         line_angle = sd(axis_lon)
         marker_angle = (
             display_angles[f"axis:{lbl}"]
-            if system == "whole_sign" else line_angle
+            if system in ("whole_sign", "equal") else line_angle
         )
         degree_value = norm(axis_lon) % 30
         axis_degree = int(degree_value)
         axis_minute = int((degree_value - axis_degree) * 60)
         axis_sign = sign_of(axis_lon)
-        if system == "whole_sign":
+        if system in ("whole_sign", "equal"):
             name_radius, info_radius = Rpt, PLANET_DEGREE_RADIUS
             boxes = _radial_axis_label_boxes(lbl, axis_lon, marker_angle)
         else:
@@ -568,7 +567,7 @@ def generate_chart_svg(planets, cusps, asc_lon, mc_lon, aspects, name="", date_s
             "sign": axis_sign,
             "name_radius": name_radius,
             "info_radius": info_radius,
-            "layout": "radial" if system == "whole_sign" else "tangent",
+            "layout": "radial" if system in ("whole_sign", "equal") else "tangent",
             "boxes": boxes,
         })
 

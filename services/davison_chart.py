@@ -4,7 +4,7 @@
 设计边界：
   - 核心计算复用 Swiss Ephemeris 与仓库既有行星/格局计算工具。
   - 计算两人真实世界时出生时刻与地理经纬度的时空中点 (Space-Time Midpoint)。
-  - 在该物理时空点排出一张具备独立真实四轴与宫位的完整星盘 (支持 Placidus 与 Whole Sign)。
+  - 在该物理时空点排出一张具备独立真实四轴与宫位的完整星盘 (支持统一宫制注册表中的全部宫制)。
   - 遵循无冷读、纯计算事实架构。
 """
 
@@ -12,7 +12,6 @@ import swisseph as swe
 
 from services.ephemeris_guard import apply_ephe_path
 from services.jones_pattern import calculate_jones_pattern
-from fortuna_projection import whole_sign_house
 
 apply_ephe_path()
 
@@ -67,18 +66,9 @@ def _sign_info(lon: float) -> tuple[int, str]:
     return idx, SIGNS_ZH[idx]
 
 
-def _house_of(lon: float, cusps: list[float]) -> int:
-    norm = _norm(lon)
-    for i in range(12):
-        c1 = cusps[i]
-        c2 = cusps[(i + 1) % 12]
-        if c1 <= c2:
-            if c1 <= norm < c2:
-                return i + 1
-        else:
-            if norm >= c1 or norm < c2:
-                return i + 1
-    return 1
+def _house_of(lon, cusps):
+    from services.house_systems import house_of
+    return house_of(lon, cusps)
 
 
 def _rudhyar_phase(sun_lon: float, moon_lon: float) -> dict:
@@ -145,8 +135,9 @@ def compute_davison_chart_full(
     lon_mid = st_mid["lng"]
 
     # 1. 四轴与宫位 (调用 Swiss Ephemeris)
-    hsys = b'W' if house_system == "whole_sign" else b'P'
-    raw_cusps, ascmc = swe.houses_ex(jd_mid, lat_mid, lon_mid, hsys)
+    from services.house_systems import calculate_houses, house_of
+    frame = calculate_houses(jd_mid, lat_mid, lon_mid, house_system)
+    raw_cusps, ascmc = frame.cusps, frame.ascmc
     cusps = [_norm(c) for c in raw_cusps[:12]]
 
     asc = _norm(ascmc[0])
@@ -169,7 +160,7 @@ def compute_davison_chart_full(
         lon = _norm(pos[0])
         speed = pos[3]
         is_rx = speed < 0.0
-        h_num = _house_of(lon, cusps) if house_system == "placidus" else whole_sign_house(lon, asc)
+        h_num = house_of(lon, cusps)
         planets[key] = {
             "key": key,
             "name": PLANET_ZH[key],
@@ -184,7 +175,7 @@ def compute_davison_chart_full(
     # 凯龙星与交点
     pos_chiron, _ = swe.calc_ut(jd_mid, swe.CHIRON, _FLAGS)
     chiron_lon = _norm(pos_chiron[0])
-    h_chiron = _house_of(chiron_lon, cusps) if house_system == "placidus" else whole_sign_house(chiron_lon, asc)
+    h_chiron = house_of(chiron_lon, cusps)
     chiron_dict = {
         "key": "chiron",
         "name": PLANET_ZH["chiron"],
@@ -205,7 +196,7 @@ def compute_davison_chart_full(
             "name": PLANET_ZH["mean_north_node"],
             "longitude": round(node_lon, 4),
             "sign": _sign_info(node_lon)[1],
-            "house": _house_of(node_lon, cusps) if house_system == "placidus" else whole_sign_house(node_lon, asc),
+            "house": house_of(node_lon, cusps),
             "retrograde": True,
         },
         "south_node": {
@@ -213,7 +204,7 @@ def compute_davison_chart_full(
             "name": PLANET_ZH["south_node"],
             "longitude": round(south_node_lon, 4),
             "sign": _sign_info(south_node_lon)[1],
-            "house": _house_of(south_node_lon, cusps) if house_system == "placidus" else whole_sign_house(south_node_lon, asc),
+            "house": house_of(south_node_lon, cusps),
             "retrograde": True,
         },
     }

@@ -385,8 +385,18 @@ def compute_lots(
     is_diurnal: bool,
     requested_lots: Optional[List[str]] = None,
     house_system: str = "whole_sign",
+    cusps_system: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """Compute Arabic and Hellenistic lots with formulas and day/night reversal info."""
+    from services.house_systems import house_system_spec, house_of, validate_cusps
+    house_system_spec(house_system)
+    # Legacy callers supply Placidus cusps even when selecting Whole Sign.
+    supplied_system = cusps_system or "placidus"
+    house_system_spec(supplied_system)
+    if cusps:
+        validate_cusps(cusps)
+    if house_system != "whole_sign" and (not cusps or supplied_system != house_system):
+        raise ValueError("所选宫制必须提供同宫制的十二宫头")
     ven = planets_map.get("venus", 0.0)
     mar = planets_map.get("mars", 0.0)
     jup = planets_map.get("jupiter", 0.0)
@@ -526,15 +536,15 @@ def compute_lots(
     else:
         selected = list(catalog.values())
 
-    from hellenistic import whole_sign_house, placidus_house
+    from hellenistic import whole_sign_house
 
     results = []
     for entry in selected:
         lon = entry["longitude"]
         sign_idx = int(lon // 30) % 12
         hw = whole_sign_house(lon, asc_lon)
-        hp = placidus_house(lon, tuple(cusps)) if cusps and len(cusps) == 12 else hw
-        active_house = hp if house_system == "placidus" else hw
+        hp = house_of(lon, cusps) if cusps and supplied_system == "placidus" else None
+        active_house = hw if house_system == "whole_sign" else house_of(lon, cusps)
 
         ruler = DOMICILE_RULERS[sign_idx]
         item = {
@@ -545,6 +555,7 @@ def compute_lots(
             "sign_zh": SIGN_NAMES_ZH[sign_idx],
             "degree_in_sign": round(lon % 30.0, 4),
             "house": active_house,
+            "house_system": house_system,
             "house_whole_sign": hw,
             "house_placidus": hp,
             "ruler": ruler,

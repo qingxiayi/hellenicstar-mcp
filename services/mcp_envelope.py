@@ -90,7 +90,21 @@ TOOL_ALGORITHM_KEYS = {
     "calculate_secondary_progressions": ("secondary_progressions",),
     "calculate_timeline_synthesis": REGISTERED_NATAL_KEYS + ("timeline_synthesis", "secondary_progressions", "timeline_aspect_windows", "progressed_lunation", "timeline_reading"),
     "calculate_relationship_observation": REGISTERED_NATAL_KEYS + ("natal_structure_graph", "natal_salience", "relationship_observation", "relationship_observation_timing", "secondary_progressions"),
+    "calculate_lots": ("planetary_longitudes", "arabic_lots"),
+    "calculate_time_lords": ("planetary_longitudes", "firdaria", "annual_profections"),
+    "calculate_relationship_charts": ("planetary_longitudes", "relationship_geometry"),
+    "calculate_sky_chart": ("planetary_longitudes",),
 }
+
+# Generic position routes no longer depend on dual-system method summaries.
+from services.house_systems import GENERIC_HOUSE_TOOLS
+for _tool in GENERIC_HOUSE_TOOLS:
+    if _tool.startswith("render_"):
+        continue
+    _existing = TOOL_ALGORITHM_KEYS.get(_tool, ())
+    TOOL_ALGORITHM_KEYS[_tool] = _existing + ("selected_house_geometry",)
+for _tool in ("calculate_natal_chart", "calculate_house_rulers"):
+    TOOL_ALGORITHM_KEYS[_tool] = ("planetary_longitudes", "selected_house_geometry", "lunar_nodes", "chiron")
 
 _ENTRY_FIELDS = (
     "key", "source", "implementation", "file_path", "code_anchor",

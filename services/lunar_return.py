@@ -71,15 +71,8 @@ def _angular_sep(a, b):
 
 
 def _house_of(lon, cusps):
-    lon = _norm(lon)
-    for i in range(12):
-        start = _norm(cusps[i])
-        end = _norm(cusps[(i + 1) % 12])
-        span = _norm(end - start)
-        offset = _norm(lon - start)
-        if offset < span or span == 0:
-            return i + 1
-    return 12
+    from services.house_systems import house_of
+    return house_of(lon, cusps)
 
 
 def _point(lon, retrograde=False, speed=None, house=None):
@@ -124,7 +117,9 @@ def _resolve_birth_jd(year, month, day, hour, minute,
 
 def _chart_at(jd, lat, lng, hsys=b'P'):
     apply_ephe_path()
-    cusps, ascmc = swe.houses(jd, lat, lng, hsys)
+    from services.house_systems import calculate_houses, system_from_code
+    frame = calculate_houses(jd, float(lat), float(lng), system_from_code(hsys))
+    cusps, ascmc = frame.cusps, frame.ascmc
     cusps = list(cusps)
 
     planets = {}
@@ -409,7 +404,9 @@ def compute_lunar_return_full(birth_year, birth_month, birth_day, birth_hour, bi
 
     内部重算本命盘以保证同一高精度星历口径，并在精确返照时刻建立月返星盘与本命叠加。
     """
-    hsys = b'W' if str(house_system).lower() in ('w', 'whole_sign') else b'P'
+    from services.house_systems import system_from_code, house_system_spec
+    house_system = system_from_code(house_system)
+    hsys = house_system_spec(house_system).code
 
     natal_jd = _resolve_birth_jd(birth_year, birth_month, birth_day, birth_hour, birth_minute,
                                  lat=birth_lat, lng=birth_lng,
@@ -442,7 +439,7 @@ def compute_lunar_return_full(birth_year, birth_month, birth_day, birth_hour, bi
         'lr_local': _jd_to_local_str(lr_jd, residence_tz),
         'natal_jd': natal_jd,
         'residence': {'lat': r_lat, 'lng': r_lng, 'tz': residence_tz, 'city': residence_city},
-        'house_system': 'whole_sign' if hsys == b'W' else 'placidus',
+        'house_system': house_system,
 
         # 单盘层
         'single': {

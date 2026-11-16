@@ -1,0 +1,80 @@
+[
+  {
+    "case": "paris",
+    "system": "placidus",
+    "longitude": 2.3333333333333335,
+    "latitude": 48.86666666666667,
+    "max_cusp_error_arcsec": 31.3662787334124,
+    "max_axis_error_arcsec": 22.752477269739302,
+    "max_planet_error_arcsec": 28.20000000001528,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": false,
+    "status": "unresolved_preexisting_placidus_difference"
+  },
+  {
+    "case": "paris",
+    "system": "equal",
+    "longitude": 2.3333333333333335,
+    "latitude": 48.86666666666667,
+    "max_cusp_error_arcsec": 8.900028829884832,
+    "max_axis_error_arcsec": 22.752477269739302,
+    "max_planet_error_arcsec": 28.20000000001528,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": true,
+    "status": "consistent_at_display_precision"
+  },
+  {
+    "case": "paris",
+    "system": "koch",
+    "longitude": 2.3333333333333335,
+    "latitude": 48.86666666666667,
+    "max_cusp_error_arcsec": 22.753579120944778,
+    "max_axis_error_arcsec": 22.752477269739302,
+    "max_planet_error_arcsec": 28.20000000001528,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": true,
+    "status": "consistent_at_display_precision"
+  },
+  {
+    "case": "sydney",
+    "system": "placidus",
+    "longitude": 151.21666666666667,
+    "latitude": -33.86666666666667,
+    "max_cusp_error_arcsec": 46.626330011292794,
+    "max_axis_error_arcsec": 14.207619733497268,
+    "max_planet_error_arcsec": 26.880000000073778,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": false,
+    "status": "unresolved_preexisting_placidus_difference"
+  },
+  {
+    "case": "sydney",
+    "system": "equal",
+    "longitude": 151.21666666666667,
+    "latitude": -33.86666666666667,
+    "max_cusp_error_arcsec": 1.0579513474681335,
+    "max_axis_error_arcsec": 14.207619733497268,
+    "max_planet_error_arcsec": 26.880000000073778,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": true,
+    "status": "consistent_at_display_precision"
+  },
+  {
+    "case": "sydney",
+    "system": "koch",
+    "longitude": 151.21666666666667,
+    "latitude": -33.86666666666667,
+    "max_cusp_error_arcsec": 29.65606756656598,
+    "max_axis_error_arcsec": 14.207619733497268,
+    "max_planet_error_arcsec": 26.880000000073778,
+    "planet_house_matches": 10,
+    "display_precision": "one arcminute; half-minute rounding threshold",
+    "cusp_within_half_arcminute": true,
+    "status": "consistent_at_display_precision"
+  }
+]

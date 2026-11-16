@@ -45,7 +45,7 @@ _last_sweep = None
 #     不升版号的话，已缓存的 PNG 仍是旧配色，用户看不到本次改动。
 # 12: 整宫制宫号从宫头线移到每个 30° 宫位扇区的正中（2026-09）。
 # 13: 整宫制四轴与行星共用径向信息列和圆周顺延队列（2026-09）。
-RENDERER_VERSION = "13"
+RENDERER_VERSION = "14"  # Generic house systems and independent Equal MC labels.
 
 
 def _normalise(obj):

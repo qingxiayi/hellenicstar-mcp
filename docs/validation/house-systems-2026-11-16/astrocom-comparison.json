@@ -1,0 +1,170 @@
+[
+  {
+    "case": "paris",
+    "system": "placidus",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "whole_sign",
+    "max_cusp_error_arcsec": 0.0,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "equal",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "koch",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "regiomontanus",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "porphyry",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "paris",
+    "system": "campanus",
+    "max_cusp_error_arcsec": 0.0001729878704281873,
+    "max_axis_error_arcsec": 0.0001729878704281873,
+    "max_mcp_cusp_error_arcsec": 0.0001729878704281873,
+    "max_mcp_planet_error_arcsec": 0.17676000004485104
+  },
+  {
+    "case": "sydney",
+    "system": "placidus",
+    "max_cusp_error_arcsec": 0.00015429096720254165,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.00015429096720254165,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "whole_sign",
+    "max_cusp_error_arcsec": 0.0,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.0,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "equal",
+    "max_cusp_error_arcsec": 0.00014141146493784618,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.00014141146493784618,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "koch",
+    "max_cusp_error_arcsec": 0.0001710583546810085,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.0001710583546810085,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "regiomontanus",
+    "max_cusp_error_arcsec": 0.00017820507309807,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.00017820507309807,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "porphyry",
+    "max_cusp_error_arcsec": 0.00014141146493784618,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.00014141146493784618,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "sydney",
+    "system": "campanus",
+    "max_cusp_error_arcsec": 0.00014141146493784618,
+    "max_axis_error_arcsec": 0.00014141136261969223,
+    "max_mcp_cusp_error_arcsec": 0.00014141146493784618,
+    "max_mcp_planet_error_arcsec": 0.1749600000493956
+  },
+  {
+    "case": "new_york_dst",
+    "system": "placidus",
+    "max_cusp_error_arcsec": 0.00015906400676612975,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.00015906400676612975,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "whole_sign",
+    "max_cusp_error_arcsec": 0.0,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.0,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "equal",
+    "max_cusp_error_arcsec": 0.0001362511511615594,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.0001362511511615594,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "koch",
+    "max_cusp_error_arcsec": 0.00015906400676612975,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.00015906400676612975,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "regiomontanus",
+    "max_cusp_error_arcsec": 0.00015906400676612975,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.00015906400676612975,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "porphyry",
+    "max_cusp_error_arcsec": 0.00017937456959771225,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.00017937456959771225,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  },
+  {
+    "case": "new_york_dst",
+    "system": "campanus",
+    "max_cusp_error_arcsec": 0.00015906400676612975,
+    "max_axis_error_arcsec": 0.0001590639044479758,
+    "max_mcp_cusp_error_arcsec": 0.00015906400676612975,
+    "max_mcp_planet_error_arcsec": 0.16236000008120755
+  }
+]

@@ -100,16 +100,8 @@ def _angular_sep(a, b):
 
 
 def _house_of(lon, cusps):
-    """给定 12 宫头经度（顺时针递增，可能跨 0°），定位 lon 落在第几宫（1-12）。"""
-    lon = _norm(lon)
-    for i in range(12):
-        start = _norm(cusps[i])
-        end = _norm(cusps[(i + 1) % 12])
-        span = _norm(end - start)
-        offset = _norm(lon - start)
-        if offset < span or span == 0:
-            return i + 1
-    return 12
+    from services.house_systems import house_of
+    return house_of(lon, cusps)
 
 
 def _point(lon, retrograde=False, speed=None, house=None):
@@ -164,7 +156,9 @@ def _resolve_birth_jd(year, month, day, hour, minute,
 
 # ── 在任意精确 JD 上出一张盘（本命 / 日返共用同一套口径）────────────────────
 def _chart_at(jd, lat, lng, hsys=b'P'):
-    cusps, ascmc = swe.houses(jd, float(lat), float(lng), hsys)
+    from services.house_systems import calculate_houses, system_from_code
+    frame = calculate_houses(jd, float(lat), float(lng), system_from_code(hsys))
+    cusps, ascmc = frame.cusps, frame.ascmc
     cusps = [_norm(c) for c in cusps[:12]]
     asc, mc = ascmc[0], ascmc[1]
     axes = {
@@ -573,7 +567,9 @@ def compute_solar_return(natal_sun_lon, target_year, birth_month, birth_day,
                          residence_lat, residence_lng,
                          residence_tz=None, residence_city='', house_system='P'):
     """只算日返盘本体（不含本命叠加）。地基阶段用，输出对齐 /calculate 字段口径。"""
-    hsys = b'W' if str(house_system).upper() == 'W' else b'P'
+    from services.house_systems import system_from_code, house_system_spec
+    house_system = system_from_code(house_system)
+    hsys = house_system_spec(house_system).code
     jd = find_return_jd(natal_sun_lon, target_year, birth_month, birth_day)
     chart = _chart_at(jd, residence_lat, residence_lng, hsys)
     sun_lon = chart['planets']['sun']['longitude']
@@ -584,7 +580,7 @@ def compute_solar_return(natal_sun_lon, target_year, birth_month, birth_day,
         'sr_local': _jd_to_local_str(jd, residence_tz),
         'residence': {'lat': float(residence_lat), 'lng': float(residence_lng),
                       'tz': residence_tz, 'city': residence_city},
-        'house_system': 'whole_sign' if hsys == b'W' else 'placidus',
+        'house_system': house_system,
         'planets': chart['planets'],
         'special_points': chart['special_points'],
         'houses': chart['houses'],
@@ -612,7 +608,9 @@ def compute_solar_return_full(birth_year, birth_month, birth_day, birth_hour, bi
     春拨空白 / 秋拨歧义抛 BirthContextError，绝不静默按 UTC 出错盘。日返盘在精确 JD
     上出，两盘同口径可直接叠加。返回按看板四层分组：single / overlay / timeline / focus。
     """
-    hsys = b'W' if str(house_system).upper() == 'W' else b'P'
+    from services.house_systems import system_from_code, house_system_spec
+    house_system = system_from_code(house_system)
+    hsys = house_system_spec(house_system).code
 
     # 本命盘（同口径重算）：出生时间走本命盘同一条解析链，非法/歧义/空白直接抛错
     natal_jd = _resolve_birth_jd(birth_year, birth_month, birth_day, birth_hour, birth_minute,
@@ -643,7 +641,7 @@ def compute_solar_return_full(birth_year, birth_month, birth_day, birth_hour, bi
         'natal_jd': natal_jd,
         'residence': {'lat': float(residence_lat), 'lng': float(residence_lng),
                       'tz': residence_tz, 'city': residence_city},
-        'house_system': 'whole_sign' if hsys == b'W' else 'placidus',
+        'house_system': house_system,
 
         # ═══ 单盘层（13）═══
         'single': {

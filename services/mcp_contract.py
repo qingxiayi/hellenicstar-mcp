@@ -25,13 +25,14 @@ def missing(value):
     return value is None or (isinstance(value, str) and not value.strip())
 
 
-def clarification(fields, *, prompt=None, status="needs_clarification", candidates=None):
+def clarification(fields, *, prompt=None, status="needs_clarification", candidates=None, house_systems=None):
     required = []
     for field in fields:
         leaf = field.rsplit(".", 1)[-1]
         item = {"field": field, "prompt": _PROMPTS.get(leaf, "请核实该输入。")}
         if leaf == "house_system":
-            item["options"] = ["placidus", "whole_sign"]
+            item["options"] = list(house_systems or ("placidus", "whole_sign"))
+            item["prompt"] = "请确认宫制：" + ", ".join(item["options"]) + "；已明确的选择可沿用。"
         required.append(item)
     message = prompt or "请补全或确认以下信息后重试；不要自行补值。"
     out = {"status": status, "error": message, "required_fields": list(fields),
@@ -43,8 +44,8 @@ def clarification(fields, *, prompt=None, status="needs_clarification", candidat
 
 
 class ClarificationRequired(ValueError):
-    def __init__(self, fields, prompt=None):
-        self.response = clarification(fields, prompt=prompt)
+    def __init__(self, fields, prompt=None, house_systems=None):
+        self.response = clarification(fields, prompt=prompt, house_systems=house_systems)
         super().__init__(self.response["error"])
 
 
@@ -58,8 +59,7 @@ def tool_clarification(name, arguments, parameter_names):
     fields = []
     if "year" in parameter_names:
         fields.extend(BIRTH_FIELDS)
-    if "house_system" in parameter_names:
-        fields.append("house_system")
+    # House system is optional: the MCP boundary normalizes omission to Placidus.
     if "residence_location_id" in parameter_names:
         fields.extend(("residence_location_id", "target_year"))
     if "relocation_location_id" in parameter_names:
@@ -89,9 +89,31 @@ def tool_clarification(name, arguments, parameter_names):
                           if missing(birth.get(field)))
     if not absent:
         return None
-    out = clarification(absent)
+    from services.house_systems import systems_for_tool
+    out = clarification(absent, house_systems=systems_for_tool(name))
     if name == "calculate_timeline_synthesis" and "target_year" in absent:
         for item in out["clarification"]["required"]:
             if item["field"] == "target_year":
                 item["prompt"] = "请提供目标年份 target_year，或滚动查询的起始日期 start_date（YYYY-MM-DD）。"
     return out
+
+
+def house_system_notice(name, system):
+    """Disclosure, not evidence that the caller obtained a human preference."""
+    from services.house_systems import systems_for_tool
+    labels = {
+        "placidus": "普拉西度制（Placidus）", "whole_sign": "整宫制（Whole Sign）",
+        "equal": "等宫制（Equal）", "koch": "科赫制（Koch）",
+        "regiomontanus": "雷吉奥蒙塔努斯制（Regiomontanus）",
+        "porphyry": "波菲利制（Porphyry）", "campanus": "坎帕努斯制（Campanus）",
+    }
+    available = list(systems_for_tool(name))
+    message = f"本次数据使用{labels[system]}。"
+    message += ("如需其他宫位制，可指定后重新计算。" if len(available) > 1
+                else "此工具目前仅支持该宫制。")
+    notice = {"house_system": system, "label": labels[system],
+              "default_house_system": "placidus", "available_systems": available,
+              "message": message}
+    if name == "calculate_time_lords":
+        notice["method_note"] = "所选宫制用于主星本命落宫；年小限固定按整宫星座推进，法达周期不随宫制改变。"
+    return notice

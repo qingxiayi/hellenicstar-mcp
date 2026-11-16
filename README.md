@@ -139,7 +139,7 @@ Streamable HTTP。客户端负责交互与解读，服务返回可核对的计�
   - `scan_planetary_aspects`：跨百年任意星体对、自定义相位角及容许度窗口或年份摘要扫描。
   - `calculate_lots`：希腊化与阿拉伯特殊点（福点、精神点、爱神点、必然点、婚姻点等）按需计算与公式展示。
 
-- 本命盘、普拉西度与整宫制、历史时区和夏令时歧义处理。
+- 本命盘与七种通用宫位制（默认普拉西度并告知），历史时区和夏令时歧义处理。
 - 古典要素、三分主星、福点/精神点、宫主星链、琼斯格局。
 - 黄道释放 L1–L4、法达、年小限、太阳弧、次限、次限月相。
 - 行运、土木周期、返照盘、关系盘、戴维森盘、重置盘与年度时间线。
@@ -267,3 +267,5 @@ Issue 和 PR 是公开的，请勿上传真实客户出生资料、私人经历�
 [正式发行包](https://github.com/qingxiayi/hellenicstar-mcp/releases) · [Glama 构建与渠道说明](docs/distribution.md)
 
 “未来一年”使用 `start_date="YYYY-MM-DD", span_years=1`；“2027 全年”使用 `target_year=2027, span_years=1`，两种起点不能混用。截止日为周年当天且不包含，实际起止见 `settings.query_range`。
+
+宫位制：通用排盘与绘图现支持普拉西度、整宫制、等宫制、Koch、Regiomontanus、Porphyry 和 Campanus；各方法的适用范围与高纬度处理见 [宫位制说明](docs/house-systems.md)。

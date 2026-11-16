@@ -33,8 +33,7 @@ def test_natal_envelope_reuses_registry_and_does_not_change_reference():
     assert envelope["provenance"]["execution_path"] == "UNKNOWN"
     registered = envelope["provenance"]["registered_algorithms"]
     assert {entry["key"] for entry in registered} == {
-        "planetary_longitudes", "axes_and_placidus_houses",
-        "whole_sign_houses", "lunar_nodes", "chiron",
+        "planetary_longitudes", "selected_house_geometry", "lunar_nodes", "chiron",
     }
     for entry in registered:
         source = get_algorithm_entry(entry["key"])
