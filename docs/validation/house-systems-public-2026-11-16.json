@@ -1,0 +1,109 @@
+{
+  "status": "ok",
+  "tool_count": 48,
+  "seven_system_schemas": 19,
+  "cases": [
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "placidus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "whole_sign",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "equal",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "koch",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "regiomontanus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "porphyry",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_natal_chart",
+      "house_system": "campanus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_house_rulers",
+      "house_system": "koch",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_lots",
+      "house_system": "placidus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_time_lords",
+      "house_system": "equal",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_solar_return",
+      "house_system": "regiomontanus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_lunar_return",
+      "house_system": "porphyry",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_secondary_progressions",
+      "house_system": "campanus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_davison_chart",
+      "house_system": "equal",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_relationship_charts",
+      "house_system": "whole_sign",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_relocation_chart",
+      "house_system": "koch",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_sky_chart",
+      "house_system": "campanus",
+      "local_public_equal": true
+    },
+    {
+      "tool": "calculate_transits_to_natal",
+      "local_public_equal": true
+    }
+  ],
+  "claim_verification": {
+    "supported": 1,
+    "contradicted": 0,
+    "unverified": 0
+  },
+  "inline_png_bytes": 272616,
+  "image_url_checked": true,
+  "source_commit": "99f7950ab4578e2cb886e31b452292c508ee391d",
+  "comparison_policy": {
+    "numeric_absolute_tolerance": 1e-09,
+    "aspect_rows": "Compared by point-pair/aspect identity, because equivalent axis contacts may reorder at tied orbs across platforms.",
+    "transport": "JSON keys normalized; response references and environment metadata excluded from cross-host data comparison; claims verified separately."
+  }
+}

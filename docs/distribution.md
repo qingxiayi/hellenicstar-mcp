@@ -1,9 +1,10 @@
 # Distribution and platform builds
 
-Current release: **v0.1.12 / 2026-11-13**. GitHub, maintainer HTTPS MCP and
-Glama 0.1.12 use `e4c9f554d16e7e2d9241026895bc94aeee451b22`. See
-[verified channel states](validation/timeline-reading-release-2026-11-13.md);
-Smithery is not a confirmed published channel.
+Current release: **v0.1.14 / 2026-11-16**. GitHub, maintainer HTTPS MCP and
+Glama 0.1.14 use `99f7950ab4578e2cb886e31b452292c508ee391d`. See
+[verified channel states](validation/house-systems-release-2026-11-16.md).
+Awesome MCP Servers PR #16607 is still open; Smithery is not a confirmed
+published channel.
 
 ## Source release
 
@@ -43,14 +44,15 @@ separate distribution channels. For local installation, see [quickstart](quickst
 
 ## Smithery — former publishing workflow retired
 
-Checked on 2026-11-13 against Smithery's [official transition notice](https://www.smithery.ai/future).
+Checked on 2026-11-16 against Smithery's [official transition notice](https://www.smithery.ai/future).
 Smithery shut down connection management on 2026-10-31, including its MCP proxy,
 managed identity, accounts/API keys, API, Connect and Toolbox. Its CLI/SDKs are
 deprecated. Smithery remains a public, non-proxied directory powered by Arcade;
 retained verified entries show direct server URLs.
 
-Our previously referenced server URL and the former `/docs/build/publish` guide
-both return 404. No HellenicStar listing or current self-service submission path
+The former project URL currently displays the transition notice rather than
+a HellenicStar listing. The old `/docs/build/publish` guide was unavailable at
+the preceding check. No HellenicStar listing or current self-service submission path
 was confirmed. Do not follow the former account/CLI publishing instructions or
 report this as a queued version update. A retained public directory is not evidence
 that this project's listing was accepted. If Smithery provides a new submission

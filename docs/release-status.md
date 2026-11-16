@@ -1,3 +1,20 @@
+# Current release: v0.1.14 — 2026-11-16
+
+GitHub v0.1.14, maintainer HTTPS MCP and Glama 0.1.14 use source
+`99f7950ab4578e2cb886e31b452292c508ee391d`. Nineteen chart/method tools expose
+seven house systems with a disclosed Placidus default. Exact natal transit
+queries retain intermediate retrograde contacts. Method-specific restrictions,
+whole-sign annual profections and compatibility changes are explicit.
+
+Local, Ubuntu and macOS full suites each passed 1559 tests and 11 subtests;
+128 production candidate tests, public calculations, claim verification and PNG
+checks passed. See [release evidence and rollback](validation/house-systems-release-2026-11-16.md)
+and [house-system scope](house-systems.md). Clients may need a schema refresh.
+Awesome MCP Servers acceptance remains pending; Smithery is not a confirmed
+published channel. The Mini Program service was not deployed.
+
+The following records describe earlier releases and their states at that time.
+
 # Current release: v0.1.12 — 2026-11-13
 
 GitHub v0.1.12, maintainer HTTPS MCP and Glama 0.1.12 use
