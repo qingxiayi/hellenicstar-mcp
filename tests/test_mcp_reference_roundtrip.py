@@ -97,3 +97,62 @@ def test_numeric_canonicalization_does_not_round_or_coerce_non_numbers():
         assert not exact_equal(a, b)
     with pytest.raises(ValueError):
         fingerprint({'v': float('nan')})
+
+
+def test_workbuddy_preserves_claim_and_reference_types_over_stdio():
+    from pathlib import Path
+    import sys
+
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+
+    root = Path(__file__).resolve().parents[1]
+
+    async def run(session):
+        await session.initialize()
+        name = 'verify_calculation_claims'
+        schema = next(tool.inputSchema for tool in (await session.list_tools()).tools
+                      if tool.name == name)
+
+        async def invoke(tool, args):
+            response = await session.call_tool(tool, args)
+            assert not response.isError, response.content
+            result = json.loads(response.content[0].text)
+            assert result['status'] == 'ok', result
+            return result
+
+        async def verify(source, claims):
+            args = dict(reference=source['calculation_reference'], claims=claims)
+            # WorkBuddy sends the object that Ajv may have modified in place.
+            validated = json.loads(subprocess.check_output(
+                ['node', root / 'tests/workbuddy/validate.js'],
+                input=json.dumps(dict(schema=schema, args=args)), text=True))
+            assert json.dumps(validated, sort_keys=True) == json.dumps(js_roundtrip(args), sort_keys=True)
+            return await invoke(name, validated)
+
+        sky = await invoke('get_current_sky', {'moment': '2026-11-22T10:20:00+08:00'})
+        cases = [('illumination_pct', 91.16), ('phase_num', 4), ('is_waxing', True),
+                 ('phase_num', '4'), ('is_waxing', 'true')]
+        result = await verify(sky, [dict(quote=key, path='/moon_phase/' + key, value=value)
+                                    for key, value in cases])
+        assert json.dumps([r['claimed_value'] for r in result['claims']]) == json.dumps(
+            [value for _, value in cases])
+        assert [r['verdict'] for r in result['claims']] == ['supported'] * 3 + ['contradicted'] * 2
+        assert result['counts'] == dict(supported=3, contradicted=2, unverified=0)
+
+        context = dict(roles=dict(a='parent', b='child'), additional_types=['friendship'],
+                       cohabiting=True)
+        relationship = await invoke('calculate_relationship_observation', dict(
+            person_a=BIRTH, person_b=PARTNER, relationship_type='family', relationship_context=context))
+        assert relationship['calculation_reference']['input']['relationship_context'] == context
+        checked = await verify(relationship, [dict(quote='Schema', path='/schema_version',
+                                                   value=relationship['schema_version'])])
+        assert checked['counts'] == dict(supported=1, contradicted=0, unverified=0)
+
+    async def check():
+        params = StdioServerParameters(command=sys.executable, args=[str(root / 'mcp_server.py')])
+        async with stdio_client(params) as (read, write):
+            async with ClientSession(read, write) as session:
+                await run(session)
+
+    asyncio.run(check())

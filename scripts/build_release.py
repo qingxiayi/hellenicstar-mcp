@@ -19,7 +19,7 @@ def source_files():
         rel = path.relative_to(ROOT)
         if path.is_symlink():
             continue
-        if any(part in {'.git', '.venv', 'venv', '__pycache__', '.pytest_cache', 'dist', 'cache', 'logs'} for part in rel.parts):
+        if any(part in {'.git', '.venv', 'venv', '__pycache__', '.pytest_cache', 'dist', 'cache', 'logs', 'node_modules'} for part in rel.parts):
             continue
         if not path.is_file():
             continue
