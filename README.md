@@ -166,6 +166,8 @@ Windows 原生安装及其他 Python 版本不属于当前 CI 覆盖范围。
 stdio 图片需要客户端支持 MCP image 内容；自检成功不代表每个客户端都能显示图片。
 本地 HTTP 和公开部署的配置见 [部署说明](docs/deployment.md) 与 [SECURITY.md](SECURITY.md)。
 
+使用 WorkBuddy 5.11.3 时，更新本地 MCP 源码后，请在 WorkBuddy 中重新加载工具，使数字和布尔值按原类型参与核验。[兼容性说明与复测结果](docs/release-status.md#workbuddy-5113)
+
 ## 地点与时间
 
 - 已知 WGS-84 经纬度：调用 `resolve_birth_coordinates`，将返回的 `location_id` 用于计算。

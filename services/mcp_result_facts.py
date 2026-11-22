@@ -37,11 +37,32 @@ ClaimValueType = Union[
 ReferenceInputType = Union[Scalar, ScalarDict, ScalarList, Dict[str, Union[Scalar, ScalarDict, ScalarList]]]
 
 
+def preserve_json_scalars(schema: dict) -> None:
+    """Group unconstrained JSON primitives before Ajv can coerce an anyOf branch."""
+    for key in ('items', 'additionalProperties'):
+        if isinstance(schema.get(key), dict):
+            preserve_json_scalars(schema[key])
+    alternatives = schema.get('anyOf', [])
+    for alternative in alternatives:
+        preserve_json_scalars(alternative)
+    primitives = [{'type': kind} for kind in ('string', 'integer', 'number', 'boolean', 'null')]
+    if all(branch in alternatives for branch in primitives):
+        # Every JSON value except an array or object is already a valid scalar.
+        # Neither of these container checks converts a primitive to another type.
+        scalar = {'not': {'anyOf': [{'type': 'array'}, {'type': 'object'}]}}
+        containers = [branch for branch in alternatives if branch not in primitives]
+        if containers:
+            schema['anyOf'] = [scalar, *containers]
+        else:
+            del schema['anyOf']
+            schema.update(scalar)
+
+
 class CalculationReference(BaseModel):
     model_config = ConfigDict(extra='forbid')
     schema_version: StrictStr
     tool: StrictStr = Field(max_length=80)
-    input: dict[str, ReferenceInputType]
+    input: dict[str, ReferenceInputType] = Field(json_schema_extra=preserve_json_scalars)
     fingerprint: StrictStr = Field(min_length=64,max_length=64)
 
 
@@ -49,7 +70,7 @@ class CalculationClaim(BaseModel):
     model_config = ConfigDict(extra='forbid')
     quote: StrictStr = Field(min_length=1,max_length=1000,description='Exact draft quote; echoed, not semantically parsed.')
     path: StrictStr = Field(min_length=1,max_length=500,description='Exact JSON Pointer to the source result field, e.g. /jones_pattern/high_focus_planet. Include adjacent role/time/planet fields in a separate claim to retain context.')
-    value: ClaimValueType = Field(description='Exact claimed source value. Use scalar values, scalar lists, flat row objects or lists of flat rows. For a nested object containing arrays (such as settings), submit separate exact paths for its scalar fields and scalar lists instead of the whole object. No fuzzy rounding or semantic interpretation.')
+    value: ClaimValueType = Field(json_schema_extra=preserve_json_scalars, description='Exact claimed source value. Use scalar values, scalar lists, flat row objects or lists of flat rows. For a nested object containing arrays (such as settings), submit separate exact paths for its scalar fields and scalar lists instead of the whole object. No fuzzy rounding or semantic interpretation.')
 
 
 def register(fn):

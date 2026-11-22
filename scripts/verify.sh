@@ -10,4 +10,5 @@ else
     echo 'Install pip in the environment or install uv to check dependencies.' >&2
     exit 1
 fi
+npm ci --prefix tests/workbuddy --ignore-scripts --prefer-offline --no-audit --no-fund
 "$PYTHON" -m pytest tests/ -q "$@"

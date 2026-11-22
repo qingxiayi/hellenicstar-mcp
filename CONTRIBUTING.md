@@ -74,7 +74,7 @@ AGPL source-availability duties do not require submitting an upstream PR. Silent
 Use Python 3.12 and install `requirements-dev.lock` for the complete regression suite,
 including the optional Astrologica and Stellium comparisons. Install Node.js,
 `rsvg-convert` and Chinese/symbol fonts for render tests. Build the optional GeoNames
-database as described in README before running `bash scripts/verify.sh`.
+database as described in README before running `bash scripts/verify.sh`. The verifier uses npm to install the pinned Ajv test dependency.
 
 Keep calculation changes separate from transport/presentation changes. Preserve exact
 birth-time and DST ambiguity handling. Add regression cases for changed behavior;

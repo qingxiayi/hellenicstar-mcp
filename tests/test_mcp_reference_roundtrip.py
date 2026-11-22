@@ -97,3 +97,86 @@ def test_numeric_canonicalization_does_not_round_or_coerce_non_numbers():
         assert not exact_equal(a, b)
     with pytest.raises(ValueError):
         fingerprint({'v': float('nan')})
+
+
+def test_workbuddy_preserves_claim_and_reference_types_over_stdio():
+    from pathlib import Path
+    import sys
+
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+
+    root = Path(__file__).resolve().parents[1]
+
+    async def run(session):
+        await session.initialize()
+        schemas = {tool.name: tool.inputSchema for tool in (await session.list_tools()).tools}
+
+        async def invoke(tool, args):
+            response = await session.call_tool(tool, args)
+            assert not response.isError, response.content
+            result = json.loads(response.content[0].text)
+            assert result['status'] == 'ok', result
+            return result
+
+        async def validated_call(name, args):
+            # WorkBuddy sends the object that Ajv may have modified in place.
+            validated = json.loads(subprocess.check_output(
+                ['node', root / 'tests/workbuddy/validate.js'],
+                input=json.dumps(dict(schema=schemas[name], args=args)), text=True))
+            assert json.dumps(validated, sort_keys=True) == json.dumps(js_roundtrip(args), sort_keys=True)
+            return await invoke(name, validated)
+
+        async def verify(source, claims):
+            return await validated_call('verify_calculation_claims', dict(
+                reference=source['calculation_reference'], claims=claims))
+
+        chart = await validated_call('calculate_natal_chart', {**BIRTH, 'house_system': 'placidus',
+                                                               'fold': None})
+        point = chart['planets'][0]
+        aspect = chart['aspects'][0]
+        claims = [
+            dict(quote='house', kind='house', point=point['key'], value=point['house'], other_point=None),
+            dict(quote='motion', kind='retrograde', point=point['key'], value=point['retrograde']),
+            dict(quote='angle', kind='aspect', point=aspect['point1'], other_point=aspect['point2'],
+                 value=aspect['angle']),
+            dict(quote='wrong house', kind='house', point=point['key'], value=point['house'] % 12 + 1),
+            dict(quote='text house', kind='house', point=point['key'], value=str(point['house'])),
+        ]
+        natal = await validated_call('verify_natal_claims', dict(reference=chart['fact_reference'], claims=claims))
+        assert [row['verdict'] for row in natal['claims']] == ['supported'] * 3 + ['contradicted', 'unverified']
+
+        sky = await invoke('get_current_sky', {'moment': '2026-11-22T10:20:00+08:00'})
+        cases = [('illumination_pct', 91.16), ('phase_num', 4), ('is_waxing', True),
+                 ('phase_num', '4'), ('is_waxing', 'true')]
+        result = await verify(sky, [dict(quote=key, path='/moon_phase/' + key, value=value)
+                                    for key, value in cases])
+        assert json.dumps([r['claimed_value'] for r in result['claims']]) == json.dumps(
+            [value for _, value in cases])
+        assert [r['verdict'] for r in result['claims']] == ['supported'] * 3 + ['contradicted'] * 2
+        assert result['counts'] == dict(supported=3, contradicted=2, unverified=0)
+
+        context = dict(roles=dict(a='parent', b='child'), additional_types=['friendship'],
+                       cohabiting=True)
+        relationship = await invoke('calculate_relationship_observation', dict(
+            person_a=BIRTH, person_b=PARTNER, relationship_type='family', relationship_context=context))
+        assert relationship['calculation_reference']['input']['relationship_context'] == context
+        checked = await verify(relationship, [dict(quote='Schema', path='/schema_version',
+                                                   value=relationship['schema_version'])])
+        assert checked['counts'] == dict(supported=1, contradicted=0, unverified=0)
+
+    async def check():
+        params = StdioServerParameters(command=sys.executable, args=[str(root / 'mcp_server.py')])
+        async with stdio_client(params) as (read, write):
+            async with ClientSession(read, write) as session:
+                await run(session)
+
+    asyncio.run(check())
+
+
+def test_workbuddy_preserves_valid_union_values_across_discovered_catalog():
+    from pathlib import Path
+
+    schemas = {tool.name: tool.inputSchema for tool in asyncio.run(m.mcp.list_tools())}
+    script = Path(__file__).parent / 'workbuddy/check-scalar-unions.js'
+    subprocess.run(['node', script], input=json.dumps(schemas), text=True, check=True)
