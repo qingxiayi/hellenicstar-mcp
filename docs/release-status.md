@@ -4,6 +4,8 @@
 
 在同一时刻的月相数据上复测，数字 `91.16`、整数 `4` 和布尔值 `true` 均返回 `supported`，字符串 `"4"` 和 `"true"` 均返回 `contradicted`。服务端继续严格区分文字、数字和布尔值。
 
+本命核验也保留宫位和相位角的整数、逆行状态的布尔值，以及可空字段中的 JSON `null`。例如，正确宫位会得到 `supported`，错误的整数宫位会得到 `contradicted`，文本宫位仍是 `unverified`。
+
 # Current release: v0.1.14 — 2026-11-16
 
 GitHub v0.1.14, maintainer HTTPS MCP and Glama 0.1.14 use source

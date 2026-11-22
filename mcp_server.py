@@ -3,7 +3,7 @@
 Run behind HTTPS reverse proxy with `uvicorn mcp_server:app --host 127.0.0.1 --port 5003`.
 """
 
-from mcp.server.fastmcp import FastMCP
+from services.mcp_input_schema import DiscoveryFastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, Icon, ImageContent, TextContent, ToolAnnotations
 from pydantic import BaseModel, Field, StrictInt, StrictFloat, StrictBool
@@ -92,7 +92,7 @@ READ_ONLY = ToolAnnotations(readOnlyHint=True, destructiveHint=False,
 
 ICON_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static_mcp", "icon.png")
 
-mcp = FastMCP(
+mcp = DiscoveryFastMCP(
     "hellenicstar-natal",
     website_url=PUBLIC_BASE,
     icons=[Icon(src=f"{PUBLIC_BASE}/mcp/icon.png", mimeType="image/png", sizes=["512x512"])],
