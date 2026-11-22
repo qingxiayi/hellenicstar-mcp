@@ -1,6 +1,8 @@
+# GitHub 源码发行 v0.1.15 · 2026-11-22
+
 ## WorkBuddy 5.11.3
 
-源码兼容性更新（尚未标记发行版本）。WorkBuddy 在发送请求前校验参数时，可能把核验值中的数字和布尔值转换成字符串。更新本地 MCP 并重新加载工具定义后，按原来的 JSON 类型提交即可。
+v0.1.15 包含 WorkBuddy 兼容性修复。WorkBuddy 在发送请求前校验参数时，可能把核验值中的数字和布尔值转换成字符串。更新本地 MCP 并重新加载工具定义后，按原来的 JSON 类型提交即可。
 
 在同一时刻的月相数据上复测，数字 `91.16`、整数 `4` 和布尔值 `true` 均返回 `supported`，字符串 `"4"` 和 `"true"` 均返回 `contradicted`。服务端继续严格区分文字、数字和布尔值。
 
@@ -8,7 +10,7 @@
 
 日返的目标年份指所选生日对应的回归周期。元旦或年末生日的精确回归时刻可能落在相邻 UTC 年份；计算和绘图共用同一项日期检查。
 
-# Current release: v0.1.14 — 2026-11-16
+# Previous release: v0.1.14 — 2026-11-16
 
 GitHub v0.1.14, maintainer HTTPS MCP and Glama 0.1.14 use source
 `99f7950ab4578e2cb886e31b452292c508ee391d`. Nineteen chart/method tools expose
