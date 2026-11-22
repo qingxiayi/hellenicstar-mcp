@@ -6,6 +6,8 @@
 
 本命核验也保留宫位和相位角的整数、逆行状态的布尔值，以及可空字段中的 JSON `null`。例如，正确宫位会得到 `supported`，错误的整数宫位会得到 `contradicted`，文本宫位仍是 `unverified`。
 
+日返的目标年份指所选生日对应的回归周期。元旦或年末生日的精确回归时刻可能落在相邻 UTC 年份；计算和绘图共用同一项日期检查。
+
 # Current release: v0.1.14 — 2026-11-16
 
 GitHub v0.1.14, maintainer HTTPS MCP and Glama 0.1.14 use source

@@ -3,7 +3,7 @@
 Every data tool is explicitly registered. Invalid results are withheld, not
 returned alongside an error. No reports, birth inputs or snapshots are stored.
 """
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 import math
 from zoneinfo import ZoneInfo
 
@@ -484,7 +484,13 @@ def domain_checks(tool,d,args):
     elif family=='return':
         sr=d['solar_return']; require(sr['house_system']==args['house_system'],'/solar_return/house_system','house_system_matches_input')
         require(sr['residence_location_id']==args['residence_location_id'],'/solar_return/residence_location_id','return_location_matches_input')
-        require(instant(sr['utc']).year==args['target_year'],'/solar_return/utc','return_year_matches_input')
+        # target_year selects the annual return near the birthday. The actual
+        # instant can fall in December or January of the adjacent UTC year.
+        # Offset from month start also handles Feb 29 in a non-leap target year.
+        anniversary = date(args['target_year'], args['month'], 1) + timedelta(days=args['day'] - 1)
+        return_date = instant(sr['utc']).date()
+        require(abs((return_date - anniversary).days) <= 7, '/solar_return/utc',
+                'return_near_target_birthday')
         c=d['chart']; cusp_list(c['house_cusps'],'/chart/house_cusps')
         require(len(c['planets'])>=10,'/chart/planets','return_planets_present')
         positions={k:v['longitude'] for k,v in c['planets'].items()}

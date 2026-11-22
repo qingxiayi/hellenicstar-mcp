@@ -243,3 +243,17 @@ def test_every_family_reference_survives_json_number_normalization(name, samples
  ref=canonical_numbers(json.loads(json.dumps(checked['calculation_reference'])))
  out=verify_calculation_claims_data(ref,[dict(quote='Transport roundtrip',path=path,value=canonical_numbers(lookup(raw,path)))])
  assert out.get('counts')==dict(supported=1,contradicted=0,unverified=0),out
+
+
+def test_solar_return_new_year_boundary_checks_the_requested_birthday_cycle():
+    from services.mcp_extended import solar_return_data
+
+    args = dict(year=2000, month=1, day=1, hour=12, minute=0,
+                location_id='coord:39.904200,116.407400', house_system='placidus',
+                target_year=2026, residence_location_id='coord:48.856600,2.352200')
+    result = solar_return_data(**args)
+    assert result['solar_return']['utc'].startswith('2025-12-31')
+    assert validate_output('calculate_solar_return', result, args) == []
+    for wrong in ('2024-12-31T11:17:33Z', '2026-12-31T11:17:33Z', '2026-08-01T00:00:00Z'):
+        result['solar_return']['utc'] = wrong
+        assert validate_output('calculate_solar_return', result, args)
