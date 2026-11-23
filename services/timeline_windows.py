@@ -7,6 +7,7 @@ Search bounds are explicit: unknown entry/exit times are never invented.
 from __future__ import annotations
 
 from functools import lru_cache
+from math import floor
 
 from services import transit_utils
 from services.secondary_progressions import PLANET_DEFS, PROG_TO_NATAL_ORBS
@@ -54,19 +55,36 @@ def motion_grid(position, lo, hi, step):
     return times, [position(t)[0] for t in times]
 
 
-def orb_intervals(position, times, longitudes, target, orb):
+def _index_motion_grid(times, longitudes):
+    """Group adjacent samples by the ten-degree sectors their short arc touches."""
+    segments = [[] for _ in range(36)]
+    turning_times = []
+    previous_motion = None
+    for i, (left, right) in enumerate(zip(longitudes, longitudes[1:])):
+        motion = _signed(right, left)
+        if previous_motion is not None and previous_motion * motion <= 0:
+            turning_times.append(times[i])
+        previous_motion = motion
+        low, high = sorted((left % 360, right % 360))
+        if high - low > 180:
+            low, high = high, low + 360
+        # Include both sides of a sector edge within floating-point roundoff.
+        for sector in range(floor((low - 1e-10) / 10), floor((high + 1e-10) / 10) + 1):
+            segments[sector % 36].append(i)
+    return turning_times, segments
+
+
+def orb_intervals(position, times, longitudes, target, orb, *, grid_index=None):
     """Connected positive-duration visits inside one directed aspect band.
 
     All grid steps are short enough to have <180 degrees motion. A tangency
     from outside touching only the boundary is not a positive-duration visit.
     """
-    # Retain turning points even for a boundary tangency without a sign change.
-    cuts = [times[0], times[-1]]
-    for i in range(1, len(times) - 1):
-        if _signed(longitudes[i], longitudes[i - 1]) * _signed(longitudes[i + 1], longitudes[i]) <= 0:
-            cuts.append(times[i])
+    turning_times, segments = grid_index if grid_index is not None else _index_motion_grid(times, longitudes)
+    cuts = [times[0], times[-1], *turning_times]
     for boundary in ((target - orb) % 360, (target + orb) % 360):
-        for i, (a, b) in enumerate(zip(times, times[1:])):
+        for i in segments[int(boundary / 10) % 36]:
+            a, b = times[i], times[i + 1]
             fa, fb = _signed(longitudes[i], boundary), _signed(longitudes[i + 1], boundary)
             if fa == 0:
                 cuts.append(a)
@@ -115,6 +133,7 @@ def compute_aspect_windows(snapshot, lo, hi, events, transit_planets, utc_text):
 
             step = 7 if progressed and planet != 'moon' else 1
             times, lons = motion_grid(position, search_lo, search_hi, step)
+            grid_index = _index_motion_grid(times, lons)
             for target, longitude in targets.items():
                 axis = target in snapshot.axes
                 angles = (0, 90, 180) if progressed else ((0,) if axis else (0, 60, 90, 120, 180))
@@ -123,7 +142,7 @@ def compute_aspect_windows(snapshot, lo, hi, events, transit_planets, utc_text):
                     for directed in ((angle, 360 - angle) if angle not in (0, 180) else (angle,)):
                         # Transit engine defines directed_angle as natal minus moving.
                         center = (longitude - directed) % 360
-                        for a, b in orb_intervals(position, times, lons, center, orb):
+                        for a, b in orb_intervals(position, times, lons, center, orb, grid_index=grid_index):
                             if b <= lo or a >= hi:
                                 continue
                             start, end = max(a, lo), min(b, hi)
