@@ -40,7 +40,7 @@ def _context(snapshot):
         raise ValueError("终身流年需要完整出生民用时间上下文")
     try:
         zone = ZoneInfo(str(ctx.snapshot.tz_iana))
-        local = datetime.fromisoformat(str(ctx.civil_dt)).replace(tzinfo=zone)
+        local = datetime.fromisoformat(str(ctx.civil_dt)).replace(tzinfo=zone, fold=getattr(ctx, "fold", 0))
     except Exception as exc:
         raise ValueError("出生时区上下文无效，无法建立周岁边界") from exc
     return ctx, local, zone
@@ -48,9 +48,11 @@ def _context(snapshot):
 
 def _anniversary(local_birth: datetime, age: int) -> datetime:
     """当地生日边界；2月29日在非闰年按该月最后一日建立年龄切片。"""
+    if age == 0:
+        return local_birth
     year = local_birth.year + int(age)
     day = min(local_birth.day, monthrange(year, local_birth.month)[1])
-    return local_birth.replace(year=year, day=day)
+    return local_birth.replace(year=year, day=day, fold=0)
 
 
 def _datetime_to_jd(value: datetime) -> float:
@@ -61,15 +63,6 @@ def _datetime_to_jd(value: datetime) -> float:
         + utc.microsecond / 86400000000.0,
         swe.GREG_CAL,
     )
-
-
-def _jd_to_datetime(jd: float) -> datetime:
-    year, month, day, hour = swe.revjul(jd, swe.GREG_CAL)
-    whole_hour = int(hour)
-    minute_float = (hour - whole_hour) * 60.0
-    minute = int(minute_float)
-    second = min(59, int(round((minute_float - minute) * 60.0)))
-    return datetime(year, month, day, whole_hour, minute, second, tzinfo=timezone.utc)
 
 
 def _utc_text(value: datetime) -> str:
@@ -99,16 +92,14 @@ def lifetime_chapters(snapshot) -> list[dict]:
 
 def _age_fields(snapshot, jd: float) -> dict:
     _ctx, birth, zone = _context(snapshot)
-    local = _jd_to_datetime(jd).astimezone(zone)
+    local = transit_utils.utc_datetime_at_second(jd).astimezone(zone)
     age = local.year - birth.year
-    if local < _anniversary(birth, age):
+    if jd < _datetime_to_jd(_anniversary(birth, age)):
         age -= 1
     age = max(0, age)
-    birthday = _anniversary(birth, age)
-    next_birthday = _anniversary(birth, age + 1)
-    fraction = (local - birthday).total_seconds() / max(
-        1.0, (next_birthday - birthday).total_seconds()
-    )
+    birthday = _datetime_to_jd(_anniversary(birth, age))
+    next_birthday = _datetime_to_jd(_anniversary(birth, age + 1))
+    fraction = (jd - birthday) / (next_birthday - birthday)
     return {
         "age": age,
         "age_decimal": round(age + max(0.0, min(1.0, fraction)), 3),
@@ -129,8 +120,8 @@ def lifetime_bounds(snapshot) -> dict:
     _ctx, birth, zone = _context(snapshot)
     # 小程序 picker 的 start/end 只认 YYYY-MM-DD；带 T/Z 的 ISO 串会被忽略，
     # 约束就形同虚设。这里直接给出可用的日期串，前端不必再解析。
-    start_local = _jd_to_datetime(chapters[0]["from_jd"]).astimezone(zone)
-    end_local = _jd_to_datetime(chapters[-1]["to_jd"]).astimezone(zone)
+    start_local = transit_utils.utc_datetime_at_second(chapters[0]["from_jd"]).astimezone(zone)
+    end_local = transit_utils.utc_datetime_at_second(chapters[-1]["to_jd"]).astimezone(zone)
     return {
         "from_jd": chapters[0]["from_jd"],
         "to_jd": chapters[-1]["to_jd"],
@@ -202,7 +193,7 @@ def compute_range_events(
         axis_result = transit_natal.compute_filtered_events(
             snapshot, from_jd, to_jd,
             planets=planets, natal_points=axis_points, aspects=(0.0,), max_days=None,
-            collapse_series=collapse_series,
+            collapse_series=collapse_series, round_event_jd=False,
         )
         event_rows.extend(axis_result["events"])
     if ordinary_points:
@@ -210,7 +201,7 @@ def compute_range_events(
             snapshot, from_jd, to_jd,
             planets=planets, natal_points=ordinary_points,
             aspects=selected_aspects, max_days=None,
-            collapse_series=collapse_series,
+            collapse_series=collapse_series, round_event_jd=False,
         )
         event_rows.extend(point_result["events"])
     event_rows.sort(key=lambda row: (
@@ -220,11 +211,12 @@ def compute_range_events(
     for row in event_rows:
         row.update(_age_fields(snapshot, row["exact_jd"]))
         row["chapter_index"] = _chapter_for_jd(chapters, row["exact_jd"])
+        row["exact_jd"] = round(row["exact_jd"], 6)
     return {
         "from_jd": round(from_jd, 6),
         "to_jd": round(to_jd, 6),
-        "from_utc": _utc_text(_jd_to_datetime(from_jd)),
-        "to_utc": _utc_text(_jd_to_datetime(to_jd)),
+        "from_utc": _utc_text(transit_utils.utc_datetime_at_second(from_jd)),
+        "to_utc": _utc_text(transit_utils.utc_datetime_at_second(to_jd)),
         "range_days": round(to_jd - from_jd, 3),
         "filters": {
             "group": group, "planet": planet, "target_scope": target_scope,
@@ -351,11 +343,12 @@ def compute_lifetime_events(
         planets=(planet,) if planet else transit_natal.TRANSIT_GROUPS[group],
         natal_points=(natal_point,) if natal_point else allowed_points,
         aspects=selected_aspects,
-        max_days=None,
+        max_days=None, round_event_jd=False,
     )
     for row in result["events"]:
         row.update(_age_fields(snapshot, row["exact_jd"]))
         row["chapter_index"] = int(chapter_index)
+        row["exact_jd"] = round(row["exact_jd"], 6)
     return {
         "chapter": {key: value for key, value in chapter.items() if not key.endswith("_jd")},
         "filters": {

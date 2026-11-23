@@ -17,6 +17,7 @@
 到 Moshier 就 fail loud（ephemeris_guard.py 之所以存在的原因，这里不能省）。
 """
 import math
+from datetime import datetime, timedelta, timezone
 
 import swisseph as swe
 
@@ -64,6 +65,12 @@ def _genuine_crossing_threshold_deg(sample_minutes: float) -> float:
             % (sample_minutes, threshold)
         )
     return threshold
+
+
+def utc_datetime_at_second(jd: float) -> datetime:
+    """Convert a Julian day to UTC at second precision, carrying into the next minute or day."""
+    year, month, day, hour = swe.revjul(jd, swe.GREG_CAL)
+    return datetime(year, month, day, tzinfo=timezone.utc) + timedelta(seconds=round(hour * 3600))
 
 
 def body_position(planet: int, jd_ut: float):
@@ -242,8 +249,10 @@ def all_exact_to_fixed_in_window(
                     if d0 == 0.0:
                         hits.append(times[i])
                         continue
-                    if i == last - 1 and d1 == 0.0:
-                        hits.append(times[i + 1])
+                    # The next interval owns an exact shared endpoint.
+                    if d1 == 0.0:
+                        if i == last - 1:
+                            hits.append(times[i + 1])
                         continue
                     if not (
                         (d0 > 0) != (d1 > 0)

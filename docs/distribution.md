@@ -1,6 +1,6 @@
 # Distribution and platform builds
 
-The current GitHub source release is [v0.1.15](https://github.com/qingxiayi/hellenicstar-mcp/releases/tag/v0.1.15) (2026-11-22). It includes the WorkBuddy input schema and solar return validation fixes. See the [compatibility and verification notes](release-status.md#workbuddy-5113).
+The current source release is [v0.1.16](https://github.com/qingxiayi/hellenicstar-mcp/releases/tag/v0.1.16) (2026-11-23). It includes timeline performance and birth-time boundary corrections. See the [release notes](release-status.md).
 
 The previous [v0.1.14 verification](validation/house-systems-release-2026-11-16.md) covers the maintainer HTTPS service and Glama on 2026-11-16.
 Awesome MCP Servers PR #16607 is still open; Smithery is not a confirmed

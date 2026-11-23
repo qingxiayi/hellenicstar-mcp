@@ -94,3 +94,19 @@ def test_contract_rejects_outside_or_stale_calendar_data(rolling,field):
     elif field=='event': d['events'][0]['exact_utc']='2026-01-01T00:00:00Z'
     else: d['progressed_context']['as_of_utc']='2026-01-01T00:00:00Z'
     assert validate_output('calculate_timeline_synthesis',d,dict(BIRTH,start_date='2026-11-13',span_years=1))
+
+
+@pytest.mark.parametrize(("fold", "utc_hour"), [(0, "05"), (1, "06")])
+def test_birth_year_timeline_accepts_only_the_matching_repeated_hour(fold, utc_hour):
+    from services.mcp_extended import timeline_synthesis_data
+    from services.mcp_validation import validate_output
+    args = dict(year=2007, month=11, day=4, hour=1, minute=6, location_id="gn:5128581",
+                fold=fold, target_year=2007, span_years=1)
+    result = timeline_synthesis_data(**args)
+    assert result["settings"]["query_range"]["start_utc"] == f"2007-11-04T{utc_hour}:06:00Z"
+    assert validate_output("calculate_timeline_synthesis", result, args) == []
+    # The UTC instant is still correct, but displaying UTC as New York local time is wrong.
+    event = result["events"][0]
+    event["local_at"] = event["exact_utc"]
+    errors = validate_output("calculate_timeline_synthesis", result, args)
+    assert any(e["rule"] == "timeline_event_instant_and_calendar" for e in errors)

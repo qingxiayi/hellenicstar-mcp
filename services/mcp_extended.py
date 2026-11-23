@@ -71,8 +71,8 @@ def _validated(year, month, day, hour, minute, location_id, fold,
 def _age_at(result: dict, moment: datetime) -> float:
     ctx = result["birth_context"]
     birth = datetime.fromisoformat(ctx["civil_dt"]).replace(
-        tzinfo=ZoneInfo(ctx["tz_iana"]))
-    return (moment - birth).total_seconds() / (365.2425 * 86400)
+        tzinfo=ZoneInfo(ctx["tz_iana"]), fold=ctx.get("fold", 0))
+    return (moment.astimezone(timezone.utc) - birth.astimezone(timezone.utc)).total_seconds() / (365.2425 * 86400)
 
 
 def _local(utc_text: str | None, tz_name: str) -> str | None:

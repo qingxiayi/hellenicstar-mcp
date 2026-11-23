@@ -238,3 +238,57 @@ def test_birth_contact_stays_in_first_chapter_before_jd_rounding(monkeypatch):
     monkeypatch.setattr(natal.transit_utils, "body_position", lambda body, jd: (0, 1))
     result = transit_lifetime.compute_lifetime_summary(snapshot)
     assert result["event_count"] == result["chapters"][0]["counts"]["total"] == 1
+
+
+@pytest.mark.parametrize(("fold", "utc_hour"), [(0, "05"), (1, "06")])
+def test_repeated_birth_hour_sets_only_the_birth_boundary(fold, utc_hour):
+    snapshot = _snapshot("2007-11-04T01:06:00", "America/New_York")
+    snapshot.context.fold = fold
+    chapters = transit_lifetime.lifetime_chapters(snapshot)
+    assert chapters[0]["from_utc"] == f"2007-11-04T{utc_hour}:06:00Z"
+    birth = transit_lifetime._context(snapshot)[1]
+    # 2018-11-04 also repeated this hour. Birth fold is not an anniversary choice.
+    birthday = transit_lifetime._anniversary(birth, 11)
+    assert transit_lifetime._utc_text(birthday) == "2018-11-04T05:06:00Z"
+    later = datetime.fromisoformat("2018-11-04T06:05:00+00:00")
+    assert transit_lifetime._age_fields(snapshot, transit_lifetime._datetime_to_jd(later))["age"] == 11
+
+
+@pytest.mark.parametrize("direction", [-1, 1])
+def test_fixed_target_on_shared_sample_only_counts_once(monkeypatch, direction):
+    from services import transit_utils
+    monkeypatch.setattr(transit_utils, "body_lon", lambda body, t: (direction * (t - 16)) % 360)
+    # Include a zero-degree crossing exactly between two 32-sample blocks.
+    hits = transit_utils.all_exact_to_fixed_in_window(0, {"asc": 0}, [0], 0, 32)
+    assert hits == [(16., "asc", 0.)]
+
+
+def test_solar_arc_elapsed_age_uses_the_selected_birth_instant():
+    from services.mcp_extended import _age_at
+    zone = ZoneInfo("America/New_York")
+    later = datetime(2007, 11, 4, 1, 6, tzinfo=zone, fold=1)
+    ctx = dict(civil_dt="2007-11-04T01:06:00", tz_iana=zone.key, fold=1)
+    assert _age_at({"birth_context": ctx}, later.astimezone(ZoneInfo("UTC"))) == 0
+    ctx["fold"] = 0
+    assert _age_at({"birth_context": ctx}, later) == pytest.approx(1 / (365.2425 * 24))
+
+
+@pytest.mark.parametrize(("civil", "zone", "first", "second"), [
+    ("2021-04-04T01:45:00", "Australia/Lord_Howe", "14:45", "15:15"),
+    ("2020-10-25T01:30:00", "Europe/London", "00:30", "01:30"),
+])
+def test_chapter_bounds_follow_local_fold_not_a_fixed_one_hour_shift(civil, zone, first, second):
+    snapshot = _snapshot(civil, zone)
+    for fold, utc_clock in enumerate((first, second)):
+        snapshot.context.fold = fold
+        bounds = transit_lifetime.lifetime_bounds(snapshot)
+        assert bounds["from_utc"].endswith("T" + utc_clock + ":00Z")
+        assert bounds["from_date"] == civil[:10]
+
+
+def test_birth_minute_is_not_displayed_one_second_before_birth():
+    from services import transit_natal
+    instant = datetime.fromisoformat("2007-11-04T06:23:00+00:00")
+    assert transit_natal._jd_to_utc(transit_lifetime._datetime_to_jd(instant)) == "2007-11-04T06:23:00Z"
+    midnight = datetime.fromisoformat("2008-01-01T00:00:00+00:00")
+    assert transit_natal._jd_to_utc(transit_lifetime._datetime_to_jd(midnight) - .25 / 86400) == "2008-01-01T00:00:00Z"

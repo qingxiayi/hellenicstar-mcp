@@ -5,7 +5,6 @@
 与精确时刻来自 ``transit_utils``（strict SWIEPH）。不计算行运四轴、宫头、福点或
 精神点；双盘始终以本命宫位框架为准。
 """
-from datetime import datetime, timezone
 from typing import Iterable, Mapping
 
 import swisseph as swe
@@ -110,14 +109,7 @@ def _applying(moving_lon: float, speed: float | None, fixed_lon: float, angle: f
 
 
 def _jd_to_utc(jd: float) -> str:
-    year, month, day, hour = swe.revjul(jd, swe.GREG_CAL)
-    whole_hour = int(hour)
-    minute_float = (hour - whole_hour) * 60.0
-    minute = int(minute_float)
-    second = int(round((minute_float - minute) * 60.0))
-    if second >= 60:
-        second = 59
-    return datetime(year, month, day, whole_hour, minute, second, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+    return transit_utils.utc_datetime_at_second(jd).isoformat().replace("+00:00", "Z")
 
 
 def _node_equivalent(directed_angle: float) -> dict:

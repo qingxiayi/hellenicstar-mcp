@@ -337,6 +337,8 @@ def domain_checks(tool,d,args):
                 '/settings','timeline_window_and_timezone')
         query_start, query_end, expected_range = resolve_timeline_range(
             d['birth_context'], args.get('target_year'), args.get('span_years',1), args.get('start_date'))
+        query_start = query_start.astimezone(timezone.utc)
+        query_end = query_end.astimezone(timezone.utc)
         require(s['query_range']==expected_range, '/settings/query_range', 'resolved_range_matches_input')
         require(d['event_count']==len(d['events']),'/event_count','count_matches_rows')
         require(d['events']==sorted(d['events'],key=_sort_key),'/events','stable_event_order')
@@ -354,7 +356,7 @@ def domain_checks(tool,d,args):
             utc=instant(row['exact_utc'])
             local=instant(row['local_at'])
             require(utc.tzinfo is not None and utc.utcoffset().total_seconds()==0
-                    and local.tzinfo is not None and local==utc.astimezone(zone)
+                    and local.tzinfo is not None and local.astimezone(timezone.utc)==utc
                     and local.utcoffset()==utc.astimezone(zone).utcoffset()
                     and row['date']==local.date().isoformat()
                     and query_start<=utc<query_end,
