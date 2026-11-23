@@ -223,3 +223,18 @@ def test_house_ingress_keeps_only_first_and_final_entry_per_ring(monkeypatch):
     assert all(row["contact_total"] == 3 for row in events)
     # 中间那次逆行返回不出现在结果里。
     assert all(row["entry_type_zh"] == "顺行进入" for row in events)
+
+
+def test_birth_contact_stays_in_first_chapter_before_jd_rounding(monkeypatch):
+    snapshot = _snapshot(civil_dt="1990-04-15T18:17:00", tz="Europe/Paris")
+    birth_jd = transit_lifetime.lifetime_chapters(snapshot)[0]["from_jd"]
+    assert round(birth_jd, 6) < birth_jd
+    natal = transit_lifetime.transit_natal
+    monkeypatch.setattr(transit_lifetime, "_SUMMARY_CACHE", OrderedDict())
+    monkeypatch.setattr(natal, "BODY_IDS", {"mars": natal.BODY_IDS["mars"]})
+    monkeypatch.setattr(natal.transit_utils, "all_exact_to_fixed_in_window",
+                        lambda body, fixed, angles, lo, hi:
+                        [(birth_jd, "mars", 0.0)] if "mars" in fixed else [])
+    monkeypatch.setattr(natal.transit_utils, "body_position", lambda body, jd: (0, 1))
+    result = transit_lifetime.compute_lifetime_summary(snapshot)
+    assert result["event_count"] == result["chapters"][0]["counts"]["total"] == 1

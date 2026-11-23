@@ -214,36 +214,52 @@ def all_exact_to_fixed_in_window(
     times = _sample_times(lo_jd, hi_jd, sample_minutes)
     moving_lons = [body_lon(moving_body, t) for t in times]
     genuine_threshold = _genuine_crossing_threshold_deg(sample_minutes)
+    # Index consecutive intervals in blocks. Adjacent blocks share their endpoint.
+    # Blocks straddling 0 degrees are always checked to keep both wrap directions.
+    blocks = []
+    last = len(times) - 1
+    for first in range(0, last, 32):
+        end = min(first + 32, last)
+        samples = moving_lons[first:end + 1]
+        low, high = min(samples), max(samples)
+        if high - low >= 180 or low < 1e-10 or high > 360 - 1e-10:
+            low, high = 0.0, 360.0
+        blocks.append((first, end, low - 1e-10, high + 1e-10))
     results = []
 
     for point_key, raw_lon in fixed_longitudes.items():
         fixed_lon = float(raw_lon) % 360.0
         for angle in aspects:
-            diffs = [_rel_diff(fixed_lon, moving_lon, angle) for moving_lon in moving_lons]
+            target = (fixed_lon - angle) % 360.0
             hits = []
-            for i in range(len(diffs) - 1):
-                d0, d1 = diffs[i], diffs[i + 1]
-                if d0 == 0.0:
-                    hits.append(times[i])
+            for first, end, low, high in blocks:
+                if not low <= target <= high:
                     continue
-                if i == len(diffs) - 2 and d1 == 0.0:
-                    hits.append(times[i + 1])
-                    continue
-                if not (
-                    (d0 > 0) != (d1 > 0)
-                    and abs(d0) < genuine_threshold
-                    and abs(d1) < genuine_threshold
-                ):
-                    continue
-                lo, hi, lo_positive = times[i], times[i + 1], d0 > 0
-                for _ in range(bisect_iters):
-                    mid = (lo + hi) / 2.0
-                    mid_diff = _rel_diff(fixed_lon, body_lon(moving_body, mid), angle)
-                    if (mid_diff > 0) == lo_positive:
-                        lo = mid
-                    else:
-                        hi = mid
-                hits.append((lo + hi) / 2.0)
+                d1 = _rel_diff(fixed_lon, moving_lons[first], angle)
+                for i in range(first, end):
+                    d0 = d1
+                    d1 = _rel_diff(fixed_lon, moving_lons[i + 1], angle)
+                    if d0 == 0.0:
+                        hits.append(times[i])
+                        continue
+                    if i == last - 1 and d1 == 0.0:
+                        hits.append(times[i + 1])
+                        continue
+                    if not (
+                        (d0 > 0) != (d1 > 0)
+                        and abs(d0) < genuine_threshold
+                        and abs(d1) < genuine_threshold
+                    ):
+                        continue
+                    lo, hi, lo_positive = times[i], times[i + 1], d0 > 0
+                    for _ in range(bisect_iters):
+                        mid = (lo + hi) / 2.0
+                        mid_diff = _rel_diff(fixed_lon, body_lon(moving_body, mid), angle)
+                        if (mid_diff > 0) == lo_positive:
+                            lo = mid
+                        else:
+                            hi = mid
+                    hits.append((lo + hi) / 2.0)
             results.extend((jd, point_key, float(angle)) for jd in hits)
 
     results.sort(key=lambda item: item[0])

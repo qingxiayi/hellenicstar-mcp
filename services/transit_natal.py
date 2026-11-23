@@ -322,6 +322,7 @@ def compute_filtered_events(
     aspects: Iterable[float] | None = None,
     max_days: float | None = 1098.0,
     collapse_series: bool = True,
+    round_event_jd: bool = True,
 ) -> dict:
     """按触发星、本命目标和相位筛选精确事件。
 
@@ -392,8 +393,9 @@ def compute_filtered_events(
 
     # API 时间窗按 [from, to) 返回，避免相邻年度都包含元旦零点同一事件。
     rows = [row for row in rows if lo_jd <= row["exact_jd"] < hi_jd]
-    for row in rows:
-        row["exact_jd"] = round(row["exact_jd"], 6)
+    if round_event_jd:
+        for row in rows:
+            row["exact_jd"] = round(row["exact_jd"], 6)
     return {
         "from_jd": round(lo_jd, 6),
         "to_jd": round(hi_jd, 6),

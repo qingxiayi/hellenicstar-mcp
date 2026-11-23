@@ -261,6 +261,7 @@ def compute_lifetime_summary(snapshot) -> dict:
     chapters = lifetime_chapters(snapshot)
     result = transit_natal.compute_filtered_events(
         snapshot, chapters[0]["from_jd"], chapters[-1]["to_jd"], max_days=None,
+        round_event_jd=False,  # Assign chapters before any display rounding.
     )
     rows = result["events"]
     summaries = []
