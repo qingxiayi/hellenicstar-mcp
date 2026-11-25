@@ -4,6 +4,7 @@
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+[![qingxiayi/hellenicstar-mcp MCP server](https://glama.ai/mcp/servers/qingxiayi/hellenicstar-mcp/badges/score.svg)](https://glama.ai/mcp/servers/qingxiayi/hellenicstar-mcp)
 
 独立的占星计算与星图渲染 MCP 服务，提供 **48 个工具**，支持 stdio 和
 Streamable HTTP。客户端负责交互与解读，服务返回可核对的计算数据和 PNG。
